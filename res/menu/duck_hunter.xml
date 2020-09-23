@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/duckConvertAttack"
+        android:icon="@drawable/ic_action_play"
+        android:title="@string/duckConvertAttack"
+        app:showAsAction="ifRoom|withText"  />
+	<item
+        android:id="@+id/chooseLanguage"
+        android:icon="@drawable/ic_action_settings_applications"
+        android:title="@string/select_language"
+        app:showAsAction="ifRoom|withText" />
+</menu>

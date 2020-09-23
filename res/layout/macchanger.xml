@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.core.widget.NestedScrollView
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center"
+                android:gravity="left"
+                android:text="@string/macchanger_description" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal" >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:hint="Current Hostname">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/f_macchanger_phone_name_et"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/f_macchanger_setHostname_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Set Hostname"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="@string/interface_select"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/f_macchanger_interface_opts_spr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/interface_select"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="#ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:padding="4dp"
+                    android:text="@string/currentmac"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/f_macchanger_currMac_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/currentmac"
+                    android:maxLength="17"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:textColor="@color/cardview_light_background"/>
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.IconOnly"
+                    android:id="@+id/f_macchanger_reloadMAC_imgbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginStart="5dp"
+                    android:contentDescription="@string/reloadMAC"
+                    app:icon="@drawable/ic_action_refresh" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:padding="4dp"
+                android:text="@string/macchanger_select"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/f_macchanger_mode_opts_spr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/macchanger_opts"
+                android:prompt="@string/macchanger_select"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="#ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_weight="0.1">
+
+                    <EditText
+                        android:id="@+id/f_macchanger_mac1_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789abcdef"
+                        android:hint="@string/TwoMACDigits"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/macSeparator" />
+
+                    <EditText
+                        android:id="@+id/f_macchanger_mac2_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789abcdef"
+                        android:hint="@string/TwoMACDigits"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/macSeparator" />
+
+                    <EditText
+                        android:id="@+id/f_macchanger_mac3_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789abcdef"
+                        android:hint="@string/TwoMACDigits"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/macSeparator" />
+
+                    <EditText
+                        android:id="@+id/f_macchanger_mac4_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789abcdef"
+                        android:hint="@string/TwoMACDigits"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/macSeparator" />
+
+                    <EditText
+                        android:id="@+id/f_macchanger_mac5_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789abcdef"
+                        android:hint="@string/TwoMACDigits"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/macSeparator" />
+
+                    <EditText
+                        android:id="@+id/f_macchanger_mac6_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789abcdef"
+                        android:hint="@string/TwoMACDigits"
+                        android:inputType="textNoSuggestions"
+                        android:maxLength="2" />
+                </LinearLayout>
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/f_macchanger_regenerate_mac_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GENERATE"
+                    android:visibility="gone"/>
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/f_macchanger_clear_mac_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CLEAR"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/f_macchanger_set_mac_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:id="@+id/f_macchanger_reset_mac_btn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

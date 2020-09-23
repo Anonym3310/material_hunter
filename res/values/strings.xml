@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MaterialHunter</string>
+    <string name="app_nav_home_label">MaterialHunter</string>
+
+    <!--string name="nethunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, settings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
+    <string name="nethunter_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
+    <string name="nethunter_howtouse_cmd">Put your own command string here, it will be run in Android environment to get the output displayed.</string>
+    <string name="nethunter_howtouse_delimiter">Put your desired delimiter string if you want to split the output into lines, default is "\\n".</string>
+    <string name="nethunter_howtouse_runoncreate">To get the output upon the fragment is created, check this option. Otherwise you have to click RUN button manually to get the output.</string>
+
+    <string name="hid_powersploit_description">The Powersploit payload provides you a choice of reverse meterpreter HTTP/S payloads. "URL to payload" should be a URL accessible to the victim machine where the larger payload is downloaded to.</string>
+    <string name="hid_windows_cmd_description">This Windows CMD payload allows you to enter raw commands to a Windows command prompt. Hitting the list menu will allow you to choose keyboard layout or UAC bypass options. </string>
+
+    <!-- KaliServices -->
+    <string name="kali_services_description">Kali Chroot services can be started and stopped via the switch toggle buttons, you can also ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your own service item, and long click on the item label to EDIT the item as well.</string>
+    <string name="kaliservices_howto_startservice">To START a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nbusybox chroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nService is considered STARTED if the return value is 0 and vice versa.</string>
+    <string name="kaliservices_howto_stopservice">To STOP a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nbusybox chroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nService is considered STOPPED if the return value is 0 and vice versa.</string>
+    <string name="kaliservices_howto_checkservice">To Check if a service in kali is up or not, a command will be run OUTSIDE KaliChroot that looks like this:\n\nbusybox ps -o pid,comm | grep \'&lt;service_name>\'\n\nService is considered UP if the return value is 0 and vice versa.</string>
+    <string name="kaliservices_howto_runServiceOnBoot">To automacticailly start the service after Kali Chroot is up, check this option.</string>
+
+    <!-- CustomCommands -->
+    <string name="custom_commands_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
+    <string-array name="custom_commands_sendto_array">
+        <item>android</item>
+        <item>kali</item>
+    </string-array>
+    <string-array name="custom_commands_execmode_array">
+        <item>interactive</item>
+        <item>background</item>
+    </string-array>
+
+    <!-- USB Armory -->
+    <string name="drawertitleusbarmory">USB Arsenal</string>
+    <string name="usbarmory_hint1_imagemounter">*Place all your .img or .iso files in "/sdcard/nh_files/diskimage/"</string>
+    <string name="usbarmory_header">USB Function Selector</string>
+    <string name="usbarmory_enabledfunctions">USB functions currently enabled:</string>
+    <string name="usbarmory_imagemounter_header">Image Mounter</string>
+    <string name="usbarmory_imagemounter_description">Image Mounter can be used only if the USB function \"mass_storage\" has been enabled</string>
+    <string name="usbarmory_networktethering_header">USB Network Tethering</string>
+    <string name="usbarmory_networktethering_description">USB NetWork Tethering can be used only if the USB function \"rndis\" or \"acmecm\" has been enabled</string>
+    <string-array name="usbarmory_target_platform">
+        <item>Windows</item>
+        <item>Linux</item>
+        <item>Mac OS</item>
+    </string-array>
+    <string-array name="usbarmory_usb_states_win_lin">
+        <item>reset</item>
+        <item>hid</item>
+        <item>mass_storage</item>
+        <item>rndis</item>
+        <item>hid,mass_storage</item>
+        <item>rndis,hid</item>
+        <item>rndis,mass_storage</item>
+        <item>rndis,hid,mass_storage</item>
+    </string-array>
+    <string-array name="usbarmory_usb_states_mac">
+        <item>reset</item>
+        <item>hid</item>
+        <item>mass_storage</item>
+        <item>acm,ecm</item>
+        <item>hid,mass_storage</item>
+        <item>acm,ecm,hid</item>
+        <item>acm,ecm,mass_storage</item>
+        <item>acm,ecm,hid,mass_storage</item>
+    </string-array>
+    <string-array name="usbarmory_usb_adb">
+        <item>Enable</item>
+        <item>Disable</item>
+    </string-array>
+    <string-array name="usbarmory_usb_network_attack_mode">
+        <item>Network Tethering Only</item>
+    </string-array>
+
+    <!-- Bad USB -->
+    <string name="badusb_label">BadUSB MITM Attack</string>
+    <string name="badusb_description">This is our implementation of the BadUSB attack as demonstrated at Black Hat USA 2014. Enabling this USB gadget mode will allow your device to act as a USB network interface when plugged into a target computer. Connecting the USB cable to a PC will force all traffic from that PC (Windows or Linux) through the NetHunter device, where the traffic can be MITM\'ed.</string>
+
+
+    <string name="mana_hostapd">The hostapd configuration file used by Mana.</string>
+    <string name="mana_hostapd_wpe">The hostapd configuration file used for 802.1x/EAP authentication attack (hostapd-wpe)  This is not used with MANA.</string>
+    <string name="mana_hostapd_wpe_certs">Generate certificates (1st time only)</string>
+    <string name="mana_dhcpd">The dhcpd configuration file used by Mana.</string>
+    <string name="mana_dnsspoof">The dnsspoof configuration file used by Mana.</string>
+    <string name="mana_nat_full">The Mana script that does full NAT &amp; SSL interception.</string>
+    <string name="mana_nat_simple">The Mana script that does full NAT only.</string>
+    <string name="mana_nat_simple_bdf">The Mana script that does full NAT &amp; BDFProxy HTTP routing to port 8080.</string>
+    <string name="bdfproxy_cfg">The configuration file for BDFProxy.</string>
+    <string name="mana_bettercap_description">Route traffic to bettercap proxy with Mana-toolkit</string>
+
+
+    <string name="hostapd_private_key">Private Key Password</string>
+
+    <string name="select_language">Language</string>
+    <string name="duckConvertAttack">Attack</string>
+    <string name="duck_hunter_headline">The DuckHunter script can easily convert "USB Rubber Ducky" scripts into NetHunter HID format.  You can generate preconfigured scripts at the incredibly useful <a href="http://www.ducktoolkit.com/Home.jsp">Ducky Toolkit</a> site, or check out the Rubber Ducky script syntax from the official <a href="https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Duckyscript">README</a></string>
+
+    <string name="payload_select">Please select</string>
+    <string-array name="payloads">
+        <item>windows/meterpreter/reverse_http</item>
+        <item>windows/meterpreter/reverse_https</item>
+    </string-array>
+
+    <string name="source">Edit source</string>
+
+    <string name="start_mitmf">Start MITMf attack</string>
+    <string name="stop_mitmf">Stop MITMf attack</string>
+
+    <string name="start_badusb">Start BadUSB attack</string>
+    <string name="stop_badusb">Stop BadUSB attack</string>
+
+
+    <string name="update">Update</string>
+    <string name="load">Load from SDCARD</string>
+    <string name="save">Save to SDCARD</string>
+    <string name="execute_attack">Execute Attack</string>
+
+    <string name="stop_mana">Stop mana</string>
+    <string name="start_mana">Start mana</string>
+    <string name="bssid">BSSID</string>
+    <string name="ssid">SSID</string>
+    <string name="chanel">Channel</string>
+    <string name="enable_karma">Enable karma</string>
+    <string name="admin">UAC Bypass</string>
+    <string name="choose_language">Keyboard Layout</string>
+
+    <!-- Macchanger -->
+    <string name="iface">Interface</string>
+    <string name="payload">Payload</string>
+    <string name="karma_loud">karma loud</string>
+
+    <string name="ps_ip_address">IP Address (LHOST)</string>
+    <string name="ps_port">Port (LPORT)</string>
+    <string name="ps_payload_url">URL to payload</string>
+
+    <string name="toast_install_terminal">Error launching intent. Install Android Terminal!</string>
+    <string name="descriptiontext" />
+
+    <string name="macchanger_description">**Important: Android 10 has MAC Randomization provided already, but if you still want to set a custom mac address yourself, the following criteria are required:\n1. Enable the \'Use randomised MAC\' on each SSID you connect to.\n2. The AP you want to connect to must be connected with a correct password before.\nAs Manually connect to a AP will lose the changed mac.</string>
+    <string name="interface_select">Pick an interface:</string>
+    <string name="macchanger_select">Select macchanger mode:</string>
+    <string name="reset_mac">Reset wlan0 MAC address</string>
+    <string name="currentmac">Current MAC:</string>
+    <string name="TwoMACDigits">XX</string>
+    <string name="macSeparator">:</string>
+    <string name="reloadMAC">Reload MAC</string>
+    <string-array name="macchanger_opts">
+        <item>Random MAC</item>
+        <item>Custom MAC</item>
+    </string-array>
+
+    <!-- USB Army(Not in use yet) -->
+
+    <!-- KeX -->
+    <string name="kex_description">Welcome to the Kali NetHunter Desktop Experience.\nYou can start multiple sessions as different users, add, save, and restore your own custom resolutions, start KeX at boot, and even output KeX to HDMI.</string>
+
+    <!-- BT Attacks -->
+    <string name="bt_description">Experimental version of Bluetooth Arsenal by yesimxev. Recon, spoof, listen to, or inject audio to various devices. Note that RFcomm needs to be enabled in your kernel for some of the attacks. Also, some devices might not support BT service.</string>
+    <string name="bt_carwhisperer">Carwhisperer script from the wayback. Listen to, or inject audio to various devices like speakers, headsets, watches or even cars. Note that target needs to be disconnected from original source. Live stream will have some delay. The sampling has to be 8kHz as we\'re injecting into SCO protocol.</string>
+    <string name="bt_spoof">Spoof your BT adapters.\nWill play essential role in upcoming attacks.</string>
+    <string name="bt_tools">Brute force BT device addresses, ping, and discover their services.</string>
+
+    <!-- MITMf -->
+    <string name="mitmf_description">Written by @byt3bl33d3r, MITMf aims to provide a one-stop-shop for Man-In-The-Middle and network attacks while updating and improving existing attacks and techniques.</string>
+    <string-array name="mitmf_interface_array">
+        <item>wlan0</item>
+        <item>wlan1</item>
+        <item>eth0</item>
+        <item>rndis0</item>
+        <item>usb0</item>
+    </string-array>
+    <string name="mitmf_javascriptkeylogger">JavaScript Keylogger</string>
+    <string name="mitmf_browserprofiler">Browser Profiler</string>
+    <string name="mitmf_filepwn">FilePWN (BDFPROXY) </string>
+    <string name="mitmf_smbauth">SMB challenge-response auth attempts</string>
+    <string name="mitmf_sslstripplus">SSLStrip+</string>
+    <string name="mitmf_appcache">App Cache Poison</string>
+    <string name="mitmf_upsidedown">Enable Upsidedowninternet</string>
+    <string name="mitmf_FERRETNG">Enable Ferret-NG Cookie Capture Plugin</string>
+    <string name="mitmf_Responder_Description">Responder allows you to poison LLMNR, NBT-NS and MDNS requests</string>
+    <string name="mitmf_Responder">Enable Responder Plugin</string>
+    <string name="mitmf_Responder_Analyze">Enable Analyze</string>
+    <string name="mitmf_Responder_Wredir">Enable Wredir</string>
+    <string name="mitmf_Responder_NBTNS">Enable NBTNS</string>
+    <string name="mitmf_Responder_Fingerprint">Fingerprint Host</string>
+    <string name="mitmf_Responder_LM">Force LM hash downgrade</string>
+    <string name="mitmf_Responder_WPAD">WPAD Rogue Proxy Server</string>
+    <string name="mitmf_spoof">Enable Spoof Plugin (redirect/modify traffic)</string>
+    <string-array name="mitmf_spoof_type">
+        <item>Select redirect type</item>
+        <item>ARP</item>
+        <item>ICMP</item>
+        <item>DHCP</item>
+        <item>DNS</item>
+    </string-array>
+    <string name="mitmf_spoof_gateway">Gateway IP </string>
+    <string name="mitmf_spoof_targets">Target(s)</string>
+    <string-array name="mitmf_spoof_arpmode">
+        <item>Select ARP mode</item>
+        <item>Requests</item>
+        <item>Reply</item>
+    </string-array>
+    <string name="mitmf_screenshotter">Enable ScreenShotter Plugin</string>
+    <string name="mitmf_screenshotter_interval">Interval (in seconds) to screenshot:</string>
+    <string name="mitmf_inject">Enable Inject Plugin</string>
+    <string name="mitmf_inject_JS">Javascript payload URL</string>
+    <string name="mitmf_inject_HTML">HTML payload URL</string>
+    <string name="mitmf_inject_HTMLPAY">HTML Payload to inject:</string>
+    <string name="mitmf_inject_PRESERVER">Preserve Cache</string>
+    <string name="mitmf_inject_ONCE">Inject once per domain</string>
+    <string name="mitmf_inject_RATELIMIT">Rate Limit (seconds)</string>
+    <string name="mitmf_inject_COUNTLIMIT">Number of times to inject</string>
+    <string name="mitmf_inject_INJECTIP">Inject only IP</string>
+    <string name="mitmf_inject_NOINJECTIP">IP not to inject</string>
+    <string name="mitmf_config">The MITMf configuration file.</string>
+
+
+    <!-- chroot stuff -->
+    <array name="f_chrootmanager_build_chroot_arm_opts">
+        <item>arm64</item>
+        <item>armhf</item>
+    </array>
+    <array name="f_chrootmanager_build_chroot_full_or_min">
+        <item>full</item>
+        <item>min</item>
+    </array>
+
+    <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Kali Linux that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
+    <string name="materialteam">Developers:\nt.me/cxblack\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/coder1\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
+    <string name="licenseInfo">License:\nNetHunter is licensed under the GPLv2 (gnu.org/licenses/old-licenses/gpl-2.0.en.html) and the source code is available at gitlab.com/kalilinux/nethunter.\n Some icons are licensed from Google, Inc. under CC BY 4.0 (creativecommons.org/licenses/by/4.0).    </string>
+    <string name="attack_launched">Attack launched!</string>
+
+    <!-- sidebar menu item titles -->
+    <string name="drawertitlenethunter">Home</string>
+    <string name="drawertitlecreatechroot">Chroot Manager</string>
+    <string name="drawertitlekaliservices">Kali Services</string>
+    <string name="drawertitlecustomcommands">Custom Commands</string>
+    <string name="drawertitlemacchanger">MAC Changer</string>
+    <string name="drawertitlevncmanager">KeX Manager</string>
+    <string name="drawertitlehid">HID Attacks</string>
+    <string name="drawertitleduckhunter">DuckHunter HID</string>
+    <string name="drawertitlebadusb">Bad USB MITM Attack</string>
+    <string name="drawertitlemana">Mana Wireless Toolkit</string>
+    <string name="drawertitlebt">Bluetooth Arsenal</string>
+    <string name="drawertitlemitmf">MITM Framework</string>
+    <string name="drawertitlenmap">Nmap Scan</string>
+    <string name="drawertitlempc">Metasploit Payload Generator</string>
+    <string name="drawertitlesearchsploit">SearchSploit</string>
+    <string name="drawertitlepineapple">Pineapple Connector</string>
+    <string name="drawertitlegps">Wardriving</string>
+    <string name="drawertitledeauth">DeAuth</string>
+    <string name="InstallAndUpdateButtonText"><![CDATA[Install & Update]]></string>
+    <string name="metapackagesExplanation">Choose some \"metapackages\". The chroot will also be upgraded (via \"apt-get update/dist-upgrade\").\n\nSelecting metapackages you already have installed (or no packages at all) simply update/upgrades without removing anything.\n\nDepending on what metapackages you select, you may be asked to do stuff (such as set passwords for services), so pay attention.</string>
+    <string name="metapackagesAdditionalInfo">Local storage requirements may be in the 20+ GB range. This installation/update will be performed in a terminal, so watch for issues. When completed, press the back button.</string>
+
+    <!-- MPC -->
+    <string name="mpc_description">MSFvenom Payload Creator (MSFPC) is a wrapper written by g0tmi1k to generate multiple types of payloads, based on users choice. The idea is to be as simple as possible (only requiring one input) to produce their payload.</string>
+    <string name="mpc_type">Type:</string>
+    <string-array name="mpc_type_array">
+        <item>ASP</item>
+        <item>ASPX</item>
+        <item>Bash [.sh]</item>
+        <item>Java [.jsp]</item>
+        <item>Linux [.elf]</item>
+        <item>OSX [.macho]</item>
+        <item>Perl [.pl]</item>
+        <item>PHP</item>
+        <item>Powershell [.ps1]</item>
+        <item>Python [.py]</item>
+        <item>Tomcat [.war]</item>
+        <item>Windows [.exe/.dll]</item>
+        <item>Android [.apk]</item>
+    </string-array>
+    <string name="mpc_port">Port:</string>
+    <string name="mpc_port_default">443</string>
+    <string name="mpc_ip_address">IP Address:</string>
+    <string name="mpc_payload">Payload Options:</string>
+    <string-array name="mpc_payload_array">
+        <item>MSF</item>
+        <item>CMD</item>
+    </string-array>
+    <string-array name="mpc_callback_array">
+        <item>Reverse</item>
+        <item>Bind</item>
+    </string-array>
+    <string-array name="mpc_stage_array">
+        <item>Staged</item>
+        <item>Stageless</item>
+    </string-array>
+    <string-array name="mpc_callbacktype_array">
+        <item>TCP</item>
+        <item>HTTP</item>
+        <item>HTTPS</item>
+        <item>Find Port</item>
+    </string-array>
+    <string name="mpc_generateSDCARD">Generate to SDCARD</string>
+    <string name="mpc_generateHTTP">Generate to HTTP</string>
+
+    <!-- SearchSploit -->
+    <string name="searchsploit_searchbar">Search Exploits</string>
+
+    <!-- Custom Launcher -->
+    <string name="drawer_opened">Drawer opened</string>
+    <string name="drawer_closed">Drawer closed</string>
+
+    <!-- Start NMAP -->
+    <string name="nmap_hint">Enter IP</string>
+    <string-array name="nmap_interface_array">
+        <item>Select interface</item>
+        <item>wlan0</item>
+        <item>wlan1</item>
+        <item>eth0</item>
+        <item>rndis0</item>
+    </string-array>
+    <string name="nmap_all">Enable OS version detect, script scan, and traceroute</string>
+    <string name="nmap_ipv6">Enable IPv6</string>
+    <string name="nmap_timing_template">Timing Template</string>
+    <string-array name="nmap_timing_array">
+        <item>Select timing template</item>
+        <item>Paranoid</item>
+        <item>Sneaky</item>
+        <item>Polite</item>
+        <item>Normal</item>
+        <item>Aggressive</item>
+        <item>Insane</item>
+    </string-array>
+    <string name="nmap_ports">Ports</string>
+    <string name="nmap_fastmode">Fast mode (fewer ports)</string>
+    <string name="nmap_dontrandomize">Don\'t randomize port scan</string>
+    <string name="nmap_topports">Top 20 Ports</string>
+    <string name="nmap_osdetectenable">Enable OS detection</string>
+    <string name="nmap_servicedetect">Service/Version Detection</string>
+    <string name="nmap_hostdiscovery_ping">Ping Scan</string>
+    <string name="nmap_scan_technique">Scan Techniques</string>
+    <string-array name="nmap_scantechnique_array">
+        <item>Select scan technique</item>
+        <item>TCP SYN</item>
+        <item>Connect()</item>
+        <item>ACK</item>
+        <item>Windows</item>
+        <item>Maimon</item>
+        <item>TCP Null</item>
+        <item>FIN</item>
+        <item>XMAS</item>
+    </string-array>
+    <string name="nmap_udpscan">UDP Scan</string>
+    <!-- End NMAP -->
+
+
+    <!-- Start PineappleFragment -->
+    <string name="pineapple_description">The pineapple connector is used in conjunction with the Hak5 Pineapple Nano and a USB OTG cable.   This helper will connect the Pineapple Nano over ethernet and upstream your wifi connection.</string>
+    <string name="pineapple_gateway">Pineapple Gateway/Web Interface IP</string>
+    <string name="pineapple_port">Pineapple Nano Web Port</string>
+    <string name="pineapple_ip">Client IP</string>
+    <string name="pineapple_cidr">Pineapple CIDR</string>
+    <string name="pineapple_start_OTG">Setup Connection</string>
+    <string name="pineapple_stop_OTG">Close Connection</string>
+    <string name="pineapple_noupstream">No upstream</string>
+    <string name="pineapple_transproxy">Forward port 80/443 to 8080/8083</string>
+    <string name="pineapple_subnet">172.16.42.0/24</string>
+    <string name="pineapple_webport">1471</string>
+    <string name="pineapple_gatewayip">172.16.42.1</string>
+    <string name="pineapple_clientip">172.16.42.42/24</string>
+    <!-- End PineappleFragment -->
+
+    <!-- Start GPSFragment -->
+    <string name="gps_description">Converts your GPS to nmea then provides to Kali chroot. Perfect for wardriving with Kismet or just a generic GPS server for Kali.  Requires OTG and external wireless.</string>
+    <string name="gps_help">You may need to give NetHunter permissions to GPS. Go to Settings > Apps > MaterialHunter > Permissions.  When it starts press: "return" three times, Vol+up and "t", "return.</string>
+    <string name="loading_file">Loading…  FILE: %s</string>
+    <string name="scanButtonText">Scan</string>
+    <string name="advancedOptionsSwitchText">Advanced Options</string>
+    <string name="edit_whitelist_file">Edit whitelist file.</string>
+    <string name="type_wlan_interface">Type wlan interface</string>
+    <string name="scan_networks">Scan Networks</string>
+    <string name="channel">Channel</string>
+    <string name="whitelist">Whitelist</string>
+    <string name="deauthenticate_anyone_besides_me">Deauthenticate anyone besides me</string>
+    <string name="start_deauthentication">Start Deauthentication :)</string>
+    <string name="objects_to_inject">Objects to Inject</string>
+    <string name="inject_characteristics">Inject Characteristics</string>
+    <string name="shellshock_command">Shellshock command</string>
+    <string name="inject_settings">Inject Settings</string>
+    <!-- End GPSFragment -->
+
+    <!--Notification Channel-->
+
+    <!--Custom Spinner Array-->
+    <string-array name="array_move_position">
+        <item>Before:</item>
+        <item>After:</item>
+    </string-array>
+
+    <string-array name="array_insert_position">
+        <item>Insert to Top</item>
+        <item>Insert to Bottom</item>
+        <item>Insert Before:</item>
+        <item>Insert After:</item>
+    </string-array>
+
+    <!-- dummy_accessibility_service -->
+</resources>
