@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -70,7 +71,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView navigationView;
-    private CharSequence mTitle = "NetHunter";
+    private CharSequence mTitle = "MaterialHunter";
     private final Stack<String> titles = new Stack<>();
     private SharedPreferences prefs;
     public static MenuItem lastSelectedMenuItem;
@@ -296,10 +297,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         navigationView.addHeaderView(navigationHeadView);
 
         FloatingActionButton readmeButton = navigationHeadView.findViewById(R.id.info_fab);
-        readmeButton.setOnTouchListener((v, event) -> {
-            showLicense();
-            return false;
-        });
+        readmeButton.setOnClickListener(view -> showLicense());
 
         /// moved build info to the menu
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd KK:mm:ss a zzz",
@@ -364,19 +362,17 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         final SpannableString readmeText = new SpannableString(readmeData);
         Linkify.addLinks(readmeText, Linkify.WEB_URLS);
 
-
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle("README INFO")
                 .setMessage(readmeText)
-                .setNegativeButton("Close", (dialog, which) -> dialog.cancel());
+                .setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
         AlertDialog ad = adb.create();
-        ad.setCancelable(false);
+        ad.setCancelable(true);
         if (ad.getWindow() != null) {
             ad.getWindow().getAttributes().windowAnimations = R.style.DialogStyle;
         }
         ad.show();
         ((TextView) Objects.requireNonNull(ad.findViewById(android.R.id.message))).setMovementMethod(LinkMovementMethod.getInstance());
-
     }
 
     @SuppressLint("NonConstantResourceId")
