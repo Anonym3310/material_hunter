@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class RunAtBootService extends JobIntentService {
 
-    private static final String TAG = "Nethunter: Startup";
+    private static final String TAG = "NetHunter: Startup";
     static final int SERVICE_JOB_ID = 1;
     private NotificationCompat.Builder n = null;
 
@@ -80,7 +80,6 @@ public class RunAtBootService extends JobIntentService {
         ShellExecuter exe = new ShellExecuter();
         exe.RunAsRootOutput(NhPaths.BUSYBOX + " run-parts " + NhPaths.APP_INITD_PATH);
         if (exe.RunAsRootReturnValue(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\"") == 0){
-            // remove possible vnc locks (if the phone is rebooted with the vnc server running)
             exe.RunAsRootOutput("rm -rf " + NhPaths.CHROOT_PATH() + "/tmp/.X1*");
             hashMap.put("CHROOT", isOK);
         }
@@ -96,7 +95,7 @@ public class RunAtBootService extends JobIntentService {
         doNotification(
                 "Root: " + hashMap.get("ROOT") + "\n" +
                 "Busybox: " + hashMap.get("BUSYBOX") + "\n" +
-                "Chroot: " + hashMap.get("KALICHROOT") + "\n" +
+                "Chroot: " + hashMap.get("CHROOT") + "\n" +
                 resultMsg);
     }
 
@@ -110,7 +109,7 @@ public class RunAtBootService extends JobIntentService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel = new NotificationChannel(
                     AppNavHomeActivity.BOOT_CHANNEL_ID,
-                    "Nethunter Boot Check Service",
+                    "NetHunter Boot Check Service",
                     NotificationManager.IMPORTANCE_HIGH
             );
 
