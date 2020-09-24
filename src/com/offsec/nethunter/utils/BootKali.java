@@ -65,10 +65,6 @@ public class BootKali {
         this.BOOTKALI = GEN_BOOTKALI();
         this.TERM_CMD = this.BOOTKALI + GEN__KALI_TERM_CMD(cmd);
         this.FULL_CMD = this.BOOTKALI + KALI_COMMAND;
-        // Log all cmd if needed
-        //Log.d("BOOTKALI", this.BOOTKALI);
-        //Log.d("KCOMMAND", this.KALI_COMMAND);
-        //GET_KALI_DNS();
     }
 
     private String GET_KALI_ENV() {
@@ -106,43 +102,6 @@ public class BootKali {
         String CLEAR_TERM = "clear && ";
         return "/bin/bash -c" + SPACE + SINGLEQ + KALI_ENV + CLEAR_TERM + cmd + SINGLEQ;
     }
-
-    // is really needed?????
-    private Boolean GET_ANDROID_DNS() {
-        try {
-            Class<?> SystemProperties = Class.forName("android.os.SystemProperties");
-            Method method = SystemProperties.getMethod("get", String.class);
-            ArrayList<String> servers = new ArrayList<>();
-            //String dns_servers = "";
-            for (String name : new String[]{"net.dns1", "net.dns2", "net.dns3", "net.dns4",}) {
-                String value = (String) method.invoke(null, name);
-                if (value != null && !"".equals(value) && !servers.contains(value)) {
-                    servers.add(value);
-                    Log.d("DNS:", value);
-                }
-            }
-            return true;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            return false;
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-            return false;
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /*
-    *
-    * PUBLIC METHODS
-    *
-     */
-
 
     // blocking with output
     // sends a command to kali

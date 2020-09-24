@@ -32,9 +32,8 @@ import java.util.HashMap;
 
 public class DuckHunterFragment extends Fragment {
     private static SharedPreferences sharedpreferences;
-    // Language vars
     private static HashMap<String, String> map = new HashMap<>();
-    public static String lang = "us"; // Set US as default language
+    public static String lang = "us";
     private static String[] keyboardLayoutString;
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG = "DuckHunterFragment";
