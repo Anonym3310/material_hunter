@@ -35,9 +35,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-//import android.app.Fragment;
-//import android.support.v4.app.FragmentActivity;
-
 public class ManaFragment extends Fragment {
 
     private ViewPager mViewPager;
@@ -491,7 +488,6 @@ public class ManaFragment extends Fragment {
 
             new Thread(() -> {
                 ShellExecuter exe = new ShellExecuter();
-                Log.d("exe: ", configFilePath);
                 String text = exe.ReadFile_SYNC(configFilePath);
 
                 String regExpatInterface = "^interface=(.*)$";
@@ -778,8 +774,6 @@ public class ManaFragment extends Fragment {
             String description = getResources().getString(R.string.bdfproxy_cfg);
             TextView desc = rootView.findViewById(R.id.description);
             desc.setText(description);
-            // use the good one?
-            Log.d("BDFPATH", configFilePath);
             EditText source = rootView.findViewById(R.id.source);
             ShellExecuter exe = new ShellExecuter();
             exe.ReadFile_ASYNC(configFilePath, source);

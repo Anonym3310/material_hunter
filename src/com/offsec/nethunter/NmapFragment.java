@@ -82,10 +82,8 @@ public class NmapFragment extends Fragment {
         advswitch.setChecked(false);
         advswitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                Log.d(TAG, "Advanced Options Open");
                 AdvLayout.setVisibility(View.VISIBLE);
             } else {
-                Log.d(TAG, "Advanced Options Closed");
                 AdvLayout.setVisibility(View.GONE);
             }
         });
@@ -205,8 +203,6 @@ public class NmapFragment extends Fragment {
         // Search button
         addClickListener(v -> intentClickListener_NH("nmap " + getCmd()), rootView);
 
-
-        // NMAP Timing Spinner
         Spinner timeSpinner = rootView.findViewById(R.id.nmap_timing_spinner);
         ArrayAdapter<CharSequence> timeAdapter = ArrayAdapter.createFromResource(context,
                 R.array.nmap_timing_array, android.R.layout.simple_spinner_item);
@@ -255,7 +251,6 @@ public class NmapFragment extends Fragment {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                //Another interface callback
             }
         });
 
@@ -404,7 +399,6 @@ public class NmapFragment extends Fragment {
         for (int j = CommandComposed.size() - 1; j >= 0; j--) {
             genCmd = genCmd + CommandComposed.get(j);
         }
-        //Log.d("NMAP SQL:", "nmap --script sqlite-output --script-args=dbname=/tmp/scan.sqlite,dbtable=scandata " + genCmd);
         Log.d("NMAP CMD OUTPUT: ", "nmap " + genCmd);
 
         return genCmd;

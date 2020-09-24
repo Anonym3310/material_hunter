@@ -354,7 +354,6 @@ public class MITMfFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     String selectedItemText = parent.getItemAtPosition(pos).toString();
-                    Log.d("Selected: ", selectedItemText);
                     spoofOption = pos;
                     if (pos == 3) { /*dhcp*/
                         viewModel.setShellShockEnabled(true);
@@ -378,13 +377,11 @@ public class MITMfFragment extends Fragment {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                     String selectedItemText = parent.getItemAtPosition(pos).toString();
-                    Log.d("Slected: ", selectedItemText);
                     arpModeOption = pos;
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
-                    //Another interface callback
                 }
             });
 
