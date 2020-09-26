@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,13 +36,12 @@ import java.util.regex.Pattern;
 
 public class ManaFragment extends Fragment {
 
-    private ViewPager mViewPager;
-
-    private SharedPreferences sharedpreferences;
-    private Integer selectedScriptIndex = 0;
-    private final CharSequence[] scripts = {"mana-nat-full", "mana-nat-simple", "mana-nat-bettercap", "mana-nat-simple-bdf", "hostapd-wpe", "hostapd-wpe-karma"};
     private static final String TAG = "ManaFragment";
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private final CharSequence[] scripts = {"mana-nat-full", "mana-nat-simple", "mana-nat-bettercap", "mana-nat-simple-bdf", "hostapd-wpe", "hostapd-wpe-karma"};
+    private ViewPager mViewPager;
+    private SharedPreferences sharedpreferences;
+    private Integer selectedScriptIndex = 0;
     private String configFilePath;
     private Context context;
     private Activity activity;
@@ -206,77 +204,23 @@ public class ManaFragment extends Fragment {
         NhPaths.showMessage(context, "Mana Stopped");
     }
 
-    public class TabsPagerAdapter extends FragmentPagerAdapter {
-
-
-        TabsPagerAdapter(FragmentManager fm) {
-            super(fm);
+    private void intentClickListener_NH(final String command) {
+        try {
+            Intent intent =
+                    new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.putExtra("com.offsec.nhterm.iInitialCommand", command);
+            startActivity(intent);
+        } catch (Exception e) {
+            NhPaths.showMessage(context, getString(R.string.toast_install_terminal));
         }
-
-        @Override
-        public Parcelable saveState() {
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 8;
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            switch (i) {
-                case 0:
-                    return new HostapdFragment();
-                case 1:
-                    return new HostapdFragmentWPE();
-                case 2:
-                    return new DhcpdFragment();
-                case 3:
-                    return new DnsspoofFragment();
-                case 4:
-                    return new ManaNatFullFragment();
-                case 5:
-                    return new ManaNatSimpleFragment();
-                case 6:
-                    return new ManaNatBettercapFragment();
-                case 7:
-                    return new BdfProxyConfigFragment();
-                default:
-                    return new ManaStartNatSimpleBdfFragment();
-            }
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "hostapd-karma.conf";
-                case 1:
-                    return "hostapd-wpe.conf";
-                case 2:
-                    return "dhcpd.conf";
-                case 3:
-                    return "dnsspoof.conf";
-                case 4:
-                    return "nat-mana-full";
-                case 5:
-                    return "nat-mana-simple";
-                case 6:
-                    return "nat-mana-bettercap";
-                case 7:
-                    return "bdfproxy.cfg";
-                default:
-                    return "mana-nat-simple-bdf";
-            }
-        }
-    } //end class
-
+    }
 
     public static class HostapdFragment extends Fragment {
 
         private Context context;
         private String configFilePath;
+
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -593,9 +537,9 @@ public class ManaFragment extends Fragment {
     }
 
     public static class DnsspoofFragment extends Fragment {
+        final ShellExecuter exe = new ShellExecuter();
         private Context context;
         private String configFilePath;
-        final ShellExecuter exe = new ShellExecuter();
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -731,7 +675,6 @@ public class ManaFragment extends Fragment {
             View rootView = inflater.inflate(R.layout.source_short, container, false);
 
 
-
             String description = getResources().getString(R.string.mana_bettercap_description);
             TextView desc = rootView.findViewById(R.id.description);
             desc.setText(description);
@@ -834,15 +777,69 @@ public class ManaFragment extends Fragment {
         }
     }
 
-    private void intentClickListener_NH(final String command) {
-        try {
-            Intent intent =
-                    new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.putExtra("com.offsec.nhterm.iInitialCommand", command);
-            startActivity(intent);
-        } catch (Exception e) {
-            NhPaths.showMessage(context, getString(R.string.toast_install_terminal));
+    public class TabsPagerAdapter extends FragmentPagerAdapter {
+
+
+        TabsPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
-    }
+
+        @Override
+        public Parcelable saveState() {
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+            return 8;
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            switch (i) {
+                case 0:
+                    return new HostapdFragment();
+                case 1:
+                    return new HostapdFragmentWPE();
+                case 2:
+                    return new DhcpdFragment();
+                case 3:
+                    return new DnsspoofFragment();
+                case 4:
+                    return new ManaNatFullFragment();
+                case 5:
+                    return new ManaNatSimpleFragment();
+                case 6:
+                    return new ManaNatBettercapFragment();
+                case 7:
+                    return new BdfProxyConfigFragment();
+                default:
+                    return new ManaStartNatSimpleBdfFragment();
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "hostapd-karma.conf";
+                case 1:
+                    return "hostapd-wpe.conf";
+                case 2:
+                    return "dhcpd.conf";
+                case 3:
+                    return "dnsspoof.conf";
+                case 4:
+                    return "nat-mana-full";
+                case 5:
+                    return "nat-mana-simple";
+                case 6:
+                    return "nat-mana-bettercap";
+                case 7:
+                    return "bdfproxy.cfg";
+                default:
+                    return "mana-nat-simple-bdf";
+            }
+        }
+    } //end class
 }

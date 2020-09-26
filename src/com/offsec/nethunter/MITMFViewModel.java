@@ -15,6 +15,35 @@ public class MITMFViewModel extends BaseObservable {
     private boolean spoofEnabled = false;
     private boolean shellShockEnabled = false;
     private boolean responderChecked = false;
+    private boolean injectJSEmpty = true;
+    public TextWatcher injectJSWatcher = new TextWatcherAdapter() {
+        @Override
+        public void afterTextChanged(Editable s) {
+            injectJSEmpty = s.toString().equals("");
+            notifyEnabledChanged();
+        }
+    };
+    private boolean injectHtmlURLEmpty = true;
+    public TextWatcher injectHtmlUrlWatcher = new TextWatcherAdapter() {
+        @Override
+        public void afterTextChanged(Editable s) {
+            injectHtmlURLEmpty = s.toString().equals("");
+            notifyEnabledChanged();
+        }
+    };
+    private boolean injectHtmlEmpty = true;
+    public TextWatcher injectHtmlWatcher = new TextWatcherAdapter() {
+        @Override
+        public void afterTextChanged(Editable s) {
+            injectHtmlEmpty = s.toString().equals("");
+            notifyEnabledChanged();
+        }
+    };
+
+    @InverseBindingAdapter(attribute = "android:checked", event = "android:checked")
+    public static boolean getViewChecked(CheckBox view) {
+        return view.isChecked();
+    }
 
     public void clickInject(View view) {
         injectionEnabled = ((CheckBox) view).isChecked();
@@ -33,40 +62,11 @@ public class MITMFViewModel extends BaseObservable {
         return injectionEnabled;
     }
 
-    private boolean injectJSEmpty = true;
-    public TextWatcher injectJSWatcher = new TextWatcherAdapter() {
-        @Override
-        public void afterTextChanged(Editable s) {
-            injectJSEmpty = s.toString().equals("");
-            notifyEnabledChanged();
-        }
-    };
-
     private void notifyEnabledChanged() {
         notifyPropertyChanged(BR.injectJSEnabled);
         notifyPropertyChanged(BR.injectHtmlUrlEnabled);
         notifyPropertyChanged(BR.injectHtmlEnabled);
     }
-
-    private boolean injectHtmlURLEmpty = true;
-
-    public TextWatcher injectHtmlUrlWatcher = new TextWatcherAdapter() {
-        @Override
-        public void afterTextChanged(Editable s) {
-            injectHtmlURLEmpty = s.toString().equals("");
-            notifyEnabledChanged();
-        }
-    };
-
-    private boolean injectHtmlEmpty = true;
-
-    public TextWatcher injectHtmlWatcher = new TextWatcherAdapter() {
-        @Override
-        public void afterTextChanged(Editable s) {
-            injectHtmlEmpty = s.toString().equals("");
-            notifyEnabledChanged();
-        }
-    };
 
     @Bindable
     public boolean isInjectJSEnabled() {
@@ -82,7 +82,6 @@ public class MITMFViewModel extends BaseObservable {
     public boolean isInjectHtmlEnabled() {
         return injectJSEmpty && injectHtmlURLEmpty && injectionEnabled;
     }
-
 
     @Bindable
     public boolean isShellShockEnabled() {
@@ -109,6 +108,17 @@ public class MITMFViewModel extends BaseObservable {
         notifyPropertyChanged(BR.responderChecked);
     }
 
+    public void responderClicked(View view) {
+        responderChecked = ((CheckBox) view).isChecked();
+        notifyPropertyChanged(BR.responderChecked);
+
+    }
+
+
+    public void onClick(View view) {
+
+    }
+
     private static class TextWatcherAdapter implements TextWatcher {
 
         @Override
@@ -122,23 +132,6 @@ public class MITMFViewModel extends BaseObservable {
         @Override
         public void afterTextChanged(Editable s) {
         }
-    }
-
-
-    public void responderClicked(View view) {
-        responderChecked = ((CheckBox) view).isChecked();
-        notifyPropertyChanged(BR.responderChecked);
-
-    }
-
-
-    public void onClick(View view) {
-
-    }
-
-    @InverseBindingAdapter(attribute = "android:checked", event = "android:checked")
-    public static boolean getViewChecked(CheckBox view) {
-        return view.isChecked();
     }
 
 }

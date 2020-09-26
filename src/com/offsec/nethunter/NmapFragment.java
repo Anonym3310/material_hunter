@@ -63,6 +63,23 @@ public class NmapFragment extends Fragment {
         return fragment;
     }
 
+    private static void cleanCmd() {
+        if (CommandComposed.size() > 0) {
+            CommandComposed.subList(0, CommandComposed.size()).clear();
+        }
+    }
+
+    private static void addToCmd(String opt) {
+        CommandComposed.add(opt);
+    }
+
+    private static void removeFromCmd(String opt) {
+        for (int j = CommandComposed.size() - 1; j >= 0; j--) {
+            if (CommandComposed.get(j).equals(opt))
+                CommandComposed.remove(j);
+        }
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -402,23 +419,6 @@ public class NmapFragment extends Fragment {
         Log.d("NMAP CMD OUTPUT: ", "nmap " + genCmd);
 
         return genCmd;
-    }
-
-    private static void cleanCmd() {
-        if (CommandComposed.size() > 0) {
-            CommandComposed.subList(0, CommandComposed.size()).clear();
-        }
-    }
-
-    private static void addToCmd(String opt) {
-        CommandComposed.add(opt);
-    }
-
-    private static void removeFromCmd(String opt) {
-        for (int j = CommandComposed.size() - 1; j >= 0; j--) {
-            if (CommandComposed.get(j).equals(opt))
-                CommandComposed.remove(j);
-        }
     }
 
     private void addClickListener(View.OnClickListener onClickListener, View rootView) {

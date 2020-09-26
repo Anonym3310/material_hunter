@@ -24,13 +24,13 @@ import java.util.Locale;
 
 public class MPCFragment extends Fragment {
 
+    private static final String ARG_SECTION_NUMBER = "section_number";
     private String typeVar;
     private String callbackTypeVar;
     private String payloadVar;
     private String callbackVar;
     private String stagerVar;
     private Context context;
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
     public MPCFragment() {
     }
@@ -241,7 +241,7 @@ public class MPCFragment extends Fragment {
         WifiManager wifiMan = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
         int ipAddress = wifiInf.getIpAddress();
-        String ip = String.format(Locale.getDefault(),"%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+        String ip = String.format(Locale.getDefault(), "%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
 
         // IP Text Field
         EditText ipaddress = rootView.findViewById(R.id.mpc_ip_address);

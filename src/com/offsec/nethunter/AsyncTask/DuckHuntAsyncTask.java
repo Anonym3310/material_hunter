@@ -16,6 +16,7 @@ public class DuckHuntAsyncTask extends AsyncTask<Object, Void, Void> {
     public DuckHuntAsyncTask(Integer ActionCode) {
         this.ActionCode = ActionCode;
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -28,20 +29,20 @@ public class DuckHuntAsyncTask extends AsyncTask<Object, Void, Void> {
     protected Void doInBackground(Object... objects) {
         switch (ActionCode) {
             case ATTACK:
-                result=true;
-                String hidgs[] = {"/dev/hidg0", "/dev/hidg1"};
+                result = true;
+                String[] hidgs = {"/dev/hidg0", "/dev/hidg1"};
                 for (String hidg : hidgs) {
-                    if (!exe.RunAsRootOutput("stat -c '%a' " + hidg).equals("666")){
-                        result=false;
+                    if (!exe.RunAsRootOutput("stat -c '%a' " + hidg).equals("666")) {
+                        result = false;
                         break;
-                    };
+                    }
                 }
-                if ((boolean)result) {
+                if ((boolean) result) {
                     exe.RunAsRootOutput(objects[0].toString());
                 }
                 break;
             case CONVERT:
-                if ((boolean)objects[1]){
+                if ((boolean) objects[1]) {
                     result = exe.RunAsRootOutput(objects[0].toString());
                 } else
                     result = "";
@@ -68,6 +69,7 @@ public class DuckHuntAsyncTask extends AsyncTask<Object, Void, Void> {
 
     public interface DuckHuntAsyncTaskListener {
         void onAsyncTaskPrepare();
+
         void onAsyncTaskFinished(Object result);
     }
 }

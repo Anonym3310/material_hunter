@@ -21,9 +21,6 @@ import com.offsec.nethunter.R;
 public class NotificationChannelService extends IntentService {
     public static final String CHANNEL_ID = "NethunterNotifyChannel";
     public static final int NOTIFY_ID = 1002;
-    public Intent resultIntent = null;
-    public PendingIntent resultPendingIntent = null;
-    public TaskStackBuilder stackBuilder = null;
     public static final String REMINDMOUNTCHROOT = BuildConfig.APPLICATION_ID + ".REMINDMOUNTCHROOT";
     public static final String USENETHUNTER = BuildConfig.APPLICATION_ID + ".USENETHUNTER";
     public static final String DOWNLOADING = BuildConfig.APPLICATION_ID + ".DOWNLOADING";
@@ -31,8 +28,11 @@ public class NotificationChannelService extends IntentService {
     public static final String BACKINGUP = BuildConfig.APPLICATION_ID + ".BACKINGUP";
     public static final String CUSTOMCOMMAND_START = BuildConfig.APPLICATION_ID + ".CUSTOMCOMMAND_START";
     public static final String CUSTOMCOMMAND_FINISH = BuildConfig.APPLICATION_ID + ".CUSTOMCOMMAND_FINISH";
+    public Intent resultIntent = null;
+    public PendingIntent resultPendingIntent = null;
+    public TaskStackBuilder stackBuilder = null;
 
-    public NotificationChannelService(){
+    public NotificationChannelService() {
         super("NotificationChannelService");
     }
 
@@ -53,8 +53,8 @@ public class NotificationChannelService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if (intent != null){
-            if (intent.getAction() != null){
+        if (intent != null) {
+            if (intent.getAction() != null) {
                 NotificationCompat.Builder builder;
                 NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
                 notificationManagerCompat.cancelAll();
@@ -62,7 +62,7 @@ public class NotificationChannelService extends IntentService {
                 stackBuilder = TaskStackBuilder.create(this);
                 stackBuilder.addNextIntentWithParentStack(resultIntent);
                 resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-                switch (intent.getAction()){
+                switch (intent.getAction()) {
                     case REMINDMOUNTCHROOT:
                         builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                                 .setAutoCancel(true)
@@ -128,13 +128,13 @@ public class NotificationChannelService extends IntentService {
                                 .setSmallIcon(R.drawable.ic_stat_ic_nh_notificaiton)
                                 .setStyle(new NotificationCompat.BigTextStyle().bigText(
                                         "Command: \"" + intent.getStringExtra("CMD") +
-                                        "\" is being run in background and in " +
-                                        intent.getStringExtra("ENV") + " environment."))
+                                                "\" is being run in background and in " +
+                                                intent.getStringExtra("ENV") + " environment."))
                                 .setContentTitle("Custom Commands")
                                 .setContentText(
                                         "Command: \"" + intent.getStringExtra("CMD") +
-                                        "\" is being run in background and in " +
-                                        intent.getStringExtra("ENV") + " environment.")
+                                                "\" is being run in background and in " +
+                                                intent.getStringExtra("ENV") + " environment.")
                                 .setPriority(NotificationCompat.PRIORITY_MAX)
                                 .setContentIntent(resultPendingIntent);
                         notificationManagerCompat.notify(NOTIFY_ID, builder.build());

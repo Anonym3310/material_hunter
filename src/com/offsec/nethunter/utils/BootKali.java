@@ -7,47 +7,42 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 
 /**
  * Created by jmingov on 11/15/15.
- *
+ * <p>
  * BootKali
  * *********
- *
+ * <p>
  * This class has 2 main functions:
-
- **********
+ * <p>
+ * *********
  * 1.- Send commands to kali:
- **********
- *
- *    - new BootKali(CMD).run() and new BootKali(CMD).run_bg()
+ * *********
+ * <p>
+ * - new BootKali(CMD).run() and new BootKali(CMD).run_bg()
  * EX:
  * String response = new BootKali("ls -l;uname -a;id;whoami").run()
- *        // Response is a string. :p
+ * // Response is a string. :p
  * EX:
  * new BootKali("ls -l;uname -a;id;whoami").run_bg()
- *        // This has no output, is runned in the background
- *
- **********
+ * // This has no output, is runned in the background
+ * <p>
+ * *********
  * 2.- Generate commands to pass to the term apk as intent (only generate)
- **********
- *
+ * *********
+ * <p>
  * EX:
- *  OPEN KALI TERMINAL :: GET_KALI_SHELL_CMD()
- *
- *     String cmd = new BootKali("").GET_KALI_SHELL_CMD() // returns the cmd.
- *     // launck intent
- *
+ * OPEN KALI TERMINAL :: GET_KALI_SHELL_CMD()
+ * <p>
+ * String cmd = new BootKali("").GET_KALI_SHELL_CMD() // returns the cmd.
+ * // launck intent
+ * <p>
  * EX:
- *  pass comands to fenerate the terminal equivalent :: GET_KALI_SHELL_CMD()
- *
- *     String cmd = new BootKali("ls -l;uname -a;id;whoami").GET_TERM_CMD() // returns the cmd.
- *     // launck intent
- *
- *
+ * pass comands to fenerate the terminal equivalent :: GET_KALI_SHELL_CMD()
+ * <p>
+ * String cmd = new BootKali("ls -l;uname -a;id;whoami").GET_TERM_CMD() // returns the cmd.
+ * // launck intent
  */
 public class BootKali {
     private final String TERM_CMD;

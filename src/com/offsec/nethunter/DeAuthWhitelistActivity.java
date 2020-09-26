@@ -18,8 +18,8 @@ import java.util.Locale;
 
 public class DeAuthWhitelistActivity extends AppCompatActivity {
 
-    private Activity activity;
     private final ShellExecuter exe = new ShellExecuter();
+    private Activity activity;
 
     @SuppressLint("SdCardPath")
     @Override
@@ -34,7 +34,7 @@ public class DeAuthWhitelistActivity extends AppCompatActivity {
         }
 
         EditText whitelist = findViewById(R.id.deauth_modify);
-        whitelist.setText(String.format(Locale.getDefault(),getString(R.string.loading_file), "/sdcard/nh_files/deauth/whitelist.txt"));
+        whitelist.setText(String.format(Locale.getDefault(), getString(R.string.loading_file), "/sdcard/nh_files/deauth/whitelist.txt"));
         exe.ReadFile_ASYNC("/sdcard/nh_files/deauth/whitelist.txt", whitelist);
 
         ActionBar ab = getSupportActionBar();
@@ -49,9 +49,9 @@ public class DeAuthWhitelistActivity extends AppCompatActivity {
         String newSource = source.getText().toString();
         @SuppressLint("SdCardPath") boolean isSaved = exe.SaveFileContents(newSource, "/sdcard/nh_files/deauth/whitelist.txt");
         if (isSaved) {
-            NhPaths.showMessage(activity,"Source updated");
+            NhPaths.showMessage(activity, "Source updated");
         } else {
-            NhPaths.showMessage(activity,"Source not updated");
+            NhPaths.showMessage(activity, "Source not updated");
         }
     }
 }

@@ -22,24 +22,44 @@ public class CustomCommandsModel {
 
     }
 
-    public String getCommandLabel() { return CommandLabel; }
+    public String getCommandLabel() {
+        return CommandLabel;
+    }
 
-    public String getCommand() { return Command; }
+    public void setCommandLabel(String CommandLabel) {
+        this.CommandLabel = CommandLabel;
+    }
 
-    public String getRuntimeEnv() { return RuntimeEnv; }
+    public String getCommand() {
+        return Command;
+    }
 
-    public String getExecutionMode() { return ExecutionMode; }
+    public void setCommand(String Command) {
+        this.Command = Command;
+    }
 
-    public String getRunOnBoot() { return RunOnBoot; }
+    public String getRuntimeEnv() {
+        return RuntimeEnv;
+    }
 
-    public void setCommandLabel(String CommandLabel) {this.CommandLabel = CommandLabel; }
+    public void setRuntimeEnv(String RuntimeEnv) {
+        this.RuntimeEnv = RuntimeEnv;
+    }
 
-    public void setCommand(String Command) {this.Command = Command; }
+    public String getExecutionMode() {
+        return ExecutionMode;
+    }
 
-    public void setRuntimeEnv(String RuntimeEnv) { this.RuntimeEnv = RuntimeEnv; }
+    public void setExecutionMode(String ExecutionMode) {
+        this.ExecutionMode = ExecutionMode;
+    }
 
-    public void setExecutionMode(String ExecutionMode) { this.ExecutionMode = ExecutionMode; }
+    public String getRunOnBoot() {
+        return RunOnBoot;
+    }
 
-    public void setRunOnBoot(String RunOnBoot) { this.RunOnBoot = RunOnBoot; }
+    public void setRunOnBoot(String RunOnBoot) {
+        this.RunOnBoot = RunOnBoot;
+    }
 
 }

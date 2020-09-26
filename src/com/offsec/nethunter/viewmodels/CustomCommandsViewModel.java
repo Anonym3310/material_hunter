@@ -19,8 +19,8 @@ import java.util.List;
 public class CustomCommandsViewModel extends ViewModel {
     private MutableLiveData<List<CustomCommandsModel>> mutableLiveDataCustomCommandsModelList;
 
-    public void init(Context context){
-        if (mutableLiveDataCustomCommandsModelList != null){
+    public void init(Context context) {
+        if (mutableLiveDataCustomCommandsModelList != null) {
             return;
         }
         CustomCommandsData customCommandsData = CustomCommandsData.getInstance();
@@ -31,7 +31,7 @@ public class CustomCommandsViewModel extends ViewModel {
         }
     }
 
-    public LiveData<List<CustomCommandsModel>> getLiveDataCustomCommandsModelList(){
+    public LiveData<List<CustomCommandsModel>> getLiveDataCustomCommandsModelList() {
         return mutableLiveDataCustomCommandsModelList;
     }
 }

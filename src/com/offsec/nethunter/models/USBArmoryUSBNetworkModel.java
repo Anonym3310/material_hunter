@@ -22,24 +22,44 @@ public class USBArmoryUSBNetworkModel {
 
     }
 
-    public String getupstream_iface() { return upstream_iface; }
+    public String getupstream_iface() {
+        return upstream_iface;
+    }
 
-    public String getusb_iface() { return usb_iface; }
+    public String getusb_iface() {
+        return usb_iface;
+    }
 
-    public String getip_address_for_target() { return ip_address_for_target; }
+    public String getip_address_for_target() {
+        return ip_address_for_target;
+    }
 
-    public String getip_gateway() { return ip_gateway; }
+    public String getip_gateway() {
+        return ip_gateway;
+    }
 
-    public String getip_subnetmask() { return ip_subnetmask; }
+    public String getip_subnetmask() {
+        return ip_subnetmask;
+    }
 
-    public void setupstream_iface(String upstream_iface) {this.upstream_iface = upstream_iface; }
+    public void setupstream_iface(String upstream_iface) {
+        this.upstream_iface = upstream_iface;
+    }
 
-    public void setusb_iface(String usb_iface) { this.usb_iface = usb_iface; }
+    public void setusb_iface(String usb_iface) {
+        this.usb_iface = usb_iface;
+    }
 
-    public void setip_address_for_target(String ip_address_for_target) { this.ip_address_for_target = ip_address_for_target; }
+    public void setip_address_for_target(String ip_address_for_target) {
+        this.ip_address_for_target = ip_address_for_target;
+    }
 
-    public void setip_gateway(String ip_gateway) { this.ip_gateway = ip_gateway; }
+    public void setip_gateway(String ip_gateway) {
+        this.ip_gateway = ip_gateway;
+    }
 
-    public void setip_subnetmask(String ip_subnetmask) { this.ip_subnetmask = ip_subnetmask; }
+    public void setip_subnetmask(String ip_subnetmask) {
+        this.ip_subnetmask = ip_subnetmask;
+    }
 
 }

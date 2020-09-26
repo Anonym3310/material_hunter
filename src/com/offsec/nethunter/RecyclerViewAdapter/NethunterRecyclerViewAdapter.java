@@ -32,6 +32,33 @@ public class NethunterRecyclerViewAdapter extends RecyclerView.Adapter<Nethunter
     private static final String TAG = "NethunterRecyclerView";
     private Context context;
     private List<NethunterModel> nethunterModelList;
+    private Filter NethunterModelListFilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            if (constraint == null || constraint.length() == 0) {
+                results.values = new ArrayList<>(NethunterData.getInstance().nethunterModelListFull);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                List<NethunterModel> tempNethunterModelList = new ArrayList<>();
+                for (NethunterModel nethunterModel : NethunterData.getInstance().nethunterModelListFull) {
+                    if (nethunterModel.getTitle().toLowerCase().contains(filterPattern)) {
+                        tempNethunterModelList.add(nethunterModel);
+                    }
+                }
+                results.values = tempNethunterModelList;
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            NethunterData.getInstance().getNethunterModels().getValue().clear();
+            NethunterData.getInstance().getNethunterModels().getValue().addAll((List<NethunterModel>) results.values);
+            NethunterData.getInstance().getNethunterModels().postValue(NethunterData.getInstance().getNethunterModels().getValue());
+        }
+    };
 
     public NethunterRecyclerViewAdapter(Context context, List<NethunterModel> nethunterModelList) {
         this.context = context;
@@ -106,25 +133,26 @@ public class NethunterRecyclerViewAdapter extends RecyclerView.Adapter<Nethunter
                             nethunterModelList.get(position))).getRunOnCreate().equals("1"));
 
             AlertDialog.Builder adb = new AlertDialog.Builder(context);
-            adb.setPositiveButton("Apply", (dialog, which) -> { });
+            adb.setPositiveButton("Apply", (dialog, which) -> {
+            });
             final AlertDialog ad = adb.create();
             ad.setView(promptViewEdit);
             ad.setCancelable(true);
             ad.setOnShowListener(dialog -> {
                 final Button buttonEdit = ad.getButton(DialogInterface.BUTTON_POSITIVE);
                 buttonEdit.setOnClickListener(v1 -> {
-                    if (titleEditText.getText().toString().isEmpty()){
+                    if (titleEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Title cannot be empty");
-                    } else if (cmdEditText.getText().toString().isEmpty()){
+                    } else if (cmdEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Command cannot be empty");
-                    } else if (delimiterEditText.getText().toString().isEmpty()){
+                    } else if (delimiterEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Delimiter cannot be empty");
                     } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(titleEditText.getText().toString());
                         dataArrayList.add(cmdEditText.getText().toString());
                         dataArrayList.add(delimiterEditText.getText().toString());
-                        dataArrayList.add(runOnCreateCheckbox.isChecked()?"1":"0");
+                        dataArrayList.add(runOnCreateCheckbox.isChecked() ? "1" : "0");
                         NethunterData.getInstance().editData(NethunterData.getInstance().nethunterModelListFull.indexOf(
                                 nethunterModelList.get(position)), dataArrayList, NethunterSQL.getInstance(context));
                         ad.dismiss();
@@ -151,38 +179,11 @@ public class NethunterRecyclerViewAdapter extends RecyclerView.Adapter<Nethunter
         return NethunterModelListFilter;
     }
 
-    private Filter NethunterModelListFilter = new Filter() {
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults results = new FilterResults();
-            if (constraint == null || constraint.length() == 0){
-                results.values = new ArrayList<>(NethunterData.getInstance().nethunterModelListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                List<NethunterModel> tempNethunterModelList = new ArrayList<>();
-                for (NethunterModel nethunterModel: NethunterData.getInstance().nethunterModelListFull){
-                    if (nethunterModel.getTitle().toLowerCase().contains(filterPattern)){
-                        tempNethunterModelList.add(nethunterModel);
-                    }
-                }
-                results.values = tempNethunterModelList;
-            }
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            NethunterData.getInstance().getNethunterModels().getValue().clear();
-            NethunterData.getInstance().getNethunterModels().getValue().addAll((List<NethunterModel>) results.values);
-            NethunterData.getInstance().getNethunterModels().postValue(NethunterData.getInstance().getNethunterModels().getValue());
-        }
-    };
-
-    class ItemViewHolder extends RecyclerView.ViewHolder{
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView titleTextView;
         private RecyclerView resultRecyclerView;
         private Button runButton;
+
         //private Button editButton;
         private ItemViewHolder(View view) {
             super(view);

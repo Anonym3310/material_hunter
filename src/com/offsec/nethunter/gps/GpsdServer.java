@@ -15,25 +15,18 @@ import java.net.SocketAddress;
 
 
 public class GpsdServer extends AsyncTask<Void, Void, Void> {
-    private static final String SCRIPT_PATH =  "/data/data/com.offsec.nethunter/files/scripts/";
+    private static final String SCRIPT_PATH = "/data/data/com.offsec.nethunter/files/scripts/";
 
     private static final String TAG = "GpsdServer";
-
-    GpsdServer(ConnectionListener listener) {
-        this.listener = listener;
-    }
-
-    public interface ConnectionListener {
-        void onSocketConnected(Socket clientSocket);
-    }
-
-    private ConnectionListener listener;
-
     /**
      * The TCP/IP port used for Socket communication.
      */
     private static final int PORT = 10110;
+    private ConnectionListener listener;
 
+    GpsdServer(ConnectionListener listener) {
+        this.listener = listener;
+    }
 
     @Override
     protected Void doInBackground(Void... params) {
@@ -53,7 +46,7 @@ public class GpsdServer extends AsyncTask<Void, Void, Void> {
                     e.printStackTrace();
                 }
                 ShellExecuter exe = new ShellExecuter();
-                String command = "su -c '" + SCRIPT_PATH + File.separator + "bootkali start_gpsd " + String.valueOf(PORT) + "'";
+                String command = "su -c '" + SCRIPT_PATH + File.separator + "bootkali start_gpsd " + PORT + "'";
                 Log.d(TAG, command);
                 String response = exe.RunAsRootOutput(command);
                 Log.d(TAG, "Response = " + response);
@@ -70,6 +63,11 @@ public class GpsdServer extends AsyncTask<Void, Void, Void> {
         }
 
         return null;
+    }
+
+
+    public interface ConnectionListener {
+        void onSocketConnected(Socket clientSocket);
     }
 
 }

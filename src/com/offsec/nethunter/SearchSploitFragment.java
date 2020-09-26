@@ -67,6 +67,13 @@ public class SearchSploitFragment extends Fragment {
         return fragment;
     }
 
+    private static void hideSoftKeyboard(final View caller) {
+        caller.postDelayed(() -> {
+            InputMethodManager imm = (InputMethodManager) caller.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(caller.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }, 100);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -208,13 +215,6 @@ public class SearchSploitFragment extends Fragment {
         }
     }
 
-    private static void hideSoftKeyboard(final View caller) {
-        caller.postDelayed(() -> {
-            InputMethodManager imm = (InputMethodManager) caller.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(caller.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }, 100);
-    }
-
     private void main(final View rootView) {
 
         searchSploitListView = rootView.findViewById(R.id.searchResultsList);
@@ -312,22 +312,6 @@ class ExploitLoader extends BaseAdapter {
 
     }
 
-    static class ViewHolderItem {
-        // The switch
-        //Switch sw;
-        // the msg holder
-        TextView type;
-        TextView platform;
-        TextView author;
-        TextView date;
-        // the service title
-        TextView description;
-        // run at boot checkbox
-        Button viewSource;
-        Button openWeb;
-        Button sendHid;
-    }
-
     public int getCount() {
         // return the number of services
         return _exploitList.size();
@@ -358,7 +342,7 @@ class ExploitLoader extends BaseAdapter {
             vH.description = convertView.findViewById(R.id.description);
             // vH.cwSwich = (Switch) convertView.findViewById(R.id.switch1);
             vH.type = convertView.findViewById(R.id.type);
-	        vH.platform = convertView.findViewById(R.id.platform);
+            vH.platform = convertView.findViewById(R.id.platform);
             vH.author = convertView.findViewById(R.id.author);
             vH.date = convertView.findViewById(R.id.exploit_date);
             vH.viewSource = convertView.findViewById(R.id.viewSource);
@@ -387,7 +371,7 @@ class ExploitLoader extends BaseAdapter {
         // set service name
         vH.description.setText(_desc);
         vH.type.setText(_type);
-	    vH.platform.setText(_platform);
+        vH.platform.setText(_platform);
         vH.author.setText(_author);
         vH.date.setText(_date);
         vH.viewSource.setOnClickListener(v -> {
@@ -419,6 +403,22 @@ class ExploitLoader extends BaseAdapter {
 
     public long getItemId(int position) {
         return position;
+    }
+
+    static class ViewHolderItem {
+        // The switch
+        //Switch sw;
+        // the msg holder
+        TextView type;
+        TextView platform;
+        TextView author;
+        TextView date;
+        // the service title
+        TextView description;
+        // run at boot checkbox
+        Button viewSource;
+        Button openWeb;
+        Button sendHid;
     }
 
 

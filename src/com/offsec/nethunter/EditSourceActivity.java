@@ -19,9 +19,9 @@ import java.util.Locale;
 
 public class EditSourceActivity extends AppCompatActivity {
 
+    private final ShellExecuter exe = new ShellExecuter();
     private String configFilePath = "";
     private Activity activity;
-    private final ShellExecuter exe = new ShellExecuter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class EditSourceActivity extends AppCompatActivity {
         }
 
         EditText source = findViewById(R.id.source);
-        source.setText(String.format(Locale.getDefault(),getString(R.string.loading_file), configFilePath));
+        source.setText(String.format(Locale.getDefault(), getString(R.string.loading_file), configFilePath));
         exe.ReadFile_ASYNC(configFilePath, source);
 
         ActionBar ab = getSupportActionBar();
@@ -61,9 +61,9 @@ public class EditSourceActivity extends AppCompatActivity {
         String newSource = source.getText().toString();
         Boolean isSaved = exe.SaveFileContents(newSource, configFilePath);
         if (isSaved) {
-            NhPaths.showMessage(activity,"Source updated");
+            NhPaths.showMessage(activity, "Source updated");
         } else {
-            NhPaths.showMessage(activity,"Source not updated");
+            NhPaths.showMessage(activity, "Source not updated");
         }
     }
 }

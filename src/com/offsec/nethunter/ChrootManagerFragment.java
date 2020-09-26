@@ -44,7 +44,11 @@ public class ChrootManagerFragment extends Fragment {
 
     public static final String TAG = "ChrootManager";
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private static final String IMAGE_SERVER = "images.kali.org";
+    private static final String IMAGE_SERVER = /*"images.kali.org"*/ "build.nethunter.com";
+    private static final int IS_MOUNTED = 0;
+    private static final int IS_UNMOUNTED = 1;
+    private static final int NEED_TO_INSTALL = 2;
+    public static boolean isAsyncTaskRunning = false;
     private static String ARCH = "";
     private static String MINORFULL = "";
     private TextView mountStatsTextView;
@@ -61,10 +65,6 @@ public class ChrootManagerFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private ChrootManagerAsynctask chrootManagerAsynctask;
     private Intent backPressedintent = new Intent();
-    private static final int IS_MOUNTED = 0;
-    private static final int IS_UNMOUNTED = 1;
-    private static final int NEED_TO_INSTALL = 2;
-    public static boolean isAsyncTaskRunning = false;
     private Context context;
     private Activity activity;
 
@@ -125,7 +125,7 @@ public class ChrootManagerFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (!isAsyncTaskRunning){
+        if (!isAsyncTaskRunning) {
             showBanner();
             compatCheck();
         }
@@ -148,7 +148,7 @@ public class ChrootManagerFragment extends Fragment {
         chrootManagerAsynctask = null;
     }
 
-    private void setEditButton(){
+    private void setEditButton() {
         kaliFolderEditButton.setOnClickListener(view -> {
             AlertDialog.Builder adb = new AlertDialog.Builder(activity);
             final AlertDialog ad = adb.create();
@@ -159,7 +159,7 @@ public class ChrootManagerFragment extends Fragment {
             EditText chrootPathEditText = new EditText(activity);
             TextView availableChrootPathextview = new TextView(activity);
             LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            editTextParams.setMargins(58,0,58,0);
+            editTextParams.setMargins(58, 0, 58, 0);
             chrootPathEditText.setText(sharedPreferences.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, ""));
             chrootPathEditText.setSingleLine();
             chrootPathEditText.setLayoutParams(editTextParams);
@@ -180,10 +180,10 @@ public class ChrootManagerFragment extends Fragment {
             ad.setCancelable(true);
             ad.setTitle("Setup Chroot Path");
             ad.setMessage("The Chroot Path is prefixed to \n\"/data/local/nhsystem/\"\n\n" +
-                        "Just put the basename of your Kali Chroot Folder:");
+                    "Just put the basename of your Kali Chroot Folder:");
             ad.setView(ll);
             ad.setButton(Dialog.BUTTON_POSITIVE, "Apply", (dialogInterface, i) -> {
-                if (chrootPathEditText.getText().toString().matches("^\\.(.*$)|^\\.\\.(.*$)|^/+(.*$)|^.*/+(.*$)|^$")){
+                if (chrootPathEditText.getText().toString().matches("^\\.(.*$)|^\\.\\.(.*$)|^/+(.*$)|^.*/+(.*$)|^$")) {
                     NhPaths.showMessage(activity, "Invilad Name, please try again.");
                 } else {
                     NhPaths.ARCH_FOLDER = chrootPathEditText.getText().toString();
@@ -215,7 +215,7 @@ public class ChrootManagerFragment extends Fragment {
 
                 @Override
                 public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
-                    if (resultCode == 0){
+                    if (resultCode == 0) {
                         setButtonVisibilty(IS_MOUNTED);
                         setMountStatsTextView(IS_MOUNTED);
                         setAllButtonEnable(true);
@@ -228,7 +228,7 @@ public class ChrootManagerFragment extends Fragment {
         });
     }
 
-    private void setStopKaliButton(){
+    private void setStopKaliButton() {
         unmountChrootButton.setOnClickListener(view -> {
             chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.UNMOUNT_CHROOT);
             chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
@@ -244,7 +244,7 @@ public class ChrootManagerFragment extends Fragment {
 
                 @Override
                 public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
-                    if (resultCode == 0){
+                    if (resultCode == 0) {
                         setMountStatsTextView(IS_UNMOUNTED);
                         setButtonVisibilty(IS_UNMOUNTED);
                         setAllButtonEnable(true);
@@ -256,30 +256,18 @@ public class ChrootManagerFragment extends Fragment {
         });
     }
 
-    private void setInstallChrootButton(){
+    private void setInstallChrootButton() {
         installChrootButton.setOnClickListener(view -> {
-            AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-            final AlertDialog ad = adb.create();
-            LinearLayout ll = new LinearLayout(activity);
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            ll.setOrientation(LinearLayout.VERTICAL);
-            ll.setLayoutParams(layoutParams);
-            Button downloadButton1 = new Button(activity);
-            Button restoreButton2 = new Button(activity);
-            LinearLayout.LayoutParams optionButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            optionButtonParams.setMargins(58,0,58,0);
-            downloadButton1.setText("DOWNLOAD LATEST KALI CHROOT FROM OFFICIAL IMAGE");
-            downloadButton1.setLayoutParams(optionButtonParams);
-            restoreButton2.setText("RESTORE FROM LOCAL STORAGE\n(.TAR.GZ /.TAR.XZ)");
-            restoreButton2.setLayoutParams(optionButtonParams);
-            ll.addView(downloadButton1);
-            ll.addView(restoreButton2);
-            ad.setView(ll);
+            AlertDialog.Builder adb = new AlertDialog.Builder(context);
+            final View rootView = getLayoutInflater().inflate(R.layout.chroot_manager_download_dialog, null);
+            Button db = rootView.findViewById(R.id.downloadButton);
+            Button rb = rootView.findViewById(R.id.restoreButton);
+            final AlertDialog ad = adb.setTitle("Install chroot").setView(rootView).create();
             ad.show();
-            downloadButton1.setOnClickListener(view1 -> {
+            db.setOnClickListener(view1 -> {
                 ad.dismiss();
                 AlertDialog.Builder adb1 = new AlertDialog.Builder(activity);
-                final View promtDownloadView = getLayoutInflater().inflate(R.layout.chroot_manager_download_diaglog, null);
+                final View promtDownloadView = getLayoutInflater().inflate(R.layout.chroot_manager_prepare_dialog, null);
                 final EditText storepathEditText = promtDownloadView.findViewById(R.id.f_chrootmanager_storepath_et);
                 final Spinner archSpinner = promtDownloadView.findViewById(R.id.f_chrootmanager_arch_adb_spr);
                 final Spinner minorfullSpinner = promtDownloadView.findViewById(R.id.f_chrootmanager_minorfull_adb_spr);
@@ -293,11 +281,11 @@ public class ChrootManagerFragment extends Fragment {
                         if (archSpinner.getSelectedItemPosition() == 0) {
                             ARCH = "arm64";
                         } else ARCH = "armhf";
-                        if (minorfullSpinner.getSelectedItemPosition() == 0){
+                        if (minorfullSpinner.getSelectedItemPosition() == 0) {
                             MINORFULL = "full";
                         } else MINORFULL = "minimal";
                         String targetDownloadFileName = "kalifs-" + ARCH + "-" + MINORFULL + ".tar.xz";
-                        if (new File(downloadDir.getAbsoluteFile() + "/" + targetDownloadFileName).exists()){
+                        if (new File(downloadDir.getAbsoluteFile() + "/" + targetDownloadFileName).exists()) {
                             AlertDialog.Builder adb3 = new AlertDialog.Builder(activity);
                             adb3.setMessage(downloadDir.getAbsoluteFile() + "/" + targetDownloadFileName + " exists. Do you want to overwrite it?");
                             adb3.setPositiveButton("YES", (dialogInterface1, i1) -> {
@@ -310,7 +298,7 @@ public class ChrootManagerFragment extends Fragment {
 
                             context.startService(new Intent(context, NotificationChannelService.class).setAction(NotificationChannelService.DOWNLOADING));
                             startDownloadChroot(targetDownloadFileName, downloadDir);
-                            }
+                        }
                     } else {
                         NhPaths.showMessage_long(context, downloadDir.getAbsolutePath() + " is not a Directory or cannot be accessed.");
                         dialogInterface.dismiss();
@@ -318,7 +306,7 @@ public class ChrootManagerFragment extends Fragment {
                 });
                 adb1.create().show();
             });
-            restoreButton2.setOnClickListener(view12 -> {
+            rb.setOnClickListener(view12 -> {
                 AlertDialog.Builder adb2 = new AlertDialog.Builder(activity);
                 LinearLayout ll1 = new LinearLayout(activity);
                 LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -327,7 +315,7 @@ public class ChrootManagerFragment extends Fragment {
                 TextView chrootTarHintTextView = new TextView(activity);
                 EditText chrootTarFileEditText = new EditText(activity);
                 LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                editTextParams.setMargins(58,40,58,0);
+                editTextParams.setMargins(58, 40, 58, 0);
                 chrootTarHintTextView.setText("Type the full path of your Kali Chroot tarball file:");
                 chrootTarHintTextView.setLayoutParams(editTextParams);
                 chrootTarFileEditText.setText(sharedPreferences.getString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, ""));
@@ -368,49 +356,50 @@ public class ChrootManagerFragment extends Fragment {
         });
     }
 
-    private void setRemoveChrootButton(){
+    private void setRemoveChrootButton() {
         removeChrootButton.setOnClickListener(view -> {
             AlertDialog.Builder adb = new AlertDialog.Builder(activity)
                     .setTitle("Warning!")
                     .setMessage("Are you sure to remove the below Kali Chroot folder?\n" + NhPaths.CHROOT_PATH())
                     .setPositiveButton("I'm sure.", (dialogInterface, i) -> {
                         AlertDialog.Builder adb1 = new AlertDialog.Builder(activity)
-                            .setTitle("Warning!")
-                            .setMessage("This is your last chance!")
-                            .setPositiveButton("Just do it.", (dialogInterface1, i1) -> {
-                                chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.REMOVE_CHROOT);
-                                chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
-                                    @Override
-                                    public void onAsyncTaskPrepare() {
-                                        broadcastBackPressedIntent(false);
-                                        setAllButtonEnable(false);
-                                    }
+                                .setTitle("Warning!")
+                                .setMessage("This is your last chance!")
+                                .setPositiveButton("Just do it.", (dialogInterface1, i1) -> {
+                                    chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.REMOVE_CHROOT);
+                                    chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
+                                        @Override
+                                        public void onAsyncTaskPrepare() {
+                                            broadcastBackPressedIntent(false);
+                                            setAllButtonEnable(false);
+                                        }
 
-                                    @Override
-                                    public void onAsyncTaskProgressUpdate(int progress) {
+                                        @Override
+                                        public void onAsyncTaskProgressUpdate(int progress) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
-                                        broadcastBackPressedIntent(true);
-                                        setAllButtonEnable(true);
-                                        compatCheck();
-                                    }
+                                        @Override
+                                        public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
+                                            broadcastBackPressedIntent(true);
+                                            setAllButtonEnable(true);
+                                            compatCheck();
+                                        }
+                                    });
+                                    chrootManagerAsynctask.execute(resultViewerLoggerTextView);
+                                })
+                                .setNegativeButton("Okay, I'm sorry.", (dialogInterface12, i12) -> {
+
                                 });
-                                chrootManagerAsynctask.execute(resultViewerLoggerTextView);
-                            })
-                            .setNegativeButton("Okay, I'm sorry.", (dialogInterface12, i12) -> {
-
-                            });
                         adb1.create().show();
                     })
-                    .setNegativeButton("Forget it.", (dialogInterface, i) -> { });
+                    .setNegativeButton("Forget it.", (dialogInterface, i) -> {
+                    });
             adb.create().show();
         });
     }
 
-    private void startDownloadChroot(String targetDownloadFileName, File downloadDir){
+    private void startDownloadChroot(String targetDownloadFileName, File downloadDir) {
         ProgressDialog progressDialog = new ProgressDialog(activity);
         chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.DOWNLOAD_CHROOT);
         chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
@@ -468,7 +457,7 @@ public class ChrootManagerFragment extends Fragment {
                 }
             }
         });
-        chrootManagerAsynctask.execute(resultViewerLoggerTextView, IMAGE_SERVER, "/nethunter/" + targetDownloadFileName, downloadDir.getAbsolutePath() + "/" + targetDownloadFileName);
+        chrootManagerAsynctask.execute(resultViewerLoggerTextView, IMAGE_SERVER, "/kalifs/kalifs-latest/" + targetDownloadFileName, downloadDir.getAbsolutePath() + "/" + targetDownloadFileName);
     }
 
     private void setAddMetaPkgButton() {
@@ -527,16 +516,16 @@ public class ChrootManagerFragment extends Fragment {
             ll.setOrientation(LinearLayout.VERTICAL);
             ll.setLayoutParams(layoutParams);
             LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            editTextParams.setMargins(58,40,58,0);
+            editTextParams.setMargins(58, 40, 58, 0);
             backupFullPathEditText.setLayoutParams(editTextParams);
             ll.addView(backupFullPathEditText);
             ad.setView(ll);
             ad.setTitle("Backup Chroot");
-            ad.setMessage("* It is strongly suggested to create your backup chroot as tar.gz format just for faster process but bigger file size.\n\nbackup \"" + NhPaths.CHROOT_PATH() + "\" to:" );
+            ad.setMessage("* It is strongly suggested to create your backup chroot as tar.gz format just for faster process but bigger file size.\n\nbackup \"" + NhPaths.CHROOT_PATH() + "\" to:");
             backupFullPathEditText.setText(sharedPreferences.getString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, ""));
             ad.setButton(Dialog.BUTTON_POSITIVE, "OK", (dialogInterface, i) -> {
                 sharedPreferences.edit().putString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, backupFullPathEditText.getText().toString()).apply();
-                if (new File(backupFullPathEditText.getText().toString()).exists()){
+                if (new File(backupFullPathEditText.getText().toString()).exists()) {
                     ad.dismiss();
                     AlertDialog ad2 = new AlertDialog.Builder(activity).create();
                     ad2.setMessage("File exists already, do you want ot overwrite it anyway?");
@@ -606,7 +595,8 @@ public class ChrootManagerFragment extends Fragment {
             }
 
             @Override
-            public void onAsyncTaskProgressUpdate(int progress) { }
+            public void onAsyncTaskProgressUpdate(int progress) {
+            }
 
             @Override
             public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -624,10 +614,10 @@ public class ChrootManagerFragment extends Fragment {
         if (MODE == IS_MOUNTED) {
             mountStatsTextView.setTextColor(Color.GREEN);
             mountStatsTextView.setText("Kali Chroot is now running!");
-        } else if  (MODE == IS_UNMOUNTED) {
+        } else if (MODE == IS_UNMOUNTED) {
             mountStatsTextView.setTextColor(Color.CYAN);
             mountStatsTextView.setText("Kali Chroot has not yet started!");
-        } else if  (MODE == NEED_TO_INSTALL) {
+        } else if (MODE == NEED_TO_INSTALL) {
             mountStatsTextView.setTextColor(Color.parseColor("#D81B60"));
             mountStatsTextView.setText("Kali Chroot is not yet installed!");
         }
@@ -662,7 +652,7 @@ public class ChrootManagerFragment extends Fragment {
         }
     }
 
-    private void setAllButtonEnable(boolean isEnable){
+    private void setAllButtonEnable(boolean isEnable) {
         mountChrootButton.setEnabled(isEnable);
         unmountChrootButton.setEnabled(isEnable);
         installChrootButton.setEnabled(isEnable);
@@ -672,7 +662,7 @@ public class ChrootManagerFragment extends Fragment {
         backupChrootButton.setEnabled(isEnable);
     }
 
-    private void broadcastBackPressedIntent(Boolean isEnabled){
+    private void broadcastBackPressedIntent(Boolean isEnabled) {
         backPressedintent.setAction(AppNavHomeActivity.NethunterReceiver.BACKPRESSED);
         backPressedintent.putExtra("isEnable", isEnabled);
         context.sendBroadcast(backPressedintent);

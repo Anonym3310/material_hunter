@@ -14,40 +14,41 @@ import com.offsec.nethunter.models.NethunterModel;
 
 import java.util.List;
 
-public class NethunterRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<NethunterRecyclerViewAdapterDeleteItems.ItemViewHolder>{
+public class NethunterRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<NethunterRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 
-	private static final String TAG = "NethunterRecyclerView";
-	private Context context;
-	private List<NethunterModel> nethunterModelList;
+    private static final String TAG = "NethunterRecyclerView";
+    private Context context;
+    private List<NethunterModel> nethunterModelList;
 
-	public NethunterRecyclerViewAdapterDeleteItems(Context context, List<NethunterModel> nethunterModelList){
-		this.context = context;
-		this.nethunterModelList = nethunterModelList;
-	}
+    public NethunterRecyclerViewAdapterDeleteItems(Context context, List<NethunterModel> nethunterModelList) {
+        this.context = context;
+        this.nethunterModelList = nethunterModelList;
+    }
 
-	@NonNull
-	@Override
-	public NethunterRecyclerViewAdapterDeleteItems.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-		View view = LayoutInflater.from(context).inflate(R.layout.nethunter_recyclerview_dialog_delete, viewGroup, false);
-		return new NethunterRecyclerViewAdapterDeleteItems.ItemViewHolder(view);
-	}
+    @NonNull
+    @Override
+    public NethunterRecyclerViewAdapterDeleteItems.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(context).inflate(R.layout.nethunter_recyclerview_dialog_delete, viewGroup, false);
+        return new NethunterRecyclerViewAdapterDeleteItems.ItemViewHolder(view);
+    }
 
-	@Override
-	public void onBindViewHolder(@NonNull final ItemViewHolder itemViewHolder, int i) {
-		itemViewHolder.checkBox.setText(nethunterModelList.get(i).getTitle());
-	}
+    @Override
+    public void onBindViewHolder(@NonNull final ItemViewHolder itemViewHolder, int i) {
+        itemViewHolder.checkBox.setText(nethunterModelList.get(i).getTitle());
+    }
 
-	@Override
-	public int getItemCount() {
-		return nethunterModelList.size();
-	}
+    @Override
+    public int getItemCount() {
+        return nethunterModelList.size();
+    }
 
-	class ItemViewHolder extends RecyclerView.ViewHolder{
-		private CheckBox checkBox;
-		private ItemViewHolder(View view){
-			super(view);
-			checkBox = view.findViewById(R.id.f_nethunter_recyclerview_dialog_chkbox);
-		}
-	}
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+        private CheckBox checkBox;
+
+        private ItemViewHolder(View view) {
+            super(view);
+            checkBox = view.findViewById(R.id.f_nethunter_recyclerview_dialog_chkbox);
+        }
+    }
 
 }

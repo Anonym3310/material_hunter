@@ -25,9 +25,9 @@ import java.util.regex.Pattern;
 
 public class BadusbFragment extends Fragment {
 
-    private String sourcePath;
     private static final String ARG_SECTION_NUMBER = "section_number";
     private final ShellExecuter exe = new ShellExecuter();
+    private String sourcePath;
     private Context context;
     private Activity activity;
 
@@ -73,16 +73,16 @@ public class BadusbFragment extends Fragment {
         }
     }
 
-    private void updateOptions(){
-            String sourceFile = exe.ReadFile_SYNC(sourcePath);
-            EditText ifc = activity.findViewById(R.id.ifc);
-            sourceFile = sourceFile.replaceAll("(?m)^INTERFACE=(.*)$", "INTERFACE=" + ifc.getText().toString());
-            Boolean r = exe.SaveFileContents(sourceFile, sourcePath);// 1st arg contents, 2nd arg filepath
-            if (r) {
-                NhPaths.showMessage(context,"Options updated!");
-            } else {
-                NhPaths.showMessage(context,"Options not updated!");
-            }
+    private void updateOptions() {
+        String sourceFile = exe.ReadFile_SYNC(sourcePath);
+        EditText ifc = activity.findViewById(R.id.ifc);
+        sourceFile = sourceFile.replaceAll("(?m)^INTERFACE=(.*)$", "INTERFACE=" + ifc.getText().toString());
+        Boolean r = exe.SaveFileContents(sourceFile, sourcePath);// 1st arg contents, 2nd arg filepath
+        if (r) {
+            NhPaths.showMessage(context, "Options updated!");
+        } else {
+            NhPaths.showMessage(context, "Options not updated!");
+        }
     }
 
     private void loadOptions(View rootView) {
@@ -134,7 +134,7 @@ public class BadusbFragment extends Fragment {
             command[0] = NhPaths.APP_SCRIPTS_PATH + "/start-badusb-kitkat &> " + NhPaths.APP_SD_FILES_PATH + "/badusb.log &";
         }
         exe.RunAsRoot(command);
-        NhPaths.showMessage(context,"BadUSB attack started! Check /sdcard/nh_files/badusb.log");
+        NhPaths.showMessage(context, "BadUSB attack started! Check /sdcard/nh_files/badusb.log");
     }
 
     private void stop() {
@@ -146,6 +146,6 @@ public class BadusbFragment extends Fragment {
             command[0] = NhPaths.APP_SCRIPTS_PATH + "/stop-badusb-kitkat";
         }
         exe.RunAsRoot(command);
-        NhPaths.showMessage(context,"BadUSB attack stopped!");
+        NhPaths.showMessage(context, "BadUSB attack stopped!");
     }
 }

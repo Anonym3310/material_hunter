@@ -14,9 +14,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 class SearchSploitSQL extends SQLiteOpenHelper {
-    private final ShellExecuter exe = new ShellExecuter();
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "SearchSploit";
+    private final ShellExecuter exe = new ShellExecuter();
 
     SearchSploitSQL(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -84,8 +84,8 @@ class SearchSploitSQL extends SQLiteOpenHelper {
         String query = "SELECT * FROM " + SearchSploit.TABLE
                 + " WHERE " + SearchSploit.DESCRIPTION + " like ?" +
                 " and " + SearchSploit.TYPE + "='" + type + "'" +
-		" and " + SearchSploit.PLATFORM + "='" + platform + "'" +
-		" GROUP BY " + SearchSploit.ID;
+                " and " + SearchSploit.PLATFORM + "='" + platform + "'" +
+                " GROUP BY " + SearchSploit.ID;
         SQLiteDatabase db = this.getWritableDatabase();
         Log.d("QUERYYY", query);
         Cursor cursor = db.rawQuery(query, new String[]{wildcard});

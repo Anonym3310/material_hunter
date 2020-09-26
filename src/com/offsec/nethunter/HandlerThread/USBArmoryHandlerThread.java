@@ -15,7 +15,6 @@ import com.offsec.nethunter.utils.ShellExecuter;
 
 public class USBArmoryHandlerThread extends HandlerThread {
 
-    private Handler handler;
     public static final int IS_INIT_EXIST = 1;
     public static final int RETRIEVE_USB_FUNCS = 2;
     public static final int SETUSBIFACE = 3;
@@ -25,6 +24,7 @@ public class USBArmoryHandlerThread extends HandlerThread {
     public static final int UNMOUNT_IMAGE = 7;
     public static final int GET_USBSWITCH_SQL_DATA = 8;
     public static final int GET_USBNETWORK_SQL_DATA = 9;
+    private Handler handler;
     private USBArmoryListener listener;
     private Object resultObject = new Object();
     private ShellExecuter exe = new ShellExecuter();

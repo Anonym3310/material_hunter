@@ -8,31 +8,27 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 
 public class PermissionCheck {
-    private static final String TAG = "PermissionCheck";
-    private Activity activity;
-    private Context context;
-
     public static final int DEFAULT_PERMISSION_RQCODE = 1;
     public static final int NH_TERM_PERMISSIONS_RQCODE = 2;
     public static final int NH_VNC_PERMISSIONS_RQCODE = 3;
     public static final int NH_VNC_PERMISSIONS_ONFRAGMENTCLICK_RQCODE = 4;
-
     public static final String[] DEFAULT_PERMISSIONS = {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.ACCESS_COARSE_LOCATION
     };
-
     public static final String[] NH_TERM_PERMISSIONS = {
             "com.offsec.nhterm.permission.RUN_SCRIPT",
             "com.offsec.nhterm.permission.RUN_SCRIPT_SU",
             "com.offsec.nhterm.permission.RUN_SCRIPT_NH",
             "com.offsec.nhterm.permission.RUN_SCRIPT_NH_LOGIN"
     };
-
     public static final String[] NH_VNC_PERMISSIONS = {
             "com.offsec.nhvnc.permission.OPEN_VNC_CONN"
     };
+    private static final String TAG = "PermissionCheck";
+    private Activity activity;
+    private Context context;
 
     public PermissionCheck(Activity activity, Context context) {
         this.activity = activity;
@@ -57,9 +53,9 @@ public class PermissionCheck {
         return true;
     }
 
-    public boolean isAllPermitted(String[] PERMISSIONS){
-        for (String permissions:PERMISSIONS){
-            if (ActivityCompat.checkSelfPermission(context, permissions) != PackageManager.PERMISSION_GRANTED){
+    public boolean isAllPermitted(String[] PERMISSIONS) {
+        for (String permissions : PERMISSIONS) {
+            if (ActivityCompat.checkSelfPermission(context, permissions) != PackageManager.PERMISSION_GRANTED) {
                 Log.e(TAG, "Permissions are NOT all granted.");
                 return false;
             }

@@ -26,22 +26,22 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
+public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
 
     private final String TAG = "CopyBootFilesAsyncTask";
+    private final WeakReference<ProgressDialog> progressDialogRef;
+    private final WeakReference<Context> context;
     private File sdCardDir;
     private File scriptsDir;
     private File etcDir;
     private String buildTime;
     private Boolean shouldRun;
-    private final WeakReference<ProgressDialog> progressDialogRef;
     private CopyBootFilesAsyncTaskListener listener;
     private String result = "";
     private SharedPreferences prefs;
     private ShellExecuter exe = new ShellExecuter();
-    private final WeakReference<Context> context;
 
-    public CopyBootFilesAsyncTask(Context context, Activity activity, ProgressDialog progressDialog){
+    public CopyBootFilesAsyncTask(Context context, Activity activity, ProgressDialog progressDialog) {
         this.context = new WeakReference<>(context);
         this.progressDialogRef = new WeakReference<>(progressDialog);
         this.sdCardDir = new File(NhPaths.APP_SD_FILES_PATH);
@@ -77,9 +77,9 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
     }
 
     @Override
-    protected String doInBackground(String ...strings) {
+    protected String doInBackground(String... strings) {
         // setup
-        if(shouldRun){
+        if (shouldRun) {
             if (!CheckForRoot.isRoot()) {
                 prefs.edit().putBoolean(AppNavHomeActivity.CHROOT_INSTALLED_TAG, false).apply();
                 return "Root permission is required!!";
@@ -121,12 +121,12 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
             // We can no longer install user apps through TWRP so we copy them across and install them here
             // Get the list of *.apk files in /sdcard/nh_files/cache/apk and install them using "pm install"
             publishProgress("Installing additional apps....");
-            String ApkCachePath= NhPaths.APP_SD_FILES_PATH + "/cache/apk/";
+            String ApkCachePath = NhPaths.APP_SD_FILES_PATH + "/cache/apk/";
             ArrayList<String> filenames = FetchFiles(ApkCachePath);
             int i, x;
 
-            for (String object: filenames) {
-                if (object.contains(".apk")){
+            for (String object : filenames) {
+                if (object.contains(".apk")) {
                     String apk = ApkCachePath + object;
                     //publishProgress("Installing additional apps.\nThe device may be unresponsive for a few minutes\nInstalling " + object);
                     ShellExecuter install = new ShellExecuter();
@@ -201,7 +201,7 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
     }
 
     private void copyFile(String TARGET_BASE_PATH, String filename) {
-        if (filename.matches("^.*/kaliservices$|^.*/runonboot_services$")){
+        if (filename.matches("^.*/kaliservices$|^.*/runonboot_services$")) {
             return;
         }
         AssetManager assetManager = context.get().getAssets();
@@ -248,17 +248,17 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
         return !canon.getCanonicalFile().equals(canon.getAbsoluteFile());
     }
 
-    private void MakeSYSWriteable(){
+    private void MakeSYSWriteable() {
         Log.d(TAG, "Making /system writeable for symlink");
         exe.RunAsRoot(new String[]{"mount -o rw,remount,rw /system"});
     }
 
-    private void MakeSYSReadOnly(){
+    private void MakeSYSReadOnly() {
         Log.d(TAG, "Making /system readonly for symlink");
         exe.RunAsRoot(new String[]{"mount -o ro,remount,ro /system"});
     }
 
-    private void NotFound(String filename){
+    private void NotFound(String filename) {
         Log.d(TAG, "Symlinking " + filename);
         Log.d(TAG, "command output: ln -s " + NhPaths.APP_SCRIPTS_PATH + "/" + filename + " /system/bin/" + filename);
         exe.RunAsRoot(new String[]{"ln -s " + NhPaths.APP_SCRIPTS_PATH + "/" + filename + " /system/bin/" + filename});
@@ -287,20 +287,20 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
     }
 
     // This rename the filename which suffix is either [name]-arm64 or [name]-armhf to [name] according to the user's CPU ABI.
-    private String renameAssetIfneeded(String asset){
-        if (asset.matches("^.*-arm64$")){
-            if (Build.CPU_ABI.equals("arm64-v8a")){
-                return (asset.replaceAll("-arm64$",""));
+    private String renameAssetIfneeded(String asset) {
+        if (asset.matches("^.*-arm64$")) {
+            if (Build.CPU_ABI.equals("arm64-v8a")) {
+                return (asset.replaceAll("-arm64$", ""));
             }
-        } else if (asset.matches("^.*-armeabi$")){
-            if (!Build.CPU_ABI.equals("arm64-v8a")){
-                return (asset.replaceAll("-armeabi$",""));
+        } else if (asset.matches("^.*-armeabi$")) {
+            if (!Build.CPU_ABI.equals("arm64-v8a")) {
+                return (asset.replaceAll("-armeabi$", ""));
             }
         }
         return asset;
     }
 
-    private void disableMagiskNotification(){
+    private void disableMagiskNotification() {
         if (exe.RunAsRootReturnValue("[ -f " + NhPaths.MAGISK_DB_PATH + " ]") == 0) {
             Log.d(TAG, "Disabling magisk notifcication and log for nethunter app.");
             if (exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_BIN_PATH + "/sqlite3 " +
@@ -308,7 +308,9 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
                     " \"UPDATE policies SET logging='0',notification='0' WHERE package_name='" +
                     BuildConfig.APPLICATION_ID + "';\"").isEmpty()) {
                 Log.d(TAG, "Updated magisk db successfully.");
-            } else { Log.e(TAG, "Failed updating to magisk db."); }
+            } else {
+                Log.e(TAG, "Failed updating to magisk db.");
+            }
         } else {
             Log.e(TAG, NhPaths.MAGISK_DB_PATH + " not found, skip disabling the magisk notification for nethunter app.");
         }
@@ -337,6 +339,7 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String>{
 
     public interface CopyBootFilesAsyncTaskListener {
         void onAsyncTaskPrepare();
+
         void onAsyncTaskFinished(Object result);
     }
 }

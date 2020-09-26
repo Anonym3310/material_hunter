@@ -2,15 +2,6 @@ package com.offsec.nethunter;
 
 public class SearchSploit {
 
-    private long id;
-    private String description;
-    private String file;
-    private String date;
-    private String author;
-    private String platform;
-    private String type;
-    private Integer port;
-
     final static String TABLE = "SearchSploitTable";
     final static String ID = "ID";
     final static String FILE = "FILE";
@@ -20,6 +11,14 @@ public class SearchSploit {
     final static String PLATFORM = "PLATFORM";
     final static String TYPE = "TYPE";
     final static String PORT = "PORT";
+    private long id;
+    private String description;
+    private String file;
+    private String date;
+    private String author;
+    private String platform;
+    private String type;
+    private Integer port;
 
     public SearchSploit() {
 
@@ -36,12 +35,12 @@ public class SearchSploit {
         this.port = port;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getFile() {
@@ -92,7 +91,9 @@ public class SearchSploit {
         this.type = type;
     }
 
-    public Integer getPort() { return port; }
+    public Integer getPort() {
+        return port;
+    }
 
     public void setPort(Integer port) {
         this.port = port;

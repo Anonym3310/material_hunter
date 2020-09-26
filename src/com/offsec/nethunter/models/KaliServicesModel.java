@@ -24,27 +24,51 @@ public class KaliServicesModel {
 
     }
 
-    public String getServiceName() { return ServiceName; }
+    public String getServiceName() {
+        return ServiceName;
+    }
 
-    public String getCommandforStartService() { return CommandforStartService; }
+    public void setServiceName(String ServiceName) {
+        this.ServiceName = ServiceName;
+    }
 
-    public String getCommandforStopService() { return CommandforStopService; }
+    public String getCommandforStartService() {
+        return CommandforStartService;
+    }
 
-    public String getCommandforCheckServiceStatus() { return CommandforCheckServiceStatus; }
+    public void setCommandforStartService(String CommandforStartService) {
+        this.CommandforStartService = CommandforStartService;
+    }
 
-    public String getRunOnChrootStart() { return RunOnChrootStart; }
+    public String getCommandforStopService() {
+        return CommandforStopService;
+    }
 
-    public String getStatus() { return Status; }
+    public void setCommandforStopService(String CommandforStopService) {
+        this.CommandforStopService = CommandforStopService;
+    }
 
-    public void setServiceName(String ServiceName) {this.ServiceName = ServiceName; }
+    public String getCommandforCheckServiceStatus() {
+        return CommandforCheckServiceStatus;
+    }
 
-    public void setCommandforStartService(String CommandforStartService) {this.CommandforStartService = CommandforStartService; }
+    public void setCommandforCheckServiceStatus(String CommandforCheckServiceStatus) {
+        this.CommandforCheckServiceStatus = CommandforCheckServiceStatus;
+    }
 
-    public void setCommandforStopService(String CommandforStopService) { this.CommandforStopService = CommandforStopService; }
+    public String getRunOnChrootStart() {
+        return RunOnChrootStart;
+    }
 
-    public void setCommandforCheckServiceStatus(String CommandforCheckServiceStatus) { this.CommandforCheckServiceStatus = CommandforCheckServiceStatus; }
+    public void setRunOnChrootStart(String RunOnChrootStart) {
+        this.RunOnChrootStart = RunOnChrootStart;
+    }
 
-    public void setRunOnChrootStart(String RunOnChrootStart) { this.RunOnChrootStart = RunOnChrootStart; }
+    public String getStatus() {
+        return Status;
+    }
 
-    public void setStatus(String Status) { this.Status = Status; }
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
 }

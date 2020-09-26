@@ -31,17 +31,17 @@ import com.offsec.nethunter.utils.SharePrefTag;
 import java.util.HashMap;
 
 public class DuckHunterFragment extends Fragment {
-    private static SharedPreferences sharedpreferences;
-    private static HashMap<String, String> map = new HashMap<>();
-    public static String lang = "us";
-    private static String[] keyboardLayoutString;
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG = "DuckHunterFragment";
+    public static String lang = "us";
+    private static SharedPreferences sharedpreferences;
+    private static HashMap<String, String> map = new HashMap<>();
+    private static String[] keyboardLayoutString;
     private Context context;
     private Activity activity;
     private Menu menu;
     private ViewPager mViewPager;
-    private String duckyInputFile ;
+    private String duckyInputFile;
     private String duckyOutputFile;
     private boolean isReceiverRegistered;
     private boolean shouldconvert = true;
@@ -53,6 +53,11 @@ public class DuckHunterFragment extends Fragment {
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private static void setLang() {
+        int keyboardLayoutIndex = sharedpreferences.getInt("DuckHunterLanguageIndex", 0);
+        lang = map.get(keyboardLayoutString[keyboardLayoutIndex]);
     }
 
     @Override
@@ -94,7 +99,7 @@ public class DuckHunterFragment extends Fragment {
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
-                if (position == 1){
+                if (position == 1) {
                     menu.findItem(R.id.duckConvertAttack).setVisible(true);
                     setLang();
                     if (shouldconvert)
@@ -106,8 +111,8 @@ public class DuckHunterFragment extends Fragment {
 
         sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
 
-        if (!sharedpreferences.contains("DuckHunterLanguageIndex")){
-            for (int i = 0; i < keyboardLayoutString.length; i++){
+        if (!sharedpreferences.contains("DuckHunterLanguageIndex")) {
+            for (int i = 0; i < keyboardLayoutString.length; i++) {
                 if ("us".equals(map.get(keyboardLayoutString[i]))) {
                     sharedpreferences.edit().putInt("DuckHunterLanguageIndex", i).apply();
                     break;
@@ -131,7 +136,7 @@ public class DuckHunterFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.duckConvertAttack:
                 duckHuntAsyncTask = new DuckHuntAsyncTask(DuckHuntAsyncTask.ATTACK);
-                duckHuntAsyncTask.setListener(new DuckHuntAsyncTask.DuckHuntAsyncTaskListener(){
+                duckHuntAsyncTask.setListener(new DuckHuntAsyncTask.DuckHuntAsyncTaskListener() {
                     @Override
                     public void onAsyncTaskPrepare() {
                         NhPaths.showMessage(context, "Launching Attack");
@@ -139,7 +144,7 @@ public class DuckHunterFragment extends Fragment {
 
                     @Override
                     public void onAsyncTaskFinished(Object result) {
-                        if (!(boolean)result){
+                        if (!(boolean) result) {
                             NhPaths.showMessage_long(context, "HID interfaces are not enabled or something wrong with the permission of /dev/hidg*, make sure they are enabled and permissions are granted as 666");
                         }
                     }
@@ -157,7 +162,7 @@ public class DuckHunterFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!isReceiverRegistered){
+        if (!isReceiverRegistered) {
             activity.registerReceiver(duckHuntBroadcastReceiver, new IntentFilter(BuildConfig.APPLICATION_ID + ".SHOULDCONVERT"));
             isReceiverRegistered = true;
         }
@@ -177,11 +182,6 @@ public class DuckHunterFragment extends Fragment {
         super.onDestroyView();
         menu = null;
         mViewPager = null;
-    }
-
-    private static void setLang() {
-        int keyboardLayoutIndex = sharedpreferences.getInt("DuckHunterLanguageIndex", 0);
-        lang = map.get(keyboardLayoutString[keyboardLayoutIndex]);
     }
 
     private void openLanguageDialog() {
@@ -246,7 +246,7 @@ public class DuckHunterFragment extends Fragment {
     public class DuckHuntBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getStringExtra("ACTION")){
+            switch (intent.getStringExtra("ACTION")) {
                 case "SHOULDCONVERT":
                     shouldconvert = intent.getBooleanExtra("SHOULDCONVERT", true);
                     break;

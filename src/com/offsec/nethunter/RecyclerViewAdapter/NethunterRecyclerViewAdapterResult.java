@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.offsec.nethunter.R;
 import com.offsec.nethunter.utils.NhPaths;
 
-public class NethunterRecyclerViewAdapterResult extends RecyclerView.Adapter<NethunterRecyclerViewAdapterResult.ItemViewHolder>{
+public class NethunterRecyclerViewAdapterResult extends RecyclerView.Adapter<NethunterRecyclerViewAdapterResult.ItemViewHolder> {
 
     private static final String TAG = "NethunterRecyclerView";
     private String[] resultStrings;
@@ -35,10 +35,10 @@ public class NethunterRecyclerViewAdapterResult extends RecyclerView.Adapter<Net
     @Override
     public void onBindViewHolder(@NonNull NethunterRecyclerViewAdapterResult.ItemViewHolder holder, int position) {
         holder.resultTextView.setText(resultStrings[position]);
-        holder.resultTextView.setOnLongClickListener(new View.OnLongClickListener(){
+        holder.resultTextView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                ClipboardManager cm = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData cData = ClipData.newPlainText("text", holder.resultTextView.getText());
                 cm.setPrimaryClip(cData);
                 NhPaths.showMessage(context, "Copied to clipboard: " + holder.resultTextView.getText());
@@ -57,8 +57,9 @@ public class NethunterRecyclerViewAdapterResult extends RecyclerView.Adapter<Net
         return super.getItemId(position);
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder{
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         private TextView resultTextView;
+
         private ItemViewHolder(View view) {
             super(view);
             resultTextView = view.findViewById(R.id.f_nethunter_item_result_tv);

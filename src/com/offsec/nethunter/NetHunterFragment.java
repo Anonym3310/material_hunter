@@ -45,6 +45,7 @@ import static com.offsec.nethunter.R.id.f_nethunter_action_search;
 public class NetHunterFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static int targetPositionId;
     private Context context;
     private Activity activity;
     private NethunterRecyclerViewAdapter nethunterRecyclerViewAdapter;
@@ -52,7 +53,6 @@ public class NetHunterFragment extends Fragment {
     private Button addButton;
     private Button deleteButton;
     private Button moveButton;
-    private static int targetPositionId;
 
     public static NetHunterFragment newInstance(int sectionNumber) {
         NetHunterFragment fragment = new NetHunterFragment();
@@ -142,13 +142,14 @@ public class NetHunterFragment extends Fragment {
                 AlertDialog.Builder adbBackup = new AlertDialog.Builder(activity);
                 adbBackup.setView(promptView);
                 adbBackup.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-                adbBackup.setPositiveButton("OK", (dialog, which) -> { });
+                adbBackup.setPositiveButton("OK", (dialog, which) -> {
+                });
                 final AlertDialog adBackup = adbBackup.create();
                 adBackup.setOnShowListener(dialog -> {
                     final Button buttonOK = adBackup.getButton(DialogInterface.BUTTON_POSITIVE);
                     buttonOK.setOnClickListener(v -> {
                         String returnedResult = NethunterData.getInstance().backupData(NethunterSQL.getInstance(context), storedpathEditText.getText().toString());
-                        if (returnedResult == null){
+                        if (returnedResult == null) {
                             NhPaths.showMessage(context, "db is successfully backup to " + storedpathEditText.getText().toString());
                         } else {
                             dialog.dismiss();
@@ -165,7 +166,8 @@ public class NetHunterFragment extends Fragment {
                 AlertDialog.Builder adbRestore = new AlertDialog.Builder(activity);
                 adbRestore.setView(promptView);
                 adbRestore.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-                adbRestore.setPositiveButton("OK", (dialog, which) -> { });
+                adbRestore.setPositiveButton("OK", (dialog, which) -> {
+                });
                 final AlertDialog adRestore = adbRestore.create();
                 adRestore.setOnShowListener(dialog -> {
                     final Button buttonOK = adRestore.getButton(DialogInterface.BUTTON_POSITIVE);
@@ -205,11 +207,11 @@ public class NetHunterFragment extends Fragment {
         nethunterRecyclerViewAdapter = null;
     }
 
-    private void onRefreshItemSetup(){
+    private void onRefreshItemSetup() {
         refreshButton.setOnClickListener(v -> NethunterData.getInstance().refreshData());
     }
 
-    private void onAddItemSetup(){
+    private void onAddItemSetup() {
         addButton.setOnClickListener(v -> {
             List<NethunterModel> nethunterModelList = NethunterData.getInstance().nethunterModelListFull;
             if (nethunterModelList == null) return;
@@ -222,7 +224,7 @@ public class NetHunterFragment extends Fragment {
             final Spinner insertPositions = promptViewAdd.findViewById(R.id.f_nethunter_add_adb_spr_positions);
             final Spinner insertTitles = promptViewAdd.findViewById(R.id.f_nethunter_add_adb_spr_titles);
             ArrayList<String> titleArrayList = new ArrayList<>();
-            for (NethunterModel nethunterModel: nethunterModelList){
+            for (NethunterModel nethunterModel : nethunterModelList) {
                 titleArrayList.add(nethunterModel.getTitle());
             }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, titleArrayList);
@@ -285,6 +287,7 @@ public class NetHunterFragment extends Fragment {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 targetPositionId = position + 1;
                             }
+
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -299,6 +302,7 @@ public class NetHunterFragment extends Fragment {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 targetPositionId = position + 2;
                             }
+
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -306,6 +310,7 @@ public class NetHunterFragment extends Fragment {
                         });
                     }
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
@@ -314,18 +319,19 @@ public class NetHunterFragment extends Fragment {
 
             AlertDialog.Builder adb = new AlertDialog.Builder(context);
             adb.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-            adb.setPositiveButton("OK", (dialog, which) -> { });
+            adb.setPositiveButton("OK", (dialog, which) -> {
+            });
             final AlertDialog ad = adb.create();
             ad.setView(promptViewAdd);
             ad.setCancelable(true);
             ad.setOnShowListener(dialog -> {
                 final Button buttonAdd = ad.getButton(DialogInterface.BUTTON_POSITIVE);
                 buttonAdd.setOnClickListener(v1 -> {
-                    if (titleEditText.getText().toString().isEmpty()){
+                    if (titleEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Title cannot be empty");
-                    } else if (cmdEditText.getText().toString().isEmpty()){
+                    } else if (cmdEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Command cannot be empty");
-                    } else if (delimiterEditText.getText().toString().isEmpty()){
+                    } else if (delimiterEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Delimiter cannot be empty");
                     } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
@@ -342,7 +348,7 @@ public class NetHunterFragment extends Fragment {
         });
     }
 
-    private void onDeleteItemSetup(){
+    private void onDeleteItemSetup() {
         deleteButton.setOnClickListener(v -> {
             List<NethunterModel> nethunterModelList = NethunterData.getInstance().nethunterModelListFull;
             if (nethunterModelList == null) return;
@@ -357,7 +363,8 @@ public class NetHunterFragment extends Fragment {
             AlertDialog.Builder adbDelete = new AlertDialog.Builder(activity);
             adbDelete.setView(promptViewDelete);
             adbDelete.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-            adbDelete.setPositiveButton("Delete", (dialog, which) -> { });
+            adbDelete.setPositiveButton("Delete", (dialog, which) -> {
+            });
             //If you want the dialog to stay open after clicking OK, you need to do it this way...
             final AlertDialog adDelete = adbDelete.create();
             adDelete.setMessage("Select the item you want to remove: ");
@@ -369,11 +376,11 @@ public class NetHunterFragment extends Fragment {
                     ArrayList<Integer> selectedTargetIds = new ArrayList<>();
                     for (int i = 0; i < recyclerViewDeleteItem.getChildCount(); i++) {
                         viewHolder = recyclerViewDeleteItem.findViewHolderForAdapterPosition(i);
-                        if (viewHolder != null){
+                        if (viewHolder != null) {
                             CheckBox box = viewHolder.itemView.findViewById(R.id.f_nethunter_recyclerview_dialog_chkbox);
-                            if (box.isChecked()){
+                            if (box.isChecked()) {
                                 selectedPosition.add(i);
-                                selectedTargetIds.add(i+1);
+                                selectedTargetIds.add(i + 1);
                             }
                         }
                     }
@@ -398,7 +405,7 @@ public class NetHunterFragment extends Fragment {
             final Spinner titlesAfter = promptViewMove.findViewById(R.id.f_nethunter_move_adb_spr_titlesafter);
             final Spinner actions = promptViewMove.findViewById(R.id.f_nethunter_move_adb_spr_actions);
             ArrayList<String> titleArrayList = new ArrayList<>();
-            for (NethunterModel nethunterModel: nethunterModelList){
+            for (NethunterModel nethunterModel : nethunterModelList) {
                 titleArrayList.add(nethunterModel.getTitle());
             }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, titleArrayList);

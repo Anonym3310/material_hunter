@@ -22,7 +22,8 @@ public class CompatCheckService extends IntentService {
     private String message = "";
     private int RESULTCODE = -1;
     private SharedPreferences sharedPreferences;
-    public CompatCheckService(){
+
+    public CompatCheckService() {
         super("CompatCheckService");
     }
 
@@ -35,7 +36,7 @@ public class CompatCheckService extends IntentService {
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
         // if no resultCode passed by ChrootManagerFragment, then set RESULTCODE to -1;
-        if (intent != null){
+        if (intent != null) {
             RESULTCODE = intent.getIntExtra("RESULTCODE", -1);
         }
 
@@ -104,7 +105,7 @@ public class CompatCheckService extends IntentService {
 
         // Check chroot status, push notification to user and disable all the fragments if chroot is not yet up.
         // if intent is NOT sent by chrootmanager, run the check asynctask again.
-        if (RESULTCODE == -1){
+        if (RESULTCODE == -1) {
             if ((new ShellExecuter().RunAsRootReturnValue(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\" -p " + NhPaths.CHROOT_PATH()) != 0)) {
                 if (AppNavHomeActivity.lastSelectedMenuItem.getItemId() != R.id.createchroot_item) {
                     startService(new Intent(getApplicationContext(), NotificationChannelService.class).setAction(NotificationChannelService.REMINDMOUNTCHROOT));

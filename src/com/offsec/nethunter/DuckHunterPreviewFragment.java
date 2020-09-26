@@ -26,10 +26,11 @@ public class DuckHunterPreviewFragment extends Fragment {
     private boolean isReceiverRegistered;
     private PreviewDuckyBroadcastReceiver previewDuckyBroadcastReceiver = new PreviewDuckyBroadcastReceiver();
 
-    public DuckHunterPreviewFragment(String inFilePath, String outFilePath){
+    public DuckHunterPreviewFragment(String inFilePath, String outFilePath) {
         this.duckyInputFile = inFilePath;
         this.duckyOutputFile = outFilePath;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class DuckHunterPreviewFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (!isReceiverRegistered){
+        if (!isReceiverRegistered) {
             activity.registerReceiver(previewDuckyBroadcastReceiver, new IntentFilter(BuildConfig.APPLICATION_ID + ".PREVIEWDUCKY"));
             isReceiverRegistered = true;
         }
@@ -70,7 +71,7 @@ public class DuckHunterPreviewFragment extends Fragment {
     public class PreviewDuckyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getStringExtra("ACTION")){
+            switch (intent.getStringExtra("ACTION")) {
                 case "PREVIEWDUCKY":
                     activity.sendBroadcast(new Intent().putExtra("ACTION", "SHOULDCONVERT").putExtra("SHOULDCONVERT", false).setAction(BuildConfig.APPLICATION_ID + ".SHOULDCONVERT"));
                     duckHuntAsyncTask = new DuckHuntAsyncTask(DuckHuntAsyncTask.CONVERT);

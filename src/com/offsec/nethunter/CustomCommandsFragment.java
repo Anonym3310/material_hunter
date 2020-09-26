@@ -41,13 +41,13 @@ import java.util.List;
 public class CustomCommandsFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG = "CustomCommandsFragment";
+    private static int targetPositionId;
     private CustomCommandsRecyclerViewAdapter customCommandsRecyclerViewAdapter;
     private Context context;
     private Activity activity;
     private Button addButton;
     private Button deleteButton;
     private Button moveButton;
-    private static int targetPositionId;
 
     public CustomCommandsFragment() {
 
@@ -130,20 +130,21 @@ public class CustomCommandsFragment extends Fragment {
         final TextView titleTextView = promptView.findViewById(R.id.f_customcommands_adb_tv_title1);
         final EditText storedpathEditText = promptView.findViewById(R.id.f_customcommands_adb_et_storedpath);
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.f_customcommands_menu_backupDB:
                 titleTextView.setText("Full path to where you want to save the database:");
                 storedpathEditText.setText(NhPaths.APP_SD_SQLBACKUP_PATH + "/FragmentCustomCommands");
                 AlertDialog.Builder adbBackup = new AlertDialog.Builder(activity);
                 adbBackup.setView(promptView);
                 adbBackup.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-                adbBackup.setPositiveButton("OK", (dialog, which) -> { });
+                adbBackup.setPositiveButton("OK", (dialog, which) -> {
+                });
                 final AlertDialog adBackup = adbBackup.create();
                 adBackup.setOnShowListener(dialog -> {
                     final Button buttonOK = adBackup.getButton(DialogInterface.BUTTON_POSITIVE);
                     buttonOK.setOnClickListener(v -> {
                         String returnedResult = CustomCommandsData.getInstance().backupData(CustomCommandsSQL.getInstance(context), storedpathEditText.getText().toString());
-                        if (returnedResult == null){
+                        if (returnedResult == null) {
                             NhPaths.showMessage(context, "db is successfully backup to " + storedpathEditText.getText().toString());
                         } else {
                             dialog.dismiss();
@@ -160,7 +161,8 @@ public class CustomCommandsFragment extends Fragment {
                 AlertDialog.Builder adbRestore = new AlertDialog.Builder(activity);
                 adbRestore.setView(promptView);
                 adbRestore.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-                adbRestore.setPositiveButton("OK", (dialog, which) -> { });
+                adbRestore.setPositiveButton("OK", (dialog, which) -> {
+                });
                 final AlertDialog adRestore = adbRestore.create();
                 adRestore.setOnShowListener(dialog -> {
                     final Button buttonOK = adRestore.getButton(DialogInterface.BUTTON_POSITIVE);
@@ -210,7 +212,7 @@ public class CustomCommandsFragment extends Fragment {
 
 
             ArrayList<String> commandLabelArrayList = new ArrayList<>();
-            for (CustomCommandsModel customCommandsModel: customCommandsModelList){
+            for (CustomCommandsModel customCommandsModel : customCommandsModelList) {
                 commandLabelArrayList.add(customCommandsModel.getCommandLabel());
             }
 
@@ -238,6 +240,7 @@ public class CustomCommandsFragment extends Fragment {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 targetPositionId = position + 1;
                             }
+
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -252,6 +255,7 @@ public class CustomCommandsFragment extends Fragment {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 targetPositionId = position + 2;
                             }
+
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -259,6 +263,7 @@ public class CustomCommandsFragment extends Fragment {
                         });
                     }
                 }
+
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
@@ -266,7 +271,8 @@ public class CustomCommandsFragment extends Fragment {
             });
 
             AlertDialog.Builder adbAdd = new AlertDialog.Builder(activity);
-            adbAdd.setPositiveButton("OK", (dialog, which) -> { });
+            adbAdd.setPositiveButton("OK", (dialog, which) -> {
+            });
             final AlertDialog adAdd = adbAdd.create();
             adAdd.setView(promptViewAdd);
             adAdd.setCancelable(true);
@@ -274,9 +280,9 @@ public class CustomCommandsFragment extends Fragment {
             adAdd.setOnShowListener(dialog -> {
                 final Button buttonAdd = adAdd.getButton(DialogInterface.BUTTON_POSITIVE);
                 buttonAdd.setOnClickListener(v1 -> {
-                    if (commandLabelEditText.getText().toString().isEmpty()){
+                    if (commandLabelEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Label cannot be empty");
-                    } else if (commandEditText.getText().toString().isEmpty()){
+                    } else if (commandEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Command String cannot be empty");
                     } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
@@ -284,7 +290,7 @@ public class CustomCommandsFragment extends Fragment {
                         dataArrayList.add(commandEditText.getText().toString());
                         dataArrayList.add(sendToSpinner.getSelectedItem().toString());
                         dataArrayList.add(execModeSpinner.getSelectedItem().toString());
-                        dataArrayList.add(runOnBootCheckbox.isChecked()?"1":"0");
+                        dataArrayList.add(runOnBootCheckbox.isChecked() ? "1" : "0");
                         CustomCommandsData.getInstance().addData(targetPositionId, dataArrayList, CustomCommandsSQL.getInstance(context));
                         adAdd.dismiss();
                     }
@@ -309,7 +315,8 @@ public class CustomCommandsFragment extends Fragment {
 
             AlertDialog.Builder adbDelete = new AlertDialog.Builder(activity);
             adbDelete.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-            adbDelete.setPositiveButton("Delete", (dialog, which) -> { });
+            adbDelete.setPositiveButton("Delete", (dialog, which) -> {
+            });
             final AlertDialog adDelete = adbDelete.create();
             adDelete.setMessage("Select the service you want to remove: ");
             adDelete.setView(promptViewDelete);
@@ -322,11 +329,11 @@ public class CustomCommandsFragment extends Fragment {
                     ArrayList<Integer> selectedTargetIds = new ArrayList<>();
                     for (int i = 0; i < recyclerViewDeleteItem.getChildCount(); i++) {
                         viewHolder = recyclerViewDeleteItem.findViewHolderForAdapterPosition(i);
-                        if (viewHolder != null){
+                        if (viewHolder != null) {
                             CheckBox box = viewHolder.itemView.findViewById(R.id.f_customcommands_recyclerview_dialog_chkbox);
-                            if (box.isChecked()){
+                            if (box.isChecked()) {
                                 selectedPosition.add(i);
-                                selectedTargetIds.add(i+1);
+                                selectedTargetIds.add(i + 1);
                             }
                         }
                     }
@@ -355,7 +362,7 @@ public class CustomCommandsFragment extends Fragment {
             final Spinner actions = promptViewMove.findViewById(R.id.f_customcommands_move_adb_spr_actions);
 
             ArrayList<String> commandLabelArrayList = new ArrayList<>();
-            for (CustomCommandsModel customCommandsModel: customCommandsModelList){
+            for (CustomCommandsModel customCommandsModel : customCommandsModelList) {
                 commandLabelArrayList.add(customCommandsModel.getCommandLabel());
             }
 
@@ -366,7 +373,8 @@ public class CustomCommandsFragment extends Fragment {
 
             AlertDialog.Builder adbMove = new AlertDialog.Builder(activity);
             adbMove.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-            adbMove.setPositiveButton("Move", (dialog, which) -> { });
+            adbMove.setPositiveButton("Move", (dialog, which) -> {
+            });
             final AlertDialog adMove = adbMove.create();
             adMove.setView(promptViewMove);
             adMove.setCancelable(true);

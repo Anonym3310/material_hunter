@@ -41,30 +41,23 @@ import java.util.List;
 public class MITMfFragment extends Fragment {
 
 
-    View.OnClickListener checkBoxListener;
-    private TabsPagerAdapter tabsPagerAdapter;
-    public interface CommandProvider {
-        void getCommands(StringBuilder stringBuilder);
-    }
-
     // ^^ \\
     // static String CommandComposed = "";
     private static final ArrayList<String> CommandComposed = new ArrayList<>();
+    private static final String ARG_SECTION_NUMBER = "section_number";
+    View.OnClickListener checkBoxListener;
+    String M_Responder; // --responder
 
     /* All MITMf Provider Command Variables */
-
-    String M_Responder; // --responder
     String M_Responder_Analyze; // --analyze
     String M_Responder_Fingerprint; // --fingerprint
     String M_Responder_Downgrade; // --lm
     String M_Responder_NBTNS; // --nbtns
     String M_Responder_WPAD; // --wpad
     String M_Responder_WRedir; // --wredir
-
-
+    private TabsPagerAdapter tabsPagerAdapter;
     private Context context;
     private Activity activity;
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static MITMfFragment newInstance(int sectionNumber) {
         MITMfFragment fragment = new MITMfFragment();
@@ -72,6 +65,12 @@ public class MITMfFragment extends Fragment {
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private static void cleanCmd() {
+        for (int j = CommandComposed.size() - 1; j >= 0; j--) {
+            CommandComposed.remove(j);
+        }
     }
 
     @Override
@@ -132,7 +131,7 @@ public class MITMfFragment extends Fragment {
         }
 
         SharedPreferences o = getActivity().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
-        if (o.getString(SharePrefTag.MITMF_CC, "").equals("")){
+        if (o.getString(SharePrefTag.MITMF_CC, "").equals("")) {
             intentClickListener_NH("mitmf" + sb.toString());
         } else {
             intentClickListener_NH(o.getString(SharePrefTag.MITMF_CC, "") + sb.toString());
@@ -147,7 +146,7 @@ public class MITMfFragment extends Fragment {
         NhPaths.showMessage(context, "MITMf Stopped!");
     }
 
-    private void cc(){
+    private void cc() {
         AlertDialog.Builder adb = new AlertDialog.Builder(context);
         final View rootView = getLayoutInflater().inflate(R.layout.mitmf_cc, null);
         final EditText o = rootView.findViewById(R.id.mitmf_dialog_cc);
@@ -167,6 +166,24 @@ public class MITMfFragment extends Fragment {
         adb.setTitle("Custom command for mitmf").setView(rootView).create().show();
     }
     /* Stop execution menu */
+
+    private void intentClickListener_NH(final String command) {
+        try {
+            Intent intent =
+                    new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+
+            intent.putExtra("com.offsec.nhterm.iInitialCommand", command);
+            startActivity(intent);
+        } catch (Exception e) {
+            NhPaths.showMessage(context, getString(R.string.toast_install_terminal));
+        }
+    }
+    /* Stop Tabs */
+
+    public interface CommandProvider {
+        void getCommands(StringBuilder stringBuilder);
+    }
 
     private static class TabsPagerAdapter extends FragmentPagerAdapter {
 
@@ -238,16 +255,14 @@ public class MITMfFragment extends Fragment {
             }
         }
     }
-    /* Stop Tabs */
 
     public static class MITMfGeneral extends Fragment implements CommandProvider {
 
+        MitmfGeneralBinding generalBinding;
+        MITMFViewModel mViewModel;
         private ArrayAdapter<CharSequence> interfaceAdapter;
         private int interfaceSelection;
         private Context context;
-
-        MitmfGeneralBinding generalBinding;
-        MITMFViewModel mViewModel;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -349,7 +364,6 @@ public class MITMfFragment extends Fragment {
         }
     }
 
-
     public static class MITMfSpoof extends Fragment implements CommandProvider {
 
         private int spoofOption;
@@ -449,7 +463,6 @@ public class MITMfFragment extends Fragment {
         }
     }
 
-
     public static class MITMfResponder extends Fragment implements CommandProvider {
 
         private MitmfResponderBinding responderBinding;
@@ -481,9 +494,9 @@ public class MITMfFragment extends Fragment {
     }
 
     public static class MITMfConfigFragment extends Fragment {
+        final ShellExecuter exe = new ShellExecuter();
         private Context context;
         private String configFilePath;
-        final ShellExecuter exe = new ShellExecuter();
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -514,26 +527,6 @@ public class MITMfFragment extends Fragment {
                 }
             });
             return rootView;
-        }
-    }
-
-    private static void cleanCmd() {
-        for (int j = CommandComposed.size() - 1; j >= 0; j--) {
-            CommandComposed.remove(j);
-        }
-    }
-
-
-    private void intentClickListener_NH(final String command) {
-        try {
-            Intent intent =
-                    new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-
-            intent.putExtra("com.offsec.nhterm.iInitialCommand", command);
-            startActivity(intent);
-        } catch (Exception e) {
-            NhPaths.showMessage(context, getString(R.string.toast_install_terminal));
         }
     }
 }

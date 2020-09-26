@@ -39,14 +39,15 @@ import java.util.regex.Pattern;
 
 public class HidFragment extends Fragment {
 
-    private ViewPager mViewPager;
-    private SharedPreferences sharedpreferences;
+    private static final String ARG_SECTION_NUMBER = "section_number";
     private final CharSequence[] platforms = {"No UAC Bypass", "Windows 7", "Windows 8", "Windows 10"};
     private final CharSequence[] languages = {"American English", "Belgian", "British English", "Danish", "French", "German", "Italian", "Norwegian", "Portugese", "Russian", "Spanish", "Swedish", "Canadian Multilingual", "Canadian", "Hungarian"};
+    private ViewPager mViewPager;
+    private SharedPreferences sharedpreferences;
     private String configFilePath;
     private Context context;
     private Activity activity;
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    private boolean isHIDenable = false;
 
     public static HidFragment newInstance(int sectionNumber) {
         HidFragment fragment = new HidFragment();
@@ -55,7 +56,6 @@ public class HidFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    private boolean isHIDenable = false;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class HidFragment extends Fragment {
                 if (isHIDenable) {
                     start();
                 } else {
-                    NhPaths.showMessage_long(context,"HID interfaces are not enabled or something wrong with the permission of /dev/hidg*, make sure they are enabled and permissions are granted as 666");
+                    NhPaths.showMessage_long(context, "HID interfaces are not enabled or something wrong with the permission of /dev/hidg*, make sure they are enabled and permissions are granted as 666");
                 }
                 return true;
             case R.id.stop_service:
@@ -203,7 +203,7 @@ public class HidFragment extends Fragment {
                     command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met-elevated-win10 --" + lang + "'";
                     break;
                 default:
-                    NhPaths.showMessage(context,"No option selected 1");
+                    NhPaths.showMessage(context, "No option selected 1");
                     break;
             }
         } else if (pageNum == 1) {
@@ -221,7 +221,7 @@ public class HidFragment extends Fragment {
                     command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd-elevated-win10 --" + lang + "'";
                     break;
                 default:
-                    NhPaths.showMessage(context,"No option selected 2");
+                    NhPaths.showMessage(context, "No option selected 2");
                     break;
             }
         }
@@ -230,7 +230,7 @@ public class HidFragment extends Fragment {
             ShellExecuter exe = new ShellExecuter();
             exe.RunAsRoot(command);
             //Logger.appendLog(outp1);
-            mViewPager.post(() -> NhPaths.showMessage(context,"Attack execution ended."));
+            mViewPager.post(() -> NhPaths.showMessage(context, "Attack execution ended."));
         }).start();
     }
 
@@ -238,7 +238,7 @@ public class HidFragment extends Fragment {
         ShellExecuter exe = new ShellExecuter();
         String[] command = {"stop-badusb"};
         exe.RunAsRoot(command);
-        NhPaths.showMessage(context,"Reseting USB");
+        NhPaths.showMessage(context, "Reseting USB");
     }
 
 
@@ -274,6 +274,22 @@ public class HidFragment extends Fragment {
             editor.apply();
         });
         builder.show();
+    }
+
+    private void check_HID_enable() {
+        new Thread(new Runnable() {
+            public void run() {
+                ShellExecuter exe_check = new ShellExecuter();
+                String[] hidgs = {"/dev/hidg0", "/dev/hidg1"};
+                for (String hidg : hidgs) {
+                    if (!exe_check.RunAsRootOutput("su -c \"stat -c '%a' " + hidg + "\"").equals("666")) {
+                        isHIDenable = false;
+                        break;
+                    }
+                    isHIDenable = true;
+                }
+            }
+        }).start();
     }
 
     public static class TabsPagerAdapter extends FragmentPagerAdapter {
@@ -359,11 +375,11 @@ public class HidFragment extends Fragment {
 
                     Boolean isSaved = exe.SaveFileContents(newText, configFileUrlPath);
                     if (!isSaved) {
-                        NhPaths.showMessage(context,"Source not updated (configFileUrlPath)");
+                        NhPaths.showMessage(context, "Source not updated (configFileUrlPath)");
                     }
                     break;
                 default:
-                    NhPaths.showMessage(context,"Unknown click");
+                    NhPaths.showMessage(context, "Unknown click");
                     break;
             }
         }
@@ -426,13 +442,13 @@ public class HidFragment extends Fragment {
         }
     }
 
-
     public static class WindowsCmdFragment extends HidFragment implements OnClickListener {
+        private static final int PICKFILE_RESULT_CODE = 1;
+        final ShellExecuter exe = new ShellExecuter();
         private Context context;
         private Activity activity;
         private String configFilePath;
         private String loadFilePath;
-        final ShellExecuter exe = new ShellExecuter();
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -457,8 +473,6 @@ public class HidFragment extends Fragment {
             b2.setOnClickListener(this);
             return rootView;
         }
-
-        private static final int PICKFILE_RESULT_CODE = 1;
 
         public void onClick(View v) {
 
@@ -521,15 +535,15 @@ public class HidFragment extends Fragment {
                                     myOutWriter.append(text1);
                                     myOutWriter.close();
                                     fOut.close();
-                                    NhPaths.showMessage(context,"Script saved");
+                                    NhPaths.showMessage(context, "Script saved");
                                 } catch (Exception e) {
                                     NhPaths.showMessage(context, e.getMessage());
                                 }
                             } else {
-                                NhPaths.showMessage(context,"File already exists");
+                                NhPaths.showMessage(context, "File already exists");
                             }
                         } else {
-                            NhPaths.showMessage(context,"Wrong name provided");
+                            NhPaths.showMessage(context, "Wrong name provided");
                         }
                     });
                     alert.setNegativeButton("Cancel", (dialog, whichButton) -> {
@@ -538,7 +552,7 @@ public class HidFragment extends Fragment {
                     alert.show();
                     break;
                 default:
-                    NhPaths.showMessage(context,"Unknown click");
+                    NhPaths.showMessage(context, "Unknown click");
                     break;
             }
         }
@@ -551,7 +565,7 @@ public class HidFragment extends Fragment {
                         String FilePath = data.getData().getPath();
                         EditText source = getView().findViewById(R.id.windowsCmdSource);
                         exe.ReadFile_ASYNC(FilePath, source);
-                        NhPaths.showMessage(context,"Script loaded");
+                        NhPaths.showMessage(context, "Script loaded");
                     }
                     break;
             }
@@ -593,11 +607,11 @@ public class HidFragment extends Fragment {
 
                     Boolean isSaved = exe.SaveFileContents(newText, configFileUrlPath);
                     if (!isSaved) {
-                        NhPaths.showMessage(context,"Source not updated (configFileUrlPath)");
+                        NhPaths.showMessage(context, "Source not updated (configFileUrlPath)");
                     }
                     break;
                 default:
-                    NhPaths.showMessage(context,"Unknown click");
+                    NhPaths.showMessage(context, "Unknown click");
                     break;
             }
         }
@@ -626,22 +640,6 @@ public class HidFragment extends Fragment {
                 });
             }).start();
         }
-    }
-
-    private void check_HID_enable() {
-        new Thread(new Runnable() {
-            public void run() {
-                ShellExecuter exe_check = new ShellExecuter();
-                String hidgs[] = {"/dev/hidg0", "/dev/hidg1"};
-                for (String hidg : hidgs) {
-                    if (!exe_check.RunAsRootOutput("su -c \"stat -c '%a' " + hidg + "\"").equals("666")) {
-                        isHIDenable = false;
-                        break;
-                    }
-                    isHIDenable = true;
-                }
-            }
-        }).start();
     }
 
 }

@@ -22,7 +22,6 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class CustomCommandsSQL extends SQLiteOpenHelper {
-    private static CustomCommandsSQL instance;
     private static final String DATABASE_NAME = "CustomCommandsFragment";
     private static final String TAG = "CustomCommandsSQL";
     private static final String TABLE_NAME = DATABASE_NAME;
@@ -47,13 +46,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
                     "ip link set wlan2 down && iw wlan2 set monitor control && ip link set wlan2 up;exit",
                     "kali", "interactive", "0"}
     };
-
-    public synchronized static CustomCommandsSQL getInstance(Context context){
-        if (instance == null) {
-            instance = new CustomCommandsSQL(context.getApplicationContext());
-        }
-        return instance;
-    }
+    private static CustomCommandsSQL instance;
 
     private CustomCommandsSQL(Context context) {
         super(context, DATABASE_NAME, null, 3);
@@ -66,16 +59,23 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         COLUMNS.add("RunOnBoot");
     }
 
+    public synchronized static CustomCommandsSQL getInstance(Context context) {
+        if (instance == null) {
+            instance = new CustomCommandsSQL(context.getApplicationContext());
+        }
+        return instance;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + COLUMNS.get(0) + " INTEGER, " +
-                COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) +  " TEXT, " +
+                COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) + " TEXT, " +
                 COLUMNS.get(3) + " TEXT, " + COLUMNS.get(4) + " TEXT, " +
                 COLUMNS.get(5) + " INTEGER)");
         // For devices update from db version 2 to 3 only;
         if (new File(NhPaths.APP_DATABASE_PATH + "/KaliLaunchers").exists()) {
             convertOldDBtoNewDB(db);
-        // else create default value;
+            // else create default value;
         } else {
             ContentValues initialValues = new ContentValues();
             db.beginTransaction();
@@ -115,7 +115,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         return customCommandsModelArrayList;
     }
 
-    public void addData(int targetPositionId, ArrayList<String> Data){
+    public void addData(int targetPositionId, ArrayList<String> Data) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues initialValues = new ContentValues();
         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " + 1 WHERE " + COLUMNS.get(0) + " >= " + targetPositionId + ";");
@@ -132,7 +132,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteData(ArrayList<Integer> selectedTargetIds){
+    public void deleteData(ArrayList<Integer> selectedTargetIds) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMNS.get(0) + " in (" + TextUtils.join(",", selectedTargetIds) + ");");
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMNS.get(0) + ";", null);
@@ -144,21 +144,21 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void moveData(Integer originalPosition, Integer targetPosition){
+    public void moveData(Integer originalPosition, Integer targetPosition) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = 0 - 1 WHERE " + COLUMNS.get(0) + " = " + (originalPosition + 1) + ";");
-        if (originalPosition < targetPosition){
+        if (originalPosition < targetPosition) {
             db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " - 1 WHERE " + COLUMNS.get(0) + " > " +
-                    (originalPosition + 1)  + " AND " + COLUMNS.get(0) + " < " + (targetPosition + 2) + ";");
+                    (originalPosition + 1) + " AND " + COLUMNS.get(0) + " < " + (targetPosition + 2) + ";");
         } else {
             db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " + 1 WHERE " + COLUMNS.get(0) + " > " +
-                    targetPosition  + " AND " + COLUMNS.get(0) + " < " + (originalPosition + 1) + ";");
+                    targetPosition + " AND " + COLUMNS.get(0) + " < " + (originalPosition + 1) + ";");
         }
         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + (targetPosition + 1) + " WHERE " + COLUMNS.get(0) + " = -1;");
         db.close();
     }
 
-    public void editData(Integer targetPosition, ArrayList<String> editData){
+    public void editData(Integer targetPosition, ArrayList<String> editData) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(1) + " = '" + editData.get(0).replace("'", "''") + "', " +
                 COLUMNS.get(2) + " = '" + editData.get(1).replace("'", "''") + "', " +
@@ -170,7 +170,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
     }
 
 
-    public void resetData(){
+    public void resetData() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + COLUMNS.get(0) + " INTEGER, " +
@@ -178,7 +178,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
                 COLUMNS.get(4) + " TEXT, " + COLUMNS.get(5) + " INTEGER)");
         ContentValues initialValues = new ContentValues();
         db.beginTransaction();
-        for (String[] data: customcommandsData){
+        for (String[] data : customcommandsData) {
             initialValues.put(COLUMNS.get(0), data[0]);
             initialValues.put(COLUMNS.get(1), data[1]);
             initialValues.put(COLUMNS.get(2), data[2]);
@@ -214,11 +214,11 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
     }
 
     public String restoreData(String storedDBpath) {
-        if (!new File(storedDBpath).exists()){
+        if (!new File(storedDBpath).exists()) {
             return "db file not found.";
         }
         if (SQLiteDatabase.openDatabase(storedDBpath, null, SQLiteDatabase.OPEN_READONLY).getVersion()
-            > this.getReadableDatabase().getVersion()) {
+                > this.getReadableDatabase().getVersion()) {
             return "db cannot be restored.\nReason: the db version of your backup db is larger than the current db version.";
         }
         if (!verifyDB(storedDBpath)) {
@@ -253,18 +253,18 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         return null;
     }
 
-    private boolean verifyDB(String storedDBpath){
+    private boolean verifyDB(String storedDBpath) {
         SQLiteDatabase tempDB = SQLiteDatabase.openDatabase(storedDBpath, null, SQLiteDatabase.OPEN_READWRITE);
         if (ifTableExists(tempDB, TABLE_NAME)) {
             Cursor c = tempDB.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TABLE_NAME + "'", null);
-            if (c.getCount()==1){
+            if (c.getCount() == 1) {
                 c.close();
                 c = tempDB.query(TABLE_NAME, null, null, null, null, null, null);
                 String[] tempColumnNames = c.getColumnNames();
                 c.close();
                 if (tempColumnNames.length == COLUMNS.size()) {
-                    for (int i = 0; i < tempColumnNames.length; i++){
-                        if (!tempColumnNames[i].equals(COLUMNS.get(i))){
+                    for (int i = 0; i < tempColumnNames.length; i++) {
+                        if (!tempColumnNames[i].equals(COLUMNS.get(i))) {
                             tempDB.close();
                             return false;
                         }
@@ -310,7 +310,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         SQLiteDatabase tempDB = SQLiteDatabase.openDatabase(storedDBpath, null, SQLiteDatabase.OPEN_READWRITE);
         try {
             SQLiteDatabase currentDB = this.getWritableDatabase();
-            currentDB.execSQL("ATTACH DATABASE ? AS oldDB",new String[]{storedDBpath});
+            currentDB.execSQL("ATTACH DATABASE ? AS oldDB", new String[]{storedDBpath});
             currentDB.execSQL("DELETE FROM " + TABLE_NAME + ";");
             currentDB.execSQL("INSERT INTO " + TABLE_NAME + "(" + COLUMNS.get(0) + "," +
                     COLUMNS.get(1) + "," + COLUMNS.get(2) + "," +
@@ -343,11 +343,11 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         SQLiteDatabase.deleteDatabase(new File(NhPaths.APP_DATABASE_PATH + "/KaliLaunchers"));
     }
 
-    private boolean ifTableExists (SQLiteDatabase tempDB, String tableName) {
+    private boolean ifTableExists(SQLiteDatabase tempDB, String tableName) {
         boolean tableExists = false;
         try {
             Cursor c = tempDB.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", null);
-            if (c.getCount()==1) {
+            if (c.getCount() == 1) {
                 tableExists = true;
             }
             c.close();

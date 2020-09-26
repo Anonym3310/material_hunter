@@ -33,13 +33,79 @@ import java.net.Socket;
 
 public class LocationUpdateService extends Service implements GpsdServer.ConnectionListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    private KaliGPSUpdates.Receiver updateReceiver;
     private static final String TAG = "LocationUpdateService";
+    private final IBinder binder = new ServiceBinder();
+    private KaliGPSUpdates.Receiver updateReceiver;
     private GoogleApiClient apiClient = null;
     private boolean requestedLocationUpdates = false;
     private Socket clientSocket = null;
+    private boolean firstupdate = true;
+    private final LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            String nmeaSentence = nmeaSentenceFromLocation(location);
 
-    private final IBinder binder = new ServiceBinder();
+            // Workaround to allow network operations in main thread
+            if (android.os.Build.VERSION.SDK_INT > 8) {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
+
+            if (clientSocket != null) {
+
+                PrintWriter out = null;
+                try {
+                    out = new PrintWriter(clientSocket.getOutputStream(), true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "NMEA update: " + nmeaSentence);
+                out.println(nmeaSentence);
+
+                if (updateReceiver != null) {
+                    if (firstupdate) {
+                        firstupdate = false;
+                        updateReceiver.onFirstPositionUpdate();
+                    }
+                    updateReceiver.onPositionUpdate(nmeaSentence);
+                }
+            }
+        }
+    };
+
+    /**
+     * Formats the time from the #Location into a string.
+     */
+    @SuppressLint("DefaultLocale")
+    public static String formatTime(Location location) {
+        DateTimeFormatter dtf = DateTimeFormat.forPattern("HHmmss");
+        return dtf.print(new DateTime(location.getTime()));
+    }
+
+    /**
+     * Formats the surface position (latitude and longitude) from the
+     * #Location into a string.
+     */
+    public static String formatPosition(Location location) {
+        double latitude = location.getLatitude();
+        char nsSuffix = latitude < 0 ? 'S' : 'N';
+        latitude = Math.abs(latitude);
+
+        double longitude = location.getLongitude();
+        char ewSuffix = longitude < 0 ? 'W' : 'E';
+        longitude = Math.abs(longitude);
+        @SuppressLint("DefaultLocale") String lat = String.format("%02d%02d.%04d,%c",
+                (int) latitude,
+                (int) (latitude * 60) % 60,
+                (int) (latitude * 60 * 10000) % 10000,
+                nsSuffix);
+        @SuppressLint("DefaultLocale") String lon = String.format("%03d%02d.%04d,%c",
+                (int) longitude,
+                (int) (longitude * 60) % 60,
+                (int) (longitude * 60 * 10000) % 10000,
+                ewSuffix);
+        return lat + "," + lon;
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -95,40 +161,6 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
         return ("*" + hex.toUpperCase());
     }
 
-    /**
-     * Formats the time from the #Location into a string.
-     */
-    @SuppressLint("DefaultLocale")
-    public static String formatTime(Location location) {
-        DateTimeFormatter dtf = DateTimeFormat.forPattern("HHmmss");
-        return dtf.print(new DateTime(location.getTime()));
-    }
-
-    /**
-     * Formats the surface position (latitude and longitude) from the
-     * #Location into a string.
-     */
-    public static String formatPosition(Location location) {
-        double latitude = location.getLatitude();
-        char nsSuffix = latitude < 0 ? 'S' : 'N';
-        latitude = Math.abs(latitude);
-
-        double longitude = location.getLongitude();
-        char ewSuffix = longitude < 0 ? 'W' : 'E';
-        longitude = Math.abs(longitude);
-        @SuppressLint("DefaultLocale") String lat = String.format("%02d%02d.%04d,%c",
-                (int) latitude,
-                (int) (latitude * 60) % 60,
-                (int) (latitude * 60 * 10000) % 10000,
-                nsSuffix);
-        @SuppressLint("DefaultLocale") String lon = String.format("%03d%02d.%04d,%c",
-                (int) longitude,
-                (int) (longitude * 60) % 60,
-                (int) (longitude * 60 * 10000) % 10000,
-                ewSuffix);
-        return lat + "," + lon;
-    }
-
     @Override
     public void onSocketConnected(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -151,18 +183,10 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
         Log.d(TAG, "Google API Client connection failed");
     }
 
-
-    public class ServiceBinder extends Binder {
-        public LocationUpdateService getService() {
-            return LocationUpdateService.this;
-        }
-    }
-
     @Override
     public IBinder onBind(Intent intent) {
         return binder;
     }
-
 
     public void requestUpdates(KaliGPSUpdates.Receiver receiver) {
         requestedLocationUpdates = true;
@@ -217,42 +241,6 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
         }
     }
 
-    private boolean firstupdate = true;
-    private final LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            String nmeaSentence = nmeaSentenceFromLocation(location);
-
-            // Workaround to allow network operations in main thread
-            if (android.os.Build.VERSION.SDK_INT > 8)
-            {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-            }
-
-            if (clientSocket != null) {
-
-                PrintWriter out = null;
-                try {
-                    out = new PrintWriter(clientSocket.getOutputStream(), true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Log.d(TAG, "NMEA update: "+nmeaSentence);
-                out.println(nmeaSentence);
-
-                if (updateReceiver != null) {
-                    if (firstupdate) {
-                        firstupdate = false;
-                        updateReceiver.onFirstPositionUpdate();
-                    }
-                    updateReceiver.onPositionUpdate(nmeaSentence);
-                }
-            }
-        }
-    };
-
-
     private String nmeaSentenceFromLocation(Location location) {
 
 //       from: https://github.com/ya-isakov/blue-nmea-mirror/blob/master/src/Source.java
@@ -271,7 +259,6 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
 
     }
 
-
     @Override
     public void onDestroy() {
         Log.d(TAG, "OnDestroy");
@@ -280,6 +267,12 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
             LocationServices.FusedLocationApi.removeLocationUpdates(apiClient, locationListener);
         }
         super.onDestroy();
+    }
+
+    public class ServiceBinder extends Binder {
+        public LocationUpdateService getService() {
+            return LocationUpdateService.this;
+        }
     }
 }
 

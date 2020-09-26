@@ -17,11 +17,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
-    private ChrootManagerAsyncTaskListener listener;
-    private ShellExecuter exe = new ShellExecuter();
-    private int ACTIONCODE;
-    private int resultCode;
-    private ArrayList<String> resultString = new ArrayList<>();
     public static final int CHECK_CHROOT = 0;
     public static final int MOUNT_CHROOT = 1;
     public static final int UNMOUNT_CHROOT = 2;
@@ -31,8 +26,13 @@ public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
     public static final int DOWNLOAD_CHROOT = 6;
     public static final int FIND_CHROOT = 7;
     public static final int ISSUE_BANNER = 8;
+    private ChrootManagerAsyncTaskListener listener;
+    private ShellExecuter exe = new ShellExecuter();
+    private int ACTIONCODE;
+    private int resultCode;
+    private ArrayList<String> resultString = new ArrayList<>();
 
-    public ChrootManagerAsynctask(Integer ACTIONCODE){
+    public ChrootManagerAsynctask(Integer ACTIONCODE) {
         this.ACTIONCODE = ACTIONCODE;
     }
 
@@ -49,33 +49,33 @@ public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
     protected Void doInBackground(Object... objects) {
         switch (ACTIONCODE) {
             case ISSUE_BANNER:
-                exe.RunAsRootOutput("echo \"" + objects[1].toString() + "\"", ((TextView)objects[0]));
+                exe.RunAsRootOutput("echo \"" + objects[1].toString() + "\"", ((TextView) objects[0]));
                 break;
             case CHECK_CHROOT:
-                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\" -p " + objects[1].toString(), ((TextView)objects[0]));
+                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\" -p " + objects[1].toString(), ((TextView) objects[0]));
                 break;
             case MOUNT_CHROOT:
-                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/bootkali_init", ((TextView)objects[0]));
-                exe.RunAsRootOutput("sleep 1 && " + NhPaths.CHROOT_INITD_SCRIPT_PATH, ((TextView)objects[0]));
+                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/bootkali_init", ((TextView) objects[0]));
+                exe.RunAsRootOutput("sleep 1 && " + NhPaths.CHROOT_INITD_SCRIPT_PATH, ((TextView) objects[0]));
                 break;
             case UNMOUNT_CHROOT:
-                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/killkali", ((TextView)objects[0]));
+                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/killkali", ((TextView) objects[0]));
                 break;
             case INSTALL_CHROOT:
-                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"restore " + objects[1] + " " + objects[2] + "\"", ((TextView)objects[0]));
+                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"restore " + objects[1] + " " + objects[2] + "\"", ((TextView) objects[0]));
                 break;
             case REMOVE_CHROOT:
-                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"remove " + NhPaths.CHROOT_PATH() + "\"", ((TextView)objects[0]));
+                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"remove " + NhPaths.CHROOT_PATH() + "\"", ((TextView) objects[0]));
                 break;
             case BACKUP_CHROOT:
-                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"backup " + objects[1].toString() + " " + objects[2].toString() + "\"", ((TextView)objects[0]));
+                resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"backup " + objects[1].toString() + " " + objects[2].toString() + "\"", ((TextView) objects[0]));
                 break;
             case FIND_CHROOT:
                 resultString.addAll(Arrays.asList(new ShellExecuter().RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"findchroot\"").split("\\n")));
                 break;
             case DOWNLOAD_CHROOT:
                 try {
-                    exe.RunAsRootOutput("echo \"[!] The Download has been started...Please wait.\"", ((TextView)objects[0]));
+                    exe.RunAsRootOutput("echo \"[!] The Download has been started...Please wait.\"", ((TextView) objects[0]));
                     int count;
                     URL url = new URL("https://" + objects[1].toString() + objects[2].toString());
                     URLConnection connection = url.openConnection();
@@ -96,13 +96,13 @@ public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
                     }
                     writer.close();
                     reader.close();
-                    exe.RunAsRootOutput("echo \"[+] Download completed.\"", ((TextView)objects[0]));
-                    resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"checksha512 " +
+                    exe.RunAsRootOutput("echo \"[+] Download completed.\"", ((TextView) objects[0]));
+                    /*resultCode = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"checksha512 " +
                             exe.RunAsRootOutput("ping -c 1 " + objects[1].toString() + " | head -n1 | sed 's/\\(^.*(\\)\\(.*\\)\\().*(.*$\\)/\\2/g'") +
-                            objects[1].toString().replace(".tar.xz","") + ".sha512sum " + objects[3].toString() + "\"", ((TextView)objects[0]));
+                            objects[1].toString().replace(".tar.xz","") + ".sha512sum " + objects[3].toString() + "\"", ((TextView)objects[0]));*/
                 } catch (Exception e) {
-                    exe.RunAsRootOutput("echo \"[-] " + e.getMessage() + "\"", ((TextView)objects[0]));
-                    resultCode = 1;
+                    exe.RunAsRootOutput("echo \"[-] " + e.getMessage() + "\"", ((TextView) objects[0]));
+                    //resultCode = 1;
                 }
                 break;
         }
@@ -130,14 +130,16 @@ public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
         this.listener = listener;
     }
 
-    public interface ChrootManagerAsyncTaskListener {
-        void onAsyncTaskPrepare();
-        void onAsyncTaskProgressUpdate(int progress);
-        void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString);
-    }
-
     @Override
     protected void onCancelled() {
         super.onCancelled();
+    }
+
+    public interface ChrootManagerAsyncTaskListener {
+        void onAsyncTaskPrepare();
+
+        void onAsyncTaskProgressUpdate(int progress);
+
+        void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString);
     }
 }

@@ -39,17 +39,17 @@ import java.util.List;
 
 public class DuckHunterConvertFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "DuckHunterConvert";
-    private String duckyInputFile;
-    private String duckyOutputFile;
     private static final String loadFilePath = "/scripts/ducky/";
     private static final int PICKFILE_RESULT_CODE = 1;
+    private String duckyInputFile;
+    private String duckyOutputFile;
     private Context context;
     private Activity activity;
     private boolean isReceiverRegistered;
     private EditText editsource;
     private ConvertDuckyBroadcastReceiver convertDuckyBroadcastReceiver = new ConvertDuckyBroadcastReceiver();
 
-    public DuckHunterConvertFragment(String inFilePath, String outFilePath){
+    public DuckHunterConvertFragment(String inFilePath, String outFilePath) {
         this.duckyInputFile = inFilePath;
         this.duckyOutputFile = outFilePath;
     }
@@ -116,7 +116,7 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        if (!isReceiverRegistered){
+        if (!isReceiverRegistered) {
             activity.registerReceiver(convertDuckyBroadcastReceiver, new IntentFilter(BuildConfig.APPLICATION_ID + ".WRITEDUCKY"));
             isReceiverRegistered = true;
         }
@@ -203,7 +203,7 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
         return result.toArray(new String[0]);
     }
 
-    private void write_ducky(){
+    private void write_ducky() {
         try {
             File myFile = new File(duckyInputFile);
             myFile.createNewFile();
@@ -216,6 +216,7 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
             NhPaths.showMessage(context, e.getMessage());
         }
     }
+
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.duckyLoad:
@@ -290,7 +291,7 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
     public class ConvertDuckyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getStringExtra("ACTION")){
+            switch (intent.getStringExtra("ACTION")) {
                 case "WRITEDUCKY":
                     write_ducky();
                     activity.sendBroadcast(new Intent().putExtra("ACTION", "PREVIEWDUCKY").setAction(BuildConfig.APPLICATION_ID + ".PREVIEWDUCKY"));

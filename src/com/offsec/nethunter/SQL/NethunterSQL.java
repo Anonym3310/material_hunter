@@ -17,15 +17,13 @@ import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
- /*
-    SQLiteOpenHelper class for nethunter fragment.
- */
+/*
+   SQLiteOpenHelper class for nethunter fragment.
+*/
 public class NethunterSQL extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "NethunterFragment";
-    private static NethunterSQL instance;
     private static final String TAG = "NethunterSQL";
     private static final String TABLE_NAME = DATABASE_NAME;
-    private static ArrayList<String> COLUMNS = new ArrayList<>();
     private static final String[][] nethunterData = {
             {"1", "Kernel Version", "uname -a", "\\n", "1"},
             {"2", "Device codename", "getprop ro.product.device", "\\n", "1"},
@@ -33,13 +31,8 @@ public class NethunterSQL extends SQLiteOpenHelper {
             {"4", "Network Interface Status", "ip -o addr show | awk '{print $2, $3, $4}'", "\\n", "1"},
             {"5", "External IP", "curl ipv4.icanhazip.com || echo \"No internet connection.\"", "\\n", "0"}
     };
-
-    public synchronized static NethunterSQL getInstance(Context context){
-        if (instance == null) {
-            instance = new NethunterSQL(context.getApplicationContext());
-        }
-        return instance;
-    }
+    private static NethunterSQL instance;
+    private static ArrayList<String> COLUMNS = new ArrayList<>();
 
     private NethunterSQL(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -51,13 +44,20 @@ public class NethunterSQL extends SQLiteOpenHelper {
         COLUMNS.add("RunOnCreate");
     }
 
+    public synchronized static NethunterSQL getInstance(Context context) {
+        if (instance == null) {
+            instance = new NethunterSQL(context.getApplicationContext());
+        }
+        return instance;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + COLUMNS.get(0) + " INTEGER, " +
-                COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) +  " TEXT, " + COLUMNS.get(3) + " INTEGER, " + COLUMNS.get(4) + " TEXT)");
+                COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) + " TEXT, " + COLUMNS.get(3) + " INTEGER, " + COLUMNS.get(4) + " TEXT)");
         ContentValues initialValues = new ContentValues();
         db.beginTransaction();
-        for (String[] data: nethunterData){
+        for (String[] data : nethunterData) {
             initialValues.put(COLUMNS.get(0), data[0]);
             initialValues.put(COLUMNS.get(1), data[1]);
             initialValues.put(COLUMNS.get(2), data[2]);
@@ -92,7 +92,7 @@ public class NethunterSQL extends SQLiteOpenHelper {
         return nethunterModelArrayList;
     }
 
-    public void addData(int targetPositionId, ArrayList<String> addData){
+    public void addData(int targetPositionId, ArrayList<String> addData) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues initialValues = new ContentValues();
         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " + 1 WHERE " + COLUMNS.get(0) + " >= " + targetPositionId + ";");
@@ -108,7 +108,7 @@ public class NethunterSQL extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void deleteData(ArrayList<Integer> selectedTargetIds){
+    public void deleteData(ArrayList<Integer> selectedTargetIds) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COLUMNS.get(0) + " in (" + TextUtils.join(",", selectedTargetIds) + ");");
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMNS.get(0) + ";", null);
@@ -120,21 +120,21 @@ public class NethunterSQL extends SQLiteOpenHelper {
         db.close();
     }
 
-     public void moveData(Integer originalPosition, Integer targetPosition){
-         SQLiteDatabase db = this.getWritableDatabase();
-         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = 0 - 1 WHERE " + COLUMNS.get(0) + " = " + (originalPosition + 1) + ";");
-         if (originalPosition < targetPosition){
-             db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " - 1 WHERE " + COLUMNS.get(0) + " > " +
-                     (originalPosition + 1)  + " AND " + COLUMNS.get(0) + " < " + (targetPosition + 2) + ";");
-         } else {
-             db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " + 1 WHERE " + COLUMNS.get(0) + " > " +
-                     targetPosition  + " AND " + COLUMNS.get(0) + " < " + (originalPosition + 1) + ";");
-         }
-         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + (targetPosition + 1) + " WHERE " + COLUMNS.get(0) + " = -1;");
-         db.close();
-     }
+    public void moveData(Integer originalPosition, Integer targetPosition) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = 0 - 1 WHERE " + COLUMNS.get(0) + " = " + (originalPosition + 1) + ";");
+        if (originalPosition < targetPosition) {
+            db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " - 1 WHERE " + COLUMNS.get(0) + " > " +
+                    (originalPosition + 1) + " AND " + COLUMNS.get(0) + " < " + (targetPosition + 2) + ";");
+        } else {
+            db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + COLUMNS.get(0) + " + 1 WHERE " + COLUMNS.get(0) + " > " +
+                    targetPosition + " AND " + COLUMNS.get(0) + " < " + (originalPosition + 1) + ";");
+        }
+        db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(0) + " = " + (targetPosition + 1) + " WHERE " + COLUMNS.get(0) + " = -1;");
+        db.close();
+    }
 
-    public void editData(Integer targetPosition, ArrayList<String> editData){
+    public void editData(Integer targetPosition, ArrayList<String> editData) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(1) + " = '" + editData.get(0).replace("'", "''") + "', " +
                 COLUMNS.get(2) + " = '" + editData.get(1).replace("'", "''") + "', " +
@@ -144,14 +144,14 @@ public class NethunterSQL extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void resetData(){
+    public void resetData() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + COLUMNS.get(0) + " INTEGER, " +
-                COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) +  " TEXT, " + COLUMNS.get(3) + " INTEGER, " + COLUMNS.get(4) + " TEXT)");
+                COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) + " TEXT, " + COLUMNS.get(3) + " INTEGER, " + COLUMNS.get(4) + " TEXT)");
         ContentValues initialValues = new ContentValues();
         db.beginTransaction();
-        for (String[] data: nethunterData){
+        for (String[] data : nethunterData) {
             initialValues.put(COLUMNS.get(0), data[0]);
             initialValues.put(COLUMNS.get(1), data[1]);
             initialValues.put(COLUMNS.get(2), data[2]);
@@ -189,7 +189,7 @@ public class NethunterSQL extends SQLiteOpenHelper {
     }
 
     public String restoreData(String storedDBpath) {
-        if (!new File(storedDBpath).exists()){
+        if (!new File(storedDBpath).exists()) {
             //new AlertDialog.Builder(context).setTitle("Failed to restore the DB.").setMessage("db file not found.").create().show();
             return "db file not found.";
         }
@@ -219,10 +219,10 @@ public class NethunterSQL extends SQLiteOpenHelper {
         return null;
     }
 
-    private boolean verifyDB(String storedDBpath){
+    private boolean verifyDB(String storedDBpath) {
         SQLiteDatabase tempDB = SQLiteDatabase.openDatabase(storedDBpath, null, SQLiteDatabase.OPEN_READWRITE);
         Cursor c = tempDB.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + TABLE_NAME + "'", null);
-        if (c.getCount()==1){
+        if (c.getCount() == 1) {
             c.close();
             c = tempDB.query(TABLE_NAME, null, null, null, null, null, null);
             String[] tempColumnNames = c.getColumnNames();
@@ -231,8 +231,8 @@ public class NethunterSQL extends SQLiteOpenHelper {
                 tempDB.close();
                 return false;
             }
-            for (int i = 0; i < tempColumnNames.length; i++){
-                if (!tempColumnNames[i].equals(COLUMNS.get(i))){
+            for (int i = 0; i < tempColumnNames.length; i++) {
+                if (!tempColumnNames[i].equals(COLUMNS.get(i))) {
                     tempDB.close();
                     return false;
                 }

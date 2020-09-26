@@ -22,9 +22,13 @@ import java.util.Map;
 
 public class RunAtBootService extends JobIntentService {
 
-    private static final String TAG = "NetHunter: Startup";
     static final int SERVICE_JOB_ID = 1;
+    private static final String TAG = "NetHunter: Startup";
     private NotificationCompat.Builder n = null;
+
+    public static void enqueueWork(Context context, Intent work) {
+        enqueueWork(context, RunAtBootService.class, SERVICE_JOB_ID, work);
+    }
 
     @Override
     public void onCreate() {
@@ -48,10 +52,6 @@ public class RunAtBootService extends JobIntentService {
         if (notificationManager != null) {
             notificationManager.notify(999, n.build());
         }
-    }
-
-    public static void enqueueWork(Context context, Intent work) {
-        enqueueWork(context, RunAtBootService.class, SERVICE_JOB_ID, work);
     }
 
     @Override
@@ -79,14 +79,14 @@ public class RunAtBootService extends JobIntentService {
 
         ShellExecuter exe = new ShellExecuter();
         exe.RunAsRootOutput(NhPaths.BUSYBOX + " run-parts " + NhPaths.APP_INITD_PATH);
-        if (exe.RunAsRootReturnValue(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\"") == 0){
+        if (exe.RunAsRootReturnValue(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\"") == 0) {
             exe.RunAsRootOutput("rm -rf " + NhPaths.CHROOT_PATH() + "/tmp/.X1*");
             hashMap.put("CHROOT", isOK);
         }
 
         String resultMsg = "Boot completed.\nEveryting is fine and Chroot has been started!";
-        for(Map.Entry<String, String> entry: hashMap.entrySet()){
-            if (!entry.getValue().equals(isOK)){
+        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+            if (!entry.getValue().equals(isOK)) {
                 resultMsg = "Make sure the above requirements are met.";
                 break;
             }
@@ -94,9 +94,9 @@ public class RunAtBootService extends JobIntentService {
 
         doNotification(
                 "Root: " + hashMap.get("ROOT") + "\n" +
-                "Busybox: " + hashMap.get("BUSYBOX") + "\n" +
-                "Chroot: " + hashMap.get("CHROOT") + "\n" +
-                resultMsg);
+                        "Busybox: " + hashMap.get("BUSYBOX") + "\n" +
+                        "Chroot: " + hashMap.get("CHROOT") + "\n" +
+                        resultMsg);
     }
 
     @Override

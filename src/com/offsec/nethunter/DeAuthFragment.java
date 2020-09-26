@@ -23,18 +23,17 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.offsec.nethunter.utils.BootKali;
 import com.offsec.nethunter.utils.NhPaths;
 import com.offsec.nethunter.utils.ShellExecuter;
+
 /**
  * Created by nik on 20/02/17.
  */
 
 
-
-
-    public class DeAuthFragment  extends Fragment {
+public class DeAuthFragment extends Fragment {
+    private static final String ARG_SECTION_NUMBER = "section_number";
     private final ShellExecuter exe = new ShellExecuter();
     private Context context;
     private Activity activity;
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static DeAuthFragment newInstance(int sectionNumber) {
         DeAuthFragment fragment = new DeAuthFragment();
@@ -73,13 +72,11 @@ import com.offsec.nethunter.utils.ShellExecuter;
                 Thread.sleep(2000);
                 if (whitelist.isChecked()) {
                     whitelist_command = "-w /sdcard/nh_files/deauth/whitelist.txt ";
-                }
-                else{
+                } else {
                     whitelist_command = "";
                 }
                 intentClickListener_NH("echo Press Crtl+C to stop! && mdk3 " + wlan.getText() + "mon d " + whitelist_command + "-c " + channel.getText());
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
@@ -97,7 +94,7 @@ import com.offsec.nethunter.utils.ShellExecuter;
             new BootKali(cmd).run_bg();
             try {
                 Thread.sleep(5000);
-                String output = exe.RunAsRootOutput("cat " + NhPaths.APP_SD_FILES_PATH + "/deauth/output.txt").replace("Channel:","\n Channel:");
+                String output = exe.RunAsRootOutput("cat " + NhPaths.APP_SD_FILES_PATH + "/deauth/output.txt").replace("Channel:", "\n Channel:");
                 term.setText(output);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -106,12 +103,11 @@ import com.offsec.nethunter.utils.ShellExecuter;
 
         });
         whitelist.setOnClickListener(v -> {
-            if (whitelist.isChecked()){
+            if (whitelist.isChecked()) {
                 white_me.setClickable(true);
                 String check_me = exe.RunAsRootOutput("grep -q " + getmac(wlan.getText().toString()) + " \"" + NhPaths.APP_SD_FILES_PATH + "/deauth/whitelist.txt\" && echo $?");
                 white_me.setChecked(check_me.contains("0"));
-            }
-            else{
+            } else {
                 white_me.setChecked(false);
                 white_me.setClickable(false);
             }
@@ -129,8 +125,7 @@ import com.offsec.nethunter.utils.ShellExecuter;
                     }
                     exe.RunAsRootOutput("sed -i '/" + getmac(wlan.getText().toString()) + "/d' " + NhPaths.APP_SD_FILES_PATH + "/deauth/whitelist.txt");
                 }
-            }
-            else{
+            } else {
                 white_me.setChecked(false);
             }
         });
@@ -165,9 +160,9 @@ import com.offsec.nethunter.utils.ShellExecuter;
         }
     }
 
-    public String getmac(final String wlan){
+    public String getmac(final String wlan) {
         final String mac;
-        mac = exe.RunAsRootOutput("cat /sys/class/net/"+ wlan +  "/address");
+        mac = exe.RunAsRootOutput("cat /sys/class/net/" + wlan + "/address");
         return mac;
     }
 }

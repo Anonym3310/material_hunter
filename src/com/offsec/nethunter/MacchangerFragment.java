@@ -7,8 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -39,6 +37,7 @@ public class MacchangerFragment extends Fragment {
     private static final String TAG = "MacchangerFragment";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static int lastSelectedIfacePosition = 0;
+    private static HashMap<String, String> iFaceAndMacHashMap = new HashMap<>();
     private Spinner interfaceSpinner;
     private Spinner macModeSpinner;
     private Button changeMacButton;
@@ -56,7 +55,6 @@ public class MacchangerFragment extends Fragment {
     private TextView currentMacTextView;
     //private TextView currentHostNameTextView;
     private Button reloadImageButton;
-    private static HashMap<String, String> iFaceAndMacHashMap = new HashMap<>();
     private Context context;
     private Activity activity;
 
@@ -70,6 +68,30 @@ public class MacchangerFragment extends Fragment {
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private static void getIfaceAndMacAddr() {
+        if (iFaceAndMacHashMap.size() != 0) iFaceAndMacHashMap.clear();
+        try {
+            List<NetworkInterface> allIface = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface iface : allIface) {
+                byte[] macBytes = iface.getHardwareAddress();
+                if (macBytes == null) {
+                    continue;
+                }
+                StringBuilder macaddrStringBuilder = new StringBuilder();
+                for (byte b : macBytes) {
+                    macaddrStringBuilder.append(String.format("%02X:", b));
+                }
+
+                if (macaddrStringBuilder.length() > 0) {
+                    macaddrStringBuilder.deleteCharAt(macaddrStringBuilder.length() - 1);
+                }
+                iFaceAndMacHashMap.put(iface.getName().toLowerCase(), macaddrStringBuilder.toString());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     @Override
@@ -153,7 +175,7 @@ public class MacchangerFragment extends Fragment {
         mac6.setText(String.format("%02x", macAddr[5]));
     }
 
-    private void setHostNameEditText(){
+    private void setHostNameEditText() {
         MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.GETHOSTNAME);
         macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
             @Override
@@ -175,7 +197,7 @@ public class MacchangerFragment extends Fragment {
         macchangerAsyncTask.execute();
     }
 
-    private void setSetHostnameButton(){
+    private void setSetHostnameButton() {
         setHostNameButton.setOnClickListener(v -> {
             MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.SETHOSTNAME);
             macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
@@ -195,7 +217,7 @@ public class MacchangerFragment extends Fragment {
     }
 
     private void setIfaceSpinner() {
-        List<String> keys  = new ArrayList<>(iFaceAndMacHashMap.keySet());
+        List<String> keys = new ArrayList<>(iFaceAndMacHashMap.keySet());
         Collections.sort(keys, Collections.reverseOrder());
         String[] iFaceStrings = keys.toArray(new String[0]);
         ArrayAdapter<String> iFaceArrayAdapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, iFaceStrings);
@@ -218,7 +240,7 @@ public class MacchangerFragment extends Fragment {
     }
 
     private void setMacModeSpinner() {
-        if (macModeSpinner.getSelectedItemPosition() == 0){
+        if (macModeSpinner.getSelectedItemPosition() == 0) {
             regenerateMacButton.setVisibility(View.VISIBLE);
             clearMacButton.setVisibility(View.GONE);
         } else {
@@ -228,11 +250,11 @@ public class MacchangerFragment extends Fragment {
         macModeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0){
+                if (position == 0) {
                     regenerateMacButton.setVisibility(View.VISIBLE);
                     clearMacButton.setVisibility(View.GONE);
                     genRandomMACAddress();
-                } else if (position == 1){
+                } else if (position == 1) {
                     regenerateMacButton.setVisibility(View.GONE);
                     clearMacButton.setVisibility(View.VISIBLE);
                 }
@@ -249,7 +271,7 @@ public class MacchangerFragment extends Fragment {
         regenerateMacButton.setOnClickListener(v -> genRandomMACAddress());
     }
 
-    private void setClearMacButton(){
+    private void setClearMacButton() {
         clearMacButton.setOnClickListener(v -> {
             mac1.setText("");
             mac2.setText("");
@@ -263,7 +285,7 @@ public class MacchangerFragment extends Fragment {
     private void setReloadImageButton() {
         reloadImageButton.setOnClickListener(v -> {
             getIfaceAndMacAddr();
-            List<String> keys  = new ArrayList<>(iFaceAndMacHashMap.keySet());
+            List<String> keys = new ArrayList<>(iFaceAndMacHashMap.keySet());
             Collections.sort(keys, Collections.reverseOrder());
             String[] iFaceStrings = keys.toArray(new String[0]);
             ArrayAdapter<String> iFaceArrayAdapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, iFaceStrings);
@@ -271,30 +293,6 @@ public class MacchangerFragment extends Fragment {
             interfaceSpinner.setAdapter(iFaceArrayAdapter);
             interfaceSpinner.setSelection(lastSelectedIfacePosition);
         });
-    }
-
-    private static void getIfaceAndMacAddr() {
-        if (iFaceAndMacHashMap.size() != 0) iFaceAndMacHashMap.clear();
-        try {
-            List<NetworkInterface> allIface = Collections.list(NetworkInterface.getNetworkInterfaces());
-            for (NetworkInterface iface : allIface) {
-                byte[] macBytes = iface.getHardwareAddress();
-                if (macBytes == null) {
-                    continue;
-                }
-                StringBuilder macaddrStringBuilder = new StringBuilder();
-                for (byte b : macBytes) {
-                    macaddrStringBuilder.append(String.format("%02X:",b));
-                }
-
-                if (macaddrStringBuilder.length() > 0) {
-                    macaddrStringBuilder.deleteCharAt(macaddrStringBuilder.length() - 1);
-                }
-                iFaceAndMacHashMap.put(iface.getName().toLowerCase(), macaddrStringBuilder.toString());
-            }
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-        }
     }
 
     private void setResetMacButton() {
@@ -331,7 +329,7 @@ public class MacchangerFragment extends Fragment {
                             @Override
                             public void onAsyncTaskFinished(Object result1) {
                                 ad1.dismiss();
-                                if ((int)result1 == 0){
+                                if ((int) result1 == 0) {
                                     NhPaths.showMessage(context, "The MAC address of " + interfaceSpinner.getSelectedItem().toString().toLowerCase() +
                                             " has been successfully changed to " + originalMac);
                                 } else {
@@ -373,7 +371,7 @@ public class MacchangerFragment extends Fragment {
                 @Override
                 public void onAsyncTaskFinished(Object result) {
                     ad.dismiss();
-                    if ((int)result == 0){
+                    if ((int) result == 0) {
                         NhPaths.showMessage(context, "The MAC address of " + interfaceSpinner.getSelectedItem().toString().toLowerCase() +
                                 " has been successfully changed to " + macAddress);
                     } else {

@@ -22,24 +22,44 @@ public class USBArmoryUSBSwitchModel {
 
     }
 
-    public String getidVendor() { return idVendor; }
+    public String getidVendor() {
+        return idVendor;
+    }
 
-    public String getidProduct() { return idProduct; }
+    public String getidProduct() {
+        return idProduct;
+    }
 
-    public String getmanufacturer() { return manufacturer; }
+    public String getmanufacturer() {
+        return manufacturer;
+    }
 
-    public String getproduct() { return product; }
+    public String getproduct() {
+        return product;
+    }
 
-    public String getserialnumber() { return serialnumber; }
+    public String getserialnumber() {
+        return serialnumber;
+    }
 
-    public void setidVendor(String idVendor) {this.idVendor = idVendor; }
+    public void setidVendor(String idVendor) {
+        this.idVendor = idVendor;
+    }
 
-    public void setidProduct(String idProduct) {this.idProduct = idProduct; }
+    public void setidProduct(String idProduct) {
+        this.idProduct = idProduct;
+    }
 
-    public void setmanufacturer(String manufacturer) { this.manufacturer = manufacturer; }
+    public void setmanufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
 
-    public void setproduct(String product) { this.product = product; }
+    public void setproduct(String product) {
+        this.product = product;
+    }
 
-    public void setserialnumber(String serialnumber) { this.serialnumber = serialnumber; }
+    public void setserialnumber(String serialnumber) {
+        this.serialnumber = serialnumber;
+    }
 
 }

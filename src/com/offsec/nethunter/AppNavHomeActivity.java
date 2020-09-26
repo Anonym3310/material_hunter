@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +64,9 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     public static final String CHROOT_INSTALLED_TAG = "CHROOT_INSTALLED_TAG";
     public static final String GPS_BACKGROUND_FRAGMENT_TAG = "BG_FRAGMENT_TAG";
     public static final String BOOT_CHANNEL_ID = "BOOT_CHANNEL";
+    public static MenuItem lastSelectedMenuItem;
+    public static Boolean isBackPressEnabled = true;
+    private final Stack<String> titles = new Stack<>();
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -72,16 +74,33 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView navigationView;
     private CharSequence mTitle = "MaterialHunter";
-    private final Stack<String> titles = new Stack<>();
     private SharedPreferences prefs;
-    public static MenuItem lastSelectedMenuItem;
     private boolean locationUpdatesRequested = false;
     private KaliGPSUpdates.Receiver locationUpdateReceiver;
     private NhPaths nhPaths;
     private PermissionCheck permissionCheck;
     private BroadcastReceiver nethunterReceiver;
-    public static Boolean isBackPressEnabled = true;
+    private LocationUpdateService locationService;
+    private boolean updateServiceBound = false;
+    private final ServiceConnection locationServiceConnection = new ServiceConnection() {
 
+        @Override
+        public void onServiceConnected(ComponentName className,
+                                       IBinder service) {
+            // We've bound to Update Service, cast the IBinder and get LocalService instance
+            LocationUpdateService.ServiceBinder binder = (LocationUpdateService.ServiceBinder) service;
+            locationService = binder.getService();
+            updateServiceBound = true;
+            if (locationUpdatesRequested) {
+                locationService.requestUpdates(locationUpdateReceiver);
+            }
+
+        }
+
+        public void onServiceDisconnected(ComponentName arg0) {
+            updateServiceBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,12 +150,12 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
 
                 // After finishing copying app files, we do a compatibility check before allowing user to use it.
                 // First, check if the app has gained the root already.
-                if (!CheckForRoot.isRoot()){
+                if (!CheckForRoot.isRoot()) {
                     showWarningDialog("NetHunter app cannot be run properly", "Root permission is required!!", true);
                 }
 
                 // Secondly, check if busybox is present.
-                if (!CheckForRoot.isBusyboxInstalled()){
+                if (!CheckForRoot.isBusyboxInstalled()) {
                     showWarningDialog("NetHunter app cannot be run properly", "No busybox is detected, please make sure you have busybox installed!!", true);
                 }
 
@@ -146,14 +165,13 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 }
 
                 // Lastly, check if all required permissions are granted, if yes, show the view to user.
-                if (isAllRequiredPermissionsGranted()){
+                if (isAllRequiredPermissionsGranted()) {
                     setRootView();
                 }
             }
         });
         copyBootFilesAsyncTask.execute();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -175,9 +193,9 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == PermissionCheck.DEFAULT_PERMISSION_RQCODE || requestCode == PermissionCheck.NH_TERM_PERMISSIONS_RQCODE){
-            for (int grantResult:grantResults){
-                if (grantResult != 0){
+        if (requestCode == PermissionCheck.DEFAULT_PERMISSION_RQCODE || requestCode == PermissionCheck.NH_TERM_PERMISSIONS_RQCODE) {
+            for (int grantResult : grantResults) {
+                if (grantResult != 0) {
                     if (getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.offsec.nhterm") == null) {
                         showWarningDialog("NetHunter app cannot be run properly", "NetHunter Terminal is not installed yet, please install from the store!", true);
                         return;
@@ -199,28 +217,6 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         Intent intent = new Intent(getApplicationContext(), LocationUpdateService.class);
         bindService(intent, locationServiceConnection, Context.BIND_AUTO_CREATE);
     }
-
-    private LocationUpdateService locationService;
-    private boolean updateServiceBound = false;
-    private final ServiceConnection locationServiceConnection = new ServiceConnection() {
-
-        @Override
-        public void onServiceConnected(ComponentName className,
-                                       IBinder service) {
-            // We've bound to Update Service, cast the IBinder and get LocalService instance
-            LocationUpdateService.ServiceBinder binder = (LocationUpdateService.ServiceBinder) service;
-            locationService = binder.getService();
-            updateServiceBound = true;
-            if (locationUpdatesRequested) {
-                locationService.requestUpdates(locationUpdateReceiver);
-            }
-
-        }
-
-        public void onServiceDisconnected(ComponentName arg0) {
-            updateServiceBound = false;
-        }
-    };
 
     @Override
     public void onBackPressed() {
@@ -263,7 +259,8 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     @Override
     protected void onStart() {
         super.onStart();
-        if (navigationView != null) startService(new Intent(getApplicationContext(), CompatCheckService.class));
+        if (navigationView != null)
+            startService(new Intent(getApplicationContext(), CompatCheckService.class));
     }
 
     @Override
@@ -273,13 +270,13 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         if (nethunterReceiver != null) {
             unregisterReceiver(nethunterReceiver);
         }
-        if (nhPaths != null){
+        if (nhPaths != null) {
             nhPaths.onDestroy();
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private void setRootView(){
+    private void setRootView() {
 
         setContentView(R.layout.base_layout);
 
@@ -483,7 +480,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         }
     }
 
-    public void blockActionBar(){
+    public void blockActionBar() {
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setHomeButtonEnabled(false);
@@ -492,7 +489,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         }
     }
 
-    public void setDefaultSharePreference () {
+    public void setDefaultSharePreference() {
         if (prefs.getString(SharePrefTag.DUCKHUNTER_LANG_SHAREPREF_TAG, null) == null) {
             prefs.edit().putString(SharePrefTag.DUCKHUNTER_LANG_SHAREPREF_TAG, "us").apply();
         }
@@ -512,7 +509,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 .commit();
     }
 
-    private boolean isAllRequiredPermissionsGranted(){
+    private boolean isAllRequiredPermissionsGranted() {
         if (!permissionCheck.isAllPermitted(PermissionCheck.DEFAULT_PERMISSIONS)) {
             permissionCheck.checkPermissions(PermissionCheck.DEFAULT_PERMISSIONS, PermissionCheck.DEFAULT_PERMISSION_RQCODE);
             return false;
@@ -540,7 +537,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     }
 
     // Main app broadcastRecevier to response for different actions.
-    public class NethunterReceiver extends BroadcastReceiver{
+    public class NethunterReceiver extends BroadcastReceiver {
         public static final String CHECKCOMPAT = BuildConfig.APPLICATION_ID + ".CHECKCOMPAT";
         public static final String BACKPRESSED = BuildConfig.APPLICATION_ID + ".BACKPRESSED";
         public static final String CHECKCHROOT = BuildConfig.APPLICATION_ID + ".CHECKCHROOT";
@@ -563,8 +560,8 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                         }
                         break;
                     case CHECKCHROOT:
-                        try{
-                            if (intent.getBooleanExtra("ENABLEFRAGMENT", false)){
+                        try {
+                            if (intent.getBooleanExtra("ENABLEFRAGMENT", false)) {
                                 navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, true);
                             } else {
                                 navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
