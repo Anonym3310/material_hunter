@@ -351,7 +351,7 @@ if [ ! $# -eq 0 ]; then
                     [ ! -d $MNT ] && bklog "[-] \"$MNT\" directory not existed! Please check again first!" && exit 1
                     $SOURCE_PATH/killkali
                     [ $? -eq 1 ] && bklog "[-] Failed to umount the chroot environment..Aborted." && exit 1
-                    bklog "[!] Removing $MNT now....It may take a while, be patient."
+                    bklog "[!] Removing $MNT now..It may take a while, be patient."
                     $BUSYBOX find $MNT -type l -exec rm -rf {} \;
                     if rm -rf $MNT; then
                         $BUSYBOX sync
