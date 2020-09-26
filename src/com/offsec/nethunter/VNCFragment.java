@@ -1,5 +1,6 @@
 package com.offsec.nethunter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -242,24 +243,6 @@ public class VNCFragment extends Fragment {
             }
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-            }
-        });
-
-        //Immersion switch
-        final Switch immersionSwitch = rootView.findViewById(R.id.immersionSwitch);
-        final String immersion = exe.RunAsRootOutput("settings get global policy_control");
-        if (immersion.equals("null*"))
-            immersionSwitch.setChecked(false);
-        else
-            immersionSwitch.setChecked(true);
-
-        immersionSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    exe.RunAsRoot(new String[]{"settings put global policy_control immersive.full=*"});
-                } else {
-                    exe.RunAsRoot(new String[]{"settings put global policy_control null*"});
-                }
             }
         });
 

@@ -287,24 +287,14 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
                     android:text="Remove selected Kali user"
                     android:textColor="#ffffffff" />
-
-                <Switch
-                    android:id="@+id/immersionSwitch"
-                    style="?android:attr/textAppearanceSmall"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:text="IMMERSIVE MODE"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="?android:attr/listDivider"
-                    android:paddingBottom="15dp" />
+                    android:background="?android:attr/listDivider" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -378,7 +368,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:orientation="horizontal"
-                    android:paddingBottom="10dp">
+                    android:layout_marginBottom="10dp">
 
                     <Button
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
