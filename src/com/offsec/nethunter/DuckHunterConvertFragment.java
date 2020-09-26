@@ -227,7 +227,7 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
                 }
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                 Uri selectedUri = Uri.parse(NhPaths.APP_SD_FILES_PATH + loadFilePath);
-                intent.setDataAndType(selectedUri, "file/*");
+                intent.setDataAndType(selectedUri, "*/*");
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
                 break;
             case R.id.duckySave:
