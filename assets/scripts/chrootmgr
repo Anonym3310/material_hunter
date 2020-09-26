@@ -36,7 +36,6 @@ f_chroot_usage(){
     bklog "[!] chrootmgr [-p <your chroot folder>] -c \"backup <full_path_of_your_chroot_folder> <full_path_with_desired_name.tar.[gx]z>\""
     bklog "[!] chrootmgr [-p <your chroot folder>] -c \"restore <full_path_of_your_.tar.[gx]z> </data/local/nhsystem/>\""
     bklog "[!] chrootmgr [-p <your chroot folder>] -c \"remove <full_path_of_your_chroot_folder>\" ---> Delete your chroot folder without rebooting the device, but not 100% guranteed success"
-    #bklog "[!] chrootmgr -c \"sha512sum <URL of the checksum file> <the target file to be checked.>\" ---> Compare the sha512 checksum of the downloaded chroot and the official sha512 file."
     bklog "[!] If -p option is not specified, then the script will find the chroot path according to the app sharepreference."
 }
 
@@ -169,7 +168,7 @@ if [ ! $# -eq 0 ]; then
                             if [ ! -x $MNT$CHROOT_EXEC ]; then
                                 bklog "[-] Seems the sudo is not installed successfully."
                                 bklog "[-] Make sure your Kali Chroot is not corrupted."
-                                ##exit 2
+                                exit 2
                             fi
                         fi
                         ISALLREADY=0
