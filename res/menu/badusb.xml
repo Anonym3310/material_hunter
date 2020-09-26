@@ -3,6 +3,6 @@
     <item
         android:id="@+id/source_button"
         android:title="@string/source"
-        android:icon="@android:drawable/ic_menu_edit"
+        android:icon="@drawable/ic_pencil"
         app:showAsAction="ifRoom|withText"  />
 </menu>
