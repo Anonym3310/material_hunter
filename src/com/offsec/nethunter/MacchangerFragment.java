@@ -119,12 +119,6 @@ public class MacchangerFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.macchanger, menu);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         interfaceSpinner = null;

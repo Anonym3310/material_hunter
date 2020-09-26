@@ -3,9 +3,9 @@ package com.offsec.nethunter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -31,6 +32,7 @@ import com.offsec.nethunter.databinding.MitmfInjectBinding;
 import com.offsec.nethunter.databinding.MitmfResponderBinding;
 import com.offsec.nethunter.databinding.MitmfSpoofBinding;
 import com.offsec.nethunter.utils.NhPaths;
+import com.offsec.nethunter.utils.SharePrefTag;
 import com.offsec.nethunter.utils.ShellExecuter;
 
 import java.util.ArrayList;
@@ -114,6 +116,9 @@ public class MITMfFragment extends Fragment {
             case R.id.mitmf_menu_stop_service:
                 stop();
                 return true;
+            case R.id.mitmf_menu_fix:
+                cc();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -126,7 +131,12 @@ public class MITMfFragment extends Fragment {
             provider.getCommands(sb);
         }
 
-        intentClickListener_NH("mitmf" + sb.toString());
+        SharedPreferences o = getActivity().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+        if (o.getString(SharePrefTag.MITMF_CC, "").equals("")){
+            intentClickListener_NH("mitmf" + sb.toString());
+        } else {
+            intentClickListener_NH(o.getString(SharePrefTag.MITMF_CC, "") + sb.toString());
+        }
         NhPaths.showMessage(context, "MITMf Started!");
     }
 
@@ -136,9 +146,28 @@ public class MITMfFragment extends Fragment {
         exe.RunAsRoot(command);
         NhPaths.showMessage(context, "MITMf Stopped!");
     }
+
+    private void cc(){
+        AlertDialog.Builder adb = new AlertDialog.Builder(context);
+        final View rootView = getLayoutInflater().inflate(R.layout.mitmf_cc, null);
+        final EditText o = rootView.findViewById(R.id.mitmf_dialog_cc);
+        final Button a = rootView.findViewById(R.id.mitmf_dialog_save);
+        final Button b = rootView.findViewById(R.id.mitmf_dialog_clear);
+        final SharedPreferences oa = getActivity().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+        o.setText(oa.getString(SharePrefTag.MITMF_CC, ""));
+        a.setOnClickListener(view -> {
+            oa.edit().putString(SharePrefTag.MITMF_CC, o.getText().toString()).commit();
+            NhPaths.showMessage_long(context, "Custom command will setted!");
+        });
+        b.setOnClickListener(view -> {
+            oa.edit().remove(SharePrefTag.MITMF_CC).commit();
+            o.setText("");
+            NhPaths.showMessage_long(context, "Custom command will cleared!");
+        });
+        adb.setTitle("Custom command for mitmf").setView(rootView).create().show();
+    }
     /* Stop execution menu */
 
-    //public static class TabsPagerAdapter extends FragmentPagerAdapter {
     private static class TabsPagerAdapter extends FragmentPagerAdapter {
 
         private List<CommandProvider> commandProviders = new ArrayList<>(5);

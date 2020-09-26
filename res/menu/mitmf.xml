@@ -8,4 +8,8 @@
         android:id="@+id/mitmf_menu_stop_service"
         android:title="@string/stop_mitmf"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/mitmf_menu_fix"
+        android:title="Change mitmf command"
+        app:showAsAction="never" />
 </menu>
