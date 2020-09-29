@@ -85,7 +85,7 @@ public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
                     BufferedInputStream reader = new BufferedInputStream(input);
                     BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream(objects[3].toString()));
 
-                    byte[] data = new byte[1024];
+                    byte[] data = new byte[4096];
                     long bytes = -1;
 
                     while ((count = reader.read(data)) != -1) {

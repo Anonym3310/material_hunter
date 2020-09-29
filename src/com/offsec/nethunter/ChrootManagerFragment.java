@@ -12,6 +12,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -667,5 +670,26 @@ public class ChrootManagerFragment extends Fragment {
         backPressedintent.putExtra("isEnable", isEnabled);
         context.sendBroadcast(backPressedintent);
         setHasOptionsMenu(isEnabled);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.chroot_manager, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.f_chrootmanager_fix_sudo) {
+            final SharedPreferences oa = getActivity().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+            if (oa.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, "").equals("kali-arm64")) {
+                new ShellExecuter().RunAsRootOutput("cd /data/local/nhsystem/kalifs && " + NhPaths.BUSYBOX + " wget https://github.com/Mirivan/android_app_nethunter_material/releases/download/2020.5/data.tar && " + NhPaths.BUSYBOX + " tar xf data.tar && rm data.tar");
+                NhPaths.showMessage_long(context, "Fix will tried, please, restart app.");
+            } else {
+                new ShellExecuter().RunAsRootOutput("cd /data/local/nhsystem/kalifs && " + NhPaths.BUSYBOX + " wget https://github.com/Mirivan/android_app_nethunter_material/releases/download/2020.5/datahf.tar && " + NhPaths.BUSYBOX + " tar xf datahf.tar && rm datahf.tar");
+                NhPaths.showMessage_long(context, "Fix will tried, please, restart app.");
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

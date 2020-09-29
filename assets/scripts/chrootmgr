@@ -36,6 +36,7 @@ f_chroot_usage(){
     bklog "[!] chrootmgr [-p <your chroot folder>] -c \"backup <full_path_of_your_chroot_folder> <full_path_with_desired_name.tar.[gx]z>\""
     bklog "[!] chrootmgr [-p <your chroot folder>] -c \"restore <full_path_of_your_.tar.[gx]z> </data/local/nhsystem/>\""
     bklog "[!] chrootmgr [-p <your chroot folder>] -c \"remove <full_path_of_your_chroot_folder>\" ---> Delete your chroot folder without rebooting the device, but not 100% guranteed success"
+    #bklog "[!] chrootmgr -c \"sha512sum <URL of the checksum file> <the target file to be checked.>\" ---> Compare the sha512 checksum of the downloaded chroot and the official sha512 file."
     bklog "[!] If -p option is not specified, then the script will find the chroot path according to the app sharepreference."
 }
 
@@ -159,6 +160,7 @@ if [ ! $# -eq 0 ]; then
                     if [ "$($BUSYBOX chroot $MNT /bin/uname -n)" ]; then
                         bklog "[+] seems you have kali chroot installed already!"
                         ## Define chroot shell executable path.
+                        ## FUCKING CHECKER
                         if [ -x $MNT/usr/bin/sudo ]; then
                             CHROOT_EXEC=/usr/bin/sudo
                         else
@@ -214,7 +216,7 @@ if [ ! $# -eq 0 ]; then
             case $# in
                 2)
                     if ! echo $2 | $BUSYBOX grep -q ".tar.[gx]z$"; then
-                        bklog "[-] Invalid filename, make sure it is followed by .tar.gz"
+                        bklog "[-] Invalid filename, make sure it is followed by .tar.gz(xz)"
                         exit 1
                     fi
                     [ ! -d $1 ] && bklog "[-] $1 not found, please check again." && exit 1;

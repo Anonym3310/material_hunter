@@ -59,7 +59,7 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Log.d(TAG, "NMEA update: " + nmeaSentence);
+                //Log.d(TAG, "NMEA update: " + nmeaSentence);
                 out.println(nmeaSentence);
 
                 if (updateReceiver != null) {
@@ -196,7 +196,7 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
         gpsdServer = new GpsdServer(this);
         if (gpsdServer != null) {
             gpsdServer.execute(null, null);
-            Log.d(TAG, "GPSDServer Async Task Begun");
+            //Log.d(TAG, "GPSDServer Async Task Begun");
         } else {
             Log.d(TAG, "Error starting gpsd server");
         }
@@ -216,14 +216,14 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
     }
 
     public void stopUpdates() {
-        Log.d(TAG, "In stopUpdates");
+        //Log.d(TAG, "In stopUpdates");
         requestedLocationUpdates = false;
         this.updateReceiver = null;
         stopSelf();
     }
 
     private void startLocationUpdates() {
-        Log.d(TAG, "in startLocationUpdates");
+        //Log.d(TAG, "in startLocationUpdates");
         final LocationRequest lr = LocationRequest.create()
                 .setExpirationDuration(1000 * 3600 * 2) /*2 hrs*/
                 .setFastestInterval(100L)
@@ -232,7 +232,7 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
-        Log.d(TAG, "Requesting permissions marshmallow");
+        //Log.d(TAG, "Requesting permissions marshmallow");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -261,7 +261,7 @@ public class LocationUpdateService extends Service implements GpsdServer.Connect
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "OnDestroy");
+        //Log.d(TAG, "OnDestroy");
         if (apiClient != null && apiClient.isConnected()) {
             apiClient.disconnect();
             LocationServices.FusedLocationApi.removeLocationUpdates(apiClient, locationListener);

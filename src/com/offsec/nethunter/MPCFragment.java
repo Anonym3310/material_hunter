@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +66,6 @@ public class MPCFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selectedItemText = parent.getItemAtPosition(pos).toString();
-                Log.d("Slected: ", selectedItemText);
                 switch (pos) {
                     case 0:
                         typeVar = "asp";
@@ -129,7 +127,6 @@ public class MPCFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selectedItemText = parent.getItemAtPosition(pos).toString();
-                Log.d("Slected: ", selectedItemText);
                 if (selectedItemText.equals("MSF")) {
                     payloadVar = "msf";
                 } else if (selectedItemText.equals("CMD")) {
@@ -155,7 +152,6 @@ public class MPCFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selectedItemText = parent.getItemAtPosition(pos).toString();
-                Log.d("Slected: ", selectedItemText);
                 if (selectedItemText.equals("Reverse")) {
                     callbackVar = "reverse";
                 } else if (selectedItemText.equals("Bind")) {
@@ -181,7 +177,6 @@ public class MPCFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selectedItemText = parent.getItemAtPosition(pos).toString();
-                Log.d("Slected: ", selectedItemText);
                 if (selectedItemText.equals("Staged")) {
                     stagerVar = "staged";
                 } else if (selectedItemText.equals("Stageless")) {
@@ -207,8 +202,6 @@ public class MPCFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 String selectedItemText = parent.getItemAtPosition(pos).toString();
-                Log.d("Slected: ", selectedItemText);
-                //use swich!
                 switch (selectedItemText) {
                     case "TCP":
                         callbackTypeVar = "tcp";
@@ -251,16 +244,16 @@ public class MPCFragment extends Fragment {
         // the vaue is dinamic, create a gettet (getCmd())
         //cmd = typeVar + " " + ipaddress.getText() + " " + port.getText() + " " + payloadVar + " " + callbackVar + " " + " " + stagerVar + " " + callbackTypeVar;
 
-        Log.d("start cmd values", getCmd(rootView));
+        //Log.d("start cmd values", getCmd(rootView));
 
         // Buttons
         addClickListener(R.id.mpc_GenerateSDCARD, v -> {
-            Log.d("thecmd", "cd /sdcard/; msfpc " + getCmd(rootView));
+            //Log.d("thecmd", "cd /sdcard/; msfpc " + getCmd(rootView));
             intentClickListener_NH("cd /sdcard/; msfpc " + getCmd(rootView)); // since is a kali command we can send it as is
         }, rootView);
 
         addClickListener(R.id.mpc_GenerateHTTP, v -> {
-            Log.d("thecmd", "cd /var/www/html; msfpc " + getCmd(rootView));
+            //Log.d("thecmd", "cd /var/www/html; msfpc " + getCmd(rootView));
             intentClickListener_NH("cd /var/www/html; msfpc " + getCmd(rootView)); // since is a kali command we can send it as is
         }, rootView);
 

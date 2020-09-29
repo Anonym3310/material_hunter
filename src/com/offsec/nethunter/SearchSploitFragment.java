@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -151,11 +150,9 @@ public class SearchSploitFragment extends Fragment {
 
                             src.close();
                             dst.close();
-                            Log.d("importDB", "Successfuly imported " + DATABASE_NAME);
                             main(rootView);
                             pd.dismiss();
                         } catch (Exception e) {
-                            Log.d("importDB", e.toString());
                             NhPaths.showMessage_long(context, "DB FEED FAILED");
                             pd.dismiss();
                         }
@@ -321,7 +318,6 @@ class ExploitLoader extends BaseAdapter {
         String[] command = new String[1];
         command[0] = "su -c /data/data/com.offsec.nethunter/files/scripts/bootkali file2hid-file " + file;
         String test = "su -c /data/data/com.offsec.nethunter/files/scripts/bootkali file2hid-file " + file;
-        Log.d("Exe:", test);
         ShellExecuter exe = new ShellExecuter();
         exe.RunAsRoot(command);
     }

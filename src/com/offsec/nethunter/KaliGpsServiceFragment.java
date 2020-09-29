@@ -60,7 +60,6 @@ public class KaliGpsServiceFragment extends Fragment implements KaliGPSUpdates.R
                 new Thread(() -> {
                     ShellExecuter exe = new ShellExecuter();
                     String command = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/stop-gpsd'";
-                    Log.d(TAG, command);
                     exe.RunAsRootOutput(command);
                 }).start();
             }

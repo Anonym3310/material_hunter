@@ -30,7 +30,7 @@ public class GpsdServer extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        Log.d(TAG, "Started Listening");
+        //Log.d(TAG, "Started Listening");
 
 
         try {
@@ -47,15 +47,15 @@ public class GpsdServer extends AsyncTask<Void, Void, Void> {
                 }
                 ShellExecuter exe = new ShellExecuter();
                 String command = "su -c '" + SCRIPT_PATH + File.separator + "bootkali start_gpsd " + PORT + "'";
-                Log.d(TAG, command);
+                //Log.d(TAG, command);
                 String response = exe.RunAsRootOutput(command);
-                Log.d(TAG, "Response = " + response);
+                //Log.d(TAG, "Response = " + response);
             }).start();
 
 
             Socket clientSocket = serverSocket.accept();
             listener.onSocketConnected(clientSocket);
-            Log.d(TAG, "Client bound");
+            //Log.d(TAG, "Client bound");
         } catch (IOException e) {
             Log.d(TAG, "Unable to create ServerSocket for port: " + PORT);
             Log.d(TAG, e.getMessage());
