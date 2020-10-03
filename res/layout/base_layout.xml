@@ -13,15 +13,13 @@ view using match_parent for both width and height to consume the full space avai
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
         android:scaleType="centerCrop" />
 
     <ImageView
-        android:id="@+id/base_background"
+        android:id="@+id/w"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:alpha="0.13"
         android:contentDescription="@string/app_name"
         android:scaleType="center" />
 

@@ -47,7 +47,7 @@ public class ChrootManagerFragment extends Fragment {
 
     public static final String TAG = "ChrootManager";
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private static final String IMAGE_SERVER = /*"images.kali.org"*/ "build.nethunter.com";
+    private static final String IMAGE_SERVER = "images.kali.org";
     private static final int IS_MOUNTED = 0;
     private static final int IS_UNMOUNTED = 1;
     private static final int NEED_TO_INSTALL = 2;
@@ -460,14 +460,14 @@ public class ChrootManagerFragment extends Fragment {
                 }
             }
         });
-        chrootManagerAsynctask.execute(resultViewerLoggerTextView, IMAGE_SERVER, "/kalifs/kalifs-latest/" + targetDownloadFileName, downloadDir.getAbsolutePath() + "/" + targetDownloadFileName);
+        chrootManagerAsynctask.execute(resultViewerLoggerTextView, IMAGE_SERVER, "/" + targetDownloadFileName, downloadDir.getAbsolutePath() + "/" + targetDownloadFileName);
     }
 
     private void setAddMetaPkgButton() {
         addMetaPkgButton.setOnClickListener(view -> {
             //for now, we'll hardcode packages in the dialog view.  At some point we'll want to grab them automatically.
             AlertDialog.Builder adb = new AlertDialog.Builder(activity);
-            adb.setTitle("Metapackage Install & Upgrade");
+            adb.setTitle("Metapackages - Install & Upgrade");
             LayoutInflater inflater = activity.getLayoutInflater();
             @SuppressLint("InflateParams") final ScrollView sv = (ScrollView) inflater.inflate(R.layout.metapackagechooser, null);
             adb.setView(sv);
@@ -670,26 +670,5 @@ public class ChrootManagerFragment extends Fragment {
         backPressedintent.putExtra("isEnable", isEnabled);
         context.sendBroadcast(backPressedintent);
         setHasOptionsMenu(isEnabled);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.chroot_manager, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.f_chrootmanager_fix_sudo) {
-            final SharedPreferences oa = getActivity().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
-            if (oa.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, "").equals("kali-arm64")) {
-                new ShellExecuter().RunAsRootOutput("cd /data/local/nhsystem/kalifs && " + NhPaths.BUSYBOX + " wget https://github.com/Mirivan/android_app_nethunter_material/releases/download/2020.5/data.tar && " + NhPaths.BUSYBOX + " tar xf data.tar && rm data.tar");
-                NhPaths.showMessage_long(context, "Fix will tried, please, restart app.");
-            } else {
-                new ShellExecuter().RunAsRootOutput("cd /data/local/nhsystem/kalifs && " + NhPaths.BUSYBOX + " wget https://github.com/Mirivan/android_app_nethunter_material/releases/download/2020.5/datahf.tar && " + NhPaths.BUSYBOX + " tar xf datahf.tar && rm datahf.tar");
-                NhPaths.showMessage_long(context, "Fix will tried, please, restart app.");
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

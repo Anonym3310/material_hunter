@@ -9,8 +9,7 @@
         android:paddingRight="16dp"
         android:orientation="vertical"
         android:focusable="true"
-  		android:focusableInTouchMode="true" 
-  		>
+  		android:focusableInTouchMode="true">
         
         <TextView
             android:id="@+id/reference_text"

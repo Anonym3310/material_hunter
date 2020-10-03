@@ -227,7 +227,6 @@
 
     <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Kali Linux that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
     <string name="materialteam">Developers:\nt.me/cxblack\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/coder1\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
-    <string name="licenseInfo">License:\nNetHunter is licensed under the GPLv2 (gnu.org/licenses/old-licenses/gpl-2.0.en.html) and the source code is available at gitlab.com/kalilinux/nethunter.\n Some icons are licensed from Google, Inc. under CC BY 4.0 (creativecommons.org/licenses/by/4.0).    </string>
     <string name="attack_launched">Attack launched!</string>
 
     <!-- sidebar menu item titles -->

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.offsec.nethunter.RecyclerViewAdapter.NethunterRecyclerViewAdapter;
@@ -49,7 +51,6 @@ public class NetHunterFragment extends Fragment {
     private Context context;
     private Activity activity;
     private NethunterRecyclerViewAdapter nethunterRecyclerViewAdapter;
-    private Button refreshButton;
     private Button addButton;
     private Button deleteButton;
     private Button moveButton;
@@ -92,12 +93,18 @@ public class NetHunterFragment extends Fragment {
         itemRecyclerView.setLayoutManager(linearLayoutManager);
         itemRecyclerView.setAdapter(nethunterRecyclerViewAdapter);
 
-        refreshButton = view.findViewById(R.id.f_nethunter_refreshButton);
         addButton = view.findViewById(R.id.f_nethunter_addItemButton);
         deleteButton = view.findViewById(R.id.f_nethunter_deleteItemButton);
         moveButton = view.findViewById(R.id.f_nethunter_moveItemButton);
 
-        onRefreshItemSetup();
+        // MaterialFeatures
+
+        SwipeRefreshLayout o = view.findViewById(R.id.f_nethunter_scrollView);
+        o.setOnRefreshListener(() -> {
+            NethunterData.getInstance().refreshData();
+            new Handler().postDelayed(() -> o.setRefreshing(false), 1000);
+        });
+
         onAddItemSetup();
         onDeleteItemSetup();
         onMoveItemSetup();
@@ -200,15 +207,10 @@ public class NetHunterFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        refreshButton = null;
         addButton = null;
         deleteButton = null;
         moveButton = null;
         nethunterRecyclerViewAdapter = null;
-    }
-
-    private void onRefreshItemSetup() {
-        refreshButton.setOnClickListener(v -> NethunterData.getInstance().refreshData());
     }
 
     private void onAddItemSetup() {

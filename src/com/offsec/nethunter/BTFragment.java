@@ -52,7 +52,6 @@ public class BTFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ViewPager mViewPager;
     private SharedPreferences sharedpreferences;
-    private NhPaths nh;
     private Context context;
     private Activity activity;
 
@@ -114,16 +113,14 @@ public class BTFragment extends Fragment {
     public void SetupDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         sharedpreferences = activity.getSharedPreferences("com.offsec.nethunter", Context.MODE_PRIVATE);
-        builder.setTitle("Welcome to Bluetooth Arsenal!");
-        builder.setMessage("In order to make sure everything is working, an initial setup needs to be done.");
-        builder.setPositiveButton("Check & Install", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                RunSetup();
-                sharedpreferences.edit().putBoolean("setup_done", true).apply();
-            }
-        });
-        builder.show();
-
+        builder.setTitle("Welcome to Bluetooth Arsenal!")
+                .setMessage("In order to make sure everything is working, an initial setup needs to be done.")
+                .setPositiveButton("Check & Install", (dialog, which) -> {
+                    RunSetup();
+                    sharedpreferences.edit().putBoolean("setup_done", true).apply();
+                })
+                .setNegativeButton("Don't ask again", (dialogInterface, i) -> sharedpreferences.edit().putBoolean("setup_done", true).apply())
+                .show();
     }
 
     public void RunSetup() {

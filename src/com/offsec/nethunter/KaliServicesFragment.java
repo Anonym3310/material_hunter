@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,11 +27,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.offsec.nethunter.RecyclerViewAdapter.KaliServicesRecyclerViewAdapter;
 import com.offsec.nethunter.RecyclerViewAdapter.KaliServicesRecyclerViewAdapterDeleteItems;
 import com.offsec.nethunter.RecyclerViewData.KaliServicesData;
+import com.offsec.nethunter.RecyclerViewData.NethunterData;
 import com.offsec.nethunter.SQL.KaliServicesSQL;
 import com.offsec.nethunter.models.KaliServicesModel;
 import com.offsec.nethunter.utils.NhPaths;
@@ -45,7 +48,6 @@ public class KaliServicesFragment extends Fragment {
     private static int targetPositionId;
     private Activity activity;
     private Context context;
-    private Button refreshButton;
     private Button addButton;
     private Button deleteButton;
     private Button moveButton;
@@ -86,12 +88,16 @@ public class KaliServicesFragment extends Fragment {
         recyclerViewServiceTitle.setLayoutManager(linearLayoutManager);
         recyclerViewServiceTitle.setAdapter(kaliServicesRecyclerViewAdapter);
 
-        refreshButton = view.findViewById(R.id.f_kaliservices_refreshButton);
         addButton = view.findViewById(R.id.f_kaliservices_addItemButton);
         deleteButton = view.findViewById(R.id.f_kaliservices_deleteItemButton);
         moveButton = view.findViewById(R.id.f_kaliservices_moveItemButton);
 
-        onRefreshItemSetup();
+        SwipeRefreshLayout o = view.findViewById(R.id.f_kaliservices_scrollView);
+        o.setOnRefreshListener(() -> {
+            NethunterData.getInstance().refreshData();
+            new Handler().postDelayed(() -> o.setRefreshing(false), 1000);
+        });
+
         onAddItemSetup();
         onDeleteItemSetup();
         onMoveItemSetup();
@@ -196,15 +202,10 @@ public class KaliServicesFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        refreshButton = null;
         addButton = null;
         deleteButton = null;
         moveButton = null;
         kaliServicesRecyclerViewAdapter = null;
-    }
-
-    private void onRefreshItemSetup() {
-        refreshButton.setOnClickListener(v -> KaliServicesData.getInstance().refreshData());
     }
 
     private void onAddItemSetup() {

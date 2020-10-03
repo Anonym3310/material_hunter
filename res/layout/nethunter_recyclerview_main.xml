@@ -31,14 +31,6 @@
             android:clickable="true"
             android:focusable="true"/>
 
-        <!--Button
-            android:id="@+id/f_nethunter_item_edit_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.8"
-            android:textColor="@color/accent_material_dark"
-            android:text="EDIT"
-            /-->
     </LinearLayout>
 
     <LinearLayout

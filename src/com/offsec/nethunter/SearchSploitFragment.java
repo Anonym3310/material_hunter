@@ -135,7 +135,6 @@ public class SearchSploitFragment extends Fragment {
                             // Search List
                             //String sd = NhPaths.SD_PATH;
                             String sd = "/sdcard";
-                            //String data = NhPaths.APP_PATH;
                             String data = "/data/data/com.offsec.nethunter/files/";
                             String DATABASE_NAME = "SearchSploit";
                             String currentDBPath = "../databases/" + DATABASE_NAME;

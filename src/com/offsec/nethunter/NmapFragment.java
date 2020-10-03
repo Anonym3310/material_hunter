@@ -120,7 +120,6 @@ public class NmapFragment extends Fragment {
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String selectedItemText = parent.getItemAtPosition(pos).toString();
                 switch (pos) {
                     case 0:
                         removeFromCmd(net_interface);

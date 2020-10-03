@@ -8,4 +8,6 @@ public abstract class SharePrefTag {
     public static final String CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG = "chroot_download_chroot_dir";
     public static final String VERSION_CODE_TAG = "version_code";
     public static final String MITMF_CC = "mitmf_cc";
+    public static final String BOOT_RECIVIE = "do_bootnotify";
+    public static final String BACKGROUND_ALPHA_LEVEL = "bg_alpha_level";
 }

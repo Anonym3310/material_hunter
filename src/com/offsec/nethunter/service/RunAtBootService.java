@@ -4,6 +4,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -11,9 +12,11 @@ import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
 
 import com.offsec.nethunter.AppNavHomeActivity;
+import com.offsec.nethunter.BuildConfig;
 import com.offsec.nethunter.R;
 import com.offsec.nethunter.utils.CheckForRoot;
 import com.offsec.nethunter.utils.NhPaths;
+import com.offsec.nethunter.utils.SharePrefTag;
 import com.offsec.nethunter.utils.ShellExecuter;
 
 import java.util.HashMap;
@@ -60,7 +63,9 @@ public class RunAtBootService extends JobIntentService {
     }
 
     protected void onHandleIntent(@NonNull Intent intent) {
-        //1. Check root -> 2. Check Busybox -> 3. run nethunter init.d files. -> Push notifications.
+        SharedPreferences o = this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+        if (o.getBoolean(SharePrefTag.BOOT_RECIVIE, true)) {
+            //1. Check root -> 2. Check Busybox -> 3. run nethunter init.d files. -> Push notifications.
         String isOK = "OK.";
         doNotification("Doing boot checks...");
 
@@ -91,12 +96,12 @@ public class RunAtBootService extends JobIntentService {
                 break;
             }
         }
-
-        doNotification(
-                "Root: " + hashMap.get("ROOT") + "\n" +
-                        "Busybox: " + hashMap.get("BUSYBOX") + "\n" +
-                        "Chroot: " + hashMap.get("CHROOT") + "\n" +
-                        resultMsg);
+            doNotification(
+                    "Root: " + hashMap.get("ROOT") + "\n" +
+                            "Busybox: " + hashMap.get("BUSYBOX") + "\n" +
+                            "Kali Chroot: " + hashMap.get("KALICHROOT") + "\n" +
+                            resultMsg);
+        }
     }
 
     @Override

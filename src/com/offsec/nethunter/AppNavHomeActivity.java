@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -62,7 +63,6 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
 
     public final static String TAG = "AppNavHomeActivity";
     public static final String CHROOT_INSTALLED_TAG = "CHROOT_INSTALLED_TAG";
-    public static final String GPS_BACKGROUND_FRAGMENT_TAG = "BG_FRAGMENT_TAG";
     public static final String BOOT_CHANNEL_ID = "BOOT_CHANNEL";
     public static MenuItem lastSelectedMenuItem;
     public static Boolean isBackPressEnabled = true;
@@ -318,9 +318,15 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
         }
 
-        ImageView o = findViewById(R.id.base_background);
-        Drawable oa = WallpaperManager.getInstance(this).getDrawable();
-        o.setImageDrawable(oa);
+        SharedPreferences oa = this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+        ImageView o = findViewById(R.id.w);
+        if (oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0) == 0) {
+            o.setAlpha(50);
+        } else {
+            o.setAlpha(oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0));
+        }
+        Drawable b = WallpaperManager.getInstance(this).getDrawable();
+        o.setImageDrawable(b);
 
         @SuppressLint("CutPasteId") NavigationView o0 = findViewById(R.id.navigation_view);
         o0.setBackgroundColor(ContextCompat.getColor(this, R.color.colorBars));
@@ -353,15 +359,9 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     }
 
     private void showLicense() {
-        String readmeData = String.format("%s\n\n%s",
-                getResources().getString(R.string.licenseInfo),
-                getResources().getString(R.string.materialteam));
-        final SpannableString readmeText = new SpannableString(readmeData);
-        Linkify.addLinks(readmeText, Linkify.WEB_URLS);
-
+        final View rootView = getLayoutInflater().inflate(R.layout.license_layout, null);
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setTitle("README INFO")
-                .setMessage(readmeText)
+        adb.setView(rootView)
                 .setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
         AlertDialog ad = adb.create();
         ad.setCancelable(true);
@@ -415,7 +415,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             if (new File("/config/usb_gadget/g1").exists()) {
                                 changeFragment(fragmentManager, USBArmoryFragment.newInstance(itemId));
                             } else {
-                                showWarningDialog("", "Your kernel does not support USB ConfigFS!", false);
+                                showWarningDialog("", "Your kernel does not support FunctionFS. Maybe your kernel less than 3.11. Try contact the kernel developer.", false);
                             }
                             break;
                         case R.id.badusb_item:
@@ -447,11 +447,10 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             }
                             break;
                         case R.id.searchsploit_item:
-                            if (new File("/sdcard/nh_files/SearchSploit").exists() && new File("/data/local/nhsystem/kalifs/usr/share/exploitdb").exists()) {
+                            if (new File("/data/local/nhsystem/kalifs/usr/share/exploitdb").exists()) {
                                 changeFragment(fragmentManager, SearchSploitFragment.newInstance(itemId));
-                                ab.setTitle("MaterialHunter");
                             } else {
-                                showWarningDialog("", "You need installed SearchSploit SQL and exploitdb in chroot.", false);
+                                showWarningDialog("", "You need installed exploitdb in chroot.", false);
                             }
                             break;
                         case R.id.nmap_item:
@@ -462,6 +461,9 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             break;
                         case R.id.gps_item:
                             changeFragment(fragmentManager, KaliGpsServiceFragment.newInstance(itemId));
+                            break;
+                        case R.id.settings_item:
+                            changeFragment(fragmentManager, SettingsFragment.newInstance(itemId));
                             break;
                     }
                     restoreActionBar();
@@ -494,7 +496,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
             prefs.edit().putString(SharePrefTag.DUCKHUNTER_LANG_SHAREPREF_TAG, "us").apply();
         }
         if (prefs.getString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, null) == null) {
-            prefs.edit().putString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, NhPaths.SD_PATH + "/kalifs-backup.tar.gz").apply();
+            prefs.edit().putString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, NhPaths.SD_PATH + "/Download/kalifs-backup.tar.xz").apply();
         }
         if (prefs.getString(SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, null) == null) {
             prefs.edit().putString(SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, NhPaths.SD_PATH + "/Download").apply();
