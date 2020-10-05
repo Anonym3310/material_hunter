@@ -9,7 +9,6 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!-- material features -->
         <item name="fontFamily">@font/google_sans</item>
-
     </style>
 
     <style name="Widget.MaterialComponents.Button.OutlinedNewButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
@@ -34,7 +33,6 @@
         <item name="spinBars">true</item>
         <item name="color">@android:color/white</item>
     </style>
-
 
     <style name="DialogStyle" parent="Base.Theme.AppCompat.Dialog.Alert">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>

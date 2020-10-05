@@ -1,5 +1,6 @@
 package com.offsec.nethunter;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -63,10 +64,11 @@ public class SettingsFragment extends Fragment {
                 oa.edit().putInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, cb).commit();
                 Snackbar.make(rootView, "Need restart.", Snackbar.LENGTH_LONG).show();
             }
-
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
+        final Button cd = rootView.findViewById(R.id.settings__clear_data);
+        cd.setOnClickListener(view -> ((ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE)).clearApplicationUserData());
         return rootView;
     }
 }

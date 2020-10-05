@@ -312,15 +312,12 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
             setupDrawerContent(navigationView);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // detail for android 5 devices
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorBars));
-            getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
-        }
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorBars));
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
 
         SharedPreferences oa = this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         ImageView o = findViewById(R.id.w);
-        if (oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0) == 0) {
+        if (String.valueOf(oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0)) == "") {
             o.setAlpha(50);
         } else {
             o.setAlpha(oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0));

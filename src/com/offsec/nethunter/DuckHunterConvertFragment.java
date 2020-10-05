@@ -39,7 +39,7 @@ import java.util.List;
 
 public class DuckHunterConvertFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "DuckHunterConvert";
-    private static final String loadFilePath = "/scripts/ducky/";
+    private static final String loadFilePath = "/duckyscripts/";
     private static final int PICKFILE_RESULT_CODE = 1;
     private String duckyInputFile;
     private String duckyOutputFile;
@@ -220,15 +220,16 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.duckyLoad:
-                try {
+                /*try {
                     File scriptsDir = new File(NhPaths.APP_SD_FILES_PATH, loadFilePath);
                     if (!scriptsDir.exists()) scriptsDir.mkdirs();
                 } catch (Exception e) {
                     NhPaths.showMessage(context, e.getMessage());
-                }
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                Uri selectedUri = Uri.parse(NhPaths.APP_SD_FILES_PATH + loadFilePath);
+                }*/
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                Uri selectedUri = Uri.parse(NhPaths.APP_SD_FILES_PATH/* + loadFilePath*/);
                 intent.setDataAndType(selectedUri, "*/*");
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
                 startActivityForResult(intent, PICKFILE_RESULT_CODE);
                 break;
             case R.id.duckySave:
@@ -251,7 +252,7 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
                     String value = input.getText().toString();
                     if (value.length() > 0) {
                         //Save file (ask name)
-                        File scriptFile = new File(NhPaths.APP_SD_FILES_PATH + loadFilePath + File.separator + value + ".conf");
+                        File scriptFile = new File(NhPaths.APP_SD_FILES_PATH + loadFilePath + File.separator + value);
                         System.out.println(scriptFile.getAbsolutePath());
                         if (!scriptFile.exists()) {
                             try {
