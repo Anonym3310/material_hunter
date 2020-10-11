@@ -5,17 +5,17 @@
         <item
             android:id="@+id/f_usbarmory_menu_backupDB"
             android:orderInCategory="100"
-            android:title="Backup DB"
+            android:title="@string/bd_backup"
             app:showAsAction="never" />
         <item
             android:id="@+id/f_usbarmory_menu_restoreDB"
             android:orderInCategory="100"
-            android:title="Restore DB"
+            android:title="@string/bd_restore"
             app:showAsAction="never" />
         <item
             android:id="@+id/f_usbarmory_menu_ResetToDefault"
             android:orderInCategory="100"
-            android:title="Reset to Default"
+            android:title="@string/bd_reset"
             app:showAsAction="never" />
     </group>
 

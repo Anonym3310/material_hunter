@@ -9,159 +9,159 @@
     </data>
 
     <ScrollView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical"
-        android:focusableInTouchMode="true">
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mitmf_description"
-            android:layout_gravity="center_horizontal|center"
-            android:gravity="center"
-            android:padding="4dp" />
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text="@string/mitmf_description" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Interface" />
+                android:text="@string/interface_select"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
+                android:id="@+id/mitmf_interface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="4dp"
-                android:id="@+id/mitmf_interface"
                 android:spinnerMode="dropdown" />
 
             <TextView
+                android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="General Settings"
-                android:id="@+id/textView17" />
+                android:text="@string/general_sett"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingTop="10px"
                 android:paddingBottom="5px"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
             <CheckBox
+                android:id="@+id/mitmf_jskey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_javascriptkeylogger"
-                android:id="@+id/mitmf_jskey"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_javascriptkeylogger" />
 
             <CheckBox
+                android:id="@+id/mitmf_ferretng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_FERRETNG"
-                android:id="@+id/mitmf_ferretng"
                 android:checked="false"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_FERRETNG" />
 
             <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/mitmf_browserprofiler"
                 android:id="@+id/mitmf_browserprofile"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_filepwn"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_browserprofiler" />
+
+            <CheckBox
                 android:id="@+id/mitmf_filepwn"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_smbauth"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_filepwn" />
+
+            <CheckBox
                 android:id="@+id/mitmf_smb"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SMB trap"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_smbauth" />
+
+            <CheckBox
                 android:id="@+id/mitmf_smb_trap"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_sslstripplus"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_smbtrap" />
+
+            <CheckBox
                 android:id="@+id/mitmf_sslstrip"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_appcache"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_sslstripplus" />
+
+            <CheckBox
                 android:id="@+id/mitmf_app_poison"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_upsidedown"
-                android:id="@+id/mitmf_upsidedown"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_appcache" />
+
+            <CheckBox
+                android:id="@+id/mitmf_upsidedown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_upsidedown" />
 
             <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:paddingTop="10px"
                 android:paddingBottom="5px"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="ScreenShotter" />
+                android:text="@string/mitmf_screenshotter"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingTop="10px"
                 android:paddingBottom="5px"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
             <CheckBox
+                android:id="@+id/mitmf_screenshotter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mitmf_screenshotter"
-                android:id="@+id/mitmf_screenshotter"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp" />
+                android:paddingBottom="5dp"
+                android:text="@string/mitmf_enable_screenshotter" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -171,23 +171,23 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/mitmf_screen_interval"
-                        android:inputType="number"
-                        android:ems="10"
-                        android:maxLines="1"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
             <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingTop="10px"
                 android:paddingBottom="5px"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
 </layout>

@@ -9,54 +9,54 @@
     </data>
 
     <ScrollView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical"
-        android:focusableInTouchMode="true">
-
-        <ImageView
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="10px"
-            android:paddingBottom="20px"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            app:srcCompat="@android:drawable/divider_horizontal_bright" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/inject_settings" />
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mitmf_inject"
-            android:id="@+id/mitmf_enableinject"
-            android:onClick="@{(view) -> viewModel.clickInject(view)}" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mitmf_inject_PRESERVER"
-            android:id="@+id/mitmf_inject_preservecache"
-            android:enabled="@{viewModel.injectionEnabled}" />
-
-        <CheckBox
-            android:id="@+id/mitmf_inject_onceperdomain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:enabled="@{viewModel.injectionEnabled}"
-            android:text="@string/mitmf_inject_ONCE" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="10px"
+                android:paddingBottom="20px"
+                app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
             <TextView
-            android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/inject_settings"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <CheckBox
+                android:id="@+id/mitmf_enableinject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view) -> viewModel.clickInject(view)}"
+                android:text="@string/mitmf_inject" />
+
+            <CheckBox
+                android:id="@+id/mitmf_inject_preservecache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="@{viewModel.injectionEnabled}"
+                android:text="@string/mitmf_inject_PRESERVER" />
+
+            <CheckBox
+                android:id="@+id/mitmf_inject_onceperdomain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="@{viewModel.injectionEnabled}"
+                android:text="@string/mitmf_inject_ONCE" />
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/objects_to_inject"
@@ -65,8 +65,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -114,7 +114,7 @@
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/inject_characteristics"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle" />
@@ -122,23 +122,23 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/mitmf_inject_rateseconds"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.injectionEnabled}"
                     android:hint="@string/mitmf_inject_RATELIMIT"
-                    android:inputType="number"
-                    android:enabled="@{viewModel.injectionEnabled}" />
+                    android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
@@ -146,16 +146,16 @@
                     android:id="@+id/mitmf_inject_times_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.injectionEnabled}"
                     android:hint="@string/mitmf_inject_COUNTLIMIT"
-                    android:inputType="number"
-                    android:enabled="@{viewModel.injectionEnabled}" />
+                    android:inputType="number" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
@@ -163,14 +163,14 @@
                     android:id="@+id/mitmf_inject_ip_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mitmf_inject_INJECTIP"
-                    android:enabled="@{viewModel.injectionEnabled}" />
+                    android:enabled="@{viewModel.injectionEnabled}"
+                    android:hint="@string/mitmf_inject_INJECTIP" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
@@ -178,10 +178,10 @@
                     android:id="@+id/mitmf_inject_noip_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/mitmf_inject_NOINJECTIP"
-                    android:enabled="@{viewModel.injectionEnabled}" />
+                    android:enabled="@{viewModel.injectionEnabled}"
+                    android:hint="@string/mitmf_inject_NOINJECTIP" />
 
             </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </layout>

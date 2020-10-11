@@ -21,6 +21,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.offsec.nethunter.AsyncTask.MacchangerAsyncTask;
 import com.offsec.nethunter.utils.NhPaths;
@@ -53,10 +54,12 @@ public class MacchangerFragment extends Fragment {
     private EditText mac5;
     private EditText mac6;
     private TextView currentMacTextView;
-    //private TextView currentHostNameTextView;
     private Button reloadImageButton;
     private Context context;
     private Activity activity;
+
+    private Button setKHost;
+    private TextInputEditText KHost;
 
     public MacchangerFragment() {
 
@@ -112,7 +115,6 @@ public class MacchangerFragment extends Fragment {
         resetMacButton = rootView.findViewById(R.id.f_macchanger_reset_mac_btn);
         netHostNameEditText = rootView.findViewById(R.id.f_macchanger_phone_name_et);
         currentMacTextView = rootView.findViewById(R.id.f_macchanger_currMac_tv);
-        //currentHostNameTextView = rootView.findViewById(R.id.f_macchanger_hostname_tv);
         reloadImageButton = rootView.findViewById(R.id.f_macchanger_reloadMAC_imgbtn);
         regenerateMacButton = rootView.findViewById(R.id.f_macchanger_regenerate_mac_btn);
         clearMacButton = rootView.findViewById(R.id.f_macchanger_clear_mac_btn);
@@ -122,6 +124,9 @@ public class MacchangerFragment extends Fragment {
         mac4 = rootView.findViewById(R.id.f_macchanger_mac4_et);
         mac5 = rootView.findViewById(R.id.f_macchanger_mac5_et);
         mac6 = rootView.findViewById(R.id.f_macchanger_mac6_et);
+
+        setKHost = rootView.findViewById(R.id.f_macchanger_setKHostname_btn);
+        KHost = rootView.findViewById(R.id.f_macchanger_khost_et);
         return rootView;
     }
 
@@ -138,6 +143,9 @@ public class MacchangerFragment extends Fragment {
         setResetMacButton();
         setRegenerateMacButton();
         setClearMacButton();
+
+        setKHostName();
+        getKHostName();
     }
 
     @Override
@@ -179,18 +187,14 @@ public class MacchangerFragment extends Fragment {
         MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.GETHOSTNAME);
         macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
             @Override
-            public void onAsyncTaskPrepare() {
-
-            }
+            public void onAsyncTaskPrepare() {}
 
             @Override
             public void onAsyncTaskFinished(Object result) {
                 if (result != null) {
                     netHostNameEditText.setText(result.toString());
-                    //currentHostNameTextView.setText(result.toString());
                 } else {
                     netHostNameEditText.setText("");
-                    //currentHostNameTextView.setText("");
                 }
             }
         });
@@ -202,9 +206,7 @@ public class MacchangerFragment extends Fragment {
             MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.SETHOSTNAME);
             macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
                 @Override
-                public void onAsyncTaskPrepare() {
-
-                }
+                public void onAsyncTaskPrepare() {}
 
                 @Override
                 public void onAsyncTaskFinished(Object result) {
@@ -228,8 +230,8 @@ public class MacchangerFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 lastSelectedIfacePosition = position;
                 currentMacTextView.setText(iFaceAndMacHashMap.get(interfaceSpinner.getSelectedItem().toString().toLowerCase()));
-                changeMacButton.setText("CHANGE MAC ON " + interfaceSpinner.getSelectedItem().toString().toUpperCase());
-                resetMacButton.setText("RESET MAC ON " + interfaceSpinner.getSelectedItem().toString().toUpperCase());
+                changeMacButton.setText(getString(R.string.changeMAC) + " ON " + interfaceSpinner.getSelectedItem().toString().toUpperCase());
+                resetMacButton.setText(getString(R.string.resetMAC) + " ON " + interfaceSpinner.getSelectedItem().toString().toUpperCase());
             }
 
             @Override
@@ -388,4 +390,42 @@ public class MacchangerFragment extends Fragment {
         });
     }
 
+    private void setKHostName(){
+        setKHost.setOnClickListener(v -> {
+            MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.SETKHOSTNAME);
+            macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
+                @Override
+                public void onAsyncTaskPrepare() {}
+
+                @Override
+                public void onAsyncTaskFinished(Object result) {
+                    Snackbar.make(getView(), "Kernel Hostname is set to " + KHost.getText().toString(), Snackbar.LENGTH_LONG).show();
+                    getKHostName();
+                }
+            });
+            if (KHost.getText().toString().isEmpty()) {
+                Snackbar.make(getView(), "Kernel Hostname must not be null", Snackbar.LENGTH_LONG).show();
+            } else {
+                macchangerAsyncTask.execute(KHost.getText().toString());
+            }
+        });
+    }
+
+    private void getKHostName() {
+        MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.GETKHOSTNAME);
+        macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
+            @Override
+            public void onAsyncTaskPrepare() {}
+
+            @Override
+            public void onAsyncTaskFinished(Object result) {
+                if (result != null) {
+                    KHost.setText(result.toString());
+                } else {
+                    KHost.setText("");
+                }
+            }
+        });
+        macchangerAsyncTask.execute();
+    }
 }

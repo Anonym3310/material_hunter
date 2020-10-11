@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.os.IBinder;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -388,9 +390,13 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
 
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     int itemId = menuItem.getItemId();
-                    ActionBar ab = getSupportActionBar();
                     switch (itemId) {
                         case R.id.nethunter_item:
+                            if (new File("/data/local/nhsystem/kalifs/usr/sbin/iw").exists()) {
+                                changeFragment(fragmentManager, KaliGpsServiceFragment.newInstance(itemId));
+                            } else {
+                                showWarningDialog("", "You need installed iw in chroot.", false);
+                            }
                             changeFragment(fragmentManager, NetHunterFragment.newInstance(itemId));
                             break;
                         case R.id.deauth_item:
@@ -457,10 +463,25 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             changeFragment(fragmentManager, PineappleFragment.newInstance(itemId));
                             break;
                         case R.id.gps_item:
-                            changeFragment(fragmentManager, KaliGpsServiceFragment.newInstance(itemId));
+                            if (new File("/data/local/nhsystem/kalifs/usr/sbin/gpsd").exists()) {
+                                changeFragment(fragmentManager, KaliGpsServiceFragment.newInstance(itemId));
+                            } else {
+                                showWarningDialog("", "You need installed gpsd in chroot.", false);
+                            }
                             break;
                         case R.id.settings_item:
                             changeFragment(fragmentManager, SettingsFragment.newInstance(itemId));
+                            break;
+                        case R.id.terminal_item:
+                            //this.startActivity(this.getPackageManager().getLaunchIntentForPackage("com.offsec.nhterm"));
+                            try {
+                                Intent intent = new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                intent.putExtra("com.offsec.nhterm.iInitialCommand", "");
+                                startActivity(intent);
+                            } catch (Exception e) {
+                                NhPaths.showMessage(this, getString(R.string.toast_install_terminal));
+                            }
                             break;
                     }
                     restoreActionBar();

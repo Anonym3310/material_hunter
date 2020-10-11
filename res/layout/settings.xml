@@ -37,7 +37,7 @@
                         android:layout_marginBottom="4dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:singleLine="true"
-                        android:text="MaterialHunter Settings"
+                        android:text="@string/mh_sett"
                         android:textColor="@android:color/background_light"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -46,7 +46,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
-                    android:paddingTop="8dp"
                     android:paddingRight="16dp">
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -54,12 +53,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="RunOnBoot recivie"
+                        android:text="@string/mh_sett_boot_recivie"
                         android:textSize="15sp"
                         android:textStyle="bold"
-                        tools:ignore="MissingConstraints"
-                        tools:layout_editor_absoluteX="16dp"
-                        tools:layout_editor_absoluteY="8dp" />
+                        tools:ignore="MissingConstraints" />
 
                     <TextView
                         android:id="@+id/settings_tv1"
@@ -67,7 +64,7 @@
                         android:layout_height="wrap_content"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:text="Background alpha level. Use slider."
+                        android:text="@string/mh_sett_bal"
                         android:textColor="#fff"
                         android:textSize="15sp"
                         android:textStyle="bold"
@@ -111,7 +108,7 @@
                         android:layout_marginBottom="4dp"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:singleLine="true"
-                        android:text="Developer features"
+                        android:text="@string/mh_devsett"
                         android:textColor="@android:color/background_light"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -128,7 +125,7 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="CLEAR APP DATA"
+                        android:text="@string/mh_devsett_cad"
                         tools:ignore="MissingConstraints" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

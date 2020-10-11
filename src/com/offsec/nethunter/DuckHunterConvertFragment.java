@@ -26,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.offsec.nethunter.utils.NhPaths;
+import com.offsec.nethunter.utils.ShellExecuter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -146,6 +147,7 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
                         return;
                     }
                     String FilePath = data.getData().getPath();
+                    FilePath = new ShellExecuter().RunAsRootOutput("echo " + FilePath + " | sed -e 's/\\/document\\/primary:/\\/sdcard\\//g' ");
                     EditText editsource = getView().findViewById(R.id.editSource);
                     try {
                         String text = "";

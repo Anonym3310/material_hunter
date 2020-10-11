@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:textColor="@color/accent_material_dark"
-                    android:text="Send to:"/>
+                    android:text="@string/customcommands_send_to"/>
 
                 <TextView
                     android:id="@+id/f_customcommands_recyclerview_tv_execenvironment"
@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:textColor="@color/accent_material_dark"
-                    android:text="Exec Mode:"/>
+                    android:text="@string/customcommands_exec_mode"/>
 
                 <TextView
                     android:id="@+id/f_customcommands_recyclerview_tv_execmode"
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
                     android:textColor="@color/accent_material_dark"
-                    android:text="RunOnBoot:"/>
+                    android:text="@string/customcommands_rob"/>
 
                 <TextView
                     android:id="@+id/f_customcommands_recyclerview_tv_runonboot"

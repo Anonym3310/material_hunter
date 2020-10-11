@@ -66,40 +66,40 @@ public class RunAtBootService extends JobIntentService {
         SharedPreferences o = this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         if (o.getBoolean(SharePrefTag.BOOT_RECIVIE, true)) {
             //1. Check root -> 2. Check Busybox -> 3. run nethunter init.d files. -> Push notifications.
-        String isOK = "OK.";
-        doNotification("Doing boot checks...");
+            String isOK = "OK.";
+            doNotification("Doing boot checks...");
 
-        HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("ROOT", "No root access is granted.");
-        hashMap.put("BUSYBOX", "No busybox is found.");
-        hashMap.put("CHROOT", "Chroot is not yet installed.");
+            HashMap<String, String> hashMap = new HashMap<>();
+            hashMap.put("ROOT", "No root access is granted.");
+            hashMap.put("BUSYBOX", "No busybox is found.");
+            hashMap.put("CHROOT", "Chroot is not yet installed.");
 
-        if (CheckForRoot.isRoot()) {
-            hashMap.put("ROOT", isOK);
-        }
-
-        if (CheckForRoot.isBusyboxInstalled()) {
-            hashMap.put("BUSYBOX", isOK);
-        }
-
-        ShellExecuter exe = new ShellExecuter();
-        exe.RunAsRootOutput(NhPaths.BUSYBOX + " run-parts " + NhPaths.APP_INITD_PATH);
-        if (exe.RunAsRootReturnValue(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\"") == 0) {
-            exe.RunAsRootOutput("rm -rf " + NhPaths.CHROOT_PATH() + "/tmp/.X1*");
-            hashMap.put("CHROOT", isOK);
-        }
-
-        String resultMsg = "Boot completed.\nEveryting is fine and Chroot has been started!";
-        for (Map.Entry<String, String> entry : hashMap.entrySet()) {
-            if (!entry.getValue().equals(isOK)) {
-                resultMsg = "Make sure the above requirements are met.";
-                break;
+            if (CheckForRoot.isRoot()) {
+                hashMap.put("ROOT", isOK);
             }
-        }
+
+            if (CheckForRoot.isBusyboxInstalled()) {
+                hashMap.put("BUSYBOX", isOK);
+            }
+
+            ShellExecuter exe = new ShellExecuter();
+            exe.RunAsRootOutput(NhPaths.BUSYBOX + " run-parts " + NhPaths.APP_INITD_PATH);
+            if (exe.RunAsRootReturnValue(NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\"") == 0) {
+                exe.RunAsRootOutput("rm -rf " + NhPaths.CHROOT_PATH() + "/tmp/.X1*");
+                hashMap.put("CHROOT", isOK);
+            }
+
+            String resultMsg = "Boot completed.\nEveryting is fine and Chroot has been started!";
+            for (Map.Entry<String, String> entry : hashMap.entrySet()) {
+                if (!entry.getValue().equals(isOK)) {
+                    resultMsg = "Make sure the above requirements are met.";
+                    break;
+                }
+            }
             doNotification(
                     "Root: " + hashMap.get("ROOT") + "\n" +
                             "Busybox: " + hashMap.get("BUSYBOX") + "\n" +
-                            "Kali Chroot: " + hashMap.get("KALICHROOT") + "\n" +
+                            "Chroot: " + hashMap.get("CHROOT") + "\n" +
                             resultMsg);
         }
     }

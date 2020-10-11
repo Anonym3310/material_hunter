@@ -2,7 +2,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
@@ -10,11 +10,10 @@
         android:orientation="vertical"
         android:focusableInTouchMode="true">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="The Powershell HTTP payload allows you to download and run a generic powershell payload from a URL. The URL to payload should be in a location accessible to the victim."
+            android:text="@string/hid_ps_head"
             android:layout_gravity="center_horizontal|center"
             android:gravity="center"
             android:padding="4dp" />

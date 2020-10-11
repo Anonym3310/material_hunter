@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.offsec.nethunter.RecyclerViewAdapter.NethunterRecyclerViewAdapter;
 import com.offsec.nethunter.RecyclerViewAdapter.NethunterRecyclerViewAdapterDeleteItems;
 import com.offsec.nethunter.RecyclerViewData.NethunterData;
@@ -157,7 +158,8 @@ public class NetHunterFragment extends Fragment {
                     buttonOK.setOnClickListener(v -> {
                         String returnedResult = NethunterData.getInstance().backupData(NethunterSQL.getInstance(context), storedpathEditText.getText().toString());
                         if (returnedResult == null) {
-                            NhPaths.showMessage(context, "db is successfully backup to " + storedpathEditText.getText().toString());
+                            //NhPaths.showMessage(context, "db is successfully backup to " + storedpathEditText.getText().toString());
+                            Snackbar.make(getView(), "db is successfully backup to " + storedpathEditText.getText().toString(), Snackbar.LENGTH_LONG).show();
                         } else {
                             dialog.dismiss();
                             new AlertDialog.Builder(context).setTitle("Failed to backup the DB.").setMessage(returnedResult).create().show();
@@ -181,7 +183,8 @@ public class NetHunterFragment extends Fragment {
                     buttonOK.setOnClickListener(v -> {
                         String returnedResult = NethunterData.getInstance().restoreData(NethunterSQL.getInstance(context), storedpathEditText.getText().toString());
                         if (returnedResult == null) {
-                            NhPaths.showMessage(context, "db is successfully restored to " + storedpathEditText.getText().toString());
+                            //NhPaths.showMessage(context, "db is successfully restored to " + storedpathEditText.getText().toString());
+                            Snackbar.make(getView(), "db is successfully backup to " + storedpathEditText.getText().toString(), Snackbar.LENGTH_LONG).show();
                         } else {
                             dialog.dismiss();
                             new AlertDialog.Builder(context).setTitle("Failed to restore the DB.").setMessage(returnedResult).create().show();
@@ -330,11 +333,14 @@ public class NetHunterFragment extends Fragment {
                 final Button buttonAdd = ad.getButton(DialogInterface.BUTTON_POSITIVE);
                 buttonAdd.setOnClickListener(v1 -> {
                     if (titleEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Title cannot be empty");
+                        Snackbar.make(getView(), "Title cannot be empty", Snackbar.LENGTH_LONG).show();
+                        //NhPaths.showMessage(context, "Title cannot be empty");
                     } else if (cmdEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Command cannot be empty");
+                        Snackbar.make(getView(), "Command cannot be empty", Snackbar.LENGTH_LONG).show();
+                        //NhPaths.showMessage(context, "Command cannot be empty");
                     } else if (delimiterEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Delimiter cannot be empty");
+                        Snackbar.make(getView(), "Delimiter cannot be empty", Snackbar.LENGTH_LONG).show();
+                        //NhPaths.showMessage(context, "Delimiter cannot be empty");
                     } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(titleEditText.getText().toString());
@@ -388,9 +394,10 @@ public class NetHunterFragment extends Fragment {
                     }
                     if (selectedPosition.size() != 0) {
                         NethunterData.getInstance().deleteData(selectedPosition, selectedTargetIds, NethunterSQL.getInstance(context));
-                        NhPaths.showMessage(context, "Successfully deleted " + selectedPosition.size() + " items.");
+                        //NhPaths.showMessage(context, "Successfully deleted " + selectedPosition.size() + " items.");
+                        Snackbar.make(getView(), "Successfully deleted " + selectedPosition.size() + " items", Snackbar.LENGTH_LONG).show();
                         adDelete.dismiss();
-                    } else NhPaths.showMessage(context, "Nothing to be deleted.");
+                    } else Snackbar.make(getView(), "Nothing to be deleted", Snackbar.LENGTH_LONG).show();
                 });
             });
             adDelete.show();
@@ -430,11 +437,13 @@ public class NetHunterFragment extends Fragment {
                     if (originalPositionIndex == targetPositionIndex ||
                             (actions.getSelectedItemPosition() == 0 && targetPositionIndex == (originalPositionIndex + 1)) ||
                             (actions.getSelectedItemPosition() == 1 && targetPositionIndex == (originalPositionIndex - 1))) {
-                        NhPaths.showMessage(context, "You are moving the item to the same position, nothing to be moved.");
+                        //NhPaths.showMessage(context, "You are moving the item to the same position, nothing to be m");
+                        Snackbar.make(getView(), "You are moving the item to the same position, nothing to be moved.", Snackbar.LENGTH_LONG).show();
                     } else {
                         if (actions.getSelectedItemPosition() == 1) targetPositionIndex += 1;
                         NethunterData.getInstance().moveData(originalPositionIndex, targetPositionIndex, NethunterSQL.getInstance(context));
-                        NhPaths.showMessage(context, "Successfully moved item.");
+                        //NhPaths.showMessage(context, "Successfully moved item.");
+                        Snackbar.make(getView(), "Successfully moved item.", Snackbar.LENGTH_LONG).show();
                         adMove.dismiss();
                     }
                 });

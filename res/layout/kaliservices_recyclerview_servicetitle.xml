@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_marginTop="7dp"
-            android:text="Loading.."
+            android:text="Loading"
             android:textColor="@android:color/background_light"
             android:textSize="20sp"
             android:background="?attr/selectableItemBackground"
@@ -41,7 +41,7 @@
             android:id="@+id/f_kaliservices_recyclerview_serviceresult_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Service is NOT running."
+            android:text="@string/kaliservices_not_running"
             android:singleLine="true"
             android:layout_weight="0.35"
             android:layout_marginStart="12dp"/>
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.35"
-            android:text="RunOnChrootStart"/>
+            android:text="@string/kaliservices_run_on_chroot"/>
         <Switch
             android:id="@+id/f_kaliservices_recyclerview_switch_toggle"
             android:layout_width="match_parent"

@@ -100,7 +100,7 @@ public class VNCFragment extends Fragment {
         }
         AdvancedView.setVisibility(showingAdvanced ? View.VISIBLE : View.INVISIBLE);
         if (showingAdvanced) {
-            Advanced.setText("HIDE ADVANCED SETTINGS");
+            Advanced.setText(getString(R.string.kex_advanced_hide));
         }
         // Get screen size to pass to VNC
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -350,12 +350,12 @@ public class VNCFragment extends Fragment {
         addClickListener(Advanced, v -> {
             if (!showingAdvanced) {
                 AdvancedView.setVisibility(View.VISIBLE);
-                Advanced.setText("HIDE ADVANCED SETTINGS");
+                Advanced.setText(getString(R.string.kex_advanced_hide));
                 showingAdvanced = true;
                 sharedpreferences.edit().putBoolean("advanced_visible", true).apply();
             } else {
                 AdvancedView.setVisibility(View.GONE);
-                Advanced.setText("SHOW ADVANCED SETTINGS");
+                Advanced.setText(getString(R.string.kex_advanced));
                 showingAdvanced = false;
                 sharedpreferences.edit().putBoolean("advanced_visible", false).apply();
             }

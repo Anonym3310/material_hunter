@@ -1,77 +1,75 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:focusableInTouchMode="true">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/bt_carwhisperer"
             android:layout_gravity="center_horizontal|center"
             android:gravity="center"
-            android:padding="4dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bluetooth interface"
             android:padding="4dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            />
+            android:text="@string/bt_carwhisperer" />
 
-        <EditText
-            android:id="@+id/hci_interface"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="hci0" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/bt_iface"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/hci_interface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="hci0"
+                android:inputType="text" />
+
+        </LinearLayout>
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/set_target"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Use selected target"
+            android:text="@string/bt_use_selected"
             android:textColor="#ffffffff" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Address"
-            android:padding="4dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            />
-
-        <EditText
-            android:id="@+id/hci_address"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="00:11:22:33:44:55" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:text="@string/bt_adress"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/hci_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="00:11:22:33:44:55" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,29 +81,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Channel"
                 android:padding="4dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
+                android:text="@string/bt_channel"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/hci_channel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
-                android:text="2"
-                android:inputType="number" />
+                android:gravity="center"
+                android:inputType="number"
+                android:text="2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Mode"
                 android:padding="4dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                />
+                android:text="@string/bt_mode"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <Spinner
                 android:id="@+id/cwmode"
@@ -119,8 +115,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save recorded sound to /sdcard/"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/bt_carwhisperer_save" />
 
         <EditText
             android:id="@+id/listenfilename"
@@ -133,8 +129,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sound file to inject"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/bt_carwhisperer_select" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -147,12 +143,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="text"
-                android:hint="/root/carwhisperer/message.wav" />
+                android:hint="/root/carwhisperer/message.wav"
+                android:inputType="text" />
 
             <Button
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:id="@+id/injectfilebrowse"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -161,48 +157,45 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/start_cw"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Launch"
-            android:textColor="#ffffffff" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/stop_cw"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Kill"
-            android:textColor="#ffffffff" />
+            <Button
+                android:id="@+id/start_cw"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/bt_launch"
+                android:textColor="#ffffffff" />
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.IconOnly"
-            android:id="@+id/play_audio"
-            android:minWidth="38dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_action_play" />
+            <Button
+                android:id="@+id/stop_cw"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:text="@string/bt_kill"
+                android:textColor="#ffffffff" />
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.IconOnly"
-            android:id="@+id/stop_audio"
-            android:minWidth="38dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_action_stop" />
+            <Button
+                android:id="@+id/play_audio"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.IconOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="38dp"
+                app:icon="@drawable/ic_action_play" />
 
+            <Button
+                android:id="@+id/stop_audio"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.IconOnly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="38dp"
+                app:icon="@drawable/ic_action_stop" />
+        </LinearLayout>
     </LinearLayout>
-
-    </LinearLayout>
-
 </ScrollView>

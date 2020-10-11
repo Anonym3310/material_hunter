@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -37,7 +36,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:hint="Current Hostname">
+                    android:hint="@string/macchanger_current_hostname">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/f_macchanger_phone_name_et"
@@ -51,7 +50,35 @@
                     android:id="@+id/f_macchanger_setHostname_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Set Hostname"/>
+                    android:text="@string/macchanger_set_hostname"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal" >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Design.TextInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:hint="@string/macchanger_kernel_hostname">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/f_macchanger_khost_et"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/f_macchanger_setKHostname_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macchanger_set_hostname"/>
             </LinearLayout>
 
             <TextView
@@ -235,7 +262,7 @@
                     android:id="@+id/f_macchanger_regenerate_mac_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="GENERATE"
+                    android:text="@string/macchanger_generate"
                     android:visibility="gone"/>
 
                 <Button
@@ -243,7 +270,7 @@
                     android:id="@+id/f_macchanger_clear_mac_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CLEAR"
+                    android:text="@string/macchanger_clear"
                     android:visibility="gone" />
 
             </LinearLayout>

@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Spoof Settings" />
+            android:text="@string/mitmf_spoof_sett" />
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Redirect Using:" />
+            android:text="@string/mitmf_redirect" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="ARP Mode:" />
+            android:text="@string/mitmf_arp" />
 
         <Spinner
             android:layout_width="match_parent"

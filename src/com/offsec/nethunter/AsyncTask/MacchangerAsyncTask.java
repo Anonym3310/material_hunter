@@ -10,6 +10,8 @@ public class MacchangerAsyncTask extends AsyncTask<String, Void, Void> {
     public static final int SETHOSTNAME = 1;
     public static final int SETMAC = 2;
     public static final int GETORIGINMAC = 3;
+    public static final int SETKHOSTNAME = 4;
+    public static final int GETKHOSTNAME = 5;
     private MacchangerAsyncTaskListener listener;
     private ShellExecuter exe = new ShellExecuter();
     private Object result;
@@ -47,6 +49,12 @@ public class MacchangerAsyncTask extends AsyncTask<String, Void, Void> {
                     result = exe.RunAsRootReturnValue(NhPaths.APP_SCRIPTS_BIN_PATH + "/macchanger " + strings[0] + " -m " + strings[1]);
                 }
                 break;
+            case SETKHOSTNAME:
+                result = exe.RunAsRootOutput("echo " + strings[0] + " > /proc/sys/kernel/hostname");
+                break;
+            case GETKHOSTNAME:
+                result = exe.Executer("cat /proc/sys/kernel/hostname");
+                break;
         }
         return null;
     }
@@ -64,7 +72,6 @@ public class MacchangerAsyncTask extends AsyncTask<String, Void, Void> {
 
     public interface MacchangerAsyncTaskListener {
         void onAsyncTaskPrepare();
-
         void onAsyncTaskFinished(Object result);
     }
 }

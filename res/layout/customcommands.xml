@@ -55,24 +55,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:text="Add" />
+                android:text="@string/add" />
 
             <Button
                 android:id="@+id/f_customcommands_deleteItemButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:text="Delete" />
+                android:text="@string/delete" />
 
             <Button
                 android:id="@+id/f_customcommands_moveItemButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:text="Move" />
+                android:text="@string/move" />
 
         </LinearLayout>
     </HorizontalScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -117,6 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/pineapple_stop_OTG"
+            android:singleLine="true"
             android:id="@+id/pineapple_close_button" />
         </LinearLayout>
     </LinearLayout>
