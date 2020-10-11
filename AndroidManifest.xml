@@ -68,7 +68,7 @@
 
         <activity
             android:name=".EditSourceActivity"
-            android:label="Edit Source"
+            android:label="@string/edit"
             android:theme="@style/Theme.Nethunter"
             android:windowSoftInputMode="stateHidden">
             <meta-data
@@ -77,7 +77,7 @@
         </activity>
         <activity
             android:name=".DeAuthWhitelistActivity"
-            android:label="Edit whitelist"
+            android:label="@string/edit_whitelist_file"
             android:theme="@style/Theme.Nethunter"
             android:windowSoftInputMode="stateHidden">
             <meta-data
@@ -112,16 +112,6 @@
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <!--service
-            android:name=".service.DummyAccessibilityService"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/dummy_accessibility_service"/>
-        </service-->
         <service
             android:name=".gps.LocationUpdateService"
             android:enabled="true"
