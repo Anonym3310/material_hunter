@@ -2,6 +2,7 @@
 
 import argparse         # Handle arguments
 import os               # To write hid comands to system
+import keyseed
 
 '''
 
@@ -33,7 +34,7 @@ if not language:
 
 def do_file(filename, lang):
     try:
-        os.system("/system/xbin/dos2unixdos2unix " + filename)
+        os.system("dos2unix " + filename)
         f = open(filename, "r")
         for line in f:  # Read a line in the file
             for char in line:  # Read each character in that line
@@ -44,7 +45,7 @@ def do_file(filename, lang):
                     if lang == "ru":  # If russian, set characters to russian
                         char = iso_ru[char]
 
-                    line = dicts[lang+'_bin'].get(char)
+                    line = keyseed.dicts[lang+'_bin'].get(char)
                     if line is not None:
                         if isinstance(line, str):
                             os.system('%s%s%s\n' % (prefix, line.rstrip('\n').strip(), suffix))
