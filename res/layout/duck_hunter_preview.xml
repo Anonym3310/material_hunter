@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
     <LinearLayout
@@ -8,12 +8,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="0dp">
-        
-		<TextView
+
+        <TextView
             android:id="@+id/source"
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-			android:textColor="#ffffff"
-            android:gravity="top" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:textColor="#ffffff" />
     </LinearLayout>
 </ScrollView>

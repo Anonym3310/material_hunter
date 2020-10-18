@@ -5,120 +5,120 @@
 
         <variable
             name="viewModel"
-            type="com.offsec.nethunter.MITMFViewModel" />
+            type="material.hunter.MITMFViewModel" />
     </data>
 
     <ScrollView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical"
-        android:focusableInTouchMode="true">
-
-        <ImageView
-            android:layout_gravity="center_horizontal"
-            android:paddingTop="10px"
-            android:paddingBottom="20px"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            app:srcCompat="@android:drawable/divider_horizontal_bright" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/mitmf_spoof_sett" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mitmf_spoof"
-            android:id="@+id/mitmf_enablespoof"
-            android:onClick="@{(view) -> viewModel.clickSpoof(view)}" />
-
-        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="5px"
-            android:paddingTop="10px"
-            app:srcCompat="@android:drawable/divider_horizontal_bright" />
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/mitmf_redirect" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="10px"
+                android:paddingBottom="20px"
+                app:srcCompat="@android:drawable/divider_horizontal_bright" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/mitmf_spoof_redirectspin"
-            android:enabled="@{viewModel.spoofEnabled}" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mitmf_spoof_sett"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="@string/mitmf_arp" />
+            <CheckBox
+                android:id="@+id/mitmf_enablespoof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{(view) -> viewModel.clickSpoof(view)}"
+                android:text="@string/mitmf_spoof" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/mitmf_spoof_arpmodespin"
-            android:enabled="@{viewModel.spoofEnabled}" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10px"
+                android:paddingBottom="5px"
+                app:srcCompat="@android:drawable/divider_horizontal_bright" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mitmf_redirect"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/mitmf_spoof_redirectspin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="@{viewModel.spoofEnabled}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mitmf_arp"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/mitmf_spoof_arpmodespin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="@{viewModel.spoofEnabled}" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mitmf_spoof_gateway_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{viewModel.spoofEnabled}"
-                    android:hint="@string/mitmf_spoof_gateway"
-                    android:id="@+id/mitmf_spoof_gateway_text" />
+                    android:hint="@string/mitmf_spoof_gateway" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mitmf_spoof_targets_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{viewModel.spoofEnabled}"
-                    android:hint="@string/mitmf_spoof_targets"
-                    android:id="@+id/mitmf_spoof_targets_text" />
+                    android:hint="@string/mitmf_spoof_targets" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/mitmf_spoof_shellshock_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="@{viewModel.spoofEnabled}"
-                    android:hint="@string/shellshock_command"
-                    android:id="@+id/mitmf_spoof_shellshock_text" />
+                    android:hint="@string/shellshock_command" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
-</ScrollView>
+    </ScrollView>
 </layout>

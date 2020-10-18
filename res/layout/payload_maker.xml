@@ -5,24 +5,24 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:focusableInTouchMode="true">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mpc_description"
             android:layout_gravity="center_horizontal|center"
             android:gravity="center"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:text="@string/mpc_description" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mpc_type"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/mpc_type" />
 
         <Spinner
             android:id="@+id/mpc_type_spinner"
@@ -34,8 +34,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mpc_port"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/mpc_port" />
 
         <EditText
             android:id="@+id/mpc_port"
@@ -44,70 +44,66 @@
             android:ems="10"
             android:inputType="number"
             android:maxWidth="15dp"
-            android:maxLines="1"
-            android:maxLength="5" />
+            android:maxLength="5"
+            android:maxLines="1" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mpc_ip_address"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/mpc_ip_address" />
 
         <EditText
             android:id="@+id/mpc_ip_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:digits="0123456789."
             android:ems="10"
             android:inputType="number"
-            android:digits="0123456789."
             android:maxWidth="10dp"
-            android:maxLines="1"
-            android:maxLength="15" />
+            android:maxLength="15"
+            android:maxLines="1" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mpc_payload"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/mpc_payload" />
 
         <Spinner
             android:id="@+id/mpc_payload_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/mpc_payload_array"
-            />
+            android:entries="@array/mpc_payload_array" />
 
         <Spinner
             android:id="@+id/mpc_callback_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/mpc_callback_array"
-            />
+            android:entries="@array/mpc_callback_array" />
 
         <Spinner
             android:id="@+id/mpc_stage_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/mpc_stage_array"
-             />
+            android:entries="@array/mpc_stage_array" />
 
         <Spinner
             android:id="@+id/mpc_callbacktype_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/mpc_callbacktype_array"
-             />
+            android:entries="@array/mpc_callbacktype_array" />
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/mpc_GenerateSDCARD"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mpc_generateSDCARD" />
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/mpc_GenerateHTTP"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/mpc_generateHTTP" />

@@ -8,34 +8,34 @@
         android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingRight="16dp">
-        
+
         <TextView
             android:id="@+id/description"
-            android:text="@string/descriptiontext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|center" 
+            android:layout_gravity="center_horizontal|center"
             android:gravity="center"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/descriptiontext" />
 
         <EditText
             android:id="@+id/source"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:lines="18"
-            android:includeFontPadding="false"
-            android:paddingTop="0px"
-            android:gravity="top"
             android:layout_marginLeft="1dip"
-            android:layout_marginRight="1dip" />
+            android:layout_marginRight="1dip"
+            android:gravity="top"
+            android:includeFontPadding="false"
+            android:lines="18"
+            android:paddingTop="0px" />
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/update"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/update"
+            android:layout_marginLeft="1dip"
             android:onClick="updateSource"
-            android:layout_marginLeft="1dip" />
+            android:text="@string/update" />
     </LinearLayout>
 </ScrollView>

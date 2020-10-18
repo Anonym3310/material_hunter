@@ -5,7 +5,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:4.0.2'
     }
     configurations.all {
         resolutionStrategy {
@@ -55,8 +55,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 202010007
-        versionName "2020.10-material"
+        versionCode 202010032
+        versionName "2020.10"
         multiDexEnabled true
     }
 
@@ -85,7 +85,6 @@ android {
             minifyEnabled false
             buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + System.currentTimeMillis() + "L)"
             buildConfigField "String", "BUILD_NAME", "\"" + System.getenv("USER") + "\""
-
             return true
         }
         release {
@@ -97,7 +96,6 @@ android {
             zipAlignEnabled true
             buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + System.currentTimeMillis() + "L)"
             buildConfigField "String", "BUILD_NAME", "\"" + System.getenv("USER") + "\""
-
             return true
         }
     }

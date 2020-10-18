@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -8,57 +7,57 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:textSize="18sp"
+            android:text="Arch:"
             android:textColor="@color/clearTitle"
-            android:text="Arch:"/>
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/f_chrootmanager_arch_adb_spr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:entries="@array/f_chrootmanager_build_chroot_arm_opts"
             android:textColor="@color/clearTitle"
-            android:entries="@array/f_chrootmanager_build_chroot_arm_opts"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
-            android:textSize="18sp"
+            android:text="Min or Full install:"
             android:textColor="@color/clearTitle"
-            android:text="Min or Full install:"/>
+            android:textSize="18sp" />
 
         <Spinner
             android:id="@+id/f_chrootmanager_minorfull_adb_spr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:entries="@array/f_chrootmanager_build_chroot_full_or_min"
             android:textColor="@color/clearTitle"
-            android:entries="@array/f_chrootmanager_build_chroot_full_or_min"/>
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
             android:text="@string/chrootmanager_dwnld_path"
-            android:textSize="18sp"
-            android:textColor="@color/clearTitle"/>
+            android:textColor="@color/clearTitle"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/f_chrootmanager_storepath_et"
@@ -66,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:textSize="18sp"
-            android:textColor="@color/clearTitle"/>
+            android:textColor="@color/clearTitle"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </LinearLayout>

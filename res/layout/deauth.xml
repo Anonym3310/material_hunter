@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:id="@+id/deauth_item"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -13,30 +14,30 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/wlan_interface"
-            android:inputType="textPersonName"
-            android:text="wlan0"
-            android:ems="10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="wlan0" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/scan_networks"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:text="@string/scan_networks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/scan_networks" />
+        android:text="@string/scan_networks" />
 
     <EditText
+        android:id="@+id/TerminalOutputDeAuth"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:editable="false"
-        android:id="@+id/TerminalOutputDeAuth"
-        android:padding="16sp"
-        android:background="@android:color/black"
-        android:textColor="@android:color/holo_green_light"
-        android:fontFamily="monospace"
         android:layout_weight="1.00"
+        android:background="@android:color/black"
+        android:editable="false"
+        android:fontFamily="monospace"
+        android:padding="16sp"
+        android:textColor="@android:color/holo_green_light"
         android:textSize="14sp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -47,10 +48,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/channel"
-            android:inputType="number"
-            android:ems="10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TableRow
@@ -61,8 +62,8 @@
             android:id="@+id/deauth_whitelist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/whitelist"
-            android:clickable="false" />
+            android:clickable="false"
+            android:text="@string/whitelist" />
 
         <CheckBox
             android:id="@+id/deauth_me"
@@ -73,10 +74,10 @@
     </TableRow>
 
     <Button
+        android:id="@+id/StartDeAuth"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:text="@string/start_deauthentication"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/StartDeAuth" />
+        android:text="@string/start_deauthentication" />
 
 </LinearLayout>

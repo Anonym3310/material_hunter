@@ -6,28 +6,30 @@
     <!--string name="nethunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, settings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
     <string name="nethunter_sysinfo">Системная информация</string>
     <string name="nethunter_description">Вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши горячие команды. Также зажав лейбел команды, вы можете её редактировать.</string>
-    <string name="nethunter_howtouse_cmd">Put your own command string here, it will be run in Android environment to get the output displayed.</string>
-    <string name="nethunter_howtouse_delimiter">Put your desired delimiter string if you want to split the output into lines, default is "\\n".</string>
-    <string name="nethunter_howtouse_runoncreate">To get the output upon the fragment is created, check this option. Otherwise you have to click RUN button manually to get the output.</string>
+    <string name="nethunter_howtouse_cmd">Введите здесь свою команду, она будет запущена в Android среде для получения ответа.</string>
+    <string name="nethunter_howtouse_delimiter">Введите значение разделителя строк, есил вы хотите разделить ответ команды, по умолчанию "\\n".</string>
+    <string name="nethunter_howtouse_runoncreate">Для получения ответа сразу при запуске фрагмента, используйте эту опцию.</string>
     <string name="nethunter_run_item">RUN</string>
+    <string name="nethunter_move">Переместить: </string>
 
     <!-- Hid -->
-    <string name="hid_powersploit_description">Powersploit payload основывается на вашем выборе reverse meterpreter HTTP/S payloads. "URL to payload" должен быть URL адресов, доступным для машины вашей жертвы, куда загружается payload.</string>
+    <string name="hid_powersploit_description">Powersploit payload основывается на вашем выборе reverse meterpreter HTTP/S payloads. "URL to payload" должен быть URL адресом, доступным для машины вашей жертвы, куда позже загружается payload.</string>
     <string name="hid_uac_bypass_item1">Без UAC Bypass</string>
     <string name="ps_ip_address">IP Адрес (LHOST)</string>
     <string name="ps_port">Порт (LPORT)</string>
     <string name="ps_payload_url">URL to payload</string>
     <string name="hid_ps_head">Полезная нагрузка Powershell HTTP позволяет загружать и запускать универсальную полезную нагрузку powershell с URL-адреса. URL-адрес полезной нагрузки должен находиться в месте, доступном жертве.</string>
-    <string name="hid_windows_cmd_description">Windows CMD payload позволяет вводить необработанные команду в Командную Строку Windows. Из меню вы можете выбрать keyboard layout или UAC bypass. </string>
+    <string name="hid_windows_cmd_description">Windows CMD payload позволяет вводить необработанные команды в Командную Строку Windows. Из меню вы можете выбрать keyboard layout или UAC bypass.</string>
 
     <!-- KaliServices -->
     <string name="kali_services_description">Kali Chroot сервисы могут быть включены или выключены с помощю Toggle кнопок, также, вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши сервисы. Зажав лейбел сервиса, вы можете редактировать его.</string>
-    <string name="kaliservices_howto_startservice">To START a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nbusybox chroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nService is considered STARTED if the return value is 0 and vice versa.</string>
-    <string name="kaliservices_howto_stopservice">To STOP a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nbusybox chroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nService is considered STOPPED if the return value is 0 and vice versa.</string>
-    <string name="kaliservices_howto_checkservice">To Check if a service in kali is up or not, a command will be run OUTSIDE KaliChroot that looks like this:\n\nbusybox ps -o pid,comm | grep \'&lt;service_name>\'\n\nService is considered UP if the return value is 0 and vice versa.</string>
-    <string name="kaliservices_howto_runServiceOnBoot">To automacticailly start the service after Kali Chroot is up, check this option.</string>
+    <string name="kaliservices_howto_startservice">Чтобы запустить службу в kali, будет запущена команда, которая выглядит следующим образом:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nСлужба считается запущенной, если возвращаемое значение равно 0, и наоборот.</string>
+    <string name="kaliservices_howto_stopservice">Чтобы остановить службу в kali, будет запущена команда, которая выглядит следующим образом:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nСлужба считается остановленной, если возвращаемое значение равно 0, и наоборот.</string>
+    <string name="kaliservices_howto_checkservice">Чтобы проверить, работает ли служба в kali или нет, за пределами Chroot будет запущена команда, которая выглядит следующим образом:\n\nbusybox ps -o pid,comm | grep \'&lt;service_name>\'\n\nУслуга считается выполненной, если возвращаемое значение равно 0, и наоборот.</string>
+    <string name="kaliservices_howto_runServiceOnBoot">Для автоматического запуска при старте Chroot, используйте эту опцию.</string>
     <string name="kaliservices_not_running">Сервис не запущен.</string>
     <string name="kaliservices_run_on_chroot">RunOnChrootStart</string>
+    <string name="kaliservices_move">Переместить: </string>
 
     <!-- CustomCommands -->
     <string name="custom_commands_description">Вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши горячие команды. Также зажав лейбел команды, вы можете её редактировать.</string>
@@ -42,6 +44,7 @@
     <string name="customcommands_send_to">Цель:</string>
     <string name="customcommands_exec_mode">Exec режим:</string>
     <string name="customcommands_rob">RunOnBoot:</string>
+    <string name="customcommands_move">Переместить: </string>
 
     <!-- USB Armory -->
     <string name="drawertitleusbarmory">USB Arsenal</string>
@@ -61,7 +64,7 @@
     <string name="usbarmory_imagemounter_mounted">Монтировано:</string>
     <string name="usbarmory_imagemounter_nonmounted">Ничего не монтировано.</string>
     <string name="usbarmory_networktethering_header">USB Network Tethering</string>
-    <string name="usbarmory_networktethering_description">USB Network Tethering используетс только с включенным \"rndis\" или \"acmecm\"</string>
+    <string name="usbarmory_networktethering_description">USB Network Tethering используется только с включенным \"rndis\" или \"acm/ecm\"</string>
     <string name="usbarmory_networktethering_attack_mode">Режим атаки:</string>
     <string name="usbarmory_networktethering_upstream">Upstream интерфейс (e.g. wlan0, rmnet_data0):</string>
     <string name="usbarmory_networktethering_interface">USB интерфейс\n(e.g. rndis0, usb0):</string>
@@ -107,7 +110,8 @@
     <!-- Bad USB -->
     <string name="badusb_label">BadUSB MITM Атака</string>
     <string name="badusb_description">Это наша реализация атаки BadUSB, продемонстрированной на выставке Black Hat USA 2014. Включение этого режима USB-гаджета позволит вашему устройству действовать как сетевой интерфейс USB при подключении к целевому компьютеру. Подключение USB-кабеля к ПК приведет к тому, что весь трафик с этого компьютера (Windows или Linux) будет проходить через устройство NetHunter, где трафик может быть MITM\'ed.</string>
-
+    <string name="badusb_started">BadUSB атака начата! Смотрите /sdcard/nh_files/badusb.log</string>
+    <string name="badusb_stopped">BadUSB атака остановлена!</string>
 
     <string name="mana_hostapd">hostapd конфигурационный файл.</string>
     <string name="mana_hostapd_wpe">hostapd конфигурационный файл для 802.1x/EAP атак (hostapd-wpe) Не используется с MANA.</string>
@@ -124,7 +128,7 @@
 
     <string name="select_language">Язык</string>
     <string name="duckConvertAttack">Атаковать</string>
-    <string name="duck_hunter_headline">DuckHunter скрипт может быть легко конвертирован. "USB Rubber Ducky" скрипты в NetHunter HID формат. You can generate preconfigured scripts at the incredibly useful <a href="http://www.ducktoolkit.com/Home.jsp">Ducky Toolkit</a> сайт, или посмотрите Rubber Ducky синтаксис скриптов из официального <a href="https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Duckyscript">README</a></string>
+    <string name="duck_hunter_headline">DuckHunter скрипт может быть легко конвертирован. "USB Rubber Ducky" скрипты в NetHunter HID формат. Вы можете создать заранее настроенные скрипты в неверятно полезном <a href="http://www.ducktoolkit.com/Home.jsp">Ducky Toolkit</a> сайте, или посмотрите Rubber Ducky синтаксис скриптов из официального <a href="https://github.com/hak5darren/USB-Rubber-Ducky/wiki/Duckyscript">README</a></string>
     <string name="duckyscripts">Duckyscripts</string>
     <string name="duck_hunter_info">Храните свои скрипты в /sdcard/nh_files/duckyscripts/</string>
     <string name="duck_hunter_preview">Preview</string>
@@ -143,14 +147,13 @@
     <string name="start_badusb">Начать BadUSB атаку</string>
     <string name="stop_badusb">Остановить BadUSB атаку</string>
 
-
     <string name="update">Обновить</string>
     <string name="load">Загрузить с SDCARD</string>
     <string name="save">Сохранить в SDCARD</string>
     <string name="execute_attack">Начать атаку</string>
 
-    <string name="stop_mana">Старт</string>
-    <string name="start_mana">Стоп</string>
+    <string name="start_mana">Старт</string>
+    <string name="stop_mana">Стоп</string>
     <string name="bssid">BSSID</string>
     <string name="ssid">SSID</string>
     <string name="enable_karma">Использовать karma</string>
@@ -162,7 +165,12 @@
     <string name="payload">Payload</string>
     <string name="karma_loud">karma loud</string>
 
-    <string name="toast_install_terminal">Error launching intent. Install Android Terminal!</string>
+    <string name="toast_install_terminal">Не удалось запустить. Установите NetHunter Terminal.</string>
+    <string name="toast_install_gpsd">Вы должны установить gpsd в chroot.</string>
+    <string name="toast_install_exploitdb">Вы должны установить exploitdb в chroot.</string>
+    <string name="toast_install_kex">NetHunter KeX не установлен, пожалуйста, установите из магазина!</string>
+    <string name="toast_need_configfs">Ваше ядро не поддерживает FunctionFS. Может быть ядро ниже версии 3.11. Попробуйте связаться с разработчиком ядра.</string>
+    <string name="toast_need_iw">Вы должны установить iw в chroot.</string>
     <string name="descriptiontext" />
 
     <string name="macchanger_description">**Важно: Android 10 имеет встроенную рандомизацию MAC, но если вы хотите сменить его на желаемый вами - следует:\n1. Включить \'Рандомизация MAC\' на SSID к которой вы подключены.\n2. Точка, к которой вы хотите подключиться с измененным MAC, уже должна быть в устройстве.\nПодключение к другой сети может вызвать потерю измененного MAC Адреса.</string>
@@ -172,12 +180,12 @@
     <string name="interface_select">Выбрать интерфейс:</string>
     <string name="macchanger_select">Режим macchanger:</string>
     <string name="reset_mac">Сбросить wlan0 MAC</string>
-    <string name="currentmac">Сейчас MAC:</string>
+    <string name="currentmac">Текущий MAC:</string>
     <string name="TwoMACDigits">XX</string>
     <string name="macSeparator">:</string>
     <string name="reloadMAC">Перезагрузить MAC</string>
-    <string name="changeMAC">Установить MAC</string>
-    <string name="resetMAC">Сбросить MAC</string>
+    <string name="changeMAC">Установить MAC на</string>
+    <string name="resetMAC">Сбросить MAC на</string>
     <string-array name="macchanger_opts">
         <item>Сгенерированный MAC</item>
         <item>Свой MAC</item>
@@ -228,7 +236,7 @@
     <string name="bt_scan">Сканировать устройства</string>
 
     <!-- BT Tools -->
-    <string name="bt_tools">Перебор адресов устройства BT, пинг, и обнаружение их сервисов.</string>
+    <string name="bt_tools">Перебор адресов устройств BT, пинг, и обнаружение их сервисов.</string>
 
     <!-- BT Spoof -->
     <string name="bt_spoof">Обманывать свой BT адаптер.\nБудет играть существенную роль в предстоящих атаках.</string>
@@ -237,9 +245,9 @@
     <string name="bt_name">Имя</string>
     <string name="bt_apply">Применить</string>
     <string name="bt_check">Проверить</string>
-    <string name="bt_current_adress">Current Address:</string>
-    <string name="bt_current_class">Current Class:</string>
-    <string name="bt_current_name">Current Name:</string>
+    <string name="bt_current_adress">Текущий Адрес:</string>
+    <string name="bt_current_class">Текущий Класс:</string>
+    <string name="bt_current_name">Текущее Имя:</string>
 
     <!-- BT Carwhisperer -->
     <string name="bt_use_selected">Исп. выбранную цель</string>
@@ -247,7 +255,7 @@
     <string name="bt_channel">Канал</string>
     <string name="bt_mode">Режим</string>
     <string name="bt_launch">Запустить</string>
-    <string name="bt_kill">Убить</string>
+    <string name="bt_kill">Остановить</string>
     <string name="bt_carwhisperer">Сценарий Carwhisperer из wayback. Слушайте или вводите звук в различные устройства, такие как динамики, гарнитуры, часы или даже автомобили. Обратите внимание, что цель должна быть отключена от исходного источника. Прямая трансляция будет иметь некоторую задержку. Выборка должна быть 8 кГц, так как мы вводим ее в протокол SCO.</string>
     <string name="bt_carwhisperer_save">Сохранить запись в /sdcard/</string>
     <string name="bt_carwhisperer_select">Файл для инъекции</string>
@@ -292,7 +300,7 @@
         <item>DHCP</item>
         <item>DNS</item>
     </string-array>
-    <string name="mitmf_spoof_gateway">Шлюз IP </string>
+    <string name="mitmf_spoof_gateway">Шлюз IP</string>
     <string name="mitmf_spoof_targets">Цели</string>
     <string-array name="mitmf_spoof_arpmode">
         <item>ARP режим</item>
@@ -307,7 +315,7 @@
     <string name="mitmf_inject_HTMLPAY">HTML Payload to inject:</string>
     <string name="mitmf_inject_PRESERVER">Preserve Cache</string>
     <string name="mitmf_inject_ONCE">Once per domain</string>
-    <string name="mitmf_inject_RATELIMIT">Rate Limit (секунды)</string>
+    <string name="mitmf_inject_RATELIMIT">Rate Limit (сек.)</string>
     <string name="mitmf_inject_COUNTLIMIT">Количество раз для инъекции</string>
     <string name="mitmf_inject_INJECTIP">Inject only IP</string>
     <string name="mitmf_inject_NOINJECTIP">IP not to inject</string>
@@ -334,9 +342,9 @@
         <item>min</item>
     </array>
 
-    <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Kali Linux that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
+    <string name="aboutchroot">Chroot Manager для Kali. \"Chroot\" полная установка Kali Linux который разделяет обработку, сеть, память, и прочие ресурсы с Android. Он находится во внутренней области памяти (data) и должен иметь минимум 8ГБ свободного пространства для минимальной или полной установки, просто чтобы не сломать вашу систему.</string>
     <string name="materialteam">Разработчики:\nt.me/cxblack\n\nСпасибо:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/HuntMix\nt.me/hilledkinged\n\nСделано с ♥</string>
-    <string name="attack_launched">Attack launched!</string>
+    <string name="attack_launched">Атака запущена!</string>
 
     <!-- sidebar menu item titles -->
     <string name="drawertitlenethunter">Home</string>
@@ -357,9 +365,9 @@
     <string name="drawertitlepineapple">Pineapple Connector</string>
     <string name="drawertitlegps">Wardriving</string>
     <string name="drawertitledeauth">DeAuth</string>
-    <string name="InstallAndUpdateButtonText"><![CDATA[Install & Update]]></string>
-    <string name="metapackagesExplanation">Choose some \"metapackages\". The chroot will also be upgraded (via \"apt-get update/dist-upgrade\").\n\nSelecting metapackages you already have installed (or no packages at all) simply update/upgrades without removing anything.\n\nDepending on what metapackages you select, you may be asked to do stuff (such as set passwords for services), so pay attention.</string>
-    <string name="metapackagesAdditionalInfo">Local storage requirements may be in the 20+ GB range. This installation/update will be performed in a terminal, so watch for issues. When completed, press the back button.</string>
+    <string name="InstallAndUpdateButtonText"><![CDATA[Установить и Обновить]]></string>
+    <string name="metapackagesExplanation">Выберите несколько \"Метапакетов\". Chroot обновится (через \"apt-get update/dist-upgrade\").\n\nВыбрав метапакеты, которые вы уже установили (или вообще не имеете пакетов), просто обновите/обновите их, ничего не удаляя. \n\nВ зависимости от того, какие метапакеты вы выберете, вас могут попросить сделать что-то (например, установить пароли для служб), поэтому обратите внимание.</string>
+    <string name="metapackagesAdditionalInfo">К локальному хранилищу требуется около +-20ГБ. Эта установка/обновление будет выполняться в терминале, так что следите за проблемами.</string>
 
     <!-- MPC -->
     <string name="mpc_description">MSFvenom Payload Создатель (MSFPC) это оболочка, написанная g0tmi1k для создания нескольких типо payload, по выбору пользователя. Идея состоит в том, чтобы как можно более простым способом (требуя только одного ввода) можно было создать payload.</string>
@@ -405,11 +413,14 @@
     <string name="mpc_generateHTTP">Генерировать в HTTP</string>
 
     <!-- SearchSploit -->
-    <string name="searchsploit_searchbar">Поиск Exploitов</string>
+    <string name="searchsploit_searchbar">Поиск эксплоитов</string>
+    <string name="searchsploit_send_hid">В HID</string>
+    <string name="searchsploit_view_web">Веб-страница</string>
+    <string name="searchsploit_view_source">Источник</string>
 
     <!-- Custom Launcher -->
-    <string name="drawer_opened">Drawer открыт</string>
-    <string name="drawer_closed">Drawer закрыт</string>
+    <string name="drawer_opened">Drawer opened</string>
+    <string name="drawer_closed">Drawer closed</string>
 
     <!-- Start NMAP -->
     <string name="nmap_hint">Введите IP</string>
@@ -420,7 +431,7 @@
         <item>eth0</item>
         <item>rndis0</item>
     </string-array>
-    <string name="nmap_all">OS version detect, script scan, and traceroute</string>
+    <string name="nmap_all">Обнаружение версии ОС, сканирование скриптов и трассировка маршрута</string>
     <string name="nmap_ipv6">Enable IPv6</string>
     <string name="nmap_timing_template">Timing Template</string>
     <string-array name="nmap_timing_array">
@@ -479,6 +490,14 @@
     <string name="scanButtonText">Скан</string>
     <string name="advancedOptionsSwitchText">Доп. настройки</string>
     <string name="edit_whitelist_file">Редактировать whitelist</string>
+    <string name="edit_source_loaded">Файл загружен</string>
+    <string name="script_loaded">Скрипт загружен</string>
+    <string name="script_saved">Скрипт сохранен</string>
+    <string name="file_exists">Файл уже имеется</string>
+    <string name="unknown_click">Необрабатываемое нажатие</string>
+    <string name="cancel">Назад</string>
+    <string name="edit_source_updated">Источник обновлен</string>
+    <string name="edit_source_not_updated">Источник не обновлен</string>
     <string name="type_wlan_interface">Интерфейс</string>
     <string name="scan_networks">Сканировать сети</string>
     <string name="channel">Канал</string>
@@ -491,6 +510,8 @@
     <string name="inject_settings">Настройки инъекции</string>
     <string name="platform">Платформа</string>
     <string name="type">Тип</string>
+    <string name="author">Автор</string>
+    <string name="date">Дата</string>
     <string name="ss_loaddb">ЗАГРУЗИТЬ DB (1 раз)</string>
     <string name="add">Добавить</string>
     <string name="delete">Удалить</string>
@@ -498,6 +519,8 @@
     <string name="edit">Редактировать</string>
     <string name="size">Размер</string>
     <string name="count">Кол-во</string>
+    <string name="options_updated">Настройки обновлены.</string>
+    <string name="options_not_updated">Настройки не обновлены.</string>
 
     <string name="bd_backup">Сохранить BD</string>
     <string name="bd_restore">Восстановить BD</string>

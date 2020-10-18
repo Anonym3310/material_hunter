@@ -5,18 +5,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:focusableInTouchMode="true">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hid_ps_head"
             android:layout_gravity="center_horizontal|center"
             android:gravity="center"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/hid_ps_head" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -27,15 +27,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/payloadUrl"
-                android:ems="10"
-                android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/powershellOptionsUpdate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/update" />

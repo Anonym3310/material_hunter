@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -9,108 +8,110 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp">
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:textSize="18sp"
+                android:text="Label:"
                 android:textColor="@color/accent_material_dark"
-                android:text="Label:"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/f_customcommands_edit_adb_et_commandlabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:inputType="text"
-                android:hint="Enter your title name here"/>
+                android:hint="Enter your title name here"
+                android:inputType="text" />
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:textSize="18sp"
+                android:text="Command:"
                 android:textColor="@color/accent_material_dark"
-                android:text="Command:"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/f_customcommands_edit_adb_et_command"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:hint="Enter your command string here"/>
+                android:hint="Enter your command string here" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="0.4"
-                    android:textSize="18sp"
+                    android:text="Send to:"
                     android:textColor="@color/accent_material_dark"
-                    android:text="Send to:"/>
+                    android:textSize="18sp" />
 
                 <Spinner
                     android:id="@+id/f_customcommands_edit_adb_spr_sendto"
-                    android:entries="@array/custom_commands_sendto_array"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6" />
+                    android:layout_weight="0.6"
+                    android:entries="@array/custom_commands_sendto_array" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="0.4"
-                    android:textSize="18sp"
+                    android:text="Exec mode:"
                     android:textColor="@color/accent_material_dark"
-                    android:text="Exec mode:"/>
+                    android:textSize="18sp" />
 
                 <Spinner
                     android:id="@+id/f_customcommands_edit_adb_spr_execmode"
-                    android:entries="@array/custom_commands_execmode_array"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.6" />
+                    android:layout_weight="0.6"
+                    android:entries="@array/custom_commands_execmode_array" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="4dp">
+                android:layout_marginBottom="4dp"
+                android:orientation="horizontal">
 
                 <CheckBox
                     android:id="@+id/f_customcommands_edit_adb_checkbox_runonboot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
                     android:text="RunOnBoot"
-                    android:textSize="18sp"
                     android:textColor="@color/accent_material_dark"
-                    android:layout_marginStart="4dp"/>
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

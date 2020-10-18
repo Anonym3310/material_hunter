@@ -8,8 +8,9 @@
     <string name="nethunter_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
     <string name="nethunter_howtouse_cmd">Put your own command string here, it will be run in Android environment to get the output displayed.</string>
     <string name="nethunter_howtouse_delimiter">Put your desired delimiter string if you want to split the output into lines, default is "\\n".</string>
-    <string name="nethunter_howtouse_runoncreate">To get the output upon the fragment is created, check this option. Otherwise you have to click RUN button manually to get the output.</string>
+    <string name="nethunter_howtouse_runoncreate">To get the output upon the fragment is created, check this option.</string>
     <string name="nethunter_run_item">RUN</string>
+    <string name="nethunter_move">Move: </string>
 
     <!-- Hid -->
     <string name="hid_powersploit_description">The Powersploit payload provides you a choice of reverse meterpreter HTTP/S payloads. "URL to payload" should be a URL accessible to the victim machine where the larger payload is downloaded to.</string>
@@ -22,12 +23,13 @@
 
     <!-- KaliServices -->
     <string name="kali_services_description">Kali Chroot services can be started and stopped via the switch toggle buttons, you can also ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your own service item, and long click on the item label to EDIT the item as well.</string>
-    <string name="kaliservices_howto_startservice">To START a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nbusybox chroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nService is considered STARTED if the return value is 0 and vice versa.</string>
-    <string name="kaliservices_howto_stopservice">To STOP a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nbusybox chroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nService is considered STOPPED if the return value is 0 and vice versa.</string>
+    <string name="kaliservices_howto_startservice">To START a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nService is considered STARTED if the return value is 0 and vice versa.</string>
+    <string name="kaliservices_howto_stopservice">To STOP a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nService is considered STOPPED if the return value is 0 and vice versa.</string>
     <string name="kaliservices_howto_checkservice">To Check if a service in kali is up or not, a command will be run OUTSIDE KaliChroot that looks like this:\n\nbusybox ps -o pid,comm | grep \'&lt;service_name>\'\n\nService is considered UP if the return value is 0 and vice versa.</string>
     <string name="kaliservices_howto_runServiceOnBoot">To automacticailly start the service after Kali Chroot is up, check this option.</string>
     <string name="kaliservices_not_running">Service is NOT running.</string>
     <string name="kaliservices_run_on_chroot">RunOnChrootStart</string>
+    <string name="kaliservices_move">Move: </string>
 
     <!-- CustomCommands -->
     <string name="custom_commands_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
@@ -42,6 +44,7 @@
     <string name="customcommands_send_to">Send to:</string>
     <string name="customcommands_exec_mode">Exec Mode:</string>
     <string name="customcommands_rob">RunOnBoot:</string>
+    <string name="customcommands_move">Move: </string>
 
     <!-- USB Armory -->
     <string name="drawertitleusbarmory">USB Arsenal</string>
@@ -107,7 +110,8 @@
     <!-- Bad USB -->
     <string name="badusb_label">BadUSB MITM Attack</string>
     <string name="badusb_description">This is our implementation of the BadUSB attack as demonstrated at Black Hat USA 2014. Enabling this USB gadget mode will allow your device to act as a USB network interface when plugged into a target computer. Connecting the USB cable to a PC will force all traffic from that PC (Windows or Linux) through the NetHunter device, where the traffic can be MITM\'ed.</string>
-
+    <string name="badusb_started">BadUSB attack started! Check /sdcard/nh_files/badusb.log</string>
+    <string name="badusb_stopped">BadUSB attack stopped!</string>
 
     <string name="mana_hostapd">The hostapd configuration file used by Mana.</string>
     <string name="mana_hostapd_wpe">The hostapd configuration file used for 802.1x/EAP authentication attack (hostapd-wpe)  This is not used with MANA.</string>
@@ -163,7 +167,12 @@
     <string name="payload">Payload</string>
     <string name="karma_loud">karma loud</string>
 
-    <string name="toast_install_terminal">Error launching intent. Install Android Terminal!</string>
+    <string name="toast_install_terminal">Error launching intent. Install Android Terminal.</string>
+    <string name="toast_install_gpsd">You need installed gpsd in chroot.</string>
+    <string name="toast_install_exploitdb">You need installed exploitdb in chroot.</string>
+    <string name="toast_install_kex">NetHunter KeX is not installed yet, please install from the store!</string>
+    <string name="toast_need_configfs">Your kernel does not support FunctionFS. Maybe your kernel less than 3.11. Try contact the kernel developer.</string>
+    <string name="toast_need_iw">You need installed iw in chroot.</string>
     <string name="descriptiontext" />
 
     <string name="macchanger_description">**Important: Android 10 has MAC Randomization provided already, but if you still want to set a custom mac address yourself, the following criteria are required:\n1. Enable the \'Use randomised MAC\' on each SSID you connect to.\n2. The AP you want to connect to must be connected with a correct password before.\nAs Manually connect to a AP will lose the changed mac.</string>
@@ -242,6 +251,13 @@
     <string name="bt_check_proximity">Check proximity</string>
     <string name="bt_sdp_tool">SDP Tool</string>
     <string name="bt_discover_services">Discover services</string>
+    <string name="bt_iface_down">Interface is down!</string>
+    <string name="bt_iface_no_selected">No interface selected!</string>
+    <string name="bt_target_selected">Target selected!</string>
+    <string name="bt_no_target_adress">No target address!</string>
+    <string name="bt_no_target_range">No target range!</string>
+    <string name="bt_least_one_parameter">Please enter at least one parameter!</string>
+    <string name="bt_file_not_found">File not found</string>
 
     <!-- BT Spoof -->
     <string name="bt_spoof">Spoof your BT adapters.\nWill play essential role in upcoming attacks.</string>
@@ -420,6 +436,9 @@
 
     <!-- SearchSploit -->
     <string name="searchsploit_searchbar">Search Exploits</string>
+    <string name="searchsploit_send_hid">Send HID</string>
+    <string name="searchsploit_view_web">View in www</string>
+    <string name="searchsploit_view_source">View Source</string>
 
     <!-- Custom Launcher -->
     <string name="drawer_opened">Drawer opened</string>
@@ -493,6 +512,15 @@
     <string name="scanButtonText">Scan</string>
     <string name="advancedOptionsSwitchText">Advanced Options</string>
     <string name="edit_whitelist_file">Edit whitelist file.</string>
+    <string name="edit_source_loaded">File Loaded</string>
+    <string name="script_loaded">Script loaded</string>
+    <string name="script_saved">Script saved</string>
+    <string name="file_exists">File already exists</string>
+    <string name="wrong_name_provider">Wrong name provided</string>
+    <string name="unknown_click">Unknown click</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit_source_updated">Source updated</string>
+    <string name="edit_source_not_updated">Source not updated</string>
     <string name="type_wlan_interface">Type wlan interface</string>
     <string name="scan_networks">Scan Networks</string>
     <string name="channel">Channel</string>
@@ -505,6 +533,8 @@
     <string name="inject_settings">Inject Settings</string>
     <string name="platform">Platform</string>
     <string name="type">Type</string>
+    <string name="author">Author</string>
+    <string name="date">Date</string>
     <string name="ss_loaddb">LOAD DB (1st run only)</string>
     <string name="add">Add</string>
     <string name="delete">Delete</string>
@@ -512,6 +542,8 @@
     <string name="edit">Edit</string>
     <string name="size">Size</string>
     <string name="count">Count</string>
+    <string name="options_updated">Options updated.</string>
+    <string name="options_not_updated">Options not updated.</string>
 
     <string name="bd_backup">Backup BD</string>
     <string name="bd_restore">Restore BD</string>

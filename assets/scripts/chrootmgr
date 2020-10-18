@@ -150,7 +150,7 @@ if [ ! $# -eq 0 ]; then
                 0)
                     bklog "[!] chroot path is set to -> $MNT"
                     if [ ! -d "$MNT" ]; then
-                        bklog "[-] \"$MNT\" directory not exist!"
+                        bklog "[-] \"$MNT\" chroot not exist!"
                         bklog "[!] Click the button [INSTALL KALI CHROOT] down below now!"
                         exit 2
                     fi
@@ -187,8 +187,11 @@ if [ ! $# -eq 0 ]; then
                         KERNEL="$(uname -r)"
 
                         DIR="/lib/modules/$KERNEL"
-                        if [ -d "$DIR"]; then
+                        if [ -d $DIR ]; then
                             bklog "[+] kernel modules exists and linked."
+                            if [ -d $DIR/build ]; then
+                                bklog "[!] kernel modules have a build folder."
+                            fi
                         else
                             bklog "[!] ${DIR} doesn't exists or isn't mounted..."
                         fi
@@ -202,6 +205,7 @@ if [ ! $# -eq 0 ]; then
                         fi
                     else
                         bklog "[-] seems there is no kali chroot installed yet, please click the button \"EDIT\" to configure the proper Kali Chroot Path or install the chroot."
+                        bklog "[!] if the error occurs, you can check the functionlity busybox_nh"
                         return 2
                     fi
                     ;;
@@ -237,7 +241,7 @@ if [ ! $# -eq 0 ]; then
                         $BUSYBOX sync
                     elif echo $2 | grep -q ".tar.xz$"; then
                         if [ -z "$XZ" ]; then
-                            bklog "[-] Sorry, you must use /data/data/com.offsec.nethunter/files/scripts/bin/xz to get xz work here."
+                            bklog "[-] Sorry, you must use /data/data/material.hunter/files/scripts/bin/xz to get xz work here."
                             bklog "[-] Or check if the execute permission of xz is granted."
                             bklog "[-] Or please choose to compress with .tar.gz instead."
                         else

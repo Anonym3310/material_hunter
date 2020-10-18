@@ -179,11 +179,6 @@
 
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -241,12 +236,6 @@
             android:text="@string/bt_hunt_for_devices"
             android:textColor="#ffffffff" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
-
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -262,12 +251,6 @@
             android:layout_weight="1"
             android:text="@string/bt_check_proximity"
             android:textColor="#ffffffff" />
-
-        <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
 
         <TextView
             android:layout_width="wrap_content"

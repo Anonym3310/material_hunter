@@ -4,26 +4,28 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/viewSource"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <EditText
             android:id="@+id/source"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:lines="20"
+            android:gravity="top"
             android:includeFontPadding="false"
-            android:paddingTop="0px"
-            android:gravity="top" />
+            android:lines="20"
+            android:paddingTop="0px" />
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/update"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/update"
-            android:onClick="updateSource" />
+            android:onClick="updateSource"
+            android:text="@string/update" />
     </LinearLayout>
 </ScrollView>

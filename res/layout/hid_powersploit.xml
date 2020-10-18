@@ -5,25 +5,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:focusableInTouchMode="true">
-        
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hid_powersploit_description"
-            android:layout_gravity="center_horizontal|center" 
-            android:gravity="center"
-            android:padding="4dp" />
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/payload"
+            android:layout_gravity="center_horizontal|center"
+            android:gravity="center"
             android:padding="4dp"
-            android:layout_marginTop="4dp" />
+            android:text="@string/hid_powersploit_description" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:padding="4dp"
+            android:text="@string/payload" />
 
         <Spinner
             android:id="@+id/payload"
@@ -41,9 +41,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ipaddress"
-                android:ems="10"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:ems="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,9 +54,9 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/port"
-                android:ems="10"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:ems="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -67,15 +67,15 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/payloadUrl"
-                android:ems="10"
-                android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/powersploitOptionsUpdate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/update" />

@@ -5,17 +5,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical">
-        
+        android:paddingRight="16dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hid_windows_cmd_description"
-            android:layout_gravity="center_horizontal|center" 
+            android:layout_gravity="center_horizontal|center"
             android:gravity="center"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/hid_windows_cmd_description" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -25,36 +25,36 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/windowsCmdSource"
-                android:ems="10"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:ems="10" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/load"
                 android:id="@+id/windowsCmdLoad"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-
-            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
+                android:text="@string/load" />
+
+            <Button
                 android:id="@+id/windowsCmdSave"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save" />
 
             <Button
                 android:id="@+id/windowsCmdUpdate"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/update"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                android:text="@string/update" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="Theme.Nethunter" parent="Theme.MaterialComponents">
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/material_blue_grey_950</item>
+        <item name="colorPrimaryDark">@color/colorBars</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!-- material features -->
@@ -39,4 +38,3 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 </resources>
-

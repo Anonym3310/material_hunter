@@ -10,115 +10,115 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pineapple_description"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        android:padding="4dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/pineapple_gateway" />
-
-    <EditText
-        android:layout_width="152dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/pineapple_gatewayip"
-        android:digits="0123456789."
-        android:text="@string/pineapple_gatewayip"
-        android:maxLines="1"
-        android:maxLength="15" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/pineapple_port" />
-
-    <EditText
-        android:layout_width="68dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/pineapple_webport"
-        android:text="@string/pineapple_webport"
-        android:inputType="number"
-        android:maxLines="1"
-        android:maxLength="5" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/pineapple_ip" />
-
-    <EditText
-        android:layout_width="177dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/pineapple_clientip"
-        android:digits="0123456789./"
-        android:text="@string/pineapple_clientip"
-        android:maxLines="1"
-        android:maxLength="21" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/pineapple_cidr" />
-
-    <EditText
-        android:layout_width="205dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/pineapple_cidr"
-        android:digits="0123456789./"
-        android:text="@string/pineapple_subnet"
-        android:maxLines="1"
-        android:maxLength="21" />
-
-        <CheckBox
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pineapple_noupstream"
-            android:id="@+id/pineapple_noup" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:padding="4dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/pineapple_description" />
 
-        <CheckBox
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pineapple_transproxy"
-            android:id="@+id/pineapple_transproxy" />
+            android:text="@string/pineapple_gateway"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
+        <EditText
+            android:id="@+id/pineapple_gatewayip"
+            android:layout_width="152dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/pineapple_start_OTG"
-            android:singleLine="true"
-            android:id="@+id/pineapple_start_button" />
+            android:digits="0123456789."
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:maxLength="15"
+            android:maxLines="1"
+            android:text="@string/pineapple_gatewayip" />
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/pineapple_stop_OTG"
-            android:singleLine="true"
-            android:id="@+id/pineapple_close_button" />
+            android:text="@string/pineapple_port"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/pineapple_webport"
+            android:layout_width="68dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:text="@string/pineapple_webport" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pineapple_ip"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/pineapple_clientip"
+            android:layout_width="177dp"
+            android:layout_height="wrap_content"
+            android:digits="0123456789./"
+            android:ems="10"
+            android:maxLength="21"
+            android:maxLines="1"
+            android:text="@string/pineapple_clientip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pineapple_cidr"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/pineapple_cidr"
+            android:layout_width="205dp"
+            android:layout_height="wrap_content"
+            android:digits="0123456789./"
+            android:ems="10"
+            android:maxLength="21"
+            android:maxLines="1"
+            android:text="@string/pineapple_subnet" />
+
+        <CheckBox
+            android:id="@+id/pineapple_noup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pineapple_noupstream" />
+
+        <CheckBox
+            android:id="@+id/pineapple_transproxy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pineapple_transproxy" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pineapple_start_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="@string/pineapple_start_OTG" />
+
+            <Button
+                android:id="@+id/pineapple_close_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="@string/pineapple_stop_OTG" />
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -5,89 +5,100 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="vertical">
-        
+        android:paddingRight="16dp">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/mana_hostapd_wpe"
-            android:layout_gravity="center_horizontal|center" 
+            android:layout_gravity="center_horizontal|center"
             android:gravity="center"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:text="@string/mana_hostapd_wpe" />
 
         <Button
+            android:id="@+id/wpe_generate_certs"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mana_hostapd_wpe_certs"
-            android:id="@+id/wpe_generate_certs"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/mana_hostapd_wpe_certs" />
 
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/iface"
-            android:padding="4dp" />
+            android:layout_height="72dp"
+            android:padding="4dp">
 
-        <EditText
-            android:id="@+id/wpe_ifc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/wpe_ifc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/iface" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/bssid"
-            android:padding="4dp" />
 
-        <EditText
-            android:id="@+id/wpe_bssid"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"/>
+            android:layout_height="72dp"
+            android:padding="4dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/ssid"
-            android:padding="4dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/wpe_bssid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/bssid" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/wpe_ssid"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"/>
+            android:layout_height="72dp"
+            android:padding="4dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/channel"
-            android:padding="4dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/wpe_ssid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/ssid" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/wpe_channel"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"/>
+            android:layout_height="72dp"
+            android:padding="4dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hostapd_private_key"
-            android:padding="4dp" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/wpe_channel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/channel" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/wpe_private_key"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"/>
+            android:layout_height="72dp"
+            android:padding="4dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/wpe_private_key"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/hostapd_private_key" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/wpe_updateButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/update" />

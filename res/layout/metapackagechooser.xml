@@ -16,22 +16,23 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/metapackageLinearLayout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
-            android:id="@+id/metapackageLinearLayout"
             android:padding="16dp">
 
             <CheckBox
-                android:checked="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="kali-linux-nethunter" />
 
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="kali-tools-top10" />
+
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,20 +167,20 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16sp"
             android:paddingTop="16sp"
+            android:paddingBottom="16sp"
             android:text="@string/metapackagesAdditionalInfo"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/highlighted_text_material_dark"
             android:textIsSelectable="false" />
 
         <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/metapackagesWeb"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Open kali-metapackages WebSite"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="Open kali-metapackages WebSite" />
 
     </LinearLayout>
 </ScrollView>

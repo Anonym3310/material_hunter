@@ -22,39 +22,40 @@
         android:textColor="@android:color/white" />
 
     <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="PLATFORM"
-        android:id="@+id/textView8"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true"
         android:paddingLeft="@dimen/base_listItem_LR"
         android:paddingRight="@dimen/base_listItem_LR"
-        android:textColor="@color/accent_material_dark"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentStart="true" />
+        android:text="@string/platform"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/accent_material_dark" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/description"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="-7dp"
+        android:paddingLeft="@dimen/base_listItem_LR"
+        android:paddingRight="@dimen/base_listItem_LR"
+        android:text="@string/type"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/accent_material_dark" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="TYPE"
-        android:id="@+id/textView4"
-        android:paddingLeft="@dimen/base_listItem_LR"
-        android:layout_marginTop="-7dp"
-        android:textColor="@color/accent_material_dark"
-        android:paddingRight="@dimen/base_listItem_LR"
-        android:layout_below="@+id/description"
-        android:layout_alignParentStart="true" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="DATE"
-        android:paddingLeft="@dimen/base_listItem_LR"
-        android:textColor="@color/accent_material_dark"
-        android:paddingRight="@dimen/base_listItem_LR"
         android:layout_below="@+id/textView9"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingLeft="@dimen/base_listItem_LR"
+        android:paddingRight="@dimen/base_listItem_LR"
+        android:text="@string/date"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/accent_material_dark" />
 
     <Button
         android:id="@+id/viewSource"
@@ -64,58 +65,60 @@
         android:layout_below="@+id/searchsploit_sendhid_button"
         android:layout_alignStart="@+id/openWeb"
         android:layout_marginRight="@dimen/base_listItem_LR"
-        android:text="View Source"
+        android:text="@string/searchsploit_view_source"
+        android:singleLine="true"
         android:textColor="@color/colorPrimary" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="type"
         android:id="@+id/type"
-        android:textColor="@color/accent_material_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/textView8"
-        android:layout_toEndOf="@+id/textView8" />
+        android:layout_toEndOf="@+id/textView8"
+        android:text="type"
+        android:textColor="@color/accent_material_light" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="platform"
         android:id="@+id/platform"
-        android:textColor="@color/accent_material_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView8"
-        android:layout_toEndOf="@+id/textView8" />
+        android:layout_toEndOf="@+id/textView8"
+        android:text="platform"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/accent_material_light" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="AUTHOR"
         android:id="@+id/textView9"
-        android:paddingLeft="@dimen/base_listItem_LR"
-        android:textColor="@color/accent_material_dark"
-        android:paddingRight="@dimen/base_listItem_LR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/textView8"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:paddingLeft="@dimen/base_listItem_LR"
+        android:paddingRight="@dimen/base_listItem_LR"
+        android:text="@string/author"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/accent_material_dark" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="YES/NO"
         android:id="@+id/author"
-        android:textColor="@color/accent_material_light"
-        android:layout_below="@+id/textView8"
-        android:layout_toEndOf="@+id/textView8" />
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/textView8"
+        android:layout_toEndOf="@+id/textView8"
+        android:text="null"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="date"
+        android:textColor="@color/accent_material_light" />
+
+    <TextView
         android:id="@+id/exploit_date"
-        android:textColor="@color/accent_material_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/author"
-        android:layout_alignStart="@+id/author" />
+        android:layout_alignStart="@+id/author"
+        android:text="date"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/accent_material_light" />
 
     <Button
         android:id="@+id/openWeb"
@@ -125,7 +128,8 @@
         android:layout_below="@+id/viewSource"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="@dimen/base_listItem_LR"
-        android:text="View in www"
+        android:text="@string/searchsploit_view_web"
+        android:singleLine="true"
         android:textColor="@color/colorPrimary" />
 
     <Button
@@ -136,7 +140,8 @@
         android:layout_alignStart="@+id/viewSource"
         android:layout_alignEnd="@+id/viewSource"
         android:layout_alignParentTop="true"
-        android:text="SEND HID"
+        android:text="@string/searchsploit_send_hid"
+        android:singleLine="true"
         android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>
