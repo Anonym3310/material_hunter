@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.method.LinkMovementMethod;
@@ -37,6 +36,11 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.File;
+import java.util.Objects;
+import java.util.Stack;
+
 import material.hunter.AsyncTask.CopyBootFilesAsyncTask;
 import material.hunter.SQL.CustomCommandsSQL;
 import material.hunter.SQL.KaliServicesSQL;
@@ -49,12 +53,6 @@ import material.hunter.utils.CheckForRoot;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.PermissionCheck;
 import material.hunter.utils.SharePrefTag;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Stack;
 
 
 public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpdates.Provider {
@@ -195,10 +193,10 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
             for (int grantResult : grantResults) {
                 if (grantResult != 0) {
                     if (getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.offsec.nhterm") == null) {
-                        showWarningDialog("NetHunter app cannot be run properly", "NetHunter Terminal is not installed yet, please install from the store!", true);
+                        showWarningDialog("MaterialHunter app cannot be run properly", "NetHunter Terminal is not installed yet, please install from the store!", true);
                         return;
                     }
-                    showWarningDialog("NetHunter app cannot be run properly", "Please grant all the permission requests from outside the app or restart the app to grant the rest of permissions again.", true);
+                    showWarningDialog("MaterialHunter app cannot be run properly", "Please grant all the permission requests from outside the app or restart the app to grant the rest of permissions again.", true);
                     return;
                 }
             }

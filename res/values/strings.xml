@@ -367,6 +367,7 @@
     <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Kali Linux that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
     <string name="materialteam">Developers:\nt.me/cxblack\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
     <string name="attack_launched">Attack launched!</string>
+    <string name="attack_stopped">Attack execution ended.</string>
 
     <!-- sidebar menu item titles -->
     <string name="drawertitlenethunter">Home</string>

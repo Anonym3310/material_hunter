@@ -345,6 +345,7 @@
     <string name="aboutchroot">Chroot Manager для Kali. \"Chroot\" полная установка Kali Linux который разделяет обработку, сеть, память, и прочие ресурсы с Android. Он находится во внутренней области памяти (data) и должен иметь минимум 8ГБ свободного пространства для минимальной или полной установки, просто чтобы не сломать вашу систему.</string>
     <string name="materialteam">Разработчики:\nt.me/cxblack\n\nСпасибо:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/HuntMix\nt.me/hilledkinged\n\nСделано с ♥</string>
     <string name="attack_launched">Атака запущена!</string>
+    <string name="attack_stopped">Атака закончена.</string>
 
     <!-- sidebar menu item titles -->
     <string name="drawertitlenethunter">Home</string>

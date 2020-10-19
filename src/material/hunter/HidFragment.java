@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -28,14 +29,15 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.textfield.TextInputEditText;
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.ShellExecuter;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.ShellExecuter;
 
 public class HidFragment extends Fragment {
 
@@ -231,7 +233,7 @@ public class HidFragment extends Fragment {
         new Thread(() -> {
             ShellExecuter exe = new ShellExecuter();
             exe.RunAsRoot(command);
-            mViewPager.post(() -> NhPaths.showSnack(getView(), "Attack execution ended.", 1));
+            mViewPager.post(() -> NhPaths.showSnack(getView(), getString(R.string.attack_stopped), 1));
         }).start();
     }
 
@@ -385,32 +387,31 @@ public class HidFragment extends Fragment {
 
         private void loadOptions(final View rootView) {
             final TextInputEditText payloadUrl = rootView.findViewById(R.id.payloadUrl);
+            final TextInputEditText ip = rootView.findViewById(R.id.ipaddress);
             final TextInputEditText port = rootView.findViewById(R.id.port);
             final Spinner payload = rootView.findViewById(R.id.payload);
             final ShellExecuter exe = new ShellExecuter();
 
-            // FIXME
+            // FIXED with ShellExecuter
             new Thread(() -> {
                 final String textUrl = exe.ReadFile_SYNC(configFileUrlPath);
                 final String text = exe.ReadFile_SYNC(configFilePath);
+
                 String regExPatPayloadUrl = "DownloadString\\(\"(.*)\"\\)";
                 Pattern patternPayloadUrl = Pattern.compile(regExPatPayloadUrl, Pattern.MULTILINE);
                 final Matcher matcherPayloadUrl = patternPayloadUrl.matcher(textUrl);
-
-                String[] lines = text.split("\n");
-                final String line = lines[lines.length - 1];
-
+                
                 String regExPatIp = "-Lhost\\ (.*)\\ -Lport";
                 Pattern patternIp = Pattern.compile(regExPatIp, Pattern.MULTILINE);
-                final Matcher matcherIp = patternIp.matcher(line);
+                final Matcher matcherIp = patternIp.matcher(exe.ReadFile_SYNC(configFileUrlPath));
 
                 String regExPatPort = "-Lport\\ (.*)\\ -Force";
                 Pattern patternPort = Pattern.compile(regExPatPort, Pattern.MULTILINE);
-                final Matcher matcherPort = patternPort.matcher(line);
+                final Matcher matcherPort = patternPort.matcher(exe.ReadFile_SYNC(configFileUrlPath));
 
                 String regExPatPayload = "-Payload\\ (.*)\\ -Lhost";
                 Pattern patternPayload = Pattern.compile(regExPatPayload, Pattern.MULTILINE);
-                final Matcher matcherPayload = patternPayload.matcher(line);
+                final Matcher matcherPayload = patternPayload.matcher(exe.ReadFile_SYNC(configFileUrlPath));
 
                 payloadUrl.post(() -> {
 
@@ -421,7 +422,6 @@ public class HidFragment extends Fragment {
 
                     if (matcherIp.find()) {
                         String ipValue = matcherIp.group(1);
-                        TextInputEditText ip = rootView.findViewById(R.id.ipaddress);
                         ip.setText(ipValue);
                     }
 
@@ -433,8 +433,7 @@ public class HidFragment extends Fragment {
                     if (matcherPayload.find()) {
                         String payloadValue = matcherPayload.group(1);
                         ArrayAdapter myAdap = (ArrayAdapter) payload.getAdapter();
-                        int spinnerPosition;
-                        spinnerPosition = myAdap.getPosition(payloadValue);
+                        int spinnerPosition = myAdap.getPosition(payloadValue);
                         payload.setSelection(spinnerPosition);
                     }
                 });
