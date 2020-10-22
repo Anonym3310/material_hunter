@@ -80,7 +80,7 @@ public class KaliServicesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         KaliServicesViewModel kaliServicesViewModel = ViewModelProviders.of(this).get(KaliServicesViewModel.class);
         kaliServicesViewModel.init(context);
-        kaliServicesViewModel.getLiveDataKaliServicesModelList().observe(this, kaliServicesModelList -> kaliServicesRecyclerViewAdapter.notifyDataSetChanged());
+        kaliServicesViewModel.getLiveDataKaliServicesModelList().observe(getViewLifecycleOwner(), kaliServicesModelList -> kaliServicesRecyclerViewAdapter.notifyDataSetChanged());
 
         kaliServicesRecyclerViewAdapter = new KaliServicesRecyclerViewAdapter(context, kaliServicesViewModel.getLiveDataKaliServicesModelList().getValue());
         RecyclerView recyclerViewServiceTitle = view.findViewById(R.id.f_kaliservices_recyclerviewServiceTitle);
@@ -95,7 +95,7 @@ public class KaliServicesFragment extends Fragment {
         SwipeRefreshLayout o = view.findViewById(R.id.f_kaliservices_scrollView);
         o.setOnRefreshListener(() -> {
             MaterialHunterData.getInstance().refreshData();
-            new Handler().postDelayed(() -> o.setRefreshing(false), 1000);
+            new Handler().postDelayed(() -> o.setRefreshing(false), 512);
         });
 
         onAddItemSetup();
@@ -210,7 +210,6 @@ public class KaliServicesFragment extends Fragment {
 
     private void onAddItemSetup() {
         addButton.setOnClickListener(v -> {
-            //final ViewGroup nullParent = null;
             List<KaliServicesModel> kaliServicesModelList = KaliServicesData.getInstance().kaliServicesModelListFull;
             if (kaliServicesModelList == null) return;
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

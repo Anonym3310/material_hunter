@@ -13,8 +13,9 @@ import android.widget.SeekBar;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+
+import material.hunter.utils.NhPaths;
 import material.hunter.utils.SharePrefTag;
 
 public class SettingsFragment extends Fragment {
@@ -59,7 +60,7 @@ public class SettingsFragment extends Fragment {
                 int ca = c.getProgress();
                 int cb = ca*10;
                 oa.edit().putInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, cb).commit();
-                Snackbar.make(rootView, "Need restart.", Snackbar.LENGTH_LONG).show();
+                NhPaths.showSnack(rootView, getString(R.string.mh_sett_need_restart), 1);
             }
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}

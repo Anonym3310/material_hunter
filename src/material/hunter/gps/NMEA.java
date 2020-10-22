@@ -1,6 +1,5 @@
 package material.hunter.gps;
 
-
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.Location;
@@ -16,7 +15,6 @@ import java.util.List;
  * A nice reference for NMEA is at http://www.gpsinformation.org/dale/nmea.htm
  */
 final class NMEA {
-
 
     /**
      * Formats the speed in knots from the #Location into a string.

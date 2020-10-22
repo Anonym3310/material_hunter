@@ -143,6 +143,7 @@
 
     <string name="start_mitmf">Начать MITMf атаку</string>
     <string name="stop_mitmf">Остановить MITMf атаку</string>
+    <string name="change_command_mitmf">Поменять команду для mitmf</string>
 
     <string name="start_badusb">Начать BadUSB атаку</string>
     <string name="stop_badusb">Остановить BadUSB атаку</string>
@@ -546,4 +547,5 @@
     <string name="mh_sett_bal">Уровень затемненности фона.</string>
     <string name="mh_devsett">Возможности разработчика</string>
     <string name="mh_devsett_cad">отчистить данные приложения</string>
+    <string name="mh_sett_need_restart">Необходима перезагрузка</string>
 </resources>

@@ -29,6 +29,7 @@ import material.hunter.utils.NhPaths;
 import material.hunter.utils.SharePrefTag;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class DuckHunterFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -245,7 +246,7 @@ public class DuckHunterFragment extends Fragment {
     public class DuckHuntBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getStringExtra("ACTION")) {
+            switch (Objects.requireNonNull(intent.getStringExtra("ACTION"))) {
                 case "SHOULDCONVERT":
                     shouldconvert = intent.getBooleanExtra("SHOULDCONVERT", true);
                     break;
@@ -253,4 +254,3 @@ public class DuckHunterFragment extends Fragment {
         }
     }
 }
-

@@ -147,12 +147,12 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 // After finishing copying app files, we do a compatibility check before allowing user to use it.
                 // First, check if the app has gained the root already.
                 if (!CheckForRoot.isRoot()) {
-                    showWarningDialog("MaterialHunter app cannot be run properly", "Root permission is required!!", true);
+                    showWarningDialog("MaterialHunter app cannot be run properly", "Root permission is required!", true);
                 }
 
                 // Secondly, check if busybox is present.
                 if (!CheckForRoot.isBusyboxInstalled()) {
-                    showWarningDialog("MaterialHunter app cannot be run properly", "No busybox is detected, please make sure you have busybox installed!!", true);
+                    showWarningDialog("MaterialHunter app cannot be run properly", "No busybox is detected, please make sure you have busybox installed!", true);
                 }
 
                 // Thirdly, check if NetHunter terminal app has been installed.
@@ -380,15 +380,14 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                     int itemId = menuItem.getItemId();
                     switch (itemId) {
                         case R.id.nethunter_item:
-                            if (new File("/data/local/nhsystem/kalifs/usr/sbin/iw").exists()) {
-                                changeFragment(fragmentManager, KaliGpsServiceFragment.newInstance(itemId));
-                            } else {
-                                showWarningDialog("", "You need installed iw in chroot.", false);
-                            }
                             changeFragment(fragmentManager, MaterialHunterFragment.newInstance(itemId));
                             break;
                         case R.id.deauth_item:
-                            changeFragment(fragmentManager, DeAuthFragment.newInstance(itemId));
+                            if (new File("/data/local/nhsystem/kalifs/usr/sbin/iw").exists()) {
+                                changeFragment(fragmentManager, DeAuthFragment.newInstance(itemId));
+                            } else {
+                                showWarningDialog("", getString(R.string.toast_need_iw), false);
+                            }
                             break;
                         case R.id.kaliservices_item:
                             changeFragment(fragmentManager, KaliServicesFragment.newInstance(itemId));

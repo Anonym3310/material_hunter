@@ -23,9 +23,7 @@ public class ShellExecuter {
     private final static String TAG = "ShellExecutor";
     private SimpleDateFormat timeStamp = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
 
-    public ShellExecuter() {
-
-    }
+    public ShellExecuter() {}
 
     public String Executer(String command) {
         StringBuilder output = new StringBuilder();

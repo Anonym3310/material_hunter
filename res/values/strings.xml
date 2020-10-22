@@ -144,6 +144,7 @@
 
     <string name="start_mitmf">Start MITMf attack</string>
     <string name="stop_mitmf">Stop MITMf attack</string>
+    <string name="change_command_mitmf">Change mitmf command</string>
 
     <string name="start_badusb">Start BadUSB attack</string>
     <string name="stop_badusb">Stop BadUSB attack</string>
@@ -569,4 +570,5 @@
     <string name="mh_sett_bal">Background alpha level. Use slider.</string>
     <string name="mh_devsett">Developer features</string>
     <string name="mh_devsett_cad">clear app data</string>
+    <string name="mh_sett_need_restart">Need restart</string>
 </resources>

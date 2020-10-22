@@ -19,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -68,36 +67,28 @@ public class HidFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.hid, container, false);
         HidFragment.TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(getChildFragmentManager());
-
+        configFilePath = NhPaths.CHROOT_PATH() + "/var/www/html/powersploit-payload";
         mViewPager = rootView.findViewById(R.id.pagerHid);
         mViewPager.setAdapter(tabsPagerAdapter);
-
-        configFilePath = NhPaths.CHROOT_PATH() + "/var/www/html/powersploit-payload";
-
-        mViewPager.addOnAdapterChangeListener((viewPager, oldAdapter, newAdapter) -> {
-            activity.invalidateOptionsMenu();
-        });
-        /*mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 activity.invalidateOptionsMenu();
             }
-        });*/
+        });
+
         setHasOptionsMenu(true);
         sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         check_HID_enable();
         return rootView;
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.hid, menu);
     }
-
 
     public void onPrepareOptionsMenu(Menu menu) {
         int pageNum = mViewPager.getCurrentItem();
@@ -333,7 +324,7 @@ public class HidFragment extends Fragment {
         }
     }
 
-    public static class PowerSploitFragment extends HidFragment implements OnClickListener {
+    public static class PowerSploitFragment extends Fragment implements OnClickListener {
         private Context context;
         private String configFilePath;
         private String configFileUrlPath;
@@ -395,12 +386,11 @@ public class HidFragment extends Fragment {
             // FIXED with ShellExecuter
             new Thread(() -> {
                 final String textUrl = exe.ReadFile_SYNC(configFileUrlPath);
-                final String text = exe.ReadFile_SYNC(configFilePath);
 
                 String regExPatPayloadUrl = "DownloadString\\(\"(.*)\"\\)";
                 Pattern patternPayloadUrl = Pattern.compile(regExPatPayloadUrl, Pattern.MULTILINE);
                 final Matcher matcherPayloadUrl = patternPayloadUrl.matcher(textUrl);
-                
+
                 String regExPatIp = "-Lhost\\ (.*)\\ -Lport";
                 Pattern patternIp = Pattern.compile(regExPatIp, Pattern.MULTILINE);
                 final Matcher matcherIp = patternIp.matcher(exe.ReadFile_SYNC(configFileUrlPath));
@@ -474,7 +464,6 @@ public class HidFragment extends Fragment {
         }
 
         public void onClick(View v) {
-
             switch (v.getId()) {
                 case R.id.windowsCmdUpdate:
                     if (getView() == null) {
@@ -520,7 +509,7 @@ public class HidFragment extends Fragment {
                         String value = input.getText().toString();
                         if (!value.equals("") && value.length() > 0) {
                             //FIXME Save file (ask name)
-                            File scriptFile = new File(loadFilePath + File.separator + value + ".conf");
+                            File scriptFile = new File(loadFilePath + File.separator + value);
                             if (!scriptFile.exists()) {
                                 try {
                                     if (getView() == null) {

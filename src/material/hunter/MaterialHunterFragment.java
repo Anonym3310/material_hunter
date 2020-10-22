@@ -82,7 +82,6 @@ public class MaterialHunterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         MaterialHunterViewModel nethunterViewModel = ViewModelProviders.of(this).get(MaterialHunterViewModel.class);
         nethunterViewModel.init(context);
-
         nethunterViewModel.getLiveDataMaterialHunterModelList().observe(getViewLifecycleOwner(), nethunterModelList -> {
             nethunterRecyclerViewAdapter.notifyDataSetChanged();
         });
@@ -101,7 +100,7 @@ public class MaterialHunterFragment extends Fragment {
         SwipeRefreshLayout o = view.findViewById(R.id.f_nethunter_scrollView);
         o.setOnRefreshListener(() -> {
             MaterialHunterData.getInstance().refreshData();
-            new Handler().postDelayed(() -> o.setRefreshing(false), 1000);
+            new Handler().postDelayed(() -> o.setRefreshing(false), 512);
         });
 
         onAddItemSetup();

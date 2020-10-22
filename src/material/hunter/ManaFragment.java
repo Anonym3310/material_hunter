@@ -89,7 +89,6 @@ public class ManaFragment extends Fragment {
         inflater.inflate(R.menu.mana, menu);
     }
 
-
     public void onPrepareOptionsMenu(Menu menu) {
         int pageNum = mViewPager.getCurrentItem();
         if (pageNum == 0) {
@@ -183,7 +182,7 @@ public class ManaFragment extends Fragment {
     }
 
     public void Firstrun() {
-        sharedpreferences = activity.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+        sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         intentClickListener_NH(NhPaths.makeTermTitle("Mana first setup") + " apt update && apt install mana-toolkit hostapd hostapd-wpe");
         sharedpreferences.edit().putBoolean("setup_done", true).apply();
     }
