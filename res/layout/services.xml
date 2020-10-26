@@ -6,78 +6,72 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/f_nethunter_banner"
+        android:id="@+id/f_services_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/nethunter_sysinfo"
-        android:textSize="18sp"
-        app:layout_constraintTop_toTopOf="parent"></TextView>
-
-    <TextView
-        android:id="@+id/f_nethunter_banner2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:gravity="center"
-        android:text="@string/nethunter_description"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@+id/f_nethunter_banner"></TextView>
+        android:text="@string/services_description"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/f_nethunter_scrollView"
-        android:layout_width="wrap_content"
+        android:id="@+id/f_services_scrollView"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/f_nethunter_btn_scrollView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/f_nethunter_banner2">
+        app:layout_constraintBottom_toTopOf="@+id/f_services_btn_scrollView"
+        app:layout_constraintTop_toBottomOf="@+id/f_services_banner">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/f_nethunter_recyclerview"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/f_services_recyclerviewServiceTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <HorizontalScrollView
-        android:id="@+id/f_nethunter_btn_scrollView"
-        android:layout_width="match_parent"
+        android:id="@+id/f_services_btn_scrollView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/f_nethunter_scrollView">
+        app:layout_constraintTop_toBottomOf="@+id/f_services_scrollView">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/f_nethunter_addItemButton"
+                android:id="@+id/f_services_addItemButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add" />
 
             <Button
-                android:id="@+id/f_nethunter_deleteItemButton"
+                android:id="@+id/f_services_deleteItemButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delete" />
 
             <Button
-                android:id="@+id/f_nethunter_moveItemButton"
+                android:id="@+id/f_services_moveItemButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,6 +79,4 @@
 
         </LinearLayout>
     </HorizontalScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-

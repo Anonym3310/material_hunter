@@ -48,10 +48,7 @@ public class CustomCommandsFragment extends Fragment {
     private Button addButton;
     private Button deleteButton;
     private Button moveButton;
-
-    public CustomCommandsFragment() {
-
-    }
+    public CustomCommandsFragment() { }
 
     public static CustomCommandsFragment newInstance(int sectionNumber) {
         CustomCommandsFragment fragment = new CustomCommandsFragment();
@@ -124,9 +121,8 @@ public class CustomCommandsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        final ViewGroup nullParent = null;
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View promptView = inflater.inflate(R.layout.customcommands_custom_dialog_view, nullParent);
+        final View promptView = inflater.inflate(R.layout.customcommands_custom_dialog_view, null);
         final TextView titleTextView = promptView.findViewById(R.id.f_customcommands_adb_tv_title1);
         final EditText storedpathEditText = promptView.findViewById(R.id.f_customcommands_adb_et_storedpath);
 
@@ -197,11 +193,10 @@ public class CustomCommandsFragment extends Fragment {
 
     private void onAddItemSetup() {
         addButton.setOnClickListener(v -> {
-            final ViewGroup nullParent = null;
             List<CustomCommandsModel> customCommandsModelList = CustomCommandsData.getInstance().customCommandsModelListFull;
             if (customCommandsModelList == null) return;
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewAdd = inflater.inflate(R.layout.customcommands_add_dialog_view, nullParent);
+            final View promptViewAdd = inflater.inflate(R.layout.customcommands_add_dialog_view, null);
             final EditText commandLabelEditText = promptViewAdd.findViewById(R.id.f_customcommands_add_adb_et_label);
             final EditText commandEditText = promptViewAdd.findViewById(R.id.f_customcommands_add_adb_et_command);
             final Spinner sendToSpinner = promptViewAdd.findViewById(R.id.f_customcommands_add_adb_spr_sendto);
@@ -351,11 +346,10 @@ public class CustomCommandsFragment extends Fragment {
 
     private void onMoveItemSetup() {
         moveButton.setOnClickListener(v -> {
-            final ViewGroup nullParent = null;
             List<CustomCommandsModel> customCommandsModelList = CustomCommandsData.getInstance().customCommandsModelListFull;
             if (customCommandsModelList == null) return;
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewMove = inflater.inflate(R.layout.customcommands_move_dialog_view, nullParent, false);
+            final View promptViewMove = inflater.inflate(R.layout.customcommands_move_dialog_view, null, false);
             final Spinner titlesBefore = promptViewMove.findViewById(R.id.f_customcommands_move_adb_spr_labelsbefore);
             final Spinner titlesAfter = promptViewMove.findViewById(R.id.f_customcommands_move_adb_spr_labelsafter);
             final Spinner actions = promptViewMove.findViewById(R.id.f_customcommands_move_adb_spr_actions);

@@ -1,5 +1,6 @@
 package material.hunter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -18,7 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -34,25 +34,20 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.List;
-
-//import androidx.appcompat.widget.SearchView;
-
+import java.util.Objects;
 
 public class SearchSploitFragment extends Fragment {
-
     private static final String TAG = "SearchSploitFragment";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private Boolean withFilters = true;
     private String sel_type;
     private String sel_platform;
     private String sel_search = "";
-    private String sel_date;
     private TextView numex;
     private AlertDialog adi;
     private Boolean isLoaded = false;
     private ListView searchSploitListView;
     private List<SearchSploit> full_exploitList;
-    // Create and handle database
     private SearchSploitSQL database;
     private Context context;
     private Activity activity;
@@ -60,7 +55,6 @@ public class SearchSploitFragment extends Fragment {
     public static SearchSploitFragment newInstance(int sectionNumber) {
         SearchSploitFragment fragment = new SearchSploitFragment();
         Bundle args = new Bundle();
-
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
@@ -83,41 +77,16 @@ public class SearchSploitFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.searchsploit, container, false);
-
         setHasOptionsMenu(true);
         database = new SearchSploitSQL(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Exploit Database Archive");
         builder.setMessage("Loading...wait");
-
         adi = builder.create();
         adi.setCancelable(false);
         adi.show();
         // Search Bar
         numex = rootView.findViewById(R.id.numex);
-        final SearchView searchStr = rootView.findViewById(R.id.searchSploit_searchbar);
-        searchStr.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                if (query.length() > 1) {
-                    sel_search = query;
-                } else {
-                    sel_search = "";
-                }
-                loadExploits();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                if (query.length() == 0) {
-                    sel_search = "";
-                    loadExploits();
-                }
-
-                return false;
-            }
-        });
         // Load/reload database button
         final Button searchSearchSploit = rootView.findViewById(R.id.serchsploit_loadDB);
         searchSearchSploit.setVisibility(View.GONE);
@@ -161,7 +130,6 @@ public class SearchSploitFragment extends Fragment {
                 });
             }).start();
         });
-        // Prevents menu stuck
         new android.os.Handler().postDelayed(() -> main(rootView), 250);
         return rootView;
     }
@@ -169,6 +137,34 @@ public class SearchSploitFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.searchsploit, menu);
+        final MenuItem searchItem = menu.findItem(R.id.searchsploit_search);
+        final androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) searchItem.getActionView();
+        searchView.setOnSearchClickListener(view -> menu.findItem(R.id.rawSearch_ON).setVisible(false));
+        searchView.setOnCloseListener(() -> {
+            menu.findItem(R.id.rawSearch_ON).setVisible(true);
+            return false;
+        });
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.length() > 1) {
+                    sel_search = query;
+                } else {
+                    sel_search = "";
+                }
+                loadExploits();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                if (query.length() == 0) {
+                    sel_search = "";
+                    loadExploits();
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -208,16 +204,14 @@ public class SearchSploitFragment extends Fragment {
 
     private void main(final View rootView) {
         searchSploitListView = rootView.findViewById(R.id.searchResultsList);
-        Long exploitCount = database.getCount();
+        long exploitCount = database.getCount();
         Button searchSearchSploit = rootView.findViewById(R.id.serchsploit_loadDB);
         if (exploitCount == 0) {
             searchSearchSploit.setVisibility(View.VISIBLE);
-            //rootView.findViewById(R.id.search_filters).setVisibility(View.GONE);
             adi.dismiss();
             hideSoftKeyboard(getView());
             return;
         } else {
-            //rootView.findViewById(R.id.search_filters).setVisibility(View.VISIBLE);
             searchSearchSploit.setVisibility(View.GONE);
         }
 
@@ -257,6 +251,7 @@ public class SearchSploitFragment extends Fragment {
         loadExploits();
     }
 
+    @SuppressLint("SetTextI18n")
     private void loadExploits() {
         if ((sel_platform != null) && (sel_type != null)) {
             List<SearchSploit> exploitList;
@@ -271,20 +266,17 @@ public class SearchSploitFragment extends Fragment {
             }
             if (exploitList == null) {
                 new android.os.Handler().postDelayed(
-                        () -> loadExploits(), 1500);
+                        this::loadExploits, 1500);
                 return;
             }
-            numex.setText(String.format("%d results", exploitList.size()));
+            numex.setText(exploitList.size() + " " + getString(R.string.searchsploit_results));
             ExploitLoader exploitAdapter = new ExploitLoader(context, exploitList);
             searchSploitListView.setAdapter(exploitAdapter);
             if (!isLoaded) {
-                // preloading the long list lets see if is more performant
-                // preload in the background.
                 new Thread(() -> full_exploitList = database.getAllExploitsRaw("")).start();
-
                 adi.dismiss();
                 isLoaded = true;
-                hideSoftKeyboard(getView());
+                hideSoftKeyboard(Objects.requireNonNull(getView()));
             }
         }
     }
@@ -310,26 +302,17 @@ class ExploitLoader extends BaseAdapter {
     private void start(String file) {
         String[] command = new String[1];
         command[0] = "su -c /data/data/material.hunter/files/scripts/bootkali file2hid-file " + file;
-        String test = "su -c /data/data/material.hunter/files/scripts/bootkali file2hid-file " + file;
         ShellExecuter exe = new ShellExecuter();
         exe.RunAsRoot(command);
     }
 
-    // getView method is called for each item of ListView
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // inflate the layout for each item of listView (our services)
-
         ViewHolderItem vH;
-
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) _mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.searchsploit_item, parent, false);
-
-            // set up the ViewHolder
             vH = new ViewHolderItem();
-            // get the reference of switch and the text view
             vH.description = convertView.findViewById(R.id.description);
-            // vH.cwSwich = (Switch) convertView.findViewById(R.id.switch1);
             vH.type = convertView.findViewById(R.id.type);
             vH.platform = convertView.findViewById(R.id.platform);
             vH.author = convertView.findViewById(R.id.author);
@@ -338,17 +321,12 @@ class ExploitLoader extends BaseAdapter {
             vH.openWeb = convertView.findViewById(R.id.openWeb);
             vH.sendHid = convertView.findViewById(R.id.searchsploit_sendhid_button);
             convertView.setTag(vH);
-            //System.out.println ("created row");
         } else {
-            // recycle the items in the list if already exists
             vH = (ViewHolderItem) convertView.getTag();
         }
-
-        // remove listeners
         final SearchSploit exploitItem = getItem(position);
-
         final String _file = exploitItem.getFile();
-        final Long _id = exploitItem.getId();
+        final long _id = exploitItem.getId();
         String _desc = exploitItem.getDescription();
         String _date = exploitItem.getDate();
         String _author = exploitItem.getAuthor();
@@ -395,20 +373,13 @@ class ExploitLoader extends BaseAdapter {
     }
 
     static class ViewHolderItem {
-        // The switch
-        //Switch sw;
-        // the msg holder
         TextView type;
         TextView platform;
         TextView author;
         TextView date;
-        // the service title
         TextView description;
-        // run at boot checkbox
         Button viewSource;
         Button openWeb;
         Button sendHid;
     }
-
-
 }

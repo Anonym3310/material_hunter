@@ -29,8 +29,8 @@ public class MaterialHunterAsynctask extends AsyncTask<List<MaterialHunterModel>
     private ArrayList<Integer> selectedPositionsIndex;
     private ArrayList<Integer> selectedTargetIds;
     private ArrayList<String> dataArrayList;
-    private MaterialHunterSQL nethunterSQL;
-    private List<MaterialHunterModel> nethunterModelList;
+    private MaterialHunterSQL materialhunterSQL;
+    private List<MaterialHunterModel> materialhunterModelList;
 
     public MaterialHunterAsynctask(int actionCode) {
         this.actionCode = actionCode;
@@ -41,30 +41,30 @@ public class MaterialHunterAsynctask extends AsyncTask<List<MaterialHunterModel>
         this.position = position;
     }
 
-    public MaterialHunterAsynctask(int actionCode, int position, ArrayList<String> dataArrayList, MaterialHunterSQL nethunterSQL) {
+    public MaterialHunterAsynctask(int actionCode, int position, ArrayList<String> dataArrayList, MaterialHunterSQL materialhunterSQL) {
         this.actionCode = actionCode;
         this.position = position;
         this.dataArrayList = dataArrayList;
-        this.nethunterSQL = nethunterSQL;
+        this.materialhunterSQL = materialhunterSQL;
     }
 
-    public MaterialHunterAsynctask(int actionCode, ArrayList<Integer> selectedPositionsIndex, ArrayList<Integer> selectedTargetIds, MaterialHunterSQL nethunterSQL) {
+    public MaterialHunterAsynctask(int actionCode, ArrayList<Integer> selectedPositionsIndex, ArrayList<Integer> selectedTargetIds, MaterialHunterSQL materialhunterSQL) {
         this.actionCode = actionCode;
         this.selectedPositionsIndex = selectedPositionsIndex;
         this.selectedTargetIds = selectedTargetIds;
-        this.nethunterSQL = nethunterSQL;
+        this.materialhunterSQL = materialhunterSQL;
     }
 
-    public MaterialHunterAsynctask(int actionCode, int originalPositionIndex, int targetPositionIndex, MaterialHunterSQL nethunterSQL) {
+    public MaterialHunterAsynctask(int actionCode, int originalPositionIndex, int targetPositionIndex, MaterialHunterSQL materialhunterSQL) {
         this.actionCode = actionCode;
         this.originalPositionIndex = originalPositionIndex;
         this.targetPositionIndex = targetPositionIndex;
-        this.nethunterSQL = nethunterSQL;
+        this.materialhunterSQL = materialhunterSQL;
     }
 
-    public MaterialHunterAsynctask(int actionCode, MaterialHunterSQL nethunterSQL) {
+    public MaterialHunterAsynctask(int actionCode, MaterialHunterSQL materialhunterSQL) {
         this.actionCode = actionCode;
-        this.nethunterSQL = nethunterSQL;
+        this.materialhunterSQL = materialhunterSQL;
     }
 
     @Override
@@ -76,100 +76,100 @@ public class MaterialHunterAsynctask extends AsyncTask<List<MaterialHunterModel>
     }
 
     @Override
-    protected List<MaterialHunterModel> doInBackground(List<MaterialHunterModel>... copyOfnethunterModelList) {
+    protected List<MaterialHunterModel> doInBackground(List<MaterialHunterModel>... copyOfmaterialhunterModelList) {
         switch (actionCode) {
             case GETITEMRESULTS:
-                nethunterModelList = copyOfnethunterModelList[0];
-                if (nethunterModelList != null) {
-                    for (int i = 0; i < nethunterModelList.size(); i++) {
-                        nethunterModelList.get(i).setResult(nethunterModelList.get(i).getRunOnCreate().equals("1") ? new ShellExecuter().RunAsRootOutput(nethunterModelList.get(i).getCommand()).split("\\n") : "Please click RUN button manually.".split("\\n"));
+                materialhunterModelList = copyOfmaterialhunterModelList[0];
+                if (materialhunterModelList != null) {
+                    for (int i = 0; i < materialhunterModelList.size(); i++) {
+                        materialhunterModelList.get(i).setResult(materialhunterModelList.get(i).getRunOnCreate().equals("1") ? new ShellExecuter().RunAsRootOutput(materialhunterModelList.get(i).getCommand()).split("\\n") : "Please click RUN button manually.".split("\\n"));
                     }
                 }
                 break;
             case RUNCMDFORITEM:
-                nethunterModelList = copyOfnethunterModelList[0];
-                if (nethunterModelList != null) {
-                    nethunterModelList.get(position).setResult(new ShellExecuter().RunAsRootOutput(nethunterModelList.get(position).getCommand()).split("\\n"));
+                materialhunterModelList = copyOfmaterialhunterModelList[0];
+                if (materialhunterModelList != null) {
+                    materialhunterModelList.get(position).setResult(new ShellExecuter().RunAsRootOutput(materialhunterModelList.get(position).getCommand()).split("\\n"));
                 }
                 break;
             case EDITDATA:
-                nethunterModelList = copyOfnethunterModelList[0];
-                if (nethunterModelList != null) {
-                    nethunterModelList.get(position).setTitle(dataArrayList.get(0));
-                    nethunterModelList.get(position).setCommand(dataArrayList.get(1));
-                    nethunterModelList.get(position).setDelimiter(dataArrayList.get(2));
-                    nethunterModelList.get(position).setRunOnCreate(dataArrayList.get(3));
+                materialhunterModelList = copyOfmaterialhunterModelList[0];
+                if (materialhunterModelList != null) {
+                    materialhunterModelList.get(position).setTitle(dataArrayList.get(0));
+                    materialhunterModelList.get(position).setCommand(dataArrayList.get(1));
+                    materialhunterModelList.get(position).setDelimiter(dataArrayList.get(2));
+                    materialhunterModelList.get(position).setRunOnCreate(dataArrayList.get(3));
                     if (dataArrayList.get(3).equals("1")) {
-                        nethunterModelList.get(position).setResult(new ShellExecuter().RunAsRootOutput(dataArrayList.get(1)).split(dataArrayList.get(2)));
+                        materialhunterModelList.get(position).setResult(new ShellExecuter().RunAsRootOutput(dataArrayList.get(1)).split(dataArrayList.get(2)));
                     }
-                    nethunterSQL.editData(position, dataArrayList);
+                    materialhunterSQL.editData(position, dataArrayList);
                 }
                 break;
             case ADDDATA:
-                nethunterModelList = copyOfnethunterModelList[0];
-                if (nethunterModelList != null) {
+                materialhunterModelList = copyOfmaterialhunterModelList[0];
+                if (materialhunterModelList != null) {
 
-                    nethunterModelList.add(position - 1, new MaterialHunterModel(
+                    materialhunterModelList.add(position - 1, new MaterialHunterModel(
                             dataArrayList.get(0),
                             dataArrayList.get(1),
                             dataArrayList.get(2),
                             dataArrayList.get(3),
                             "".split(dataArrayList.get(2))));
                     if (dataArrayList.get(3).equals("1")) {
-                        nethunterModelList.get(position - 1).setResult(new ShellExecuter().RunAsRootOutput(dataArrayList.get(1)).split(dataArrayList.get(2)));
+                        materialhunterModelList.get(position - 1).setResult(new ShellExecuter().RunAsRootOutput(dataArrayList.get(1)).split(dataArrayList.get(2)));
                     }
-                    nethunterSQL.addData(position, dataArrayList);
+                    materialhunterSQL.addData(position, dataArrayList);
                 }
                 break;
             case DELETEDATA:
-                nethunterModelList = copyOfnethunterModelList[0];
-                if (nethunterModelList != null) {
+                materialhunterModelList = copyOfmaterialhunterModelList[0];
+                if (materialhunterModelList != null) {
                     Collections.sort(selectedPositionsIndex, Collections.reverseOrder());
                     for (Integer selectedPosition : selectedPositionsIndex) {
                         int i = selectedPosition;
-                        nethunterModelList.remove(i);
+                        materialhunterModelList.remove(i);
                     }
-                    nethunterSQL.deleteData(selectedTargetIds);
+                    materialhunterSQL.deleteData(selectedTargetIds);
                 }
                 break;
             case MOVEDATA:
-                nethunterModelList = copyOfnethunterModelList[0];
-                if (nethunterModelList != null) {
+                materialhunterModelList = copyOfmaterialhunterModelList[0];
+                if (materialhunterModelList != null) {
                     MaterialHunterModel tempMaterialHunterModel = new MaterialHunterModel(
-                            nethunterModelList.get(originalPositionIndex).getTitle(),
-                            nethunterModelList.get(originalPositionIndex).getCommand(),
-                            nethunterModelList.get(originalPositionIndex).getDelimiter(),
-                            nethunterModelList.get(originalPositionIndex).getRunOnCreate(),
-                            nethunterModelList.get(originalPositionIndex).getResult()
+                            materialhunterModelList.get(originalPositionIndex).getTitle(),
+                            materialhunterModelList.get(originalPositionIndex).getCommand(),
+                            materialhunterModelList.get(originalPositionIndex).getDelimiter(),
+                            materialhunterModelList.get(originalPositionIndex).getRunOnCreate(),
+                            materialhunterModelList.get(originalPositionIndex).getResult()
                     );
-                    nethunterModelList.remove(originalPositionIndex);
+                    materialhunterModelList.remove(originalPositionIndex);
                     if (originalPositionIndex < targetPositionIndex) {
                         targetPositionIndex = targetPositionIndex - 1;
                     }
-                    nethunterModelList.add(targetPositionIndex, tempMaterialHunterModel);
-                    nethunterSQL.moveData(originalPositionIndex, targetPositionIndex);
+                    materialhunterModelList.add(targetPositionIndex, tempMaterialHunterModel);
+                    materialhunterSQL.moveData(originalPositionIndex, targetPositionIndex);
                 }
                 break;
             case BACKUPDATA:
                 break;
             case RESTOREDATA:
-                nethunterModelList = copyOfnethunterModelList[0];
-                if (nethunterModelList != null) {
-                    nethunterModelList.clear();
-                    nethunterModelList = nethunterSQL.bindData((ArrayList<MaterialHunterModel>) nethunterModelList);
+                materialhunterModelList = copyOfmaterialhunterModelList[0];
+                if (materialhunterModelList != null) {
+                    materialhunterModelList.clear();
+                    materialhunterModelList = materialhunterSQL.bindData((ArrayList<MaterialHunterModel>) materialhunterModelList);
                 }
                 break;
             case RESETDATA:
                 break;
         }
-        return copyOfnethunterModelList[0];
+        return copyOfmaterialhunterModelList[0];
     }
 
     @Override
-    protected void onPostExecute(List<MaterialHunterModel> nethunterModelList) {
-        super.onPostExecute(nethunterModelList);
+    protected void onPostExecute(List<MaterialHunterModel> materialhunterModelList) {
+        super.onPostExecute(materialhunterModelList);
         if (listener != null) {
-            listener.onAsyncTaskFinished(nethunterModelList);
+            listener.onAsyncTaskFinished(materialhunterModelList);
         }
     }
 
@@ -180,6 +180,6 @@ public class MaterialHunterAsynctask extends AsyncTask<List<MaterialHunterModel>
     public interface MaterialHunterAsynctaskListener {
         void onAsyncTaskPrepare();
 
-        void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList);
+        void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList);
     }
 }

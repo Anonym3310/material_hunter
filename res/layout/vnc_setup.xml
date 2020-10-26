@@ -290,11 +290,6 @@
                     android:text="@string/kex_remove_user"
                     android:textColor="#ffffffff" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -391,11 +386,6 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?android:attr/listDivider" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -456,11 +446,7 @@
                         android:textSize="13sp" />
 
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

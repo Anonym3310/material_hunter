@@ -42,7 +42,7 @@ import material.hunter.viewmodels.MaterialHunterViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import static material.hunter.R.id.f_nethunter_action_search;
+import static material.hunter.R.id.f_materialhunter_action_search;
 
 public class MaterialHunterFragment extends Fragment {
 
@@ -50,7 +50,7 @@ public class MaterialHunterFragment extends Fragment {
     private static int targetPositionId;
     private Context context;
     private Activity activity;
-    private MaterialHunterRecyclerViewAdapter nethunterRecyclerViewAdapter;
+    private MaterialHunterRecyclerViewAdapter materialhunterRecyclerViewAdapter;
     private Button addButton;
     private Button deleteButton;
     private Button moveButton;
@@ -74,30 +74,30 @@ public class MaterialHunterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.nethunter, container, false);
+        return inflater.inflate(R.layout.materialhunter, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        MaterialHunterViewModel nethunterViewModel = ViewModelProviders.of(this).get(MaterialHunterViewModel.class);
-        nethunterViewModel.init(context);
-        nethunterViewModel.getLiveDataMaterialHunterModelList().observe(getViewLifecycleOwner(), nethunterModelList -> {
-            nethunterRecyclerViewAdapter.notifyDataSetChanged();
+        MaterialHunterViewModel materialhunterViewModel = ViewModelProviders.of(this).get(MaterialHunterViewModel.class);
+        materialhunterViewModel.init(context);
+        materialhunterViewModel.getLiveDataMaterialHunterModelList().observe(getViewLifecycleOwner(), materialhunterModelList -> {
+            materialhunterRecyclerViewAdapter.notifyDataSetChanged();
         });
 
-        nethunterRecyclerViewAdapter = new MaterialHunterRecyclerViewAdapter(context, nethunterViewModel.getLiveDataMaterialHunterModelList().getValue());
-        RecyclerView itemRecyclerView = view.findViewById(R.id.f_nethunter_recyclerview);
+        materialhunterRecyclerViewAdapter = new MaterialHunterRecyclerViewAdapter(context, materialhunterViewModel.getLiveDataMaterialHunterModelList().getValue());
+        RecyclerView itemRecyclerView = view.findViewById(R.id.f_materialhunter_recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         itemRecyclerView.setLayoutManager(linearLayoutManager);
-        itemRecyclerView.setAdapter(nethunterRecyclerViewAdapter);
+        itemRecyclerView.setAdapter(materialhunterRecyclerViewAdapter);
 
-        addButton = view.findViewById(R.id.f_nethunter_addItemButton);
-        deleteButton = view.findViewById(R.id.f_nethunter_deleteItemButton);
-        moveButton = view.findViewById(R.id.f_nethunter_moveItemButton);
+        addButton = view.findViewById(R.id.f_materialhunter_addItemButton);
+        deleteButton = view.findViewById(R.id.f_materialhunter_deleteItemButton);
+        moveButton = view.findViewById(R.id.f_materialhunter_moveItemButton);
 
         // MaterialFeatures
-        SwipeRefreshLayout o = view.findViewById(R.id.f_nethunter_scrollView);
+        SwipeRefreshLayout o = view.findViewById(R.id.f_materialhunter_scrollView);
         o.setOnRefreshListener(() -> {
             MaterialHunterData.getInstance().refreshData();
             new Handler().postDelayed(() -> o.setRefreshing(false), 512);
@@ -111,12 +111,12 @@ public class MaterialHunterFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.nethunter, menu);
-        final MenuItem searchItem = menu.findItem(f_nethunter_action_search);
+        inflater.inflate(R.menu.materialhunter, menu);
+        final MenuItem searchItem = menu.findItem(f_materialhunter_action_search);
         final SearchView searchView = (SearchView) searchItem.getActionView();
-        searchView.setOnSearchClickListener(v -> menu.setGroupVisible(R.id.f_nethunter_menu_group1, false));
+        searchView.setOnSearchClickListener(v -> menu.setGroupVisible(R.id.f_materialhunter_menu_group1, false));
         searchView.setOnCloseListener(() -> {
-            menu.setGroupVisible(R.id.f_nethunter_menu_group1, true);
+            menu.setGroupVisible(R.id.f_materialhunter_menu_group1, true);
             return false;
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -127,7 +127,7 @@ public class MaterialHunterFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                nethunterRecyclerViewAdapter.getFilter().filter(newText);
+                materialhunterRecyclerViewAdapter.getFilter().filter(newText);
                 return false;
             }
         });
@@ -137,11 +137,11 @@ public class MaterialHunterFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View promptView = inflater.inflate(R.layout.nethunter_custom_dialog_view, null);
-        final TextView titleTextView = promptView.findViewById(R.id.f_nethunter_adb_tv_title1);
-        final EditText storedpathEditText = promptView.findViewById(R.id.f_nethunter_adb_et_storedpath);
+        final View promptView = inflater.inflate(R.layout.materialhunter_custom_dialog_view, null);
+        final TextView titleTextView = promptView.findViewById(R.id.f_materialhunter_adb_tv_title1);
+        final EditText storedpathEditText = promptView.findViewById(R.id.f_materialhunter_adb_et_storedpath);
         switch (item.getItemId()) {
-            case R.id.f_nethunter_menu_backupDB:
+            case R.id.f_materialhunter_menu_backupDB:
                 titleTextView.setText("Full path to where you want to save the database:");
                 storedpathEditText.setText(NhPaths.APP_SD_SQLBACKUP_PATH + "/FragmentMaterialHunter");
                 AlertDialog.Builder adbBackup = new AlertDialog.Builder(activity);
@@ -165,7 +165,7 @@ public class MaterialHunterFragment extends Fragment {
                 });
                 adBackup.show();
                 break;
-            case R.id.f_nethunter_menu_restoreDB:
+            case R.id.f_materialhunter_menu_restoreDB:
                 titleTextView.setText("Full path of the db file from where you want to restore:");
                 storedpathEditText.setText(NhPaths.APP_SD_SQLBACKUP_PATH + "/FragmentMaterialHunter");
                 AlertDialog.Builder adbRestore = new AlertDialog.Builder(activity);
@@ -189,7 +189,7 @@ public class MaterialHunterFragment extends Fragment {
                 });
                 adRestore.show();
                 break;
-            case R.id.f_nethunter_menu_ResetToDefault:
+            case R.id.f_materialhunter_menu_ResetToDefault:
                 MaterialHunterData.getInstance().resetData(MaterialHunterSQL.getInstance(context));
                 break;
         }
@@ -208,36 +208,36 @@ public class MaterialHunterFragment extends Fragment {
         addButton = null;
         deleteButton = null;
         moveButton = null;
-        nethunterRecyclerViewAdapter = null;
+        materialhunterRecyclerViewAdapter = null;
     }
 
     private void onAddItemSetup() {
         addButton.setOnClickListener(v -> {
-            List<MaterialHunterModel> nethunterModelList = MaterialHunterData.getInstance().nethunterModelListFull;
-            if (nethunterModelList == null) return;
+            List<MaterialHunterModel> materialhunterModelList = MaterialHunterData.getInstance().materialhunterModelListFull;
+            if (materialhunterModelList == null) return;
             final LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewAdd = mInflater.inflate(R.layout.nethunter_add_dialog_view, null);
-            final EditText titleEditText = promptViewAdd.findViewById(R.id.f_nethunter_add_adb_et_title);
-            final EditText cmdEditText = promptViewAdd.findViewById(R.id.f_nethunter_add_adb_et_command);
-            final EditText delimiterEditText = promptViewAdd.findViewById(R.id.f_nethunter_add_adb_et_delimiter);
-            final CheckBox runOnCreateCheckbox = promptViewAdd.findViewById(R.id.f_nethunters_add_adb_checkbox_runoncreate);
-            final Spinner insertPositions = promptViewAdd.findViewById(R.id.f_nethunter_add_adb_spr_positions);
-            final Spinner insertTitles = promptViewAdd.findViewById(R.id.f_nethunter_add_adb_spr_titles);
+            final View promptViewAdd = mInflater.inflate(R.layout.materialhunter_add_dialog_view, null);
+            final EditText titleEditText = promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_et_title);
+            final EditText cmdEditText = promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_et_command);
+            final EditText delimiterEditText = promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_et_delimiter);
+            final CheckBox runOnCreateCheckbox = promptViewAdd.findViewById(R.id.f_materialhunters_add_adb_checkbox_runoncreate);
+            final Spinner insertPositions = promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_spr_positions);
+            final Spinner insertTitles = promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_spr_titles);
             ArrayList<String> titleArrayList = new ArrayList<>();
-            for (MaterialHunterModel nethunterModel : nethunterModelList) {
-                titleArrayList.add(nethunterModel.getTitle());
+            for (MaterialHunterModel materialhunterModel : materialhunterModelList) {
+                titleArrayList.add(materialhunterModel.getTitle());
             }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, titleArrayList);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            final FloatingActionButton readmeButton1 = promptViewAdd.findViewById(R.id.f_nethunter_add_btn_info_fab1);
-            final FloatingActionButton readmeButton2 = promptViewAdd.findViewById(R.id.f_nethunter_add_btn_info_fab2);
-            final FloatingActionButton readmeButton3 = promptViewAdd.findViewById(R.id.f_nethunter_add_btn_info_fab3);
+            final FloatingActionButton readmeButton1 = promptViewAdd.findViewById(R.id.f_materialhunter_add_btn_info_fab1);
+            final FloatingActionButton readmeButton2 = promptViewAdd.findViewById(R.id.f_materialhunter_add_btn_info_fab2);
+            final FloatingActionButton readmeButton3 = promptViewAdd.findViewById(R.id.f_materialhunter_add_btn_info_fab3);
 
             readmeButton1.setOnClickListener(view -> {
                 AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
-                        .setMessage(context.getString(R.string.nethunter_howtouse_cmd))
+                        .setMessage(context.getString(R.string.materialhunter_howtouse_cmd))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
                 final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
@@ -247,7 +247,7 @@ public class MaterialHunterFragment extends Fragment {
             readmeButton2.setOnClickListener(view -> {
                 AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
-                        .setMessage(context.getString(R.string.nethunter_howtouse_delimiter))
+                        .setMessage(context.getString(R.string.materialhunter_howtouse_delimiter))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
                 final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
@@ -257,7 +257,7 @@ public class MaterialHunterFragment extends Fragment {
             readmeButton3.setOnClickListener(view -> {
                 AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
-                        .setMessage(context.getString(R.string.nethunter_howtouse_runoncreate))
+                        .setMessage(context.getString(R.string.materialhunter_howtouse_runoncreate))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
                 final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
@@ -277,7 +277,7 @@ public class MaterialHunterFragment extends Fragment {
                         //if Insert to Bottom
                     } else if (position == 1) {
                         insertTitles.setVisibility(View.INVISIBLE);
-                        targetPositionId = nethunterModelList.size() + 1;
+                        targetPositionId = materialhunterModelList.size() + 1;
                         //if Insert Before
                     } else if (position == 2) {
                         insertTitles.setVisibility(View.VISIBLE);
@@ -350,15 +350,15 @@ public class MaterialHunterFragment extends Fragment {
 
     private void onDeleteItemSetup() {
         deleteButton.setOnClickListener(v -> {
-            List<MaterialHunterModel> nethunterModelList = MaterialHunterData.getInstance().nethunterModelListFull;
-            if (nethunterModelList == null) return;
+            List<MaterialHunterModel> materialhunterModelList = MaterialHunterData.getInstance().materialhunterModelListFull;
+            if (materialhunterModelList == null) return;
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewDelete = inflater.inflate(R.layout.nethunter_delete_dialog_view, null, false);
-            final RecyclerView recyclerViewDeleteItem = promptViewDelete.findViewById(R.id.f_nethunter_delete_recyclerview);
-            MaterialHunterRecyclerViewAdapterDeleteItems nethunterRecyclerViewAdapterDeleteItems = new MaterialHunterRecyclerViewAdapterDeleteItems(context, nethunterModelList);
+            final View promptViewDelete = inflater.inflate(R.layout.materialhunter_delete_dialog_view, null, false);
+            final RecyclerView recyclerViewDeleteItem = promptViewDelete.findViewById(R.id.f_materialhunter_delete_recyclerview);
+            MaterialHunterRecyclerViewAdapterDeleteItems materialhunterRecyclerViewAdapterDeleteItems = new MaterialHunterRecyclerViewAdapterDeleteItems(context, materialhunterModelList);
             LinearLayoutManager linearLayoutManagerDelete = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
             recyclerViewDeleteItem.setLayoutManager(linearLayoutManagerDelete);
-            recyclerViewDeleteItem.setAdapter(nethunterRecyclerViewAdapterDeleteItems);
+            recyclerViewDeleteItem.setAdapter(materialhunterRecyclerViewAdapterDeleteItems);
 
             AlertDialog.Builder adbDelete = new AlertDialog.Builder(activity);
             adbDelete.setView(promptViewDelete);
@@ -377,7 +377,7 @@ public class MaterialHunterFragment extends Fragment {
                     for (int i = 0; i < recyclerViewDeleteItem.getChildCount(); i++) {
                         viewHolder = recyclerViewDeleteItem.findViewHolderForAdapterPosition(i);
                         if (viewHolder != null) {
-                            CheckBox box = viewHolder.itemView.findViewById(R.id.f_nethunter_recyclerview_dialog_chkbox);
+                            CheckBox box = viewHolder.itemView.findViewById(R.id.f_materialhunter_recyclerview_dialog_chkbox);
                             if (box.isChecked()) {
                                 selectedPosition.add(i);
                                 selectedTargetIds.add(i + 1);
@@ -397,16 +397,16 @@ public class MaterialHunterFragment extends Fragment {
 
     private void onMoveItemSetup() {
         moveButton.setOnClickListener(v -> {
-            List<MaterialHunterModel> nethunterModelList = MaterialHunterData.getInstance().nethunterModelListFull;
-            if (nethunterModelList == null) return;
+            List<MaterialHunterModel> materialhunterModelList = MaterialHunterData.getInstance().materialhunterModelListFull;
+            if (materialhunterModelList == null) return;
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewMove = inflater.inflate(R.layout.nethunter_move_dialog_view, null, false);
-            final Spinner titlesBefore = promptViewMove.findViewById(R.id.f_nethunter_move_adb_spr_titlesbefore);
-            final Spinner titlesAfter = promptViewMove.findViewById(R.id.f_nethunter_move_adb_spr_titlesafter);
-            final Spinner actions = promptViewMove.findViewById(R.id.f_nethunter_move_adb_spr_actions);
+            final View promptViewMove = inflater.inflate(R.layout.materialhunter_move_dialog_view, null, false);
+            final Spinner titlesBefore = promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesbefore);
+            final Spinner titlesAfter = promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesafter);
+            final Spinner actions = promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_actions);
             ArrayList<String> titleArrayList = new ArrayList<>();
-            for (MaterialHunterModel nethunterModel : nethunterModelList) {
-                titleArrayList.add(nethunterModel.getTitle());
+            for (MaterialHunterModel materialhunterModel : materialhunterModelList) {
+                titleArrayList.add(materialhunterModel.getTitle());
             }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, titleArrayList);
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

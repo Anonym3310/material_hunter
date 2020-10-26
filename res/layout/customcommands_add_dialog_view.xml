@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Label:"
+                android:text="@string/materialhunter_add_title"
                 android:textColor="@color/accent_material_dark"
                 android:textSize="18sp" />
 
@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Command:"
+                    android:text="@string/materialhunter_add_command"
                     android:textColor="@color/accent_material_dark"
                     android:textSize="18sp" />
 
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="0.4"
-                    android:text="Send to:"
+                    android:text="@string/customcommands_send_to"
                     android:textColor="@color/accent_material_dark"
                     android:textSize="18sp" />
 
@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="0.4"
-                    android:text="Exec mode:"
+                    android:text="@string/customcommands_exec_mode"
                     android:textColor="@color/accent_material_dark"
                     android:textSize="18sp" />
 
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Position to insert:"
+                android:text="@string/materialhunter_add_position"
                 android:textColor="@color/accent_material_dark"
                 android:textSize="18sp">
 
@@ -143,15 +143,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:entries="@array/array_insert_position"></Spinner>
+                    android:entries="@array/array_insert_position" />
 
                 <Spinner
                     android:id="@+id/f_customcommands_add_adb_spr_labels"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"></Spinner>
+                    android:layout_marginStart="4dp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </LinearLayout>

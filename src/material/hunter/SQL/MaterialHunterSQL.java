@@ -18,13 +18,13 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 /*
-   SQLiteOpenHelper class for nethunter fragment.
+   SQLiteOpenHelper class for materialhunter fragment.
 */
 public class MaterialHunterSQL extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "MaterialHunterFragment";
     private static final String TAG = "MaterialHunterSQL";
     private static final String TABLE_NAME = DATABASE_NAME;
-    private static final String[][] nethunterData = {
+    private static final String[][] materialhunterData = {
             {"1", "Kernel Version", "uname -a", "\\n", "1"},
             {"2", "Device codename", "getprop ro.product.device", "\\n", "1"},
             {"3", "HID Status", "ls /dev/hidg* || echo \"HID interface not found.\"", "\\n", "1"},
@@ -58,7 +58,7 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
                 COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) + " TEXT, " + COLUMNS.get(3) + " INTEGER, " + COLUMNS.get(4) + " TEXT)");
         ContentValues initialValues = new ContentValues();
         db.beginTransaction();
-        for (String[] data : nethunterData) {
+        for (String[] data : materialhunterData) {
             initialValues.put(COLUMNS.get(0), data[0]);
             initialValues.put(COLUMNS.get(1), data[1]);
             initialValues.put(COLUMNS.get(2), data[2]);
@@ -76,11 +76,11 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public ArrayList<MaterialHunterModel> bindData(ArrayList<MaterialHunterModel> nethunterModelArrayList) {
+    public ArrayList<MaterialHunterModel> bindData(ArrayList<MaterialHunterModel> materialhunterModelArrayList) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMNS.get(0) + ";", null);
         while (cursor.moveToNext()) {
-            nethunterModelArrayList.add(new MaterialHunterModel(
+            materialhunterModelArrayList.add(new MaterialHunterModel(
                     cursor.getString(cursor.getColumnIndex(COLUMNS.get(1))),
                     cursor.getString(cursor.getColumnIndex(COLUMNS.get(2))),
                     cursor.getString(cursor.getColumnIndex(COLUMNS.get(3))),
@@ -90,7 +90,7 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        return nethunterModelArrayList;
+        return materialhunterModelArrayList;
     }
 
     public void addData(int targetPositionId, ArrayList<String> addData) {
@@ -152,7 +152,7 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
                 COLUMNS.get(1) + " TEXT, " + COLUMNS.get(2) + " TEXT, " + COLUMNS.get(3) + " INTEGER, " + COLUMNS.get(4) + " TEXT)");
         ContentValues initialValues = new ContentValues();
         db.beginTransaction();
-        for (String[] data : nethunterData) {
+        for (String[] data : materialhunterData) {
             initialValues.put(COLUMNS.get(0), data[0]);
             initialValues.put(COLUMNS.get(1), data[1]);
             initialValues.put(COLUMNS.get(2), data[2]);

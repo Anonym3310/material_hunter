@@ -58,7 +58,6 @@ public class DeAuthFragment extends Fragment {
         final TextInputEditText wlan = rootView.findViewById(R.id.wlan_interface);
         final EditText term = rootView.findViewById(R.id.TerminalOutputDeAuth);
         final Button start = rootView.findViewById(R.id.StartDeAuth);
-        final EditText pkt = rootView.findViewById(R.id.time);
         final TextInputEditText channel = rootView.findViewById(R.id.channel);
         final CheckBox whitelist = rootView.findViewById(R.id.deauth_whitelist);
         final CheckBox white_me = rootView.findViewById(R.id.deauth_me);

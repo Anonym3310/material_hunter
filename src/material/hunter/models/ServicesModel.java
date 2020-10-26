@@ -3,7 +3,7 @@ package material.hunter.models;
 /*
     KaliServices Model class, each model object represent the data of each recyclerview item.
  */
-public class KaliServicesModel {
+public class ServicesModel {
     private String ServiceName;
     private String CommandforStartService;
     private String CommandforStopService;
@@ -11,7 +11,7 @@ public class KaliServicesModel {
     private String RunOnChrootStart;
     private String Status;
 
-    public KaliServicesModel(String ServiceName, String CommandforStartService, String CommandforStopService, String CommandforCheckServiceStatus, String RunOnChrootStart, String Status) {
+    public ServicesModel(String ServiceName, String CommandforStartService, String CommandforStopService, String CommandforCheckServiceStatus, String RunOnChrootStart, String Status) {
         this.ServiceName = ServiceName;
         this.CommandforStartService = CommandforStartService;
         this.CommandforStopService = CommandforStopService;
@@ -20,7 +20,7 @@ public class KaliServicesModel {
         this.Status = Status;
     }
 
-    public KaliServicesModel() {
+    public ServicesModel() {
 
     }
 

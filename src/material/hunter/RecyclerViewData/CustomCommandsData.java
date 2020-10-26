@@ -43,9 +43,7 @@ public class CustomCommandsData {
         CustomCommandsAsyncTask customCommandsAsyncTask = new CustomCommandsAsyncTask(CustomCommandsAsyncTask.RUNCMD, position, context);
         customCommandsAsyncTask.setListener(new CustomCommandsAsyncTask.CustomCommandsAsyncTaskListener() {
             @Override
-            public void onAsyncTaskPrepare() {
-
-            }
+            public void onAsyncTaskPrepare() { }
 
             @Override
             public void onAsyncTaskFinished(List<CustomCommandsModel> customCommandsModelList) {

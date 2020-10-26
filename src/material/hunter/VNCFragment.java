@@ -477,37 +477,35 @@ public class VNCFragment extends Fragment {
         final View dialogView = inflater.inflate(R.layout.resolutiondialog, null);
         builder.setView(dialogView);
         builder.setTitle("Add a new device resolution (vertical)");
-        final EditText width = (EditText) dialogView.findViewById(R.id.width);
-        final EditText height = (EditText) dialogView.findViewById(R.id.height);
-        final EditText density = (EditText) dialogView.findViewById(R.id.density);
+        final EditText width = dialogView.findViewById(R.id.width);
+        final EditText height = dialogView.findViewById(R.id.height);
+        final EditText density = dialogView.findViewById(R.id.density);
         File hdmiResFile = new File(NhPaths.APP_SD_FILES_PATH + "/configs/hdmi-resolutions");
         ShellExecuter exe = new ShellExecuter();
-        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                final String add_width = width.getText().toString();
-                final String add_height = height.getText().toString();
-                final String add_density = density.getText().toString();
-                if (add_width.equals("") || add_height.equals("") || add_density.equals("")) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Please enter the values!", Toast.LENGTH_SHORT).show();
+        builder.setPositiveButton("Add", (dialog, which) -> {
+            final String add_width = width.getText().toString();
+            final String add_height = height.getText().toString();
+            final String add_density = density.getText().toString();
+            if (add_width.equals("") || add_height.equals("") || add_density.equals("")) {
+                Toast.makeText(getActivity().getApplicationContext(), "Please enter the values!", Toast.LENGTH_SHORT).show();
+                openResolutionDialog();
+            } else if (Integer.parseInt(width.getText().toString()) > Integer.parseInt(height.getText().toString())) {
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
+                builder2.setTitle("Width is bigger than height!");
+                builder2.setMessage("Bigger width is usually only for tablets. Misconfiguration can render the device unresponsive");
+                builder2.setPositiveButton("Keep", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog2, int which) {
+                        exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + ":" + add_density + "ppi >> " + hdmiResFile + "'"});
+                        reload();
+                    }
+                });
+                builder2.setNegativeButton("Back", (dialog2, whichButton) -> {
                     openResolutionDialog();
-                } else if (Integer.parseInt(width.getText().toString()) > Integer.parseInt(height.getText().toString())) {
-                    AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
-                    builder2.setTitle("Width is bigger than height!");
-                    builder2.setMessage("Bigger width is usually only for tablets. Misconfiguration can render the device unresponsive");
-                    builder2.setPositiveButton("Keep", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog2, int which) {
-                            exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + ":" + add_density + "ppi >> " + hdmiResFile + "'"});
-                            reload();
-                        }
-                    });
-                    builder2.setNegativeButton("Back", (dialog2, whichButton) -> {
-                        openResolutionDialog();
-                    });
-                    builder2.show();
-                } else {
-                    exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + ":" + add_density + "ppi >> " + hdmiResFile + "'"});
-                    reload();
-                }
+                });
+                builder2.show();
+            } else {
+                exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + ":" + add_density + "ppi >> " + hdmiResFile + "'"});
+                reload();
             }
         });
         builder.setNegativeButton(getString(R.string.cancel), (dialog, whichButton) -> {
@@ -518,24 +516,22 @@ public class VNCFragment extends Fragment {
     private void openVNCResolutionDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.vncresolutiondialog, null);
+        final View dialogView = inflater.inflate(R.layout.vnc_resolutiondialog, null);
         builder.setView(dialogView);
         builder.setTitle("Add a new VNC server resolution (horizontal)");
-        final EditText width = (EditText) dialogView.findViewById(R.id.width);
-        final EditText height = (EditText) dialogView.findViewById(R.id.height);
+        final EditText width = dialogView.findViewById(R.id.width);
+        final EditText height = dialogView.findViewById(R.id.height);
         File vncResFile = new File(NhPaths.APP_SD_FILES_PATH + "/configs/vnc-resolutions");
         ShellExecuter exe = new ShellExecuter();
-        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                final String add_width = width.getText().toString();
-                final String add_height = height.getText().toString();
-                if (add_width.equals("") || add_height.equals("")) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Please enter the values!", Toast.LENGTH_SHORT).show();
-                    openResolutionDialog();
-                } else {
-                    exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + " >> " + vncResFile + "'"});
-                    reload();
-                }
+        builder.setPositiveButton("Add", (dialog, which) -> {
+            final String add_width = width.getText().toString();
+            final String add_height = height.getText().toString();
+            if (add_width.equals("") || add_height.equals("")) {
+                Toast.makeText(getActivity().getApplicationContext(), "Please enter the values!", Toast.LENGTH_SHORT).show();
+                openResolutionDialog();
+            } else {
+                exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + " >> " + vncResFile + "'"});
+                reload();
             }
         });
         builder.setNegativeButton(getString(R.string.cancel), (dialog, whichButton) -> {

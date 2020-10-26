@@ -56,7 +56,7 @@
                     android:layout_marginTop="8dp"
                     android:enabled="false"
                     android:gravity="center"
-                    android:text="KaliChrootPath: /data/local/nhsystem/"
+                    android:text="ChrootPath: /data/local/nhsystem/"
                     android:textColor="@android:color/background_light" />
 
                 <TextView

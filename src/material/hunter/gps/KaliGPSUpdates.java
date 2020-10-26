@@ -1,4 +1,4 @@
-package material.hunter.gps;
+package material.hunter.GPS;
 
 public interface KaliGPSUpdates {
 
@@ -13,6 +13,4 @@ public interface KaliGPSUpdates {
 
         void onStopRequested();
     }
-
-
 }

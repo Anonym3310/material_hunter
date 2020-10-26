@@ -12,7 +12,7 @@ import material.hunter.models.MaterialHunterModel;
 import java.util.List;
 
 /*
-    ViewModel class for nethunter model, this is to be observed the List of MaterialHunterModel class.
+    ViewModel class for materialhunter model, this is to be observed the List of MaterialHunterModel class.
     This class should be initiated every time the MaterialHunterFragment is created.
     After the MaterialHunterData singleton is created, it will live until the app dies.
  */
@@ -23,11 +23,11 @@ public class MaterialHunterViewModel extends ViewModel {
         if (mutableLiveDataMaterialHunterModelList != null) {
             return;
         }
-        MaterialHunterData nethunterData = MaterialHunterData.getInstance();
+        MaterialHunterData materialhunterData = MaterialHunterData.getInstance();
         if (MaterialHunterData.isDataInitiated) {
-            mutableLiveDataMaterialHunterModelList = nethunterData.getMaterialHunterModels();
+            mutableLiveDataMaterialHunterModelList = materialhunterData.getMaterialHunterModels();
         } else {
-            mutableLiveDataMaterialHunterModelList = nethunterData.getMaterialHunterModels(context);
+            mutableLiveDataMaterialHunterModelList = materialhunterData.getMaterialHunterModels(context);
         }
     }
 

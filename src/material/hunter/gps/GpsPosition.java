@@ -1,5 +1,4 @@
-package material.hunter.gps;
-
+package material.hunter.GPS;
 
 import java.util.Locale;
 
@@ -18,9 +17,7 @@ public class GpsPosition {
     private float altitude = 0.0f;
     private float velocity = 0.0f;
 
-    public void updateIsfixed() {
-        boolean isFixed = quality > 0;
-    }
+    public void updateIsfixed() { boolean isFixed = quality > 0; }
 
     @Override
     public String toString() {

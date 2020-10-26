@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -43,17 +44,17 @@ import java.util.Stack;
 
 import material.hunter.AsyncTask.CopyBootFilesAsyncTask;
 import material.hunter.SQL.CustomCommandsSQL;
-import material.hunter.SQL.KaliServicesSQL;
+import material.hunter.SQL.ServicesSQL;
 import material.hunter.SQL.MaterialHunterSQL;
 import material.hunter.SQL.USBArmorySQL;
-import material.hunter.gps.KaliGPSUpdates;
-import material.hunter.gps.LocationUpdateService;
+import material.hunter.GPS.KaliGPSUpdates;
+import material.hunter.GPS.LocationUpdateService;
 import material.hunter.service.CompatCheckService;
 import material.hunter.utils.CheckForRoot;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.PermissionCheck;
 import material.hunter.utils.SharePrefTag;
-
+import material.hunter.utils.ShellExecuter;
 
 public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpdates.Provider {
 
@@ -75,9 +76,10 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     private KaliGPSUpdates.Receiver locationUpdateReceiver;
     private NhPaths nhPaths;
     private PermissionCheck permissionCheck;
-    private BroadcastReceiver nethunterReceiver;
+    private BroadcastReceiver materialhunterReceiver;
     private LocationUpdateService locationService;
     private boolean updateServiceBound = false;
+    private ShellExecuter exe;
     private final ServiceConnection locationServiceConnection = new ServiceConnection() {
 
         @Override
@@ -109,13 +111,13 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         // Initiate the PermissionCheck class.
         permissionCheck = new PermissionCheck(this, getApplicationContext());
         // Register the NetHunter receiver with intent actions.
-        nethunterReceiver = new MaterialHunterReceiver();
+        materialhunterReceiver = new MaterialHunterReceiver();
         IntentFilter AppNavHomeIntentFilter = new IntentFilter();
         AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.CHECKCOMPAT);
         AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.BACKPRESSED);
         AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.CHECKCHROOT);
         AppNavHomeIntentFilter.addAction("ChrootManager");
-        this.registerReceiver(nethunterReceiver, new IntentFilter(AppNavHomeIntentFilter));
+        this.registerReceiver(materialhunterReceiver, new IntentFilter(AppNavHomeIntentFilter));
         // initiate prefs.
         prefs = getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
 
@@ -137,7 +139,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 // Now Initiate all SQL singleton in MainActivity so that it can be less lagged when switching fragments,
                 // because it takes time to retrieve data from database.
                 MaterialHunterSQL.getInstance(getApplicationContext());
-                KaliServicesSQL.getInstance(getApplicationContext());
+                ServicesSQL.getInstance(getApplicationContext());
                 CustomCommandsSQL.getInstance(getApplicationContext());
                 USBArmorySQL.getInstance(getApplicationContext());
 
@@ -263,8 +265,8 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     protected void onDestroy() {
         super.onDestroy();
         lastSelectedMenuItem = null;
-        if (nethunterReceiver != null) {
-            unregisterReceiver(nethunterReceiver);
+        if (materialhunterReceiver != null) {
+            unregisterReceiver(materialhunterReceiver);
         }
         if (nhPaths != null) {
             nhPaths.onDestroy();
@@ -320,7 +322,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.container, MaterialHunterFragment.newInstance(R.id.nethunter_item))
+                .replace(R.id.container, MaterialHunterFragment.newInstance(R.id.materialhunter_item))
                 .commit();
 
         // and put the title in the queue for when you need to back through them
@@ -351,6 +353,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         adb.setView(rootView)
                 .setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
         AlertDialog ad = adb.create();
+        ad.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         ad.setCancelable(true);
         if (ad.getWindow() != null) {
             ad.getWindow().getAttributes().windowAnimations = R.style.DialogStyle;
@@ -379,7 +382,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     int itemId = menuItem.getItemId();
                     switch (itemId) {
-                        case R.id.nethunter_item:
+                        case R.id.materialhunter_item:
                             changeFragment(fragmentManager, MaterialHunterFragment.newInstance(itemId));
                             break;
                         case R.id.deauth_item:
@@ -389,8 +392,8 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                                 showWarningDialog("", getString(R.string.toast_need_iw), false);
                             }
                             break;
-                        case R.id.kaliservices_item:
-                            changeFragment(fragmentManager, KaliServicesFragment.newInstance(itemId));
+                        case R.id.services_item:
+                            changeFragment(fragmentManager, ServicesFragment.newInstance(itemId));
                             break;
                         case R.id.custom_commands_item:
                             changeFragment(fragmentManager, CustomCommandsFragment.newInstance(itemId));
@@ -451,7 +454,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             break;
                         case R.id.gps_item:
                             if (new File("/data/local/nhsystem/kalifs/usr/sbin/gpsd").exists()) {
-                                changeFragment(fragmentManager, KaliGpsServiceFragment.newInstance(itemId));
+                                changeFragment(fragmentManager, GpsServiceFragment.newInstance(itemId));
                             } else {
                                 showWarningDialog("", getString(R.string.toast_install_gpsd), false);
                             }
@@ -522,8 +525,6 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         } else if (!permissionCheck.isAllPermitted(PermissionCheck.NH_TERM_PERMISSIONS)) {
             permissionCheck.checkPermissions(PermissionCheck.NH_TERM_PERMISSIONS, PermissionCheck.NH_TERM_PERMISSIONS_RQCODE);
             return false;
-            //} else if (!permissionCheck.isAllPermitted(PermissionCheck.NH_VNC_PERMISSIONS)) {
-            //permissionCheck.checkPermissions(PermissionCheck.NH_VNC_PERMISSIONS, PermissionCheck.NH_VNC_PERMISSIONS_RQCODE);
         }
 
         return true;
@@ -571,10 +572,10 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                                 navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, true);
                             } else {
                                 navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
-                                if (lastSelectedMenuItem.getItemId() != R.id.nethunter_item &&
+                                if (lastSelectedMenuItem.getItemId() != R.id.materialhunter_item &&
                                         lastSelectedMenuItem.getItemId() != R.id.createchroot_item) {
                                     FragmentManager fragmentManager = getSupportFragmentManager();
-                                    changeFragment(fragmentManager, MaterialHunterFragment.newInstance(R.id.nethunter_item));
+                                    changeFragment(fragmentManager, MaterialHunterFragment.newInstance(R.id.materialhunter_item));
                                 }
                             }
                         } catch (Exception e) {

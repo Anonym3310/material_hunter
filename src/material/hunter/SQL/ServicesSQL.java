@@ -9,7 +9,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import material.hunter.BuildConfig;
-import material.hunter.models.KaliServicesModel;
+import material.hunter.models.ServicesModel;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,9 +17,9 @@ import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
-public class KaliServicesSQL extends SQLiteOpenHelper {
+public class ServicesSQL extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "KaliServicesFragment";
-    private static final String TAG = "KaliServicesSQL";
+    private static final String TAG = "ServicesSQL";
     private static final String TABLE_NAME = DATABASE_NAME;
     private static final String[][] kaliserviceData = {
             {"1", "SSH", "service ssh start", "service ssh stop", "sshd", "0"},
@@ -27,10 +27,10 @@ public class KaliServicesSQL extends SQLiteOpenHelper {
             {"3", "POSTGRESQL", "service postgresql start", "service postgresql stop", "postgres", "0"},
             {"4", "DNSMASQ", "service dnsmasq start", "service dnsmasq stop", "dnsmasq", "0"}
     };
-    private static KaliServicesSQL instance;
+    private static ServicesSQL instance;
     private static ArrayList<String> COLUMNS = new ArrayList<>();
 
-    private KaliServicesSQL(Context context) {
+    private ServicesSQL(Context context) {
         super(context, DATABASE_NAME, null, 1);
         // Add your default column here;
         COLUMNS.add("id");
@@ -41,9 +41,9 @@ public class KaliServicesSQL extends SQLiteOpenHelper {
         COLUMNS.add("RunOnChrootStart");
     }
 
-    public synchronized static KaliServicesSQL getInstance(Context context) {
+    public synchronized static ServicesSQL getInstance(Context context) {
         if (instance == null) {
-            instance = new KaliServicesSQL(context.getApplicationContext());
+            instance = new ServicesSQL(context.getApplicationContext());
         }
         return instance;
     }
@@ -75,11 +75,11 @@ public class KaliServicesSQL extends SQLiteOpenHelper {
         this.onCreate(db);
     }
 
-    public ArrayList<KaliServicesModel> bindData(ArrayList<KaliServicesModel> kaliServicesModelArrayList) {
+    public ArrayList<ServicesModel> bindData(ArrayList<ServicesModel> servicesModelArrayList) {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY " + COLUMNS.get(0) + ";", null);
         while (cursor.moveToNext()) {
-            kaliServicesModelArrayList.add(new KaliServicesModel(
+            servicesModelArrayList.add(new ServicesModel(
                     cursor.getString(cursor.getColumnIndex(COLUMNS.get(1))),
                     cursor.getString(cursor.getColumnIndex(COLUMNS.get(2))),
                     cursor.getString(cursor.getColumnIndex(COLUMNS.get(3))),
@@ -90,7 +90,7 @@ public class KaliServicesSQL extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        return kaliServicesModelArrayList;
+        return servicesModelArrayList;
     }
 
     public void addData(int targetPositionId, ArrayList<String> Data) {

@@ -6,9 +6,9 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -27,10 +27,11 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/f_nethunter_add_adb_et_title"
+                android:id="@+id/f_services_add_adb_et_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:hint="Enter your title name here"
                 android:inputType="text" />
 
             <LinearLayout
@@ -43,12 +44,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="0.9"
-                    android:text="Command for getting the output:"
+                    android:text="Command for starting the service:"
                     android:textColor="@color/accent_material_dark"
                     android:textSize="18sp" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/f_nethunter_add_btn_info_fab1"
+                    android:id="@+id/f_services_add_btn_info_fab1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -58,11 +59,10 @@
                     app:elevation="6dp"
                     app:fabCustomSize="32dp"
                     app:pressedTranslationZ="12dp" />
-
             </LinearLayout>
 
             <EditText
-                android:id="@+id/f_nethunter_add_adb_et_command"
+                android:id="@+id/f_services_add_adb_et_startcommand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp" />
@@ -77,12 +77,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_weight="0.9"
-                    android:text="Line delimiter:"
+                    android:text="Command for stopping the service:"
                     android:textColor="@color/accent_material_dark"
                     android:textSize="18sp" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/f_nethunter_add_btn_info_fab2"
+                    android:id="@+id/f_services_add_btn_info_fab2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -92,11 +92,44 @@
                     app:elevation="6dp"
                     app:fabCustomSize="32dp"
                     app:pressedTranslationZ="12dp" />
-
             </LinearLayout>
 
             <EditText
-                android:id="@+id/f_nethunter_add_adb_et_delimiter"
+                android:id="@+id/f_services_add_adb_et_stopcommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="0.9"
+                    android:text="String for checking the service:"
+                    android:textColor="@color/accent_material_dark"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/f_services_add_btn_info_fab3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="0.1"
+                    android:src="@drawable/ic_action_information"
+                    android:textSize="12sp"
+                    app:elevation="6dp"
+                    app:fabCustomSize="32dp"
+                    app:pressedTranslationZ="12dp" />
+            </LinearLayout>
+
+
+            <EditText
+                android:id="@+id/f_services_add_adb_et_checkstatuscommand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp" />
@@ -107,17 +140,17 @@
                 android:orientation="horizontal">
 
                 <CheckBox
-                    android:id="@+id/f_nethunters_add_adb_checkbox_runoncreate"
+                    android:id="@+id/f_services_add_adb_checkbox_runonboot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="RunOnCreate"
+                    android:text="RunOnChrootStart"
                     android:textColor="@color/accent_material_dark"
                     android:textSize="18sp" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/f_nethunter_add_btn_info_fab3"
-                    android:layout_width="match_parent"
+                    android:id="@+id/f_services_add_btn_info_fab4"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:src="@drawable/ic_action_information"
@@ -127,13 +160,16 @@
                     app:pressedTranslationZ="12dp" />
             </LinearLayout>
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="Position to insert:"
                 android:textColor="@color/accent_material_dark"
-                android:textSize="18sp"></TextView>
+                android:textSize="18sp">
+
+            </TextView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,14 +178,14 @@
                 android:orientation="horizontal">
 
                 <Spinner
-                    android:id="@+id/f_nethunter_add_adb_spr_positions"
+                    android:id="@+id/f_services_add_adb_spr_positions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:entries="@array/array_insert_position"></Spinner>
 
                 <Spinner
-                    android:id="@+id/f_nethunter_add_adb_spr_titles"
+                    android:id="@+id/f_services_add_adb_spr_titles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"></Spinner>

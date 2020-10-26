@@ -31,20 +31,20 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
 
     private static final String TAG = "MaterialHunterRecyclerView";
     private Context context;
-    private List<MaterialHunterModel> nethunterModelList;
+    private List<MaterialHunterModel> materialhunterModelList;
     private Filter MaterialHunterModelListFilter = new Filter() {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             if (constraint == null || constraint.length() == 0) {
-                results.values = new ArrayList<>(MaterialHunterData.getInstance().nethunterModelListFull);
+                results.values = new ArrayList<>(MaterialHunterData.getInstance().materialhunterModelListFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 List<MaterialHunterModel> tempMaterialHunterModelList = new ArrayList<>();
-                for (MaterialHunterModel nethunterModel : MaterialHunterData.getInstance().nethunterModelListFull) {
-                    if (nethunterModel.getTitle().toLowerCase().contains(filterPattern)) {
-                        tempMaterialHunterModelList.add(nethunterModel);
+                for (MaterialHunterModel materialhunterModel : MaterialHunterData.getInstance().materialhunterModelListFull) {
+                    if (materialhunterModel.getTitle().toLowerCase().contains(filterPattern)) {
+                        tempMaterialHunterModelList.add(materialhunterModel);
                     }
                 }
                 results.values = tempMaterialHunterModelList;
@@ -60,39 +60,39 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
         }
     };
 
-    public MaterialHunterRecyclerViewAdapter(Context context, List<MaterialHunterModel> nethunterModelList) {
+    public MaterialHunterRecyclerViewAdapter(Context context, List<MaterialHunterModel> materialhunterModelList) {
         this.context = context;
-        this.nethunterModelList = nethunterModelList;
+        this.materialhunterModelList = materialhunterModelList;
     }
 
     @NonNull
     @Override
     public MaterialHunterRecyclerViewAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.nethunter_recyclerview_main, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.materialhunter_recyclerview_main, parent, false);
         return new MaterialHunterRecyclerViewAdapter.ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MaterialHunterRecyclerViewAdapter.ItemViewHolder holder, int position) {
-        holder.titleTextView.setText(nethunterModelList.get(position).getTitle());
+        holder.titleTextView.setText(materialhunterModelList.get(position).getTitle());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         holder.resultRecyclerView.setLayoutManager(linearLayoutManager);
-        holder.resultRecyclerView.setAdapter(new MaterialHunterRecyclerViewAdapterResult(context, nethunterModelList.get(position).getResult()));
+        holder.resultRecyclerView.setAdapter(new MaterialHunterRecyclerViewAdapterResult(context, materialhunterModelList.get(position).getResult()));
         holder.runButton.setOnClickListener(v -> MaterialHunterData.getInstance().runCommandforItem(position));
         holder.titleTextView.setOnLongClickListener(v -> {
             final LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewEdit = mInflater.inflate(R.layout.nethunter_edit_dialog_view, null);
-            final EditText titleEditText = promptViewEdit.findViewById(R.id.f_nethunter_edit_adb_et_title);
-            final EditText cmdEditText = promptViewEdit.findViewById(R.id.f_nethunter_edit_adb_et_command);
-            final EditText delimiterEditText = promptViewEdit.findViewById(R.id.f_nethunter_edit_adb_et_delimiter);
-            final CheckBox runOnCreateCheckbox = promptViewEdit.findViewById(R.id.f_nethunters_edit_adb_checkbox_runoncreate);
-            final FloatingActionButton readmeButton1 = promptViewEdit.findViewById(R.id.f_nethunter_edit_btn_info_fab1);
-            final FloatingActionButton readmeButton2 = promptViewEdit.findViewById(R.id.f_nethunter_edit_btn_info_fab2);
-            final FloatingActionButton readmeButton3 = promptViewEdit.findViewById(R.id.f_nethunter_edit_btn_info_fab3);
+            final View promptViewEdit = mInflater.inflate(R.layout.materialhunter_edit_dialog_view, null);
+            final EditText titleEditText = promptViewEdit.findViewById(R.id.f_materialhunter_edit_adb_et_title);
+            final EditText cmdEditText = promptViewEdit.findViewById(R.id.f_materialhunter_edit_adb_et_command);
+            final EditText delimiterEditText = promptViewEdit.findViewById(R.id.f_materialhunter_edit_adb_et_delimiter);
+            final CheckBox runOnCreateCheckbox = promptViewEdit.findViewById(R.id.f_materialhunters_edit_adb_checkbox_runoncreate);
+            final FloatingActionButton readmeButton1 = promptViewEdit.findViewById(R.id.f_materialhunter_edit_btn_info_fab1);
+            final FloatingActionButton readmeButton2 = promptViewEdit.findViewById(R.id.f_materialhunter_edit_btn_info_fab2);
+            final FloatingActionButton readmeButton3 = promptViewEdit.findViewById(R.id.f_materialhunter_edit_btn_info_fab3);
             readmeButton1.setOnClickListener(view -> {
                 androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
-                        .setMessage(context.getString(R.string.nethunter_howtouse_cmd))
+                        .setMessage(context.getString(R.string.materialhunter_howtouse_cmd))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
                 final androidx.appcompat.app.AlertDialog ad = adb.create();
                 ad.setCancelable(true);
@@ -102,7 +102,7 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
             readmeButton2.setOnClickListener(view -> {
                 androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
-                        .setMessage(context.getString(R.string.nethunter_howtouse_delimiter))
+                        .setMessage(context.getString(R.string.materialhunter_howtouse_delimiter))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
                 final androidx.appcompat.app.AlertDialog ad = adb.create();
                 ad.setCancelable(true);
@@ -112,24 +112,24 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
             readmeButton3.setOnClickListener(view -> {
                 androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
-                        .setMessage(context.getString(R.string.nethunter_howtouse_runoncreate))
+                        .setMessage(context.getString(R.string.materialhunter_howtouse_runoncreate))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
                 final androidx.appcompat.app.AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });
-            titleEditText.setText(MaterialHunterData.getInstance().nethunterModelListFull.get(
-                    MaterialHunterData.getInstance().nethunterModelListFull.indexOf(
-                            nethunterModelList.get(position))).getTitle());
-            cmdEditText.setText(MaterialHunterData.getInstance().nethunterModelListFull.get(
-                    MaterialHunterData.getInstance().nethunterModelListFull.indexOf(
-                            nethunterModelList.get(position))).getCommand());
-            delimiterEditText.setText(MaterialHunterData.getInstance().nethunterModelListFull.get(
-                    MaterialHunterData.getInstance().nethunterModelListFull.indexOf(
-                            nethunterModelList.get(position))).getDelimiter());
-            runOnCreateCheckbox.setChecked(MaterialHunterData.getInstance().nethunterModelListFull.get(
-                    MaterialHunterData.getInstance().nethunterModelListFull.indexOf(
-                            nethunterModelList.get(position))).getRunOnCreate().equals("1"));
+            titleEditText.setText(MaterialHunterData.getInstance().materialhunterModelListFull.get(
+                    MaterialHunterData.getInstance().materialhunterModelListFull.indexOf(
+                            materialhunterModelList.get(position))).getTitle());
+            cmdEditText.setText(MaterialHunterData.getInstance().materialhunterModelListFull.get(
+                    MaterialHunterData.getInstance().materialhunterModelListFull.indexOf(
+                            materialhunterModelList.get(position))).getCommand());
+            delimiterEditText.setText(MaterialHunterData.getInstance().materialhunterModelListFull.get(
+                    MaterialHunterData.getInstance().materialhunterModelListFull.indexOf(
+                            materialhunterModelList.get(position))).getDelimiter());
+            runOnCreateCheckbox.setChecked(MaterialHunterData.getInstance().materialhunterModelListFull.get(
+                    MaterialHunterData.getInstance().materialhunterModelListFull.indexOf(
+                            materialhunterModelList.get(position))).getRunOnCreate().equals("1"));
 
             AlertDialog.Builder adb = new AlertDialog.Builder(context);
             adb.setPositiveButton("Apply", (dialog, which) -> {
@@ -152,8 +152,8 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
                         dataArrayList.add(cmdEditText.getText().toString());
                         dataArrayList.add(delimiterEditText.getText().toString());
                         dataArrayList.add(runOnCreateCheckbox.isChecked() ? "1" : "0");
-                        MaterialHunterData.getInstance().editData(MaterialHunterData.getInstance().nethunterModelListFull.indexOf(
-                                nethunterModelList.get(position)), dataArrayList, MaterialHunterSQL.getInstance(context));
+                        MaterialHunterData.getInstance().editData(MaterialHunterData.getInstance().materialhunterModelListFull.indexOf(
+                                materialhunterModelList.get(position)), dataArrayList, MaterialHunterSQL.getInstance(context));
                         ad.dismiss();
                     }
                 });
@@ -161,7 +161,7 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
             ad.show();
             return false;
         });
-        if (MaterialHunterData.getInstance().nethunterModelListFull.get(MaterialHunterData.getInstance().nethunterModelListFull.indexOf(nethunterModelList.get(position))).getRunOnCreate().equals("1")) {
+        if (MaterialHunterData.getInstance().materialhunterModelListFull.get(MaterialHunterData.getInstance().materialhunterModelListFull.indexOf(materialhunterModelList.get(position))).getRunOnCreate().equals("1")) {
             holder.runButton.setVisibility(View.INVISIBLE);
         } else {
             holder.runButton.setVisibility(View.VISIBLE);
@@ -170,7 +170,7 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
 
     @Override
     public int getItemCount() {
-        return nethunterModelList.size();
+        return materialhunterModelList.size();
     }
 
     @Override
@@ -191,10 +191,10 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
         //private Button editButton;
         private ItemViewHolder(View view) {
             super(view);
-            titleTextView = view.findViewById(R.id.f_nethunter_item_title_tv);
-            resultRecyclerView = view.findViewById(R.id.f_nethunter_item_result_recyclerview);
-            runButton = view.findViewById(R.id.f_nethunter_item_run_btn);
-            //editButton = view.findViewById(R.id.f_nethunter_item_edit_btn);
+            titleTextView = view.findViewById(R.id.f_materialhunter_item_title_tv);
+            resultRecyclerView = view.findViewById(R.id.f_materialhunter_item_result_recyclerview);
+            runButton = view.findViewById(R.id.f_materialhunter_item_run_btn);
+            //editButton = view.findViewById(R.id.f_materialhunter_item_edit_btn);
         }
     }
 }

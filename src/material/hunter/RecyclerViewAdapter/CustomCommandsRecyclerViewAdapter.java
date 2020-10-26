@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomCommandsRecyclerViewAdapter extends RecyclerView.Adapter<CustomCommandsRecyclerViewAdapter.ItemViewHolder> implements Filterable {
-    private static final String TAG = "KaliServiceRecycleView";
+    private static final String TAG = "CustomCommandsRecycleView";
     private Context context;
     private List<CustomCommandsModel> customCommandsModelList;
     private Filter CustomCommandsModelListFilter = new Filter() {
@@ -77,9 +77,8 @@ public class CustomCommandsRecyclerViewAdapter extends RecyclerView.Adapter<Cust
         itemViewHolder.execModeTextView.setText(customCommandsModelList.get(position).getExecutionMode());
         itemViewHolder.runOnBootTextView.setText(customCommandsModelList.get(position).getRunOnBoot().equals("1") ? "yes" : "no");
         itemViewHolder.commandLabelTextView.setOnLongClickListener(v -> {
-            final ViewGroup nullParent = null;
             final LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewEdit = mInflater.inflate(R.layout.customcommands_edit_dialog_view, nullParent);
+            final View promptViewEdit = mInflater.inflate(R.layout.customcommands_edit_dialog_view, null );
             final EditText commandLabelEditText = promptViewEdit.findViewById(R.id.f_customcommands_edit_adb_et_commandlabel);
             final EditText commandEditText = promptViewEdit.findViewById(R.id.f_customcommands_edit_adb_et_command);
             final Spinner sendToSpinner = promptViewEdit.findViewById(R.id.f_customcommands_edit_adb_spr_sendto);
@@ -154,7 +153,6 @@ public class CustomCommandsRecyclerViewAdapter extends RecyclerView.Adapter<Cust
         private TextView execEnvTextView;
         private TextView execModeTextView;
         private TextView runOnBootTextView;
-        //private Button editButton;
         private Button runButton;
 
         private ItemViewHolder(View view) {
@@ -163,7 +161,6 @@ public class CustomCommandsRecyclerViewAdapter extends RecyclerView.Adapter<Cust
             execEnvTextView = view.findViewById(R.id.f_customcommands_recyclerview_tv_execenvironment);
             execModeTextView = view.findViewById(R.id.f_customcommands_recyclerview_tv_execmode);
             runOnBootTextView = view.findViewById(R.id.f_customcommands_recyclerview_tv_runonboot);
-            //editButton = view.findViewById(R.id.f_customcommands_recyclerview_btn_edit);
             runButton = view.findViewById(R.id.f_customcommands_recyclerview_btn_run);
         }
     }

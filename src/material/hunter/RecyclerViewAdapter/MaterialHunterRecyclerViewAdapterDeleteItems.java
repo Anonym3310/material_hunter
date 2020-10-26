@@ -18,28 +18,28 @@ public class MaterialHunterRecyclerViewAdapterDeleteItems extends RecyclerView.A
 
     private static final String TAG = "MaterialHunterRecyclerView";
     private Context context;
-    private List<MaterialHunterModel> nethunterModelList;
+    private List<MaterialHunterModel> materialhunterModelList;
 
-    public MaterialHunterRecyclerViewAdapterDeleteItems(Context context, List<MaterialHunterModel> nethunterModelList) {
+    public MaterialHunterRecyclerViewAdapterDeleteItems(Context context, List<MaterialHunterModel> materialhunterModelList) {
         this.context = context;
-        this.nethunterModelList = nethunterModelList;
+        this.materialhunterModelList = materialhunterModelList;
     }
 
     @NonNull
     @Override
     public MaterialHunterRecyclerViewAdapterDeleteItems.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.nethunter_recyclerview_dialog_delete, viewGroup, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.materialhunter_recyclerview_dialog_delete, viewGroup, false);
         return new MaterialHunterRecyclerViewAdapterDeleteItems.ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder itemViewHolder, int i) {
-        itemViewHolder.checkBox.setText(nethunterModelList.get(i).getTitle());
+        itemViewHolder.checkBox.setText(materialhunterModelList.get(i).getTitle());
     }
 
     @Override
     public int getItemCount() {
-        return nethunterModelList.size();
+        return materialhunterModelList.size();
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -47,7 +47,7 @@ public class MaterialHunterRecyclerViewAdapterDeleteItems extends RecyclerView.A
 
         private ItemViewHolder(View view) {
             super(view);
-            checkBox = view.findViewById(R.id.f_nethunter_recyclerview_dialog_chkbox);
+            checkBox = view.findViewById(R.id.f_materialhunter_recyclerview_dialog_chkbox);
         }
     }
 

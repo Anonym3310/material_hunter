@@ -56,10 +56,9 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPreExecute() {
-        // Check if it is a new build and inflates the nethunter files again if yes.
+        // Check if it is a new build and inflates the materialhunter files again if yes.
         // Added versionCode tag to shareprefence to check if the versionCode is different from previous install, this fix the new updated installation not copying files.
         if (prefs.getInt(SharePrefTag.VERSION_CODE_TAG, 0) != BuildConfig.VERSION_CODE || !prefs.getString(TAG, buildTime).equals(buildTime) || !sdCardDir.isDirectory() || !scriptsDir.isDirectory() || !etcDir.isDirectory()) {
-            Log.d(TAG, "COPYING NEW FILES");
             ProgressDialog progressDialog = progressDialogRef.get();
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setTitle("New app build detected:");
@@ -93,7 +92,16 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
             assetsToFiles(NhPaths.SD_PATH, "", "sdcard");
             publishProgress("Fixing permissions for new files");
             exe.RunAsRoot(new String[]{"chmod -R 700 " + NhPaths.APP_SCRIPTS_PATH + "/*", "chmod -R 700 " + NhPaths.APP_INITD_PATH + "/*"});
-            // disable the magisk notification for nethunter app as it will keep popping up bunch of toast message when executing runtime command.
+            /*exe.RunAsRoot(new String[]{"mount -o rw,remount /"});
+            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali /system/xbin/bootkali"});
+            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_bash /system/xbin/bootkali_bash"});
+            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_env /system/xbin/bootkali_env"});
+            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_init /system/xbin/bootkali_init"});
+            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_log /system/xbin/bootkali_log"});
+            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_login /system/xbin/bootkali_login"});
+            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_BIN_PATH + "/busybox_nh /system/xbin/busybox_nh"});
+            exe.RunAsRoot(new String[]{"mount -o ro,remount /"});*/
+            // disable the magisk notification for materialhunter app as it will keep popping up bunch of toast message when executing runtime command.
             disableMagiskNotification();
             SharedPreferences.Editor ed = prefs.edit();
             ed.putString(TAG, buildTime);
@@ -120,7 +128,7 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
             // This is required to install the additional apks in Android Oreo and newer
             // We can no longer install user apps through TWRP so we copy them across and install them here
             // Get the list of *.apk files in /sdcard/nh_files/cache/apk and install them using "pm install"
-            publishProgress("Installing additional apps...");
+            /*publishProgress("Installing additional apps...");
             String ApkCachePath = NhPaths.APP_SD_FILES_PATH + "/cache/apk/";
             ArrayList<String> filenames = FetchFiles(ApkCachePath);
             int i, x;
@@ -132,7 +140,7 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
                     ShellExecuter install = new ShellExecuter();
                     install.RunAsRoot(new String[]{"mv " + apk + " /data/local/tmp/ && pm install /data/local/tmp/" + object + " && rm -f /data/local/tmp/" + object});
                 }
-            }
+            }*/
         }
         return result;
     }
@@ -201,7 +209,7 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
     }
 
     private void copyFile(String TARGET_BASE_PATH, String filename) {
-        if (filename.matches("^.*/kaliservices$|^.*/runonboot_services$")) {
+        if (filename.matches("^.*/services$|^.*/runonboot_services$")) {
             return;
         }
         AssetManager assetManager = context.get().getAssets();
@@ -223,10 +231,6 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
             out.flush();
             out.close();
         } catch (Exception e) {
-            Log.e(TAG, "Exception in copyFile() of " + newFileName);
-            Log.e(TAG, "Exception in copyFile() " + e.toString());
-            Log.e(TAG, "Trying to copy as root next");
-            // Trying runasroot
             ShellExecuter copy = new ShellExecuter();
             copy.RunAsRoot(new String[]{"cp " + filename + " " + TARGET_BASE_PATH});
         }
@@ -250,18 +254,17 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
 
     private void MakeSYSWriteable() {
         Log.d(TAG, "Making /system writeable for symlink");
-        exe.RunAsRoot(new String[]{"mount -o rw,remount,rw /system"});
+        exe.RunAsRoot(new String[]{"mount -o rw,remount /"});
     }
 
     private void MakeSYSReadOnly() {
         Log.d(TAG, "Making /system readonly for symlink");
-        exe.RunAsRoot(new String[]{"mount -o ro,remount,ro /system"});
+        exe.RunAsRoot(new String[]{"mount -o ro,remount /"});
     }
 
     private void NotFound(String filename) {
-        Log.d(TAG, "Symlinking " + filename);
-        Log.d(TAG, "command output: ln -s " + NhPaths.APP_SCRIPTS_PATH + "/" + filename + " /system/bin/" + filename);
-        exe.RunAsRoot(new String[]{"ln -s " + NhPaths.APP_SCRIPTS_PATH + "/" + filename + " /system/bin/" + filename});
+        Log.d(TAG, "Symlinking: " + filename);
+        exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/" + filename + " /system/xbin/" + filename});
     }
 
     // Get a list of files from a directory
@@ -302,7 +305,7 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
 
     private void disableMagiskNotification() {
         if (exe.RunAsRootReturnValue("[ -f " + NhPaths.MAGISK_DB_PATH + " ]") == 0) {
-            Log.d(TAG, "Disabling magisk notifcication and log for nethunter app.");
+            Log.d(TAG, "Disabling magisk notifcication and log for MaterialHunter.");
             if (exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_BIN_PATH + "/sqlite3 " +
                     NhPaths.MAGISK_DB_PATH +
                     " \"UPDATE policies SET logging='0',notification='0' WHERE package_name='" +
@@ -312,7 +315,7 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
                 Log.e(TAG, "Failed updating to magisk db.");
             }
         } else {
-            Log.e(TAG, NhPaths.MAGISK_DB_PATH + " not found, skip disabling the magisk notification for nethunter app.");
+            Log.e(TAG, NhPaths.MAGISK_DB_PATH + " not found, skip disabling the magisk notification for MaterialHunter.");
         }
     }
 

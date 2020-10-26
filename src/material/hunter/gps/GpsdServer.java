@@ -1,10 +1,7 @@
-package material.hunter.gps;
-
+package material.hunter.GPS;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
-import material.hunter.utils.ShellExecuter;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +9,13 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.Objects;
 
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.ShellExecuter;
 
 public class GpsdServer extends AsyncTask<Void, Void, Void> {
-    private static final String SCRIPT_PATH = "/data/data/material.hunter/files/scripts/";
+    private static final String SCRIPT_PATH = NhPaths.APP_SCRIPTS_PATH;
 
     private static final String TAG = "GpsdServer";
     /**
@@ -30,9 +30,6 @@ public class GpsdServer extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        //Log.d(TAG, "Started Listening");
-
-
         try {
             SocketAddress socketAddress = new InetSocketAddress("127.0.0.1", PORT);
             ServerSocket serverSocket = new ServerSocket();
@@ -58,13 +55,12 @@ public class GpsdServer extends AsyncTask<Void, Void, Void> {
             //Log.d(TAG, "Client bound");
         } catch (IOException e) {
             Log.d(TAG, "Unable to create ServerSocket for port: " + PORT);
-            Log.d(TAG, e.getMessage());
+            Log.d(TAG, Objects.requireNonNull(e.getMessage()));
             return null;
         }
 
         return null;
     }
-
 
     public interface ConnectionListener {
         void onSocketConnected(Socket clientSocket);

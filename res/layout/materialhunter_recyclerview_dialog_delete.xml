@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <CheckBox
-        android:id="@+id/f_nethunter_recyclerview_dialog_chkbox"
+        android:id="@+id/f_materialhunter_recyclerview_dialog_chkbox"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

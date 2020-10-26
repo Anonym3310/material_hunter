@@ -28,7 +28,7 @@ public class MaterialHunterRecyclerViewAdapterResult extends RecyclerView.Adapte
     @NonNull
     @Override
     public MaterialHunterRecyclerViewAdapterResult.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.nethunter_recyclerview_result, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.materialhunter_recyclerview_result, parent, false);
         return new MaterialHunterRecyclerViewAdapterResult.ItemViewHolder(view);
     }
 
@@ -59,7 +59,7 @@ public class MaterialHunterRecyclerViewAdapterResult extends RecyclerView.Adapte
 
         private ItemViewHolder(View view) {
             super(view);
-            resultTextView = view.findViewById(R.id.f_nethunter_item_result_tv);
+            resultTextView = view.findViewById(R.id.f_materialhunter_item_result_tv);
         }
     }
 }

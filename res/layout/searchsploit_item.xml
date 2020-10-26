@@ -30,8 +30,7 @@
         android:paddingLeft="@dimen/base_listItem_LR"
         android:paddingRight="@dimen/base_listItem_LR"
         android:text="@string/platform"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/accent_material_dark" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textView4"
@@ -43,8 +42,7 @@
         android:paddingLeft="@dimen/base_listItem_LR"
         android:paddingRight="@dimen/base_listItem_LR"
         android:text="@string/type"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/accent_material_dark" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,8 +52,7 @@
         android:paddingLeft="@dimen/base_listItem_LR"
         android:paddingRight="@dimen/base_listItem_LR"
         android:text="@string/date"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/accent_material_dark" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
         android:id="@+id/viewSource"
@@ -97,8 +94,7 @@
         android:paddingLeft="@dimen/base_listItem_LR"
         android:paddingRight="@dimen/base_listItem_LR"
         android:text="@string/author"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/accent_material_dark" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/author"

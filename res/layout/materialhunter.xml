@@ -6,72 +6,78 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/f_kaliservices_banner"
+        android:id="@+id/f_materialhunter_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|center"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/kali_services_description"
+        android:text="@string/materialhunter_sysinfo"
+        android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/f_kaliservices_scrollView"
+    <TextView
+        android:id="@+id/f_materialhunter_banner2"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="@string/materialhunter_description"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/f_materialhunter_banner" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/f_materialhunter_scrollView"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/f_kaliservices_btn_scrollView"
-        app:layout_constraintTop_toBottomOf="@+id/f_kaliservices_banner">
+        app:layout_constraintBottom_toTopOf="@+id/f_materialhunter_btn_scrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/f_materialhunter_banner2">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="vertical">
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/f_materialhunter_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/f_kaliservices_recyclerviewServiceTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
+                android:layout_height="wrap_content" />
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <HorizontalScrollView
-        android:id="@+id/f_kaliservices_btn_scrollView"
-        android:layout_width="wrap_content"
+        android:id="@+id/f_materialhunter_btn_scrollView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/f_kaliservices_scrollView">
+        app:layout_constraintTop_toBottomOf="@+id/f_materialhunter_scrollView">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/f_kaliservices_addItemButton"
+                android:id="@+id/f_materialhunter_addItemButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add" />
 
             <Button
-                android:id="@+id/f_kaliservices_deleteItemButton"
+                android:id="@+id/f_materialhunter_deleteItemButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delete" />
 
             <Button
-                android:id="@+id/f_kaliservices_moveItemButton"
+                android:id="@+id/f_materialhunter_moveItemButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,4 +85,6 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

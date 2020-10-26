@@ -28,17 +28,17 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:singleLine="true"
-                android:text="@string/kaliservices_move"
+                android:text="@string/materialhunter_move"
                 android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
 
             <Spinner
-                android:id="@+id/f_kaliservices_move_adb_spr_actions"
+                android:id="@+id/f_materialhunter_move_adb_spr_actions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:entries="@array/array_move_position"
-                android:textSize="18sp"></Spinner>
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -50,19 +50,17 @@
             android:orientation="vertical">
 
             <Spinner
-                android:id="@+id/f_kaliservices_move_adb_spr_titlesbefore"
+                android:id="@+id/f_materialhunter_move_adb_spr_titlesbefore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"></Spinner>
+                android:layout_marginTop="8dp" />
 
             <Spinner
-                android:id="@+id/f_kaliservices_move_adb_spr_titlesafter"
+                android:id="@+id/f_materialhunter_move_adb_spr_titlesafter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"></Spinner>
+                android:layout_marginTop="8dp" />
+
         </LinearLayout>
-
     </LinearLayout>
-
-
 </LinearLayout>

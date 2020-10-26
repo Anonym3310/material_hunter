@@ -3,9 +3,9 @@
 
     <group>
         <item
-            android:id="@+id/nethunter_item"
+            android:id="@+id/materialhunter_item"
             android:icon="@drawable/ic_action_home"
-            android:title="@string/drawertitlenethunter" />
+            android:title="@string/drawertitlematerialhunter" />
         <item
             android:id="@+id/createchroot_item"
             android:icon="@drawable/ic_action_android"
@@ -21,9 +21,9 @@
     </group>
     <group android:id="@+id/chrootDependentGroup">
          <item
-             android:id="@+id/kaliservices_item"
+             android:id="@+id/services_item"
              android:icon="@drawable/ic_action_settings_applications"
-             android:title="@string/drawertitlekaliservices" />
+             android:title="@string/drawertitleservices" />
          <item
              android:id="@+id/custom_commands_item"
              android:icon="@drawable/ic_action_play"

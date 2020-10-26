@@ -65,7 +65,7 @@ public class RunAtBootService extends JobIntentService {
     protected void onHandleIntent(@NonNull Intent intent) {
         SharedPreferences o = this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         if (o.getBoolean(SharePrefTag.BOOT_RECIVIE, true)) {
-            //1. Check root -> 2. Check Busybox -> 3. run nethunter init.d files. -> Push notifications.
+            //1. Check root -> 2. Check Busybox -> 3. run materialhunter init.d files. -> Push notifications.
             String isOK = "OK.";
             doNotification("Doing boot checks...");
 

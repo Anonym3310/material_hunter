@@ -29,13 +29,13 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
     private static final String[][] customcommandsData = {
             {"1", "Update Kali Metapackages",
                     "apt update && apt-get -y upgrade",
-                    "kali", "interactive", "0"},
+                    "chroot", "interactive", "0"},
             {"2", "Launch Wifite",
                     "wifite",
-                    "kali", "interactive", "0"},
+                    "chroot", "interactive", "0"},
             {"3", "Launch Metasploit",
                     "msfconsole",
-                    "kali", "interactive", "0"},
+                    "chroot", "interactive", "0"},
             {"4", "Start wlan0 in monitor mode",
                     "su -c \"ip link set wlan0 down; echo 4 > /sys/module/wlan/parameters/con_mode;ip link set wlan0 up\";exit",
                     "android", "interactive", "0"},
@@ -44,7 +44,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
                     "android", "interactive", "0"},
             {"6", "Start wlan2 in monitor mode",
                     "ip link set wlan2 down && iw wlan2 set monitor control && ip link set wlan2 up;exit",
-                    "kali", "interactive", "0"}
+                    "chroot", "interactive", "0"}
     };
     private static CustomCommandsSQL instance;
 

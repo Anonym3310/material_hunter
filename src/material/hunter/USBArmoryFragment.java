@@ -497,9 +497,9 @@ public class USBArmoryFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert inflater != null;
-        final View promptView = inflater.inflate(R.layout.kaliservices_custom_dialog_view, null);
-        final TextView titleTextView = promptView.findViewById(R.id.f_kaliservices_adb_tv_title1);
-        final EditText storedpathEditText = promptView.findViewById(R.id.f_kaliservices_adb_et_storedpath);
+        final View promptView = inflater.inflate(R.layout.services_custom_dialog_view, null);
+        final TextView titleTextView = promptView.findViewById(R.id.f_services_adb_tv_title1);
+        final EditText storedpathEditText = promptView.findViewById(R.id.f_services_adb_et_storedpath);
 
         switch (item.getItemId()) {
             case R.id.f_usbarmory_menu_backupDB:

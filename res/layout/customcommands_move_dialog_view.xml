@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:entries="@array/array_move_position"
-                android:textSize="18sp"></Spinner>
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,16 +52,13 @@
                 android:id="@+id/f_customcommands_move_adb_spr_labelsbefore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"></Spinner>
+                android:layout_marginTop="8dp" />
 
             <Spinner
                 android:id="@+id/f_customcommands_move_adb_spr_labelsafter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"></Spinner>
+                android:layout_marginTop="8dp" />
         </LinearLayout>
-
     </LinearLayout>
-
-
 </LinearLayout>

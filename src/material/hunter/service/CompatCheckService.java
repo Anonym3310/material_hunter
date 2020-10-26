@@ -75,7 +75,7 @@ public class CompatCheckService extends IntentService {
             message = "No busybox is detected, please make sure you have busybox installed!";
             return false;
         }
-        // Lastly, check if nethunter terminal app has been installed.
+        // Lastly, check if materialhunter terminal app has been installed.
         if (getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.offsec.nhterm") == null) {
             message = "NetHunter terminal is not installed yet.";
             return false;

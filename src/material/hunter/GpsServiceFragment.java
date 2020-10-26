@@ -11,24 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import material.hunter.gps.KaliGPSUpdates;
+import material.hunter.GPS.KaliGPSUpdates;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 
+public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Receiver {
 
-public class KaliGpsServiceFragment extends Fragment implements KaliGPSUpdates.Receiver {
-
-    private static final String TAG = "KaliGpsServiceFragment";
+    private static final String TAG = "GpsServiceFragment";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private KaliGPSUpdates.Provider gpsProvider = null;
     private TextView gpsTextView;
     private Context context;
 
-    public KaliGpsServiceFragment() {
+    public GpsServiceFragment() {
     }
 
-    public static KaliGpsServiceFragment newInstance(int sectionNumber) {
-        KaliGpsServiceFragment fragment = new KaliGpsServiceFragment();
+    public static GpsServiceFragment newInstance(int sectionNumber) {
+        GpsServiceFragment fragment = new GpsServiceFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -45,9 +44,8 @@ public class KaliGpsServiceFragment extends Fragment implements KaliGPSUpdates.R
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.gps, container, false);
         addClickListener(R.id.start_kismet, v -> {
-
             if (gpsProvider != null) {
-                gpsProvider.onLocationUpdatesRequested(KaliGpsServiceFragment.this);
+                gpsProvider.onLocationUpdatesRequested(GpsServiceFragment.this);
                 gpsTextView.append("Starting gps updates \n");
             }
         }, rootView);

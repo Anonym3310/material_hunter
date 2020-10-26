@@ -14,8 +14,8 @@ import java.util.List;
 public class MaterialHunterData {
     public static boolean isDataInitiated = false;
     private static MaterialHunterData instance;
-    public List<MaterialHunterModel> nethunterModelListFull;
-    private ArrayList<MaterialHunterModel> nethunterModelArrayList = new ArrayList<>();
+    public List<MaterialHunterModel> materialhunterModelListFull;
+    private ArrayList<MaterialHunterModel> materialhunterModelArrayList = new ArrayList<>();
     private MutableLiveData<List<MaterialHunterModel>> data = new MutableLiveData<>();
     private List<MaterialHunterModel> copyOfMaterialHunterModelListFull = new ArrayList<>();
 
@@ -28,8 +28,8 @@ public class MaterialHunterData {
 
     public MutableLiveData<List<MaterialHunterModel>> getMaterialHunterModels(Context context) {
         if (!isDataInitiated) {
-            data.setValue(MaterialHunterSQL.getInstance(context).bindData(nethunterModelArrayList));
-            nethunterModelListFull = new ArrayList<>(data.getValue());
+            data.setValue(MaterialHunterSQL.getInstance(context).bindData(materialhunterModelArrayList));
+            materialhunterModelListFull = new ArrayList<>(data.getValue());
             isDataInitiated = true;
         }
         return data;
@@ -40,176 +40,176 @@ public class MaterialHunterData {
     }
 
     public void refreshData() {
-        MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.GETITEMRESULTS);
-        nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+        MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.GETITEMRESULTS);
+        materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
             @Override
             public void onAsyncTaskPrepare() {
 
             }
 
             @Override
-            public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
+            public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
                 getMaterialHunterModels().getValue().clear();
-                getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                 getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
             }
         });
-        nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+        materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
     }
 
     public void runCommandforItem(int position) {
-        MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.RUNCMDFORITEM, position);
-        nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+        MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.RUNCMDFORITEM, position);
+        materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
             @Override
             public void onAsyncTaskPrepare() {
 
             }
 
             @Override
-            public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
+            public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
                 getMaterialHunterModels().getValue().clear();
-                getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                 getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
             }
         });
-        nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+        materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
     }
 
-    public void editData(int position, ArrayList<String> dataArrayList, MaterialHunterSQL nethunterSQL) {
-        MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.EDITDATA, position, dataArrayList, nethunterSQL);
-        nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+    public void editData(int position, ArrayList<String> dataArrayList, MaterialHunterSQL materialhunterSQL) {
+        MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.EDITDATA, position, dataArrayList, materialhunterSQL);
+        materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
             @Override
             public void onAsyncTaskPrepare() {
 
             }
 
             @Override
-            public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
-                updateMaterialHunterModelListFull(nethunterModelList);
+            public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
+                updateMaterialHunterModelListFull(materialhunterModelList);
                 getMaterialHunterModels().getValue().clear();
-                getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                 getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
             }
         });
-        nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+        materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
     }
 
-    public void addData(int position, ArrayList<String> dataArrayList, MaterialHunterSQL nethunterSQL) {
-        MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.ADDDATA, position, dataArrayList, nethunterSQL);
-        nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+    public void addData(int position, ArrayList<String> dataArrayList, MaterialHunterSQL materialhunterSQL) {
+        MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.ADDDATA, position, dataArrayList, materialhunterSQL);
+        materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
             @Override
             public void onAsyncTaskPrepare() {
 
             }
 
             @Override
-            public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
-                updateMaterialHunterModelListFull(nethunterModelList);
+            public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
+                updateMaterialHunterModelListFull(materialhunterModelList);
                 getMaterialHunterModels().getValue().clear();
-                getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                 getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
             }
         });
-        nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+        materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
     }
 
-    public void deleteData(ArrayList<Integer> selectedPositionsIndex, ArrayList<Integer> selectedTargetIds, MaterialHunterSQL nethunterSQL) {
-        MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.DELETEDATA, selectedPositionsIndex, selectedTargetIds, nethunterSQL);
-        nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+    public void deleteData(ArrayList<Integer> selectedPositionsIndex, ArrayList<Integer> selectedTargetIds, MaterialHunterSQL materialhunterSQL) {
+        MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.DELETEDATA, selectedPositionsIndex, selectedTargetIds, materialhunterSQL);
+        materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
             @Override
             public void onAsyncTaskPrepare() {
 
             }
 
             @Override
-            public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
-                updateMaterialHunterModelListFull(nethunterModelList);
+            public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
+                updateMaterialHunterModelListFull(materialhunterModelList);
                 getMaterialHunterModels().getValue().clear();
-                getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                 getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
             }
         });
-        nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+        materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
     }
 
-    public void moveData(int originalPositionIndex, int targetPositionIndex, MaterialHunterSQL nethunterSQL) {
-        MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.MOVEDATA, originalPositionIndex, targetPositionIndex, nethunterSQL);
-        nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+    public void moveData(int originalPositionIndex, int targetPositionIndex, MaterialHunterSQL materialhunterSQL) {
+        MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.MOVEDATA, originalPositionIndex, targetPositionIndex, materialhunterSQL);
+        materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
             @Override
             public void onAsyncTaskPrepare() {
 
             }
 
             @Override
-            public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
-                updateMaterialHunterModelListFull(nethunterModelList);
+            public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
+                updateMaterialHunterModelListFull(materialhunterModelList);
                 getMaterialHunterModels().getValue().clear();
-                getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                 getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
             }
         });
-        nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+        materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
     }
 
-    public String backupData(MaterialHunterSQL nethunterSQL, String storedDBpath) {
-        return nethunterSQL.backupData(storedDBpath);
+    public String backupData(MaterialHunterSQL materialhunterSQL, String storedDBpath) {
+        return materialhunterSQL.backupData(storedDBpath);
     }
 
-    public String restoreData(MaterialHunterSQL nethunterSQL, String storedDBpath) {
-        String returnedResult = nethunterSQL.restoreData(storedDBpath);
+    public String restoreData(MaterialHunterSQL materialhunterSQL, String storedDBpath) {
+        String returnedResult = materialhunterSQL.restoreData(storedDBpath);
         if (returnedResult == null) {
-            MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.RESTOREDATA, nethunterSQL);
-            nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+            MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.RESTOREDATA, materialhunterSQL);
+            materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
                 @Override
                 public void onAsyncTaskPrepare() {
 
                 }
 
                 @Override
-                public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
-                    updateMaterialHunterModelListFull(nethunterModelList);
+                public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
+                    updateMaterialHunterModelListFull(materialhunterModelList);
                     getMaterialHunterModels().getValue().clear();
-                    getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                    getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                     getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
                     refreshData();
                 }
             });
-            nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+            materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
             return null;
         } else {
             return returnedResult;
         }
     }
 
-    public void resetData(MaterialHunterSQL nethunterSQL) {
-        nethunterSQL.resetData();
-        MaterialHunterAsynctask nethunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.RESTOREDATA, nethunterSQL);
-        nethunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
+    public void resetData(MaterialHunterSQL materialhunterSQL) {
+        materialhunterSQL.resetData();
+        MaterialHunterAsynctask materialhunterAsynctask = new MaterialHunterAsynctask(MaterialHunterAsynctask.RESTOREDATA, materialhunterSQL);
+        materialhunterAsynctask.setListener(new MaterialHunterAsynctask.MaterialHunterAsynctaskListener() {
             @Override
             public void onAsyncTaskPrepare() {
 
             }
 
             @Override
-            public void onAsyncTaskFinished(List<MaterialHunterModel> nethunterModelList) {
-                updateMaterialHunterModelListFull(nethunterModelList);
+            public void onAsyncTaskFinished(List<MaterialHunterModel> materialhunterModelList) {
+                updateMaterialHunterModelListFull(materialhunterModelList);
                 getMaterialHunterModels().getValue().clear();
-                getMaterialHunterModels().getValue().addAll(nethunterModelList);
+                getMaterialHunterModels().getValue().addAll(materialhunterModelList);
                 getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
                 refreshData();
             }
         });
-        nethunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
+        materialhunterAsynctask.execute(getInitCopyOfMaterialHunterModelListFull());
     }
 
     public void updateMaterialHunterModelListFull(List<MaterialHunterModel> copyOfMaterialHunterModelList) {
-        nethunterModelListFull.clear();
-        nethunterModelListFull.addAll(copyOfMaterialHunterModelList);
+        materialhunterModelListFull.clear();
+        materialhunterModelListFull.addAll(copyOfMaterialHunterModelList);
     }
 
     private List<MaterialHunterModel> getInitCopyOfMaterialHunterModelListFull() {
         copyOfMaterialHunterModelListFull.clear();
-        copyOfMaterialHunterModelListFull.addAll(nethunterModelListFull);
+        copyOfMaterialHunterModelListFull.addAll(materialhunterModelListFull);
         return copyOfMaterialHunterModelListFull;
     }
 

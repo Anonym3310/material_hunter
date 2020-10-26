@@ -3,14 +3,19 @@
     <string name="app_name">MaterialHunter</string>
     <string name="app_nav_home_label">MaterialHunter</string>
 
-    <!--string name="nethunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, settings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
-    <string name="nethunter_sysinfo">System Information</string>
-    <string name="nethunter_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
-    <string name="nethunter_howtouse_cmd">Put your own command string here, it will be run in Android environment to get the output displayed.</string>
-    <string name="nethunter_howtouse_delimiter">Put your desired delimiter string if you want to split the output into lines, default is "\\n".</string>
-    <string name="nethunter_howtouse_runoncreate">To get the output upon the fragment is created, check this option.</string>
-    <string name="nethunter_run_item">RUN</string>
-    <string name="nethunter_move">Move: </string>
+    <!--string name="materialhunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, settings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
+    <string name="materialhunter_sysinfo">System Information</string>
+    <string name="materialhunter_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
+    <string name="materialhunter_howtouse_cmd">Put your own command string here, it will be run in Android environment to get the output displayed.</string>
+    <string name="materialhunter_howtouse_delimiter">Put your desired delimiter string if you want to split the output into lines, default is "\\n".</string>
+    <string name="materialhunter_howtouse_runoncreate">To get the output upon the fragment is created, check this option.</string>
+    <string name="materialhunter_run_item">RUN</string>
+    <string name="materialhunter_move">Move: </string>
+    <string name="materialhunter_add_title">Title:</string>
+    <string name="materialhunter_add_command">Command:</string>
+    <string name="materialhunter_add_delimiter">Line delimiter:</string>
+    <string name="materialhunter_add_runoncreate">RunOnCreate</string>
+    <string name="materialhunter_add_position">Position to insert:</string>
 
     <!-- Hid -->
     <string name="hid_powersploit_description">The Powersploit payload provides you a choice of reverse meterpreter HTTP/S payloads. "URL to payload" should be a URL accessible to the victim machine where the larger payload is downloaded to.</string>
@@ -21,21 +26,21 @@
     <string name="hid_ps_head">Powershell HTTP payload allows you to download and run a generic powershell payload from a URL. The URL to payload should be in a location accessible to the victim.</string>
     <string name="hid_windows_cmd_description">This Windows CMD payload allows you to enter raw commands to a Windows command prompt. Hitting the list menu will allow you to choose keyboard layout or UAC bypass options. </string>
 
-    <!-- KaliServices -->
-    <string name="kali_services_description">Kali Chroot services can be started and stopped via the switch toggle buttons, you can also ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your own service item, and long click on the item label to EDIT the item as well.</string>
-    <string name="kaliservices_howto_startservice">To START a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nService is considered STARTED if the return value is 0 and vice versa.</string>
-    <string name="kaliservices_howto_stopservice">To STOP a service in kali, a command will be run INSIDE KaliChroot that looks like this:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nService is considered STOPPED if the return value is 0 and vice versa.</string>
-    <string name="kaliservices_howto_checkservice">To Check if a service in kali is up or not, a command will be run OUTSIDE KaliChroot that looks like this:\n\nbusybox ps -o pid,comm | grep \'&lt;service_name>\'\n\nService is considered UP if the return value is 0 and vice versa.</string>
-    <string name="kaliservices_howto_runServiceOnBoot">To automacticailly start the service after Kali Chroot is up, check this option.</string>
-    <string name="kaliservices_not_running">Service is NOT running.</string>
-    <string name="kaliservices_run_on_chroot">RunOnChrootStart</string>
-    <string name="kaliservices_move">Move: </string>
+    <!-- Services -->
+    <string name="services_description">Chroot services can be started and stopped via the switch toggle buttons, you can also ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your own service item, and long click on the item label to EDIT the item as well.</string>
+    <string name="services_howto_startservice">To START a service in chroot, a command will be run INSIDE Chroot that looks like this:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nService is considered STARTED if the return value is 0 and vice versa.</string>
+    <string name="services_howto_stopservice">To STOP a service in chroot, a command will be run INSIDE Chroot that looks like this:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nService is considered STOPPED if the return value is 0 and vice versa.</string>
+    <string name="services_howto_checkservice">To Check if a service in chroot is up or not, a command will be run OUTSIDE Chroot that looks like this:\n\nbusybox ps -o pid,comm | grep \'&lt;service_name>\'\n\nService is considered UP if the return value is 0 and vice versa.</string>
+    <string name="services_howto_runServiceOnBoot">To automacticailly start the service after Chroot is up, check this option.</string>
+    <string name="services_not_running">Service is NOT running.</string>
+    <string name="services_run_on_chroot">RunOnChrootStart</string>
+    <string name="services_move">Move: </string>
 
     <!-- CustomCommands -->
     <string name="custom_commands_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP, RESTORE and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
     <string-array name="custom_commands_sendto_array">
         <item>android</item>
-        <item>kali</item>
+        <item>chroot</item>
     </string-array>
     <string-array name="custom_commands_execmode_array">
         <item>interactive</item>
@@ -199,7 +204,7 @@
     <!-- USB Army(Not in use yet) -->
 
     <!-- KeX -->
-    <string name="kex_description">Welcome to the Kali NetHunter Desktop Experience.\nYou can start multiple sessions as different users, add, save, and restore your own custom resolutions, start KeX at boot, and even output KeX to HDMI.</string>
+    <string name="kex_description">Welcome to the NetHunter Desktop Experience.\nYou can start multiple sessions as different users, add, save, and restore your own custom resolutions, start KeX at boot, and even output KeX to HDMI.</string>
     <string name="kex_setup">Setup Local Server</string>
     <string name="kex_localhost_only">Localhost Only</string>
     <string name="kex_at_boot">Enable at boot</string>
@@ -212,9 +217,9 @@
     <string name="kex_open_client">OPEN KEX CLIENT</string>
     <string name="kex_advanced">SHOW ADVANCED SETTINGS</string>
     <string name="kex_advanced_hide">HIDE ADVANCED SETTINGS</string>
-    <string name="kex_manage_users">MANAGE KALI USERS</string>
-    <string name="kex_add_user">Add new Kali user</string>
-    <string name="kex_remove_user">Remove selected Kali user</string>
+    <string name="kex_manage_users">MANAGE USERS</string>
+    <string name="kex_add_user">Add new user</string>
+    <string name="kex_remove_user">Remove selected user</string>
     <string name="kex_hdmi_resolution">DEVICE RESOLUTION FOR HDMI</string>
     <string name="kex_apply">Apply</string>
     <string name="kex_remove_resolution">Remove selected resolution</string>
@@ -345,17 +350,23 @@
 
 
     <!-- chroot stuff -->
-    <string name="chrootmanager_label">Click EDIT button to change your Kali Chroot Path below.</string>
+    <string name="chrootmanager_label">Click EDIT button to change your Chroot Path below.</string>
     <string name="chrootmanager_status">Status:</string>
-    <string name="chrootmanager_start">Start Kali Chroot</string>
-    <string name="chrootmanager_stop">Stop Kali Chroot</string>
-    <string name="chrootmanager_install">Install Kali Chroot</string>
+    <string name="chrootmanager_start">Start Chroot</string>
+    <string name="chrootmanager_stop">Stop Chroot</string>
+    <string name="chrootmanager_install">Install Chroot</string>
     <string name="chrootmanager_add_metapkg">Add Metapackge</string>
-    <string name="chrootmanager_backup">Backup Kali Chroot</string>
-    <string name="chrootmanager_remove">Remove Kali Chroot</string>
+    <string name="chrootmanager_backup">Backup Chroot</string>
+    <string name="chrootmanager_remove">Remove Chroot</string>
     <string name="chrootmanager_dwnld_path">Path of the folder you want to donwload to:</string>
     <string name="chrootmanager_dwnld_download">DOWNLOAD LATEST KALI CHROOT FROM OFFICIAL IMAGE</string>
     <string name="chrootmanager_dwnld_restore">RESTORE FROM LOCAL STORAGE\n(.TAR.GZ /.TAR.XZ)</string>
+    <string name="f_chrootmanager_list_folders">List of available folder(s) in</string>
+    <string name="f_chrootmanager_setup_path">Setup Chroot Path</string>
+    <string name="f_chrootmanager_chroot_prefix">The Chroot Path is prefixed to</string>
+    <string name="f_chrootmanager_put_chroot_folder">Just put the basename of your Chroot Folder:</string>
+    <string name="f_chrootmanager_install_label">Install Chroot</string>
+    <string name="f_chrootmanager_select_options">Select the options below:</string>
     <array name="f_chrootmanager_build_chroot_arm_opts">
         <item>arm64</item>
         <item>armhf</item>
@@ -365,15 +376,15 @@
         <item>min</item>
     </array>
 
-    <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Kali Linux that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
-    <string name="materialteam">Developers:\nt.me/cxblack\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
+    <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Linux-environment that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
+    <string name="materialteam">Developers:\nt.me/cxblack\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/dark2048\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
     <string name="attack_launched">Attack launched!</string>
     <string name="attack_stopped">Attack execution ended.</string>
 
     <!-- sidebar menu item titles -->
-    <string name="drawertitlenethunter">Home</string>
+    <string name="drawertitlematerialhunter">Home</string>
     <string name="drawertitlecreatechroot">Chroot Manager</string>
-    <string name="drawertitlekaliservices">Kali Services</string>
+    <string name="drawertitleservices">Services</string>
     <string name="drawertitlecustomcommands">Custom Commands</string>
     <string name="drawertitlemacchanger">MAC Changer</string>
     <string name="drawertitlevncmanager">KeX Manager</string>
@@ -441,6 +452,7 @@
     <string name="searchsploit_send_hid">Send HID</string>
     <string name="searchsploit_view_web">View in www</string>
     <string name="searchsploit_view_source">View Source</string>
+    <string name="searchsploit_results">results</string>
 
     <!-- Custom Launcher -->
     <string name="drawer_opened">Drawer opened</string>
@@ -506,7 +518,7 @@
     <!-- End PineappleFragment -->
 
     <!-- Start GPSFragment -->
-    <string name="gps_description">Converts your GPS to nmea then provides to Kali chroot. Perfect for wardriving with Kismet or just a generic GPS server for Kali.  Requires OTG and external wireless.</string>
+    <string name="gps_description">Converts your GPS to nmea then provides to chroot. Perfect for wardriving with Kismet or just a generic GPS server for Kali.  Requires OTG and external wireless.</string>
     <string name="gps_help">You may need to give NetHunter permissions to GPS. Go to Settings > Apps > MaterialHunter > Permissions.  When it starts press: "return" three times, Vol+up and "t", "return.</string>
     <!-- End GPSFragment -->
 
@@ -546,6 +558,10 @@
     <string name="count">Count</string>
     <string name="options_updated">Options updated.</string>
     <string name="options_not_updated">Options not updated.</string>
+    <string name="ok">Ok</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="file_invalid_name">Invilad Name, please try again.</string>
 
     <string name="bd_backup">Backup BD</string>
     <string name="bd_restore">Restore BD</string>
@@ -566,7 +582,7 @@
 
     <!-- MaterialHunter Settings fragment strings -->
     <string name="mh_sett">MaterialHunter Settings</string>
-    <string name="mh_sett_boot_recivie">RunOnBoot recivie</string>
+    <string name="mh_sett_boot_receive">RunOnBoot receive</string>
     <string name="mh_sett_bal">Background alpha level. Use slider.</string>
     <string name="mh_devsett">Developer features</string>
     <string name="mh_devsett_cad">clear app data</string>
