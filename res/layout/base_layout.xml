@@ -23,7 +23,7 @@ view using match_parent for both width and height to consume the full space avai
         android:contentDescription="@string/app_name"
         android:scaleType="center" />
 
-    <com.google.android.material.navigation.NavigationView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

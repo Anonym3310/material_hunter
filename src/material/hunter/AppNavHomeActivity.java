@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
@@ -10,7 +11,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -27,7 +27,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -43,12 +42,12 @@ import java.util.Objects;
 import java.util.Stack;
 
 import material.hunter.AsyncTask.CopyBootFilesAsyncTask;
-import material.hunter.SQL.CustomCommandsSQL;
-import material.hunter.SQL.ServicesSQL;
-import material.hunter.SQL.MaterialHunterSQL;
-import material.hunter.SQL.USBArmorySQL;
 import material.hunter.GPS.KaliGPSUpdates;
 import material.hunter.GPS.LocationUpdateService;
+import material.hunter.SQL.CustomCommandsSQL;
+import material.hunter.SQL.MaterialHunterSQL;
+import material.hunter.SQL.ServicesSQL;
+import material.hunter.SQL.USBArmorySQL;
 import material.hunter.service.CompatCheckService;
 import material.hunter.utils.CheckForRoot;
 import material.hunter.utils.NhPaths;
@@ -97,8 +96,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
 
         public void onServiceDisconnected(ComponentName arg0) {
             updateServiceBound = false;
-        }
-    };
+        }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -386,7 +384,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             changeFragment(fragmentManager, MaterialHunterFragment.newInstance(itemId));
                             break;
                         case R.id.deauth_item:
-                            if (new File("/data/local/nhsystem/kalifs/usr/sbin/iw").exists()) {
+                            if (new File(NhPaths.CHROOT_SYMLINK_PATH + "/usr/sbin/iw").exists()) {
                                 changeFragment(fragmentManager, DeAuthFragment.newInstance(itemId));
                             } else {
                                 showWarningDialog("", getString(R.string.toast_need_iw), false);
@@ -440,7 +438,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             }
                             break;
                         case R.id.searchsploit_item:
-                            if (new File("/data/local/nhsystem/kalifs/usr/share/exploitdb").exists()) {
+                            if (new File(NhPaths.CHROOT_SYMLINK_PATH + "/usr/share/exploitdb").exists()) {
                                 changeFragment(fragmentManager, SearchSploitFragment.newInstance(itemId));
                             } else {
                                 showWarningDialog("", getString(R.string.toast_install_exploitdb), false);
@@ -453,7 +451,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                             changeFragment(fragmentManager, PineappleFragment.newInstance(itemId));
                             break;
                         case R.id.gps_item:
-                            if (new File("/data/local/nhsystem/kalifs/usr/sbin/gpsd").exists()) {
+                            if (new File(NhPaths.CHROOT_SYMLINK_PATH + "/usr/sbin/gpsd").exists()) {
                                 changeFragment(fragmentManager, GpsServiceFragment.newInstance(itemId));
                             } else {
                                 showWarningDialog("", getString(R.string.toast_install_gpsd), false);
@@ -531,7 +529,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     }
 
     public void showWarningDialog(String title, String message, boolean NeedToExit) {
-        android.app.AlertDialog.Builder warningAD = new android.app.AlertDialog.Builder(this);
+        AlertDialog.Builder warningAD = new AlertDialog.Builder(this);
         warningAD.setCancelable(true);
         warningAD.setTitle(title);
         warningAD.setMessage(message);

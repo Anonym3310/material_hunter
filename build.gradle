@@ -55,8 +55,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 202010051
-        versionName "2020.10"
+        versionCode 202011003
+        versionName "2020.11"
         multiDexEnabled true
     }
 
@@ -73,7 +73,6 @@ android {
     }
 
     signingConfigs {
-
         debug {
             storeFile file("${System.properties['user.home']}" + "/.android/debug.keystore")
         }

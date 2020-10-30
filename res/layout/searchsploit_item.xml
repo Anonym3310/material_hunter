@@ -18,8 +18,7 @@
         android:paddingLeft="@dimen/base_listItem_LR"
         android:paddingRight="@dimen/base_listItem_LR"
         android:text="description"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/textView8"
@@ -63,8 +62,7 @@
         android:layout_alignStart="@+id/openWeb"
         android:layout_marginRight="@dimen/base_listItem_LR"
         android:text="@string/searchsploit_view_source"
-        android:singleLine="true"
-        android:textColor="@color/colorPrimary" />
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/type"
@@ -125,8 +123,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginRight="@dimen/base_listItem_LR"
         android:text="@string/searchsploit_view_web"
-        android:singleLine="true"
-        android:textColor="@color/colorPrimary" />
+        android:singleLine="true" />
 
     <Button
         android:id="@+id/searchsploit_sendhid_button"
@@ -137,7 +134,6 @@
         android:layout_alignEnd="@+id/viewSource"
         android:layout_alignParentTop="true"
         android:text="@string/searchsploit_send_hid"
-        android:singleLine="true"
-        android:textColor="@color/colorPrimary" />
+        android:singleLine="true" />
 
 </RelativeLayout>

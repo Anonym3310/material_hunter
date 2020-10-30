@@ -20,9 +20,7 @@ public class SearchSploit {
     private String type;
     private Integer port;
 
-    public SearchSploit() {
-
-    }
+    public SearchSploit() { }
 
     public SearchSploit(long id, String file, String description, String date, String author, String type, String platform, Integer port) {
         this.id = id;

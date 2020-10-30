@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,18 +19,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import java.util.HashMap;
+import java.util.Objects;
+
 import material.hunter.AsyncTask.DuckHuntAsyncTask;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.SharePrefTag;
-
-import java.util.HashMap;
-import java.util.Objects;
 
 public class DuckHunterFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";

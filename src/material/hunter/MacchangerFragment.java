@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -17,12 +18,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
-import material.hunter.AsyncTask.MacchangerAsyncTask;
-import material.hunter.utils.NhPaths;
 
 import java.net.NetworkInterface;
 import java.security.SecureRandom;
@@ -30,6 +28,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import material.hunter.AsyncTask.MacchangerAsyncTask;
+import material.hunter.utils.NhPaths;
 
 public class MacchangerFragment extends Fragment {
 

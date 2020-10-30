@@ -18,14 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.R;
 import material.hunter.RecyclerViewData.MaterialHunterData;
 import material.hunter.SQL.MaterialHunterSQL;
 import material.hunter.models.MaterialHunterModel;
 import material.hunter.utils.NhPaths;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<MaterialHunterRecyclerViewAdapter.ItemViewHolder> implements Filterable {
 
@@ -90,31 +91,31 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
             final FloatingActionButton readmeButton2 = promptViewEdit.findViewById(R.id.f_materialhunter_edit_btn_info_fab2);
             final FloatingActionButton readmeButton3 = promptViewEdit.findViewById(R.id.f_materialhunter_edit_btn_info_fab3);
             readmeButton1.setOnClickListener(view -> {
-                androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
                         .setMessage(context.getString(R.string.materialhunter_howtouse_cmd))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
-                final androidx.appcompat.app.AlertDialog ad = adb.create();
+                final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });
 
             readmeButton2.setOnClickListener(view -> {
-                androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
                         .setMessage(context.getString(R.string.materialhunter_howtouse_delimiter))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
-                final androidx.appcompat.app.AlertDialog ad = adb.create();
+                final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });
 
             readmeButton3.setOnClickListener(view -> {
-                androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
                         .setMessage(context.getString(R.string.materialhunter_howtouse_runoncreate))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
-                final androidx.appcompat.app.AlertDialog ad = adb.create();
+                final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });
@@ -188,13 +189,11 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
         private RecyclerView resultRecyclerView;
         private Button runButton;
 
-        //private Button editButton;
         private ItemViewHolder(View view) {
             super(view);
             titleTextView = view.findViewById(R.id.f_materialhunter_item_title_tv);
             resultRecyclerView = view.findViewById(R.id.f_materialhunter_item_result_recyclerview);
             runButton = view.findViewById(R.id.f_materialhunter_item_run_btn);
-            //editButton = view.findViewById(R.id.f_materialhunter_item_edit_btn);
         }
     }
 }

@@ -40,5 +40,4 @@
             android:layout_height="wrap_content"
             android:text="@string/update" />
     </LinearLayout>
-
 </ScrollView>

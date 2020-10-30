@@ -114,7 +114,6 @@
                     android:textSize="18sp" />
 
             </LinearLayout>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

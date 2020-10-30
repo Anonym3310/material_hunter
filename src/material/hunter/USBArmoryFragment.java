@@ -2,6 +2,7 @@ package material.hunter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,23 +28,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import material.hunter.HandlerThread.USBArmoryHandlerThread;
-import material.hunter.SQL.USBArmorySQL;
-import material.hunter.models.USBArmoryUSBNetworkModel;
-import material.hunter.models.USBArmoryUSBSwitchModel;
-import material.hunter.utils.NhPaths;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import material.hunter.HandlerThread.USBArmoryHandlerThread;
+import material.hunter.SQL.USBArmorySQL;
+import material.hunter.models.USBArmoryUSBNetworkModel;
+import material.hunter.models.USBArmoryUSBSwitchModel;
+import material.hunter.utils.NhPaths;
 
 public class USBArmoryFragment extends Fragment {
 

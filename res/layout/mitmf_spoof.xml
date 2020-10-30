@@ -20,17 +20,10 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10px"
-                android:paddingBottom="20px"
-                app:srcCompat="@android:drawable/divider_horizontal_bright" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="10px"
                 android:text="@string/mitmf_spoof_sett"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -41,16 +34,10 @@
                 android:onClick="@{(view) -> viewModel.clickSpoof(view)}"
                 android:text="@string/mitmf_spoof" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10px"
-                android:paddingBottom="5px"
-                app:srcCompat="@android:drawable/divider_horizontal_bright" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="10px"
                 android:text="@string/mitmf_redirect"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 

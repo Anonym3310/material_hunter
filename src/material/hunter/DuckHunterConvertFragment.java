@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,11 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.ShellExecuter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -37,6 +34,9 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.ShellExecuter;
 
 public class DuckHunterConvertFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "DuckHunterConvert";

@@ -34,7 +34,5 @@
                 android:inputType="number" />
 
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

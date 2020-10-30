@@ -2,6 +2,7 @@ package material.hunter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -24,9 +25,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.fragment.app.Fragment;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Objects;
 
 import material.hunter.AsyncTask.ChrootManagerAsynctask;
 import material.hunter.service.CompatCheckService;
@@ -34,10 +37,6 @@ import material.hunter.service.NotificationChannelService;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.SharePrefTag;
 import material.hunter.utils.ShellExecuter;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Objects;
 
 public class ChrootManagerFragment extends Fragment {
 
@@ -105,13 +104,7 @@ public class ChrootManagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         resultViewerLoggerTextView.setMovementMethod(new ScrollingMovementMethod());
-        kaliFolderTextView.setClickable(true);
         kaliFolderTextView.setText(sharedPreferences.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, NhPaths.ARCH_FOLDER));
-        final LinearLayoutCompat kaliViewFolderlinearLayout = view.findViewById(R.id.f_chrootmanager_viewholder);
-        kaliViewFolderlinearLayout.setOnClickListener(view1 -> new AlertDialog.Builder(activity)
-                .setMessage(baseChrootPathTextView.getText().toString() +
-                        kaliFolderTextView.getText().toString())
-                .create().show());
         setEditButton();
         setStopKaliButton();
         setStartKaliButton();

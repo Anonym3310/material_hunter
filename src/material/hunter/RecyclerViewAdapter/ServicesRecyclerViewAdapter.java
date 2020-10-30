@@ -22,14 +22,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.R;
 import material.hunter.RecyclerViewData.ServicesData;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.models.ServicesModel;
 import material.hunter.utils.NhPaths;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRecyclerViewAdapter.ItemViewHolder> implements Filterable {
     private static final String TAG = "KaliServiceRecycleView";
@@ -96,43 +97,42 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
             final FloatingActionButton readmeButton2 = promptViewEdit.findViewById(R.id.f_services_edit_btn_info_fab2);
             final FloatingActionButton readmeButton3 = promptViewEdit.findViewById(R.id.f_services_edit_btn_info_fab3);
             final FloatingActionButton readmeButton4 = promptViewEdit.findViewById(R.id.f_services_edit_btn_info_fab4);
-
             readmeButton1.setOnClickListener(view -> {
-                androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
                         .setMessage(context.getString(R.string.services_howto_startservice))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
-                final androidx.appcompat.app.AlertDialog ad = adb.create();
+                final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });
 
             readmeButton2.setOnClickListener(view -> {
-                androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
                         .setMessage(context.getString(R.string.services_howto_stopservice))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
-                final androidx.appcompat.app.AlertDialog ad = adb.create();
+                final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });
 
             readmeButton3.setOnClickListener(view -> {
-                androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
                         .setMessage(context.getString(R.string.services_howto_checkservice))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
-                final androidx.appcompat.app.AlertDialog ad = adb.create();
+                final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });
 
             readmeButton4.setOnClickListener(view -> {
-                androidx.appcompat.app.AlertDialog.Builder adb = new androidx.appcompat.app.AlertDialog.Builder(context);
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("HOW TO USE:")
                         .setMessage(context.getString(R.string.services_howto_runServiceOnBoot))
                         .setNegativeButton("Close", (dialogInterface, i) -> dialogInterface.dismiss());
-                final androidx.appcompat.app.AlertDialog ad = adb.create();
+                final AlertDialog ad = adb.create();
                 ad.setCancelable(true);
                 ad.show();
             });

@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -21,7 +22,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -30,17 +30,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.RecyclerViewAdapter.ServicesRecyclerViewAdapter;
 import material.hunter.RecyclerViewAdapter.ServicesRecyclerViewAdapterDeleteItems;
-import material.hunter.RecyclerViewData.ServicesData;
 import material.hunter.RecyclerViewData.MaterialHunterData;
+import material.hunter.RecyclerViewData.ServicesData;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.models.ServicesModel;
 import material.hunter.utils.NhPaths;
 import material.hunter.viewmodels.ServicesViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ServicesFragment extends Fragment {
     private static final String TAG = "ServicesFragment";
@@ -131,12 +132,10 @@ public class ServicesFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        final ViewGroup nullParent = null;
         final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View promptView = inflater.inflate(R.layout.services_custom_dialog_view, nullParent);
+        final View promptView = inflater.inflate(R.layout.services_custom_dialog_view, null);
         final TextView titleTextView = promptView.findViewById(R.id.f_services_adb_tv_title1);
         final EditText storedpathEditText = promptView.findViewById(R.id.f_services_adb_et_storedpath);
-
         switch (item.getItemId()) {
             case R.id.f_services_menu_backupDB:
                 titleTextView.setText("Full path to where you want to save the database:");
@@ -364,11 +363,10 @@ public class ServicesFragment extends Fragment {
 
     private void onDeleteItemSetup() {
         deleteButton.setOnClickListener(v -> {
-            final ViewGroup nullParent = null;
             List<ServicesModel> servicesModelList = ServicesData.getInstance().servicesModelListFull;
             if (servicesModelList == null) return;
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewDelete = inflater.inflate(R.layout.services_delete_dialog_view, nullParent, false);
+            final View promptViewDelete = inflater.inflate(R.layout.services_delete_dialog_view, null, false);
             final RecyclerView recyclerViewDeleteItem = promptViewDelete.findViewById(R.id.f_services_delete_recyclerview);
             ServicesRecyclerViewAdapterDeleteItems servicesRecyclerViewAdapterDeleteItems = new ServicesRecyclerViewAdapterDeleteItems(context, servicesModelList);
 
@@ -416,11 +414,10 @@ public class ServicesFragment extends Fragment {
 
     private void onMoveItemSetup() {
         moveButton.setOnClickListener(v -> {
-            final ViewGroup nullParent = null;
             List<ServicesModel> servicesModelList = ServicesData.getInstance().servicesModelListFull;
             if (servicesModelList == null) return;
             final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewMove = inflater.inflate(R.layout.services_move_dialog_view, nullParent, false);
+            final View promptViewMove = inflater.inflate(R.layout.services_move_dialog_view, null, false);
             final Spinner titlesBefore = promptViewMove.findViewById(R.id.f_services_move_adb_spr_titlesbefore);
             final Spinner titlesAfter = promptViewMove.findViewById(R.id.f_services_move_adb_spr_titlesafter);
             final Spinner actions = promptViewMove.findViewById(R.id.f_services_move_adb_spr_actions);

@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +19,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -27,13 +27,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.ShellExecuter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.ShellExecuter;
 
 public class ManaFragment extends Fragment {
 

@@ -28,7 +28,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="Loading"
-                android:textColor="@android:color/background_light"
                 android:textSize="20sp" />
 
         </LinearLayout>

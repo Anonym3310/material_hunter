@@ -23,7 +23,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#50000000"
+                    android:background="@color/cardview_shadow_start_color"
                     android:orientation="horizontal">
 
                     <TextView
@@ -38,7 +38,6 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:singleLine="true"
                         android:text="@string/mh_sett"
-                        android:textColor="@android:color/background_light"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -65,7 +64,6 @@
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
                         android:text="@string/mh_sett_bal"
-                        android:textColor="#fff"
                         android:textSize="15sp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toBottomOf="@id/settings_rob"
@@ -94,7 +92,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#50000000"
+                    android:background="@color/cardview_shadow_start_color"
                     android:orientation="horizontal">
 
                     <TextView
@@ -109,7 +107,6 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:singleLine="true"
                         android:text="@string/mh_devsett"
-                        android:textColor="@android:color/background_light"
                         android:textSize="20sp" />
                 </LinearLayout>
 

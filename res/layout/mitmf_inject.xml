@@ -20,17 +20,10 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10px"
-                android:paddingBottom="20px"
-                app:srcCompat="@android:drawable/divider_horizontal_bright" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="10px"
                 android:text="@string/inject_settings"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -109,7 +102,6 @@
                     app:addTextChangedListener="@{viewModel.injectHtmlWatcher}" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <TextView
                 android:id="@+id/textView"

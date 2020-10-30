@@ -13,7 +13,6 @@
             android:id="@+id/source"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:textColor="#ffffff" />
+            android:gravity="top" />
     </LinearLayout>
 </ScrollView>

@@ -54,8 +54,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/bt_use_selected"
-            android:textColor="#ffffffff" />
+            android:text="@string/bt_use_selected" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -137,8 +136,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/bt_apply"
-                android:textColor="#ffffffff" />
+                android:text="@string/bt_apply" />
 
             <Button
                 android:id="@+id/refreshSpoof"
@@ -146,8 +144,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/bt_check"
-                android:textColor="#ffffffff" />
+                android:text="@string/bt_check" />
 
         </LinearLayout>
 

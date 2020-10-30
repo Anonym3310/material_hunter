@@ -47,8 +47,7 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="@string/bt_use_selected"
-            android:textColor="#ffffffff" />
+            android:text="@string/bt_use_selected" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -152,8 +151,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:text="..."
-                android:textColor="#ffffff" />
+                android:text="..." />
 
         </LinearLayout>
 
@@ -169,8 +167,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@string/bt_launch"
-                android:textColor="#ffffffff" />
+                android:text="@string/bt_launch" />
 
             <Button
                 android:id="@+id/stop_cw"
@@ -178,8 +175,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="@string/bt_kill"
-                android:textColor="#ffffffff" />
+                android:text="@string/bt_kill" />
 
             <Button
                 android:id="@+id/play_audio"

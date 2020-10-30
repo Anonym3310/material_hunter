@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,14 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.ShellExecuter;
 
 import java.io.File;
 import java.util.Arrays;
+
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.ShellExecuter;
 
 public class VNCFragment extends Fragment {
 
@@ -493,11 +493,9 @@ public class VNCFragment extends Fragment {
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
                 builder2.setTitle("Width is bigger than height!");
                 builder2.setMessage("Bigger width is usually only for tablets. Misconfiguration can render the device unresponsive");
-                builder2.setPositiveButton("Keep", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog2, int which) {
-                        exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + ":" + add_density + "ppi >> " + hdmiResFile + "'"});
-                        reload();
-                    }
+                builder2.setPositiveButton("Keep", (dialog2, which1) -> {
+                    exe.RunAsRoot(new String[]{"su -c 'echo " + add_width + "x" + add_height + ":" + add_density + "ppi >> " + hdmiResFile + "'"});
+                    reload();
                 });
                 builder2.setNegativeButton("Back", (dialog2, whichButton) -> {
                     openResolutionDialog();
@@ -541,17 +539,13 @@ public class VNCFragment extends Fragment {
 
 
     private void confirmDialog() {
-
         SharedPreferences sharedpreferences = context.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
         final AlertDialog.Builder confirmbuilder = new AlertDialog.Builder(getActivity());
         confirmbuilder.setTitle("Do you want to keep the resolution?");
         confirmbuilder.setMessage("Loading..");
-        confirmbuilder.setPositiveButton("Keep resolution", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                sharedpreferences.edit().putBoolean("confirm_res", false).apply();
-                dialogInterface.cancel();
-            }
+        confirmbuilder.setPositiveButton("Keep resolution", (dialogInterface, i) -> {
+            sharedpreferences.edit().putBoolean("confirm_res", false).apply();
+            dialogInterface.cancel();
         });
         final AlertDialog alert = confirmbuilder.create();
         alert.show();
@@ -578,7 +572,6 @@ public class VNCFragment extends Fragment {
         });
     }
 
-
     private void addClickListener(Button _button, View.OnClickListener onClickListener) {
         _button.setOnClickListener(onClickListener);
     }
@@ -604,7 +597,6 @@ public class VNCFragment extends Fragment {
             startActivity(intent);
         } catch (Exception e) {
             NhPaths.showSnack(getView(), getString(R.string.toast_install_terminal), 1);
-
         }
     }
 

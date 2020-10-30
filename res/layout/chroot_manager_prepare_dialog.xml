@@ -20,7 +20,6 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:text="Arch:"
-            android:textColor="@color/clearTitle"
             android:textSize="18sp" />
 
         <Spinner
@@ -28,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/f_chrootmanager_build_chroot_arm_opts"
-            android:textColor="@color/clearTitle"
             android:textSize="18sp" />
 
         <TextView
@@ -38,7 +36,6 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:text="Min or Full install:"
-            android:textColor="@color/clearTitle"
             android:textSize="18sp" />
 
         <Spinner
@@ -46,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:entries="@array/f_chrootmanager_build_chroot_full_or_min"
-            android:textColor="@color/clearTitle"
             android:textSize="18sp" />
 
         <TextView
@@ -56,7 +52,6 @@
             android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
             android:text="@string/chrootmanager_dwnld_path"
-            android:textColor="@color/clearTitle"
             android:textSize="18sp" />
 
         <EditText
@@ -65,7 +60,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:textColor="@color/clearTitle"
             android:textSize="18sp" />
 
     </LinearLayout>

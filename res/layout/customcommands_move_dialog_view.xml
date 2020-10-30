@@ -28,7 +28,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/customcommands_move"
-                android:textColor="@android:color/background_light"
                 android:textSize="18sp" />
 
             <Spinner

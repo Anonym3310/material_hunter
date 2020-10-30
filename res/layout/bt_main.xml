@@ -55,7 +55,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="15"
                     android:paddingTop="5dp"
@@ -120,7 +120,8 @@
                     android:id="@+id/dbus_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="MissingConstraints" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -190,7 +191,8 @@
                     android:layout_weight="1"
                     android:text="@string/bt_interface"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline_3" />
+                    app:layout_constraintEnd_toStartOf="@+id/guideline_3"
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/HCIstatus"
@@ -271,8 +273,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/bt_scan"
-                android:textColor="#ffffffff" />
+                android:text="@string/bt_scan" />
 
             <ListView
                 android:id="@+id/targets"

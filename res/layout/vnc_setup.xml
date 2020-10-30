@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -31,8 +30,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/kex_setup"
-                android:textColor="#ffffffff" />
+                android:text="@string/kex_setup" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -131,8 +129,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kex_start"
-                    android:textColor="#ffffffff" />
+                    android:text="@string/kex_start" />
 
                 <Button
                     android:id="@+id/stop_vnc"
@@ -140,8 +137,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kex_stop"
-                    android:textColor="#ffffffff" />
+                    android:text="@string/kex_stop" />
             </LinearLayout>
 
 
@@ -277,8 +273,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kex_add_user"
-                    android:textColor="#ffffffff" />
+                    android:text="@string/kex_add_user" />
 
                 <Button
                     android:id="@+id/DelUserButton"
@@ -287,8 +282,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_weight="1"
-                    android:text="@string/kex_remove_user"
-                    android:textColor="#ffffffff" />
+                    android:text="@string/kex_remove_user" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -315,8 +309,7 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/kex_apply"
-                        android:textColor="#ffffffff" />
+                        android:text="@string/kex_apply" />
 
                 </LinearLayout>
 
@@ -326,8 +319,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kex_remove_resolution"
-                    android:textColor="#ffffffff" />
+                    android:text="@string/kex_remove_resolution" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -342,7 +334,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/kex_new_resolution"
-                        android:textColor="#ffffffff"
                         android:textSize="13sp" />
 
                     <Button
@@ -352,7 +343,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/kex_reset_resolution"
-                        android:textColor="#ffffffff"
                         android:textSize="13sp" />
 
                 </LinearLayout>
@@ -371,7 +361,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/kex_backup"
-                        android:textColor="#ffffffff"
                         android:textSize="13sp" />
 
                     <Button
@@ -381,7 +370,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/kex_restore"
-                        android:textColor="#ffffffff"
                         android:textSize="13sp" />
 
                 </LinearLayout>
@@ -407,8 +395,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kex_remove_resolution"
-                    android:textColor="#ffffffff" />
+                    android:text="@string/kex_remove_resolution" />
 
                 <Button
                     android:id="@+id/AddVncResolutionButton"
@@ -416,8 +403,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kex_new_resolution"
-                    android:textColor="#ffffffff" />
+                    android:text="@string/kex_new_resolution" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -432,7 +418,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/kex_backup"
-                        android:textColor="#ffffffff"
                         android:textSize="13sp" />
 
                     <Button
@@ -442,7 +427,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/kex_restore"
-                        android:textColor="#ffffffff"
                         android:textSize="13sp" />
 
                 </LinearLayout>

@@ -28,17 +28,10 @@
                 android:padding="4dp"
                 android:text="@string/mitmf_Responder_Description" />
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10px"
-                android:paddingBottom="20px"
-                app:srcCompat="@android:drawable/divider_horizontal_bright" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="10px"
                 android:text="@string/mitmf_responder_sett"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 

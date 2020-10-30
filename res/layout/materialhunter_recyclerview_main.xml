@@ -28,7 +28,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="Loading"
-                android:textColor="@color/cardview_light_background"
                 android:textSize="20sp" />
 
         </LinearLayout>
@@ -57,8 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="0.8"
-                android:text="@string/materialhunter_run_item"
-                android:textColor="@color/colorPrimary" />
+                android:text="@string/materialhunter_run_item" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
