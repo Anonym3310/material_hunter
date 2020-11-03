@@ -63,7 +63,6 @@ public class BootKali {
     }
 
     private String GET_KALI_ENV() {
-        // add strings here , they will be in the kali env
         String[] ENV = {
                 "USER=root",
                 "SHELL=/bin/bash",
@@ -168,10 +167,7 @@ public class BootKali {
     public String GET_KALI_SHELL_CMD() {
         return "su -c \"clear && " + BOOTKALI + "/bin/login -f root \"";
     }
-
     public String GET_CMD() {
         return FULL_CMD;
     }
-
-
 }

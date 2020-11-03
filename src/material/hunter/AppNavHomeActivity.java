@@ -283,7 +283,6 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         }
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
-
         navigationView = findViewById(R.id.navigation_view);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") LinearLayout navigationHeadView = (LinearLayout) inflater.inflate(R.layout.sidenav_header, null);
@@ -305,13 +304,8 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorBars));
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
 
-        SharedPreferences oa = this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         ImageView o = findViewById(R.id.w);
-        if (String.valueOf(oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0)) == "") {
-            o.setAlpha(50);
-        } else {
-            o.setAlpha(oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0));
-        }
+        o.setAlpha(prefs.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0));
         Drawable b = WallpaperManager.getInstance(this).getDrawable();
         o.setImageDrawable(b);
 
@@ -351,11 +345,11 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         adb.setView(rootView)
                 .setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
         AlertDialog ad = adb.create();
-        ad.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        ad.setCancelable(true);
         if (ad.getWindow() != null) {
             ad.getWindow().getAttributes().windowAnimations = R.style.DialogStyle;
+            ad.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
+        ad.setCancelable(true);
         ad.show();
         ((TextView) Objects.requireNonNull(ad.findViewById(android.R.id.message))).setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -524,7 +518,6 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
             permissionCheck.checkPermissions(PermissionCheck.NH_TERM_PERMISSIONS, PermissionCheck.NH_TERM_PERMISSIONS_RQCODE);
             return false;
         }
-
         return true;
     }
 

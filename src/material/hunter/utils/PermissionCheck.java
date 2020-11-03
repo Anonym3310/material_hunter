@@ -10,8 +10,6 @@ import androidx.core.app.ActivityCompat;
 public class PermissionCheck {
     public static final int DEFAULT_PERMISSION_RQCODE = 1;
     public static final int NH_TERM_PERMISSIONS_RQCODE = 2;
-    //public static final int NH_VNC_PERMISSIONS_RQCODE = 3;
-    //public static final int NH_VNC_PERMISSIONS_ONFRAGMENTCLICK_RQCODE = 4;
     public static final String[] DEFAULT_PERMISSIONS = {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.ACCESS_FINE_LOCATION,
@@ -23,9 +21,6 @@ public class PermissionCheck {
             "com.offsec.nhterm.permission.RUN_SCRIPT_NH",
             "com.offsec.nhterm.permission.RUN_SCRIPT_NH_LOGIN"
     };
-    /*public static final String[] NH_VNC_PERMISSIONS = {
-            "com.offsec.nhvnc.permission.OPEN_VNC_CONN"
-    };*/
     private static final String TAG = "PermissionCheck";
     private Activity activity;
     private Context context;
@@ -35,7 +30,6 @@ public class PermissionCheck {
         this.context = context;
     }
 
-    //First check the permissions everytime the app is freshly run.
     public void checkPermissions(String[] PERMISSIONS, int REQUEST_CODE) {
         if (!hasPermissions(context, PERMISSIONS)) {
             ActivityCompat.requestPermissions(activity, PERMISSIONS, REQUEST_CODE);

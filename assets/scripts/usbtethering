@@ -79,7 +79,7 @@ function dep_check() {
     done
 }
 
-## dnsnasq is somehow not working as expected, use dhcpd in kali chroot instead. ##
+## dnsnasq is somehow not working as expected, use dhcpd in chroot instead. ##
 function start_dnsmasq() {
     dnsmasq --keep-in-foreground --no-resolv --no-poll --dhcp-authoritative \
     --dhcp-option-force=43,ANDROID_METERED --pid-file --listen-mark 0xf0063 \

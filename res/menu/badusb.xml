@@ -3,5 +3,5 @@
     <item
         android:id="@+id/source_button"
         android:icon="@drawable/ic_pencil"
-        app:showAsAction="ifRoom|withText"  />
+        app:showAsAction="ifRoom" />
 </menu>

@@ -10,7 +10,5 @@ public class DummyAccessibilityService extends AccessibilityService {
     }
 
     @Override
-    public void onInterrupt() {
-
-    }
+    public void onInterrupt() { }
 }

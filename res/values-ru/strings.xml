@@ -7,7 +7,7 @@
     <string name="materialhunter_sysinfo">Системная информация</string>
     <string name="materialhunter_description">Вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши горячие команды. Также зажав лейбел команды, вы можете её редактировать.</string>
     <string name="materialhunter_howtouse_cmd">Введите здесь свою команду, она будет запущена в Android среде для получения ответа.</string>
-    <string name="materialhunter_howtouse_delimiter">Введите значение разделителя строк, есил вы хотите разделить ответ команды, по умолчанию "\\n".</string>
+    <string name="materialhunter_howtouse_delimiter">Введите значение разделителя строк, если вы хотите разделить ответ команды, по умолчанию "\\n".</string>
     <string name="materialhunter_howtouse_runoncreate">Для получения ответа сразу при запуске фрагмента, используйте эту опцию.</string>
     <string name="materialhunter_run_item">RUN</string>
     <string name="materialhunter_move">Переместить: </string>
@@ -24,10 +24,10 @@
     <string name="ps_port">Порт (LPORT)</string>
     <string name="ps_payload_url">URL to payload</string>
     <string name="hid_ps_head">Полезная нагрузка Powershell HTTP позволяет загружать и запускать универсальную полезную нагрузку powershell с URL-адреса. URL-адрес полезной нагрузки должен находиться в месте, доступном жертве.</string>
-    <string name="hid_windows_cmd_description">Windows CMD payload позволяет вводить необработанные команды в Командную Строку Windows. Из меню вы можете выбрать keyboard layout или UAC bypass.</string>
+    <string name="hid_windows_cmd_description">Windows CMD payload позволяет вводить необработанные команды в Командную Строку Windows. Из меню вы можете выбрать Keyboard Layout или UAC bypass.</string>
 
     <!-- Services -->
-    <string name="services_description">Chroot сервисы могут быть включены или выключены с помощю Toggle кнопок, также, вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши сервисы. Зажав лейбел сервиса, вы можете редактировать его.</string>
+    <string name="services_description">Chroot сервисы могут быть включены или выключены с помощью Toggle кнопок, также, вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши сервисы. Зажав лейбел сервиса, вы можете редактировать его.</string>
     <string name="services_howto_startservice">Чтобы запустить службу в chroot, будет запущена команда, которая выглядит следующим образом:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_start_service>\n\nСлужба считается запущенной, если возвращаемое значение равно 0, и наоборот.</string>
     <string name="services_howto_stopservice">Чтобы остановить службу в chroot, будет запущена команда, которая выглядит следующим образом:\n\nchroot &lt;chroot_folder> /usr/bin/sudo &lt;command_to_stop_service>\n\nСлужба считается остановленной, если возвращаемое значение равно 0, и наоборот.</string>
     <string name="services_howto_checkservice">Чтобы проверить, работает ли служба в chroot или нет, за пределами Chroot будет запущена команда, которая выглядит следующим образом:\n\nbusybox ps -o pid,comm | grep \'&lt;service_name>\'\n\nУслуга считается выполненной, если возвращаемое значение равно 0, и наоборот.</string>
@@ -37,7 +37,7 @@
     <string name="services_move">Переместить: </string>
 
     <!-- CustomCommands -->
-    <string name="custom_commands_description">Вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши горячие команды. Также зажав лейбел команды, вы можете её редактировать.</string>
+    <string name="custom_commands_description">Вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши горячие команды. Также зажав лейбл команды, вы можете её редактировать.</string>
     <string name="customcommands_send_to">Цель:</string>
     <string name="customcommands_exec_mode">Exec режим:</string>
     <string name="customcommands_rob">RunOnBoot:</string>
@@ -58,8 +58,8 @@
     <string name="usbarmory_imagemounter_mount">Монтировать</string>
     <string name="usbarmory_imagemounter_unmount">Размонтировать</string>
     <string name="usbarmory_imagemounter_ro">R/O</string>
-    <string name="usbarmory_imagemounter_mounted">Монтировано:</string>
-    <string name="usbarmory_imagemounter_nonmounted">Ничего не монтировано.</string>
+    <string name="usbarmory_imagemounter_mounted">Смонтировано:</string>
+    <string name="usbarmory_imagemounter_nonmounted">Ничего не смонтировано.</string>
     <string name="usbarmory_networktethering_header">USB Network Tethering</string>
     <string name="usbarmory_networktethering_description">USB Network Tethering используется только с включенным \"rndis\" или \"acm/ecm\"</string>
     <string name="usbarmory_networktethering_attack_mode">Режим атаки:</string>
@@ -68,7 +68,7 @@
     <string name="usbarmory_networktethering_target_ip">IP адрес для цели:</string>
     <string name="usbarmory_networktethering_your_ip">IP адрес для вашего интерфейса:</string>
     <string name="usbarmory_networktethering_mask">IP Маска:</string>
-    <string name="usbarmory_networktethering_run">ЗАПУТИТЬ В ТЕРМИНАЛЕ</string>
+    <string name="usbarmory_networktethering_run">ЗАПУСТИТЬ В ТЕРМИНАЛЕ</string>
     <string name="usbarmory_networktethering_save_config">СОХРАНИТЬ КОНФИГ</string>
     <string name="usbarmory_target">Цель</string>
     <string-array name="usbarmory_target_platform">
@@ -106,12 +106,12 @@
 
     <!-- Bad USB -->
     <string name="badusb_label">BadUSB MITM Атака</string>
-    <string name="badusb_description">Это наша реализация атаки BadUSB, продемонстрированной на выставке Black Hat USA 2014. Включение этого режима USB-гаджета позволит вашему устройству действовать как сетевой интерфейс USB при подключении к целевому компьютеру. Подключение USB-кабеля к ПК приведет к тому, что весь трафик с этого компьютера (Windows или Linux) будет проходить через устройство NetHunter, где трафик может быть MITM\'ed.</string>
+    <string name="badusb_description">Это наша реализация атаки BadUSB, продемонстрированной на выставке Black Hat USA 2014. Включение этого режима USB-гаджета позволит вашему устройству действовать как сетевой интерфейс USB при подключении к целевому компьютеру. Подключение USB-кабеля к ПК приведет к тому, что весь трафик с этого компьютера (Windows или Linux) будет проходить через устройство NetHunter, где трафик может быть MITM\'ed. \n\nВнимание! Не работает на новых устройствах с QCRndis.</string>
     <string name="badusb_started">BadUSB атака начата! Смотрите /sdcard/nh_files/badusb.log</string>
     <string name="badusb_stopped">BadUSB атака остановлена!</string>
 
     <string name="mana_hostapd">hostapd конфигурационный файл.</string>
-    <string name="mana_hostapd_wpe">hostapd конфигурационный файл для 802.1x/EAP атак (hostapd-wpe) Не используется с MANA.</string>
+    <string name="mana_hostapd_wpe">hostapd конфигурационный файл для 802.1x/EAP атак (hostapd-wpe) Не используется с Mana.</string>
     <string name="mana_hostapd_wpe_certs">Генерировать сертификаты (1 раз)</string>
     <string name="mana_dhcpd">dhcpd конфигурационный файл.</string>
     <string name="mana_dnsspoof">dnsspoof конфигурационный файл.</string>
@@ -140,7 +140,7 @@
 
     <string name="start_mitmf">Начать MITMf атаку</string>
     <string name="stop_mitmf">Остановить MITMf атаку</string>
-    <string name="change_command_mitmf">Поменять команду для mitmf</string>
+    <string name="change_command_mitmf">Изменить команду для mitmf</string>
 
     <string name="start_badusb">Начать BadUSB атаку</string>
     <string name="stop_badusb">Остановить BadUSB атаку</string>
@@ -189,14 +189,14 @@
         <item>Свой MAC</item>
     </string-array>
     <string name="macchanger_generate">Генерировать</string>
-    <string name="macchanger_clear">Отчистить</string>
+    <string name="macchanger_clear">Очистить</string>
 
     <!-- USB Army(Not in use yet) -->
 
     <!-- KeX -->
     <string name="kex_description">Добро пожаловать в NetHunter Desktop Experience.\nВы можете запускать несколько сессий под разными пользователями, добавлять, сохранять, и восстанавливать ваши разрешения экрана, запускать KeX при старте телефона, и проводить KeX к HDMI.</string>
     <string name="kex_setup">Установить сервер</string>
-    <string name="kex_localhost_only">Только Localhost</string>
+    <string name="kex_localhost_only">Только localhost</string>
     <string name="kex_at_boot">Включать при старте</string>
     <string name="kex_user">USER:</string>
     <string name="kex_display">DISPLAY:</string>
@@ -204,11 +204,11 @@
     <string name="kex_stop">Стоп</string>
     <string name="kex_status">KeX Server Статус:</string>
     <string name="kex_sessions">Активные сессии:</string>
-    <string name="kex_open_client">ОТКРЫТЬ KEX CLIENT</string>
+    <string name="kex_open_client">ОТКРЫТЬ KeX CLIENT</string>
     <string name="kex_advanced">ПОКАЗАТЬ ДОП. НАСТРОЙКИ</string>
     <string name="kex_advanced_hide">СКРЫТЬ ДОП. НАСТРОЙКИ</string>
     <string name="kex_manage_users">УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ</string>
-    <string name="kex_add_user">Добавть пользователя</string>
+    <string name="kex_add_user">Добавить пользователя</string>
     <string name="kex_remove_user">Удалить пользователя</string>
     <string name="kex_hdmi_resolution">РАЗРЕШЕНИЕ ДЛЯ HDMI</string>
     <string name="kex_apply">Применить</string>
@@ -217,14 +217,14 @@
     <string name="kex_reset_resolution">Сбросить</string>
     <string name="kex_backup">Сохранить</string>
     <string name="kex_restore">Восстановить</string>
-    <string name="kex_resolution">KEX РАЗРЕШЕНИЕ</string>
+    <string name="kex_resolution">KeX РАЗРЕШЕНИЕ</string>
 
     <!-- BT Attacks -->
-    <string name="bt_target_adress">Целефой адрес</string>
+    <string name="bt_target_adress">Целевой адрес</string>
     <string name="bt_iface">Bluetooth интерфейс</string>
 
     <!-- BT Main -->
-    <string name="bt_description">Экспериментальная версия Bluetooth Arsenal от yesimxev. Разведка, подделка, прослушивание или введение звука в различные устройства. Обратите внимание, что RFcomm должен быть включен в вашем ядре для некоторых атак. Кроме того, некоторые устройства могут не поддерживать службу BT.</string>
+    <string name="bt_description">Экспериментальная версия Bluetooth Arsenal от yesimxev. Разведка, подделка, прослушивание или воспроизведение звука на различных устройствах. Обратите внимание, что RFcomm должен быть включен в вашем ядре для некоторых атак. Кроме того, некоторые устройства могут не поддерживать службу BT.</string>
     <string name="bt_services">Сервисы</string>
     <string name="bt_dbus_service">Dbus сервис:</string>
     <string name="bt_service">Bluetooth сервис:</string>
@@ -254,7 +254,7 @@
     <string name="bt_mode">Режим</string>
     <string name="bt_launch">Запустить</string>
     <string name="bt_kill">Остановить</string>
-    <string name="bt_carwhisperer">Сценарий Carwhisperer из wayback. Слушайте или вводите звук в различные устройства, такие как динамики, гарнитуры, часы или даже автомобили. Обратите внимание, что цель должна быть отключена от исходного источника. Прямая трансляция будет иметь некоторую задержку. Выборка должна быть 8 кГц, так как мы вводим ее в протокол SCO.</string>
+    <string name="bt_carwhisperer">Сценарий Carwhisperer из wayback. Слушайте или воспроизводите звук в различных устройствах, таких как динамики, гарнитуры, часы или даже автомобили. Обратите внимание, что цель должна быть отключена от исходного источника. Прямая трансляция будет иметь некоторую задержку. Выборка должна быть 8 кГц, так как мы вводим ее в протокол SCO.</string>
     <string name="bt_carwhisperer_save">Сохранить запись в /sdcard/</string>
     <string name="bt_carwhisperer_select">Файл для инъекции</string>
 
@@ -279,8 +279,8 @@
     <string name="mitmf_screenshotter">ScreenShotter</string>
     <string name="mitmf_FERRETNG">Ferret-NG Cookie Capture Plugin</string>
     <string name="mitmf_Responder_Description">Ответчик позволяет отравлять запросы LLMNR, NBT-NS и MDNS</string>
-    <string name="mitmf_responder_sett">Responder Settings</string>
-    <string name="mitmf_Responder">Responder Plugin</string>
+    <string name="mitmf_responder_sett">Настройки ответчика</string>
+    <string name="mitmf_Responder">Плагины ответчика</string>
     <string name="mitmf_Responder_Analyze">Analyze</string>
     <string name="mitmf_Responder_Wredir">Wredir</string>
     <string name="mitmf_Responder_NBTNS">BTNS</string>
@@ -308,13 +308,13 @@
     <string name="mitmf_enable_screenshotter">ScreenShotter Plugin</string>
     <string name="mitmf_screenshotter_interval">Интервал (в секундах) to screenshot:</string>
     <string name="mitmf_inject">Inject Plugin</string>
-    <string name="mitmf_inject_JS">Javascript payload URL</string>
-    <string name="mitmf_inject_HTML">HTML payload URL</string>
+    <string name="mitmf_inject_JS">JavaScript payload URL</string>
+    <string name="mitmf_inject_HTML">HTML Payload URL</string>
     <string name="mitmf_inject_HTMLPAY">HTML Payload to inject:</string>
     <string name="mitmf_inject_PRESERVER">Preserve Cache</string>
     <string name="mitmf_inject_ONCE">Once per domain</string>
     <string name="mitmf_inject_RATELIMIT">Rate Limit (сек.)</string>
-    <string name="mitmf_inject_COUNTLIMIT">Количество раз для инъекции</string>
+    <string name="mitmf_inject_COUNTLIMIT">Количество повторов для инъекции</string>
     <string name="mitmf_inject_INJECTIP">Inject only IP</string>
     <string name="mitmf_inject_NOINJECTIP">IP not to inject</string>
     <string name="mitmf_config">MITMf конфигурационный файл.</string>
@@ -329,11 +329,11 @@
     <string name="chrootmanager_backup">СОХРАНИТЬ CHROOT</string>
     <string name="chrootmanager_remove">УДАЛИТЬ CHROOT</string>
     <string name="chrootmanager_dwnld_path">Путь до папки, куда вы загрузите архив:</string>
-    <string name="chrootmanager_dwnld_download">ЗАГРУЗИТЬ ПОСЛЕДНИЙ KALI CHROOT С ОФИЦИАЛЬНОГО СЕРВЕРА</string>
-    <string name="chrootmanager_dwnld_restore">ВОССТАНОВИТЬ ИЗ ЛОКЛЬНЫХ ДАННЫХ\n(.TAR.GZ /.TAR.XZ)</string>
+    <string name="chrootmanager_dwnld_download">ЗАГРУЗИТЬ ПОСЛЕДНИЙ CHROOT С ОФИЦИАЛЬНОГО СЕРВЕРА</string>
+    <string name="chrootmanager_dwnld_restore">ВОССТАНОВИТЬ ИЗ ЛОКАЛЬНЫХ ДАННЫХ\n(.TAR.GZ /.TAR.XZ)</string>
     <string name="f_chrootmanager_list_folders">Список доступных директорий в</string>
-    <string name="f_chrootmanager_setup_path">Установит путь до chroot</string>
-    <string name="f_chrootmanager_chroot_prefix">Путь до чрут префиксирован к</string>
+    <string name="f_chrootmanager_setup_path">Установить путь до chroot</string>
+    <string name="f_chrootmanager_chroot_prefix">Путь до chroot префиксирован к</string>
     <string name="f_chrootmanager_put_chroot_folder">Укажите название директории:</string>
     <string name="f_chrootmanager_install_label">Установить chroot</string>
     <string name="f_chrootmanager_select_options">Выберите настройки ниже:</string>
@@ -346,8 +346,8 @@
         <item>min</item>
     </array>
 
-    <string name="aboutchroot">Chroot Manager. \"Chroot\" - полная установка Linux-среды которая разделяет обработку, сеть, память, и прочие ресурсы с Android. Он находится во внутренней области памяти (data) и должен иметь минимум 8ГБ свободного пространства для минимальной или полной установки, просто чтобы не сломать вашу систему.</string>
-    <string name="materialteam">Разработчики:\nt.me/cxblack (Znowu sie upijam)\n\nСпасибо:\nt.me/Avadamiao (Наш Кот)\nt.me/Bluty4444 (Блютуз)))\nt.me/appahe (Чаек - фот0шопер)\nt.me/dark2048 (Денис🗿)\nt.me/HuntMix (Помощь в фиксах, хацкер 100%)\nt.me/hilledkinged (Мартини, Team kekHunter)\n\nСделано с ♥</string>
+    <string name="aboutchroot">Chroot Manager. \"Chroot\" - полная установка Linux-среды которая разделяет обработку, сеть, память, и прочие ресурсы с Android. Он находится во внутренней области памяти (data) и должен иметь минимум 8ГБ свободного пространства для минимальной или полной установки, просто что-бы не сломать вашу систему.</string>
+    <string name="materialteam">Разработчики:\nt.me/cxblack (Znowu sie upijam)\nt.me/Death_Warrior940 (школо-хуцкер)\n\nСпасибо:\nt.me/Avadamiao (Наш Кот)\nt.me/Bluty4444 (Блютуз)))\nt.me/appahe (Чаек - фот0шопер)\nt.me/dark2048 (Какер)\nt.me/HuntMix (Помощь в фиксах, хацкер 100%)\nt.me/hilledkinged (Мартини, Team kekHunter)\n\nСделано с ❤️</string>
     <string name="attack_launched">Атака запущена!</string>
     <string name="attack_stopped">Атака закончена.</string>
 
@@ -375,7 +375,7 @@
     <string name="metapackagesAdditionalInfo">К локальному хранилищу требуется около +-20ГБ. Эта установка/обновление будет выполняться в терминале, так что следите за проблемами.</string>
 
     <!-- MPC -->
-    <string name="mpc_description">MSFvenom Payload Создатель (MSFPC) это оболочка, написанная g0tmi1k для создания нескольких типо payload, по выбору пользователя. Идея состоит в том, чтобы как можно более простым способом (требуя только одного ввода) можно было создать payload.</string>
+    <string name="mpc_description">MSFvenom Payload Создатель (MSFPC) это оболочка, написанная g0tmi1k для создания нескольких типов payload, по выбору пользователя. Идея состоит в том, чтобы как можно более простым способом (требуя только одного ввода) можно было создать payload.</string>
     <string name="mpc_type">Тип:</string>
     <string-array name="mpc_type_array">
         <item>ASP</item>
@@ -425,8 +425,8 @@
     <string name="searchsploit_results">результат(ов)</string>
 
     <!-- Custom Launcher -->
-    <string name="drawer_opened">Drawer opened</string>
-    <string name="drawer_closed">Drawer closed</string>
+    <string name="drawer_opened">Drawer открыт</string>
+    <string name="drawer_closed">Drawer закрыт</string>
 
     <!-- Start NMAP -->
     <string name="nmap_hint">Введите IP</string>
@@ -452,13 +452,13 @@
     <string name="nmap_ports">Порты</string>
     <string name="nmap_fastmode">Fast mode (fewer ports)</string>
     <string name="nmap_dontrandomize">Не разбрасывать port scan</string>
-    <string name="nmap_topports">Top 20 Портов</string>
-    <string name="nmap_osdetectenable">OS detection</string>
-    <string name="nmap_servicedetect">Service/Version Detection</string>
-    <string name="nmap_hostdiscovery_ping">Ping Scan</string>
-    <string name="nmap_scan_technique">Scan Techniques</string>
+    <string name="nmap_topports">Топ 20 Портов</string>
+    <string name="nmap_osdetectenable">Определение ОС</string>
+    <string name="nmap_servicedetect">Обнаружение Сервиса/Версии</string>
+    <string name="nmap_hostdiscovery_ping">Сканирование Ping</string>
+    <string name="nmap_scan_technique">Тип сканирования</string>
     <string-array name="nmap_scantechnique_array">
-        <item>Выбрать технику сканирования</item>
+        <item>Выбрать тип сканирования</item>
         <item>TCP SYN</item>
         <item>Connect()</item>
         <item>ACK</item>
@@ -475,7 +475,7 @@
     <string name="pineapple_description">Pineapple разъем используется вместе с Hak5 Pineapple Nano и USB OTG кабель.   Этот помощник подключит Pineapple Nano по ethernet и подключит ваше WiFi соединение.</string>
     <string name="pineapple_gateway">Pineapple Gateway/Web Interface IP</string>
     <string name="pineapple_port">Pineapple Nano Web Port</string>
-    <string name="pineapple_ip">Client IP</string>
+    <string name="pineapple_ip">IP Клиента</string>
     <string name="pineapple_cidr">Pineapple CIDR</string>
     <string name="pineapple_start_OTG">Установить соединение</string>
     <string name="pineapple_stop_OTG">Закрыть соединение</string>
@@ -488,8 +488,8 @@
     <!-- End PineappleFragment -->
 
     <!-- Start GPSFragment -->
-    <string name="gps_description">Конвертировать GPS в nmea затем адресовать в chroot. Идеально подходит для wardriving с Kismet или просто для обычного GPS сервера для Kali. Небходимо OTG и ext wireless.</string>
-    <string name="gps_help">Вы должны дать MaterialHunter права к GPS. Идем в настройки > Приложения > MaterialHunter > Права и разрешения. Когда оно запустится, нажмите: "return" three times, Vol+up и "t", "return".</string>
+    <string name="gps_description">Конвертировать GPS в nmea затем адресовать в chroot. Идеально подходит для Wardriving с Kismet или просто для обычного GPS сервера для Kali. Небходим OTG и ext wireless.</string>
+    <string name="gps_help">Вы должны дать MaterialHunter права к GPS. Идем в настройки > Приложения > MaterialHunter > Права и разрешения. Когда оно запустится, нажмите: "return" three times, Vol+Up и "t", "return".</string>
     <!-- End GPSFragment -->
 
     <string name="loading_file">Загрузка…  FILE: %s</string>
@@ -512,7 +512,7 @@
     <string name="start_deauthentication">Начать деаунтефикацию</string>
     <string name="objects_to_inject">Объекты для иньекции</string>
     <string name="inject_characteristics">Характеристики инъекции</string>
-    <string name="shellshock_command">Shellshock command</string>
+    <string name="shellshock_command">Shellshock комманда</string>
     <string name="inject_settings">Настройки инъекции</string>
     <string name="platform">Платформа</string>
     <string name="type">Тип</string>
@@ -530,10 +530,10 @@
     <string name="ok">Ок</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
-    <string name="file_invalid_name">Invilad Name, please try again.</string>
+    <string name="file_invalid_name">Имя недоступно, пожалуйста попробуйте снова.</string>
 
-    <string name="bd_backup">Сохранить BD</string>
-    <string name="bd_restore">Восстановить BD</string>
+    <string name="bd_backup">Сохранить DB</string>
+    <string name="bd_restore">Восстановить DB</string>
     <string name="bd_reset">Сбросить DB</string>
 
     <!--Custom Spinner Array-->
@@ -554,6 +554,6 @@
     <string name="mh_sett_boot_receive">RunOnBoot receive</string>
     <string name="mh_sett_bal">Уровень затемненности фона.</string>
     <string name="mh_devsett">Возможности разработчика</string>
-    <string name="mh_devsett_cad">отчистить данные приложения</string>
+    <string name="mh_devsett_cad">очистить данные приложения</string>
     <string name="mh_sett_need_restart">Необходима перезагрузка</string>
 </resources>

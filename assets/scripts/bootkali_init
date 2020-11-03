@@ -10,7 +10,7 @@ if [ -z "$BUSYBOX" ]; then
     exit 1
 fi
 
-## Validate kali Chroot path.
+## Validate Chroot path.
 if [ -z "$MNT" ]; then
     bklog "[-] The \$MNT variable is not defined, please run nethunter app first."
     exit 2
@@ -18,7 +18,7 @@ fi
 
 if [ ! -d "$MNT" ]; then
     bklog "[-] \"$MNT\" directory not exist!"
-    bklog "[!] Click the button [INSTALL KALI CHROOT] down below now!"
+    bklog "[!] Click the button [INSTALL CHROOT] down below now!"
     exit 2
 fi
 
@@ -52,7 +52,7 @@ f_isAllReady(){
     done
     [ ! -e "/dev/net/tun" ] && return 1
     [ ! -e "/dev/fd" -o ! -e "/dev/stdin" -o ! -e "/dev/stdout" -o ! -e "/dev/stderr" ] && return 1
-    bklog "[+] The Kali chroot has been started already." && return 0
+    bklog "[+] The Chroot has been started already." && return 0
 }
 
 ######### MOUNT SDCARD #########
@@ -166,7 +166,7 @@ f_mount_fs_to_kali() {
     echo "kali" > $MNT/proc/sys/kernel/hostname
 
     ######### Setup done #########
-    bklog "[+] The Kali chroot has been started."
+    bklog "[+] The Chroot has been started."
 }
 
 ################################
@@ -186,6 +186,6 @@ fi
 f_isAllReady
 RES=$?
 if [ $RES -eq 1 ]; then
-    bklog "[!] Mounting fs to kali chroot."
+    bklog "[!] Mounting fs to chroot."
     f_mount_fs_to_kali
 fi

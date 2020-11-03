@@ -1,13 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/f_customcommands_action_search"
+    <item
+        android:id="@+id/f_customcommands_action_search"
         android:icon="@drawable/ic_search_black_24dp"
-        app:showAsAction="always"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"/>
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom" />
 
-    <group
-        android:id="@+id/f_customcommands_menu_group1">
+    <group android:id="@+id/f_customcommands_menu_group1">
         <item
             android:id="@+id/f_customcommands_menu_backupDB"
             android:orderInCategory="100"

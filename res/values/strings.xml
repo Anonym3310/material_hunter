@@ -114,7 +114,7 @@
 
     <!-- Bad USB -->
     <string name="badusb_label">BadUSB MITM Attack</string>
-    <string name="badusb_description">This is our implementation of the BadUSB attack as demonstrated at Black Hat USA 2014. Enabling this USB gadget mode will allow your device to act as a USB network interface when plugged into a target computer. Connecting the USB cable to a PC will force all traffic from that PC (Windows or Linux) through the NetHunter device, where the traffic can be MITM\'ed.</string>
+    <string name="badusb_description">This is our implementation of the BadUSB attack as demonstrated at Black Hat USA 2014. Enabling this USB gadget mode will allow your device to act as a USB network interface when plugged into a target computer. Connecting the USB cable to a PC will force all traffic from that PC (Windows or Linux) through the NetHunter device, where the traffic can be MITM\'ed. \n\nAttention! Not working on new devices with QCRndis.</string>
     <string name="badusb_started">BadUSB attack started! Check /sdcard/nh_files/badusb.log</string>
     <string name="badusb_stopped">BadUSB attack stopped!</string>
 
@@ -359,7 +359,7 @@
     <string name="chrootmanager_backup">Backup Chroot</string>
     <string name="chrootmanager_remove">Remove Chroot</string>
     <string name="chrootmanager_dwnld_path">Path of the folder you want to donwload to:</string>
-    <string name="chrootmanager_dwnld_download">DOWNLOAD LATEST KALI CHROOT FROM OFFICIAL IMAGE</string>
+    <string name="chrootmanager_dwnld_download">DOWNLOAD LATEST CHROOT FROM OFFICIAL IMAGE</string>
     <string name="chrootmanager_dwnld_restore">RESTORE FROM LOCAL STORAGE\n(.TAR.GZ /.TAR.XZ)</string>
     <string name="f_chrootmanager_list_folders">List of available folder(s) in</string>
     <string name="f_chrootmanager_setup_path">Setup Chroot Path</string>
@@ -377,7 +377,7 @@
     </array>
 
     <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Linux-environment that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
-    <string name="materialteam">Developers:\nt.me/cxblack\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/dark2048\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
+    <string name="materialteam">Developers:\nt.me/cxblack\nt.me/Death_Warrior940\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/dark2048\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
     <string name="attack_launched">Attack launched!</string>
     <string name="attack_stopped">Attack execution ended.</string>
 

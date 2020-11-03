@@ -3,16 +3,16 @@
     <item
         android:id="@+id/start_service"
         android:icon="@drawable/ic_action_play"
-        app:showAsAction="ifRoom|withText" />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/source_button"
         android:icon="@drawable/ic_pencil"
-        app:showAsAction="ifRoom|withText"  />
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/admin"
         android:title="@string/admin"
         app:showAsAction="never" />
-	<item
+    <item
         android:id="@+id/chooseLanguage"
         android:title="@string/choose_language"
         app:showAsAction="never" />

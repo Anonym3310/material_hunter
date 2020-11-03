@@ -3,7 +3,6 @@ package material.hunter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,7 +51,6 @@ public class DeAuthFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.deauth, container, false);
-        SharedPreferences sharedpreferences = context.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         setHasOptionsMenu(true);
         final Button scan = rootView.findViewById(R.id.scan_networks);
         final TextInputEditText wlan = rootView.findViewById(R.id.wlan_interface);
@@ -74,13 +72,12 @@ public class DeAuthFragment extends Fragment {
                 } else {
                     whitelist_command = "";
                 }
-                intentClickListener_NH(NhPaths.makeTermTitle("MDK3 DeAuth") + " mdk3 " + wlan.getText() + "mon d " + whitelist_command + "-c " + channel.getText());
+                intentClickListener_NH(NhPaths.makeTermTitle("MDK4 DeAuth") + " mdk4 " + wlan.getText() + "mon d " + whitelist_command + "-c " + channel.getText());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
         scan.setOnClickListener(v -> {
-
             new BootKali("cp /sdcard/nh_files/deauth/scan.sh /root/scan.sh && chmod +x /root/scan.sh").run_bg();
             String cmd = "./root/scan.sh " + wlan.getText() + " | tr -s [:space:] > /sdcard/nh_files/deauth/output.txt";
             try {
@@ -92,7 +89,7 @@ public class DeAuthFragment extends Fragment {
             new BootKali(cmd).run_bg();
             try {
                 Thread.sleep(5000);
-                String output = exe.RunAsRootOutput("cat " + NhPaths.APP_SD_FILES_PATH + "/deauth/output.txt").replace("Channel:", "\n Channel:");
+                String output = exe.RunAsRootOutput("cat " + NhPaths.APP_SD_FILES_PATH + "/deauth/output.txt | sed 's/(on " + wlan.getText().toString() + ")//g'");
                 term.setText(output);
             } catch (Exception e) {
                 e.printStackTrace();

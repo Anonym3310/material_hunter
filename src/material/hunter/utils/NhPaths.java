@@ -1,5 +1,6 @@
 package material.hunter.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,8 +40,8 @@ public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListen
     private static NhPaths instance;
     private static String BASE_PATH;
     private SharedPreferences sharedPreferences;
-    private ShellExecuter exe;
 
+    @SuppressLint("SdCardPath")
     private NhPaths(Context context) {
         sharedPreferences = context.getApplicationContext().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);

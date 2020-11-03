@@ -151,13 +151,13 @@ if [ ! $# -eq 0 ]; then
                     bklog "[!] chroot path is set to -> $MNT"
                     if [ ! -d "$MNT" ]; then
                         bklog "[-] \"$MNT\" chroot not exist!"
-                        bklog "[!] Click the button [INSTALL KALI CHROOT] down below now!"
+                        bklog "[!] Click the button [INSTALL CHROOT] down below now!"
                         exit 2
                     fi
 
                     bklog "[!] verifying chroot environment..."
                     if [ "$($BUSYBOX chroot $MNT /bin/uname -n)" ]; then
-                        bklog "[+] seems you have kali chroot installed already!"
+                        bklog "[+] seems you have chroot installed already!"
                         ## Define chroot shell executable path.
                         ## FUCKING CHECKER
                         if [ -x $MNT/usr/bin/sudo ]; then
@@ -168,7 +168,7 @@ if [ ! $# -eq 0 ]; then
                             $BUSYBOX chroot $MNT /bin/bash -c 'apt update && apt install sudo -y'
                             if [ ! -x $MNT$CHROOT_EXEC ]; then
                                 bklog "[-] Seems the sudo is not installed successfully."
-                                bklog "[-] Make sure your Kali Chroot is not corrupted."
+                                bklog "[-] Make sure your Chroot is not corrupted."
                                 exit 2
                             fi
                         fi
@@ -197,14 +197,14 @@ if [ ! $# -eq 0 ]; then
                         fi
                         if [ $ISALLREADY -eq 0 ]; then
                             bklog "[+] Chroot environment has been set and started."
-                            bklog "[!] You may click \"STOP KALI CHROOT\" to shutdown the chroot environment."
+                            bklog "[!] You may click \"STOP CHROOT\" to shutdown the chroot environment."
                             return 0
                         else
-                            bklog "[!] You may click \"START KALI CHROOT\" to start the chroot environment."
+                            bklog "[!] You may click \"START CHROOT\" to start the chroot environment."
                             return 1
                         fi
                     else
-                        bklog "[-] seems there is no kali chroot installed yet, please click the button \"EDIT\" to configure the proper Kali Chroot Path or install the chroot."
+                        bklog "[-] seems there is no chroot installed yet, please click the button \"EDIT\" to configure the proper Chroot Path or install the chroot."
                         bklog "[!] if the error occurs, you can check the functionlity busybox_nh"
                         return 2
                     fi
@@ -288,7 +288,7 @@ if [ ! $# -eq 0 ]; then
                             fi
                         fi
                     done
-                    bklog "[!] Kali Chroot requires at least 8 Gb free sapce just to make sure it won't break your system."
+                    bklog "[!] Chroot requires at least 8 Gb free sapce just to make sure it won't break your system."
                     bklog "[!] Checking storage capacity...."
                     SDCARD_PARTITION=$(mount | grep sdcardfs | $BUSYBOX awk '{print $1}' | head -n1)
                     AVAILABLESIZE=$(df $SDCARD_PARTITION | tail -n1 | $BUSYBOX awk '{s=$4} END{print (s/1024)}' | sed 's/\..*$//')
@@ -312,7 +312,7 @@ if [ ! $# -eq 0 ]; then
                             $BUSYBOX tar xzf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/
                             $BUSYBOX sync
                         else
-                            bklog "[-] $TARGET_TARBALL_PATH is not a valid tarball file for Kali Chroot, make sure there is only one root directory at the top level of the tarball file."
+                            bklog "[-] $TARGET_TARBALL_PATH is not a valid tarball file for Chroot, make sure there is only one root directory at the top level of the tarball file."
                         fi
                     elif echo $TARGET_TARBALL_PATH | $BUSYBOX grep -q ".tar.xz$"; then
                         TARBALL_ROOTDIR_NAME=$($BUSYBOX tar -tf $TARGET_TARBALL_PATH | $BUSYBOX sed -e 's@/.*@@' | $BUSYBOX uniq | $BUSYBOX sed 's/\/.*$//')
@@ -320,7 +320,7 @@ if [ ! $# -eq 0 ]; then
                             $BUSYBOX tar xJf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/
                             $BUSYBOX sync
                         else
-                            bklog "[-] $TARGET_TARBALL_PATH is not a valid tarball file for Kali Chroot, make sure there is only one root directory at the top level of the tarball file."
+                            bklog "[-] $TARGET_TARBALL_PATH is not a valid tarball file for Chroot, make sure there is only one root directory at the top level of the tarball file."
                         fi
                     fi
                     mv "$TEMP_EXTRACT_DIR/$TARBALL_ROOTDIR_NAME" "$TARGET_CHROOT_DIR_NAME"
@@ -359,7 +359,7 @@ if [ ! $# -eq 0 ]; then
                     $BUSYBOX find $MNT -type l -exec rm -rf {} \;
                     if rm -rf $MNT; then
                         $BUSYBOX sync
-                        bklog "[+] The chroot directory \"$MNT\" has been removed successfully."
+                        bklog "[+] The Chroot directory \"$MNT\" has been removed successfully."
                     fi
                     ;;
                 *)

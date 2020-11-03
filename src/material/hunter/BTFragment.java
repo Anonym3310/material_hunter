@@ -47,7 +47,6 @@ import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 
 public class BTFragment extends Fragment {
-
     private static final String ARG_SECTION_NUMBER = "section_number";
     private ViewPager mViewPager;
     private SharedPreferences sharedpreferences;
@@ -167,11 +166,9 @@ public class BTFragment extends Fragment {
     }
 
     public static class TabsPagerAdapter extends FragmentPagerAdapter {
-
         TabsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int i) {
             switch (i) {
@@ -247,12 +244,7 @@ public class BTFragment extends Fragment {
 
             //Bluetooth interfaces
             final String[] outputHCI = {""};
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    outputHCI[0] = exe.RunAsRootOutput("bootkali custom_cmd hciconfig | grep hci | cut -d: -f1");
-                }
-            });
+            AsyncTask.execute(() -> outputHCI[0] = exe.RunAsRootOutput("bootkali custom_cmd hciconfig | grep hci | cut -d: -f1"));
             final ArrayList<String> hciIfaces = new ArrayList<>();
             if (outputHCI[0].equals("")) {
                 hciIfaces.add("None");
@@ -279,54 +271,43 @@ public class BTFragment extends Fragment {
             RefreshStatus.setOnClickListener(v -> {
                 refresh(rootView);
             });
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    refresh(rootView);
-                }
-            });
+            AsyncTask.execute(() -> refresh(rootView));
 
             final Switch dbusSwitch = rootView.findViewById(R.id.dbus_switch);
             final Switch btSwitch = rootView.findViewById(R.id.bt_switch);
             final Switch hciSwitch = rootView.findViewById(R.id.hci_switch);
 
-            dbusSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        exe.RunAsRoot(new String[]{"bootkali custom_cmd service dbus start"});
-                        DBUSstatus.setText("Running");
-                    } else {
-                        exe.RunAsRoot(new String[]{"bootkali custom_cmd service dbus stop"});
-                        DBUSstatus.setText("Stopped");
-                    }
+            dbusSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    exe.RunAsRoot(new String[]{"bootkali custom_cmd service dbus start"});
+                    DBUSstatus.setText("Running");
+                } else {
+                    exe.RunAsRoot(new String[]{"bootkali custom_cmd service dbus stop"});
+                    DBUSstatus.setText("Stopped");
                 }
             });
-            btSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    String dbus_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service dbus status | grep dbus");
-                    if (dbus_statusCMD.equals("dbus is running.")) {
-                        if (isChecked) {
-                            exe.RunAsRoot(new String[]{"bootkali custom_cmd service bluetooth start"});
-                            BTstatus.setText("Running");
-                        } else {
-                            exe.RunAsRoot(new String[]{"bootkali custom_cmd service bluetooth stop"});
-                            BTstatus.setText("Stopped");
-                        }
+            btSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                String dbus_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service dbus status | grep dbus");
+                if (dbus_statusCMD.equals("dbus is running.")) {
+                    if (isChecked) {
+                        exe.RunAsRoot(new String[]{"bootkali custom_cmd service bluetooth start"});
+                        BTstatus.setText("Running");
                     } else {
-                        Toast.makeText(getActivity().getApplicationContext(), "Enable dbus service first!", Toast.LENGTH_SHORT).show();
-                        btSwitch.setChecked(false);
+                        exe.RunAsRoot(new String[]{"bootkali custom_cmd service bluetooth stop"});
+                        BTstatus.setText("Stopped");
                     }
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Enable dbus service first!", Toast.LENGTH_SHORT).show();
+                    btSwitch.setChecked(false);
                 }
             });
-            hciSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        exe.RunAsRoot(new String[]{"bootkali custom_cmd hciconfig " + selected_iface + " up noscan"});
-                        HCIstatus.setText("Up");
-                    } else {
-                        exe.RunAsRoot(new String[]{"bootkali custom_cmd hciconfig " + selected_iface + " down"});
-                        HCIstatus.setText("Down");
-                    }
+            hciSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    exe.RunAsRoot(new String[]{"bootkali custom_cmd hciconfig " + selected_iface + " up noscan"});
+                    HCIstatus.setText("Up");
+                } else {
+                    exe.RunAsRoot(new String[]{"bootkali custom_cmd hciconfig " + selected_iface + " down"});
+                    HCIstatus.setText("Down");
                 }
             });
 
@@ -379,21 +360,18 @@ public class BTFragment extends Fragment {
             });
 
             //Target selection
-            targets.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    String selected_target = targets.getItemAtPosition(i).toString();
-                    if (selected_target.equals("No devices found"))
-                        Toast.makeText(getActivity().getApplicationContext(), "No target!", Toast.LENGTH_SHORT).show();
-                    else {
-                        selected_addr = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 1");
-                        selected_class = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 2");
-                        selected_name = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 3");
-                        PreferencesData.saveString(context, "selected_address", selected_addr);
-                        PreferencesData.saveString(context, "selected_class", selected_class);
-                        PreferencesData.saveString(context, "selected_name", selected_name);
-                        NhPaths.showSnack(getView(), getString(R.string.bt_target_selected), 1);
-                    }
+            targets.setOnItemClickListener((adapterView, view, i, l) -> {
+                String selected_target = targets.getItemAtPosition(i).toString();
+                if (selected_target.equals("No devices found"))
+                    Toast.makeText(getActivity().getApplicationContext(), "No target!", Toast.LENGTH_SHORT).show();
+                else {
+                    selected_addr = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 1");
+                    selected_class = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 2");
+                    selected_name = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 3");
+                    PreferencesData.saveString(context, "selected_address", selected_addr);
+                    PreferencesData.saveString(context, "selected_class", selected_class);
+                    PreferencesData.saveString(context, "selected_name", selected_name);
+                    NhPaths.showSnack(getView(), getString(R.string.bt_target_selected), 1);
                 }
             });
             return rootView;
@@ -410,44 +388,41 @@ public class BTFragment extends Fragment {
             final Spinner ifaces = BTFragment.findViewById(R.id.hci_interface);
             SharedPreferences sharedpreferences = context.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
 
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    String dbus_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service dbus status | grep dbus");
-                    if (dbus_statusCMD.equals("dbus is running.")) {
-                        DBUSstatus.setText("Running");
-                        dbusSwitch.setChecked(true);
-                    } else {
-                        DBUSstatus.setText("Stopped");
-                        dbusSwitch.setChecked(false);
-                    }
-                    String bt_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service bluetooth status | grep bluetooth");
-                    if (bt_statusCMD.equals("bluetooth is running.")) {
-                        BTstatus.setText("Running");
-                        btSwitch.setChecked(true);
-                    } else {
-                        BTstatus.setText("Stopped");
-                        btSwitch.setChecked(false);
-                    }
-                    String hci_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd hciconfig " + selected_iface + " | grep \"UP RUNNING\" | cut -f2 -d$'\\t'");
-                    if (hci_statusCMD.equals("UP RUNNING ")) {
-                        HCIstatus.setText("Up");
-                        hciSwitch.setChecked(true);
-                    } else {
-                        HCIstatus.setText("Down");
-                        hciSwitch.setChecked(false);
-                    }
-                    String outputHCI = exe.RunAsRootOutput("bootkali custom_cmd hciconfig | grep hci | cut -d: -f1");
-                    final ArrayList<String> hciIfaces = new ArrayList<>();
-                    if (outputHCI.equals("")) {
-                        hciIfaces.add("None");
-                        ifaces.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, hciIfaces));
-                    } else {
-                        final String[] ifacesArray = outputHCI.split("\n");
-                        ifaces.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, ifacesArray));
-                        Integer lastiface = sharedpreferences.getInt("selected_iface", 0);
-                        ifaces.setSelection(lastiface);
-                    }
+            getActivity().runOnUiThread(() -> {
+                String dbus_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service dbus status | grep dbus");
+                if (dbus_statusCMD.equals("dbus is running.")) {
+                    DBUSstatus.setText("Running");
+                    dbusSwitch.setChecked(true);
+                } else {
+                    DBUSstatus.setText("Stopped");
+                    dbusSwitch.setChecked(false);
+                }
+                String bt_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service bluetooth status | grep bluetooth");
+                if (bt_statusCMD.equals("bluetooth is running.")) {
+                    BTstatus.setText("Running");
+                    btSwitch.setChecked(true);
+                } else {
+                    BTstatus.setText("Stopped");
+                    btSwitch.setChecked(false);
+                }
+                String hci_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd hciconfig " + selected_iface + " | grep \"UP RUNNING\" | cut -f2 -d$'\\t'");
+                if (hci_statusCMD.equals("UP RUNNING ")) {
+                    HCIstatus.setText("Up");
+                    hciSwitch.setChecked(true);
+                } else {
+                    HCIstatus.setText("Down");
+                    hciSwitch.setChecked(false);
+                }
+                String outputHCI = exe.RunAsRootOutput("bootkali custom_cmd hciconfig | grep hci | cut -d: -f1");
+                final ArrayList<String> hciIfaces = new ArrayList<>();
+                if (outputHCI.equals("")) {
+                    hciIfaces.add("None");
+                    ifaces.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, hciIfaces));
+                } else {
+                    final String[] ifacesArray = outputHCI.split("\n");
+                    ifaces.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, ifacesArray));
+                    Integer lastiface = sharedpreferences.getInt("selected_iface", 0);
+                    ifaces.setSelection(lastiface);
                 }
             });
         }
@@ -755,11 +730,13 @@ public class BTFragment extends Fragment {
             });
 
             //Stream or play audio
+            //FIXME
             Button PlayAudioButton = rootView.findViewById(R.id.play_audio);
             Button StopAudioButton = rootView.findViewById(R.id.stop_audio);
-            AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 8000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, 20000, AudioTrack.MODE_STREAM);
+            AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, 8000, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, 16000, AudioTrack.MODE_STREAM);
             PlayAudioButton.setOnClickListener(v -> {
-                File cw_listenfile = new File(NhPaths.SD_PATH + "/rec.raw");
+                //File cw_listenfile = new File(NhPaths.SD_PATH + "/rec.raw");
+                File cw_listenfile = new File(injectfilename.getText().toString());
                 if (cw_listenfile.length() == 0) {
                     NhPaths.showSnack(getView(), getString(R.string.bt_file_not_found), 1);
                 } else {
@@ -778,8 +755,7 @@ public class BTFragment extends Fragment {
                                 synchronized (audioTrack) {
                                     audioTrack.write(data, 0, n);
                                 }
-                        } catch (IOException e) {
-                        }
+                        } catch (IOException ignored) { }
                     });
                 }
             });
@@ -792,7 +768,6 @@ public class BTFragment extends Fragment {
     }
 
     public static class PreferencesData {
-
         public static void saveString(Context context, String key, String value) {
             SharedPreferences sharedPrefs = PreferenceManager
                     .getDefaultSharedPreferences(context);

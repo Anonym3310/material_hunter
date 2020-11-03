@@ -19,10 +19,10 @@ if [ -z "$BUSYBOX" ]; then
     exit 1
 fi
 
-## Validate kali Chroot path.
+## Validate Chroot path.
 if [ ! -d "$MNT" ]; then
     bklog "[-] \"$MNT\" directory not exist!"
-    bklog "[!] Click the button [INSTALL KALI CHROOT] down below now!"
+    bklog "[!] Click the button [INSTALL CHROOT] down below now!"
     exit 2
 fi
 if [ -z "$MNT" ]; then
@@ -33,14 +33,14 @@ fi
 ## Define chroot shell executable path.
 if [ ! -x $MNT$CHROOT_EXEC ]; then
     bklog "[-] Your chroot has no \"sudo\" installed, please install it manually first."
-    bklog "[-] Also make sure your Kali Chroot is not corrupted."
+    bklog "[-] Also make sure your Chroot is not corrupted."
     exit 2
 fi
 
-bklog "[!] Starting user defined Kali services"
+bklog "[!] Starting user defined services"
 while IFS= read -r line; do
     if [ ! -z "$line" ]; then
         $BUSYBOX chroot $MNT $CHROOT_EXEC -E PATH=$PATH su -c "$line"
     fi
 done < /data/data/$APP_PGK_NAME/files/scripts/services
-bklog "[+] Kali services should be started!"
+bklog "[+] Services should be started!"

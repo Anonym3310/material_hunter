@@ -15,7 +15,7 @@ NHSYSTEM_PATH=/data/local/nhsystem
 ## Define chroot sudo path
 CHROOT_EXEC=/usr/bin/sudo
 
-## Combine android $PATH to kali chroot $PATH
+## Combine android $PATH to chroot $PATH
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 
 ## Define busybox path.
@@ -30,7 +30,7 @@ if [ -z "$BUSYBOX" ]; then
     fi
 fi
 
-## Define the Kali Chroot path.
+## Define the Chroot path.
 MNT=`readlink -e $NHSYSTEM_PATH/kalifs`
 if [ -z "$MNT" ]; then
     MNT=`cat /data/data/$APP_PGK_NAME/shared_prefs/$APP_PGK_NAME.xml | grep "\"chroot_path\"" | sed "s/^.*\"chroot_path\">\(.*\)<\/string>/\1/g"`

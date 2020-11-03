@@ -38,6 +38,7 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:singleLine="true"
                         android:text="@string/mh_sett"
+                        android:textColor="@android:color/background_light"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -107,6 +108,7 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:singleLine="true"
                         android:text="@string/mh_devsett"
+                        android:textColor="@android:color/background_light"
                         android:textSize="20sp" />
                 </LinearLayout>
 

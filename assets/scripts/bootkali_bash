@@ -11,7 +11,7 @@ if [ -z "$BUSYBOX" ]; then
     exit 1
 fi
 
-## Validate kali Chroot path.
+## Validate Chroot path.
 if [ -z "$MNT" ]; then
     bklog "[-] The \$MNT variable is not defined, please run nethunter app first."
     exit 2
@@ -19,14 +19,14 @@ fi
 
 if [ ! -d "$MNT" ]; then
     bklog "[-] \"$MNT\" directory not exist!"
-    bklog "[!] Click the button [INSTALL KALI CHROOT] down below now!"
+    bklog "[!] Click the button [INSTALL CHROOT] down below now!"
     exit 2
 fi
 
 ## Define chroot shell executable path.
 if [ ! -x $MNT$CHROOT_EXEC ]; then
     bklog "[-] Your chroot has no \"sudo\" installed, please install it manually first."
-    bklog "[-] Also make sure your Kali Chroot is not corrupted."
+    bklog "[-] Also make sure your Chroot is not corrupted."
     exit 2
 fi
 

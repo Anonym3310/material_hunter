@@ -123,7 +123,6 @@ public class MacchangerFragment extends Fragment {
         mac4 = rootView.findViewById(R.id.f_macchanger_mac4_et);
         mac5 = rootView.findViewById(R.id.f_macchanger_mac5_et);
         mac6 = rootView.findViewById(R.id.f_macchanger_mac6_et);
-
         setKHost = rootView.findViewById(R.id.f_macchanger_setKHostname_btn);
         KHost = rootView.findViewById(R.id.f_macchanger_khost_et);
         return rootView;
@@ -165,7 +164,6 @@ public class MacchangerFragment extends Fragment {
         mac5 = null;
         mac6 = null;
         currentMacTextView = null;
-        //currentHostNameTextView = null;
         reloadImageButton = null;
     }
 
