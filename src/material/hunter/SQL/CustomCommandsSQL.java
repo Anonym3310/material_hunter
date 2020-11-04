@@ -27,7 +27,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
     private static final String TABLE_NAME = DATABASE_NAME;
     private static final ArrayList<String> COLUMNS = new ArrayList<>();
     private static final String[][] customcommandsData = {
-            {"1", "Update Kali Metapackages",
+            {"1", "Update Metapackages",
                     "apt update && apt-get -y upgrade",
                     "chroot", "interactive", "0"},
             {"2", "Launch Wifite",
@@ -73,7 +73,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
                 COLUMNS.get(3) + " TEXT, " + COLUMNS.get(4) + " TEXT, " +
                 COLUMNS.get(5) + " INTEGER)");
         // For devices update from db version 2 to 3 only;
-        if (new File(NhPaths.APP_DATABASE_PATH + "/KaliLaunchers").exists()) {
+        if (new File(NhPaths.APP_DATABASE_PATH + "/Launchers").exists()) {
             convertOldDBtoNewDB(db);
             // else create default value;
         } else {
@@ -332,7 +332,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
     }
 
     private void convertOldDBtoNewDB(SQLiteDatabase currentDB) {
-        currentDB.execSQL("ATTACH DATABASE ? AS oldDB", new String[]{NhPaths.APP_DATABASE_PATH + "/KaliLaunchers"});
+        currentDB.execSQL("ATTACH DATABASE ? AS oldDB", new String[]{NhPaths.APP_DATABASE_PATH + "/Launchers"});
         currentDB.execSQL("INSERT INTO " + TABLE_NAME + "(" + COLUMNS.get(0) + "," +
                 COLUMNS.get(1) + "," + COLUMNS.get(2) + "," +
                 COLUMNS.get(3) + "," + COLUMNS.get(4) + "," +
@@ -340,7 +340,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
                 " FROM oldDB.LAUNCHERS;");
         currentDB.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(3) + " = LOWER(" + COLUMNS.get(3) + ");");
         currentDB.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(4) + " = LOWER(" + COLUMNS.get(4) + ");");
-        SQLiteDatabase.deleteDatabase(new File(NhPaths.APP_DATABASE_PATH + "/KaliLaunchers"));
+        SQLiteDatabase.deleteDatabase(new File(NhPaths.APP_DATABASE_PATH + "/Launchers"));
     }
 
     private boolean ifTableExists(SQLiteDatabase tempDB, String tableName) {

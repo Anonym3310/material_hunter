@@ -81,9 +81,9 @@ public class ServicesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ServicesViewModel servicesViewModel = ViewModelProviders.of(this).get(ServicesViewModel.class);
         servicesViewModel.init(context);
-        servicesViewModel.getLiveDataKaliServicesModelList().observe(getViewLifecycleOwner(), kaliServicesModelList -> servicesRecyclerViewAdapter.notifyDataSetChanged());
+        servicesViewModel.getLiveDataServicesModelList().observe(getViewLifecycleOwner(), ServicesModelList -> servicesRecyclerViewAdapter.notifyDataSetChanged());
 
-        servicesRecyclerViewAdapter = new ServicesRecyclerViewAdapter(context, servicesViewModel.getLiveDataKaliServicesModelList().getValue());
+        servicesRecyclerViewAdapter = new ServicesRecyclerViewAdapter(context, servicesViewModel.getLiveDataServicesModelList().getValue());
         RecyclerView recyclerViewServiceTitle = view.findViewById(R.id.f_services_recyclerviewServiceTitle);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         recyclerViewServiceTitle.setLayoutManager(linearLayoutManager);

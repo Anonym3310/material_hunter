@@ -1,7 +1,7 @@
 package material.hunter.models;
 
 /*
-    KaliServices Model class, each model object represent the data of each recyclerview item.
+    Services Model class, each model object represent the data of each recyclerview item.
  */
 public class ServicesModel {
     private String ServiceName;

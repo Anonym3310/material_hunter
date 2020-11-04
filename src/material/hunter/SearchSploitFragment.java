@@ -2,6 +2,7 @@ package material.hunter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,11 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import android.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.ShellExecuter;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +32,9 @@ import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.List;
 import java.util.Objects;
+
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.ShellExecuter;
 
 public class SearchSploitFragment extends Fragment {
     private static final String TAG = "SearchSploitFragment";
@@ -179,22 +179,20 @@ public class SearchSploitFragment extends Fragment {
                     loadExploits();
                     hideSoftKeyboard(getView());
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    /*AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle("Warning!");
-
                     builder.setMessage("The exploit db is pretty big (+30K exploits), activating raw search will make the search slow.\nIs useful to do global searches when you don't find a exploit.")
                             .setNegativeButton(getString(R.string.cancel), (dialog, id) -> dialog.dismiss())
-                            .setPositiveButton("Enable", (dialog, id) -> {
-                                getView().findViewById(R.id.search_filters).setVisibility(View.GONE);
-                                item.setTitle("Disable Raw search");
-                                withFilters = false;
-                                loadExploits();
-                                hideSoftKeyboard(getView());
-                            });
-
+                            .setPositiveButton("Enable", (dialog, id) -> {*/
+                    getView().findViewById(R.id.search_filters).setVisibility(View.GONE);
+                    item.setTitle("Disable Raw search");
+                    withFilters = false;
+                    loadExploits();
+                    hideSoftKeyboard(getView());
+                            /*});
                     AlertDialog ad = builder.create();
                     ad.setCancelable(false);
-                    ad.show();
+                    ad.show();*/
                 }
                 return true;
             default:
@@ -299,6 +297,8 @@ class ExploitLoader extends BaseAdapter {
         return _exploitList.size();
     }
 
+    //FILE TO HID
+    //FIXME
     private void start(String file) {
         String[] command = new String[1];
         command[0] = "su -c /data/data/material.hunter/files/scripts/bootkali file2hid-file " + file;

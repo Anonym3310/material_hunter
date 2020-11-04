@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ServicesRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<ServicesRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 
-    private static final String TAG = "KaliServiceRecycleViewChild";
+    private static final String TAG = "ServiceRecycleViewChild";
     private Context context;
     private List<ServicesModel> servicesModelList;
 

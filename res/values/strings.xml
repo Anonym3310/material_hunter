@@ -535,7 +535,7 @@
     <string name="cancel">Cancel</string>
     <string name="edit_source_updated">Source updated</string>
     <string name="edit_source_not_updated">Source not updated</string>
-    <string name="type_wlan_interface">Type wlan interface</string>
+    <string name="wlan_interface">Wlan interface (without mon suffix)</string>
     <string name="scan_networks">Scan Networks</string>
     <string name="channel">Channel</string>
     <string name="whitelist">Whitelist</string>
@@ -561,6 +561,7 @@
     <string name="ok">Ok</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="file_q_overwrite">Overwrite?</string>
     <string name="file_invalid_name">Invilad Name, please try again.</string>
 
     <string name="bd_backup">Backup BD</string>

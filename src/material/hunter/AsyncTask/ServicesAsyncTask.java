@@ -24,7 +24,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
     public static final int RESTOREDATA = 8;
     public static final int RESETDATA = 9;
     public static final int UPDATE_RUNONCHROOTSTART_SCRIPTS = 10;
-    private KaliServicesAsyncTaskListener listener;
+    private ServicesAsyncTaskListener listener;
     private int actionCode;
     private int position;
     private int originalPositionIndex;
@@ -79,11 +79,11 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
     }
 
     @Override
-    protected List<ServicesModel> doInBackground(List<ServicesModel>... copyOfkaliServicesModelList) {
+    protected List<ServicesModel> doInBackground(List<ServicesModel>... copyOfServicesModelList) {
         List<ServicesModel> servicesModelList;
         switch (actionCode) {
             case GETITEMSTATUS:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     for (int i = 0; i < servicesModelList.size(); i++) {
                         servicesModelList.get(i).setStatus(new ShellExecuter().RunAsRootReturnValue(NhPaths.BUSYBOX + " ps | grep -v grep | grep '" + servicesModelList.get(i).getCommandforCheckServiceStatus() + "'") == 0 ? "[+] Service is running" : "[-] Service is NOT running");
@@ -91,19 +91,19 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
                 }
                 break;
             case START_SERVICE_FOR_ITEM:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     servicesModelList.get(position).setStatus(new ShellExecuter().RunAsChrootReturnValue(servicesModelList.get(position).getCommandforStartService()) == 0 ? "[+] Service is running" : "[-] Service is NOT running");
                 }
                 break;
             case STOP_SERVICE_FOR_ITEM:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     servicesModelList.get(position).setStatus(new ShellExecuter().RunAsChrootReturnValue(servicesModelList.get(position).getCommandforStopService()) == 0 ? "[-] Service is NOT running" : "[+] Service is running");
                 }
                 break;
             case EDITDATA:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     servicesModelList.get(position).setServiceName(dataArrayList.get(0));
                     servicesModelList.get(position).setCommandforStartService(dataArrayList.get(1));
@@ -115,7 +115,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
                 }
                 break;
             case ADDDATA:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
 
                     servicesModelList.add(position - 1, new ServicesModel(
@@ -132,7 +132,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
                 }
                 break;
             case DELETEDATA:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     Collections.sort(selectedPositionsIndex, Collections.reverseOrder());
                     for (Integer selectedPosition : selectedPositionsIndex) {
@@ -143,7 +143,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
                 }
                 break;
             case MOVEDATA:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     ServicesModel tempServicesModel = new ServicesModel(
                             servicesModelList.get(originalPositionIndex).getServiceName(),
@@ -164,7 +164,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
             case BACKUPDATA:
                 break;
             case RESTOREDATA:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     servicesModelList.clear();
                     servicesModelList = servicesSQL.bindData((ArrayList<ServicesModel>) servicesModelList);
@@ -173,7 +173,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
             case RESETDATA:
                 break;
             case UPDATE_RUNONCHROOTSTART_SCRIPTS:
-                servicesModelList = copyOfkaliServicesModelList[0];
+                servicesModelList = copyOfServicesModelList[0];
                 if (servicesModelList != null) {
                     servicesModelList.get(position).setServiceName(dataArrayList.get(0));
                     servicesModelList.get(position).setCommandforStartService(dataArrayList.get(1));
@@ -185,7 +185,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
                 }
                 break;
         }
-        return copyOfkaliServicesModelList[0];
+        return copyOfServicesModelList[0];
     }
 
     @Override
@@ -197,7 +197,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
         ChrootManagerFragment.isAsyncTaskRunning = false;
     }
 
-    public void setListener(KaliServicesAsyncTaskListener listener) {
+    public void setListener(ServicesAsyncTaskListener listener) {
         this.listener = listener;
     }
 
@@ -211,7 +211,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
         new ShellExecuter().RunAsRootOutput("cat << 'EOF' > " + NhPaths.APP_SCRIPTS_PATH + "/services" + "\n" + tmpStringBuilder.toString() + "\nEOF");
     }
 
-    public interface KaliServicesAsyncTaskListener {
+    public interface ServicesAsyncTaskListener {
         void onAsyncTaskPrepare();
 
         void onAsyncTaskFinished(List<ServicesModel> servicesModelList);

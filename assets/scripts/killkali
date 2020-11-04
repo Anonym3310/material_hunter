@@ -31,9 +31,9 @@ isAllunmounted=0
 #### DEFINE FUNCTIONS ####
 ##########################
 
-########## Kill all running kali services and processes ##########
+########## Kill all running services and processes ##########
 f_kill_pids() {
-    bklog "[!] Killing all running kali services .."
+    bklog "[!] Killing all running services .."
     local lsof_full=$($BUSYBOX lsof | awk '{print $1}' | grep -c '^lsof')
     if [ "${lsof_full}" -eq 0 ]; then
         local pids=$($BUSYBOX lsof | grep "$MNT" | awk '{print $1}' | uniq)
@@ -109,7 +109,6 @@ f_is_mntpoint() {
         return 1
     fi
 }
-
 
 ###################
 #### MAIN PART ####

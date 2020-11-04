@@ -445,7 +445,7 @@ public class HidFragment extends Fragment {
             context = getContext();
             activity = getActivity();
             configFilePath = NhPaths.APP_SD_FILES_PATH + "/configs/hid-cmd.conf";
-            loadFilePath = NhPaths.APP_SD_FILES_PATH + "/scripts/hid/";
+            loadFilePath = NhPaths.APP_SD_FILES_PATH + "/configs/";
         }
 
         @Override
@@ -508,15 +508,14 @@ public class HidFragment extends Fragment {
                     alert.setPositiveButton("Ok", (dialog, whichButton) -> {
                         String value = input.getText().toString();
                         if (!value.equals("") && value.length() > 0) {
-                            //FIXME Save file (ask name)
                             File scriptFile = new File(loadFilePath + File.separator + value);
-                            if (!scriptFile.exists()) {
-                                try {
-                                    if (getView() == null) {
-                                        return;
-                                    }
-                                    TextInputEditText source1 = getView().findViewById(R.id.windowsCmdSource);
-                                    String text1 = source1.getText().toString();
+                            try {
+                                if (getView() == null) {
+                                    return;
+                                }
+                                TextInputEditText source1 = getView().findViewById(R.id.windowsCmdSource);
+                                String text1 = source1.getText().toString();
+                                if (!scriptFile.exists()) {
                                     scriptFile.createNewFile();
                                     FileOutputStream fOut = new FileOutputStream(scriptFile);
                                     OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
@@ -524,11 +523,26 @@ public class HidFragment extends Fragment {
                                     myOutWriter.close();
                                     fOut.close();
                                     NhPaths.showSnack(getView(), getString(R.string.script_saved), 1);
-                                } catch (Exception e) {
-                                    NhPaths.showMessage(context, e.getMessage());
+                                } else {
+                                    AlertDialog.Builder alert1 = new AlertDialog.Builder(activity);
+                                    alert1.setTitle(getString(R.string.file_exists)).setMessage(getString(R.string.file_q_overwrite))
+                                            .setNegativeButton(getString(R.string.no), null)
+                                            .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+                                                try {
+                                                    scriptFile.createNewFile();
+                                                    FileOutputStream fOut = new FileOutputStream(scriptFile);
+                                                    OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                                                    myOutWriter.append(text1);
+                                                    myOutWriter.close();
+                                                    fOut.close();
+                                                    NhPaths.showSnack(getView(), getString(R.string.script_saved), 1);
+                                                } catch (Exception e) {
+                                                    NhPaths.showMessage(context, e.getMessage());
+                                                }
+                                            }).create().show();
                                 }
-                            } else {
-                                NhPaths.showSnack(getView(), getString(R.string.file_exists), 1);
+                            } catch (Exception e) {
+                                NhPaths.showMessage(context, e.getMessage());
                             }
                         } else {
                             NhPaths.showSnack(getView(), getString(R.string.wrong_name_provider), 1);

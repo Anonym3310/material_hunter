@@ -17,21 +17,21 @@ import java.util.List;
     After the ServicesData singleton is created, it will live until the app dies.
  */
 public class ServicesViewModel extends ViewModel {
-    private MutableLiveData<List<ServicesModel>> mutableLiveDataKaliServicesModelList;
+    private MutableLiveData<List<ServicesModel>> mutableLiveDataServicesModelList;
 
     public void init(Context context) {
-        if (mutableLiveDataKaliServicesModelList != null) {
+        if (mutableLiveDataServicesModelList != null) {
             return;
         }
         ServicesData servicesData = ServicesData.getInstance();
         if (ServicesData.isDataInitiated) {
-            mutableLiveDataKaliServicesModelList = servicesData.getKaliServicesModels();
+            mutableLiveDataServicesModelList = servicesData.getServicesModels();
         } else {
-            mutableLiveDataKaliServicesModelList = servicesData.getKaliServicesModels(context);
+            mutableLiveDataServicesModelList = servicesData.getServicesModels(context);
         }
     }
 
-    public LiveData<List<ServicesModel>> getLiveDataKaliServicesModelList() {
-        return mutableLiveDataKaliServicesModelList;
+    public LiveData<List<ServicesModel>> getLiveDataServicesModelList() {
+        return mutableLiveDataServicesModelList;
     }
 }

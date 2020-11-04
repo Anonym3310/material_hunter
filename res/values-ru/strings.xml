@@ -504,7 +504,7 @@
     <string name="cancel">Назад</string>
     <string name="edit_source_updated">Источник обновлен</string>
     <string name="edit_source_not_updated">Источник не обновлен</string>
-    <string name="type_wlan_interface">Интерфейс</string>
+    <string name="wlan_interface">Интерфейс (без суффикса mon)</string>
     <string name="scan_networks">Сканировать сети</string>
     <string name="channel">Канал</string>
     <string name="whitelist">Whitelist</string>
@@ -530,6 +530,7 @@
     <string name="ok">Ок</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
+    <string name="file_q_overwrite">Перезаписать?</string>
     <string name="file_invalid_name">Имя недоступно, пожалуйста попробуйте снова.</string>
 
     <string name="bd_backup">Сохранить DB</string>

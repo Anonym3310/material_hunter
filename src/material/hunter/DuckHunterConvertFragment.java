@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -69,7 +70,6 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
         View rootView = inflater.inflate(R.layout.duck_hunter_convert, container, false);
         TextView t2 = rootView.findViewById(R.id.reference_text);
         t2.setMovementMethod(LinkMovementMethod.getInstance());
-
         editsource = rootView.findViewById(R.id.editSource);
         editsource.addTextChangedListener(new TextWatcher() {
 
@@ -247,14 +247,13 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
                 alert.setPositiveButton("Ok", (dialog, whichButton) -> {
                     String value = input.getText().toString();
                     if (value.length() > 0) {
-                        //Save file (ask name)
                         File scriptFile = new File(NhPaths.APP_SD_FILES_PATH + loadFilePath + File.separator + value);
                         System.out.println(scriptFile.getAbsolutePath());
-                        if (!scriptFile.exists()) {
-                            try {
-                                if (getView() != null) {
-                                    EditText source = getView().findViewById(R.id.editSource);
-                                    String text = source.getText().toString();
+                        try {
+                            if (getView() != null) {
+                                EditText source = getView().findViewById(R.id.editSource);
+                                String text = source.getText().toString();
+                                if (!scriptFile.exists()) {
                                     scriptFile.createNewFile();
                                     FileOutputStream fOut = new FileOutputStream(scriptFile);
                                     OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
@@ -262,12 +261,27 @@ public class DuckHunterConvertFragment extends Fragment implements View.OnClickL
                                     myOutWriter.close();
                                     fOut.close();
                                     NhPaths.showSnack(getView(), getString(R.string.script_saved), 1);
+                                } else {
+                                    AlertDialog.Builder alert1 = new AlertDialog.Builder(activity);
+                                    alert1.setTitle(getString(R.string.file_exists)).setMessage(getString(R.string.file_q_overwrite))
+                                            .setNegativeButton(getString(R.string.no), null)
+                                            .setPositiveButton(getString(R.string.yes), (dialogInterface, i) -> {
+                                                try {
+                                                    scriptFile.createNewFile();
+                                                    FileOutputStream fOut = new FileOutputStream(scriptFile);
+                                                    OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+                                                    myOutWriter.append(text);
+                                                    myOutWriter.close();
+                                                    fOut.close();
+                                                    NhPaths.showSnack(getView(), getString(R.string.script_saved), 1);
+                                                } catch (Exception e) {
+                                                    NhPaths.showMessage(context, e.getMessage());
+                                                }
+                                            }).create().show();
                                 }
-                            } catch (Exception e) {
-                                NhPaths.showMessage(context, e.getMessage());
                             }
-                        } else {
-                            NhPaths.showSnack(getView(), getString(R.string.file_exists), 1);
+                        } catch (Exception e) {
+                            NhPaths.showMessage(context, e.getMessage());
                         }
                     } else {
                         NhPaths.showSnack(getView(), getString(R.string.wrong_name_provider), 1);

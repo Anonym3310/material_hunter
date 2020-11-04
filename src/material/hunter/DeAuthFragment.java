@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
-import material.hunter.utils.BootKali;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 
@@ -62,10 +61,10 @@ public class DeAuthFragment extends Fragment {
         whitelist.setChecked(false);
         start.setOnClickListener(v -> {
             String whitelist_command;
-            new BootKali("ip link set " + wlan.getText() + " up");
+            exe.RunAsRootOutput("ip link set " + wlan.getText() + " up");
             try {
                 Thread.sleep(1000);
-                new BootKali("airmon-ng start  " + wlan.getText()).run_bg();
+                exe.RunAsChrootOutput("airmon-ng start  " + wlan.getText());
                 Thread.sleep(2000);
                 if (whitelist.isChecked()) {
                     whitelist_command = "-w /sdcard/nh_files/deauth/whitelist.txt ";
@@ -78,15 +77,15 @@ public class DeAuthFragment extends Fragment {
             }
         });
         scan.setOnClickListener(v -> {
-            new BootKali("cp /sdcard/nh_files/deauth/scan.sh /root/scan.sh && chmod +x /root/scan.sh").run_bg();
+            exe.RunAsChrootOutput("cp /sdcard/nh_files/deauth/scan.sh /root/scan.sh && chmod +x /root/scan.sh");
             String cmd = "./root/scan.sh " + wlan.getText() + " | tr -s [:space:] > /sdcard/nh_files/deauth/output.txt";
             try {
-                new BootKali("ip link set " + wlan.getText() + " up").run_bg();
+                exe.RunAsRootOutput("ip link set " + wlan.getText() + " up");
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            new BootKali(cmd).run_bg();
+            exe.RunAsChrootOutput(cmd);
             try {
                 Thread.sleep(5000);
                 String output = exe.RunAsRootOutput("cat " + NhPaths.APP_SD_FILES_PATH + "/deauth/output.txt | sed 's/(on " + wlan.getText().toString() + ")//g'");

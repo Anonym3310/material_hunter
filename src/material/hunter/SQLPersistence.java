@@ -15,7 +15,7 @@ import java.util.List;
 class SQLPersistence extends SQLiteOpenHelper {
 
     private final static int DATABASE_VERSION = 1;
-    private final static String DATABASE_NAME = "KaliLaunchers";
+    private final static String DATABASE_NAME = "Launchers";
 
     private final static String CREATE_LAUNCHER_TABLE = "CREATE TABLE " +
             LauncherApp.TABLE + " (" +

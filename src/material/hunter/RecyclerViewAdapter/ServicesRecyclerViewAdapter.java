@@ -33,10 +33,10 @@ import material.hunter.models.ServicesModel;
 import material.hunter.utils.NhPaths;
 
 public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRecyclerViewAdapter.ItemViewHolder> implements Filterable {
-    private static final String TAG = "KaliServiceRecycleView";
+    private static final String TAG = "ServiceRecycleView";
     private Context context;
     private List<ServicesModel> servicesModelList;
-    private Filter KaliServicesModelListFilter = new Filter() {
+    private Filter ServicesModelListFilter = new Filter() {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -58,9 +58,9 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            ServicesData.getInstance().getKaliServicesModels().getValue().clear();
-            ServicesData.getInstance().getKaliServicesModels().getValue().addAll((List<ServicesModel>) results.values);
-            ServicesData.getInstance().getKaliServicesModels().postValue(ServicesData.getInstance().getKaliServicesModels().getValue());
+            ServicesData.getInstance().getServicesModels().getValue().clear();
+            ServicesData.getInstance().getServicesModels().getValue().addAll((List<ServicesModel>) results.values);
+            ServicesData.getInstance().getServicesModels().postValue(ServicesData.getInstance().getServicesModels().getValue());
         }
     };
 
@@ -221,7 +221,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
 
     @Override
     public Filter getFilter() {
-        return KaliServicesModelListFilter;
+        return ServicesModelListFilter;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

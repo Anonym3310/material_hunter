@@ -7,7 +7,7 @@ import java.util.Locale;
  * https://github.com/danialgoodwin/android-app-samples/blob/master/gps-satellite-nmea-info/app/src/main/java/net/simplyadvanced/gpsandsatelliteinfo/GpsPosition.java
  */
 
-public class GpsPosition {
+public class GPSPosition {
 
     public float time = 0.0f;
     private float latitude = 0.0f;
@@ -21,9 +21,8 @@ public class GpsPosition {
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "GpsPosition: latitude: %f, longitude: %f, time: %f, quality: %d, " +
+        return String.format(Locale.getDefault(), "GPSPosition: latitude: %f, longitude: %f, time: %f, quality: %d, " +
                         "direction: %f, altitude: %f, velocity: %f", latitude, longitude, time, quality,
                 direction, altitude, velocity);
     }
-
 }

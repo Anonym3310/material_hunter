@@ -18,10 +18,10 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
 public class ServicesSQL extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "KaliServicesFragment";
+    private static final String DATABASE_NAME = "ServicesFragment";
     private static final String TAG = "ServicesSQL";
     private static final String TABLE_NAME = DATABASE_NAME;
-    private static final String[][] kaliserviceData = {
+    private static final String[][] ServicesData = {
             {"1", "SSH", "service ssh start", "service ssh stop", "sshd", "0"},
             {"2", "APACHE2", "service apache2 start", "service apache2 stop", "apache2", "0"},
             {"3", "POSTGRESQL", "service postgresql start", "service postgresql stop", "postgres", "0"},
@@ -56,7 +56,7 @@ public class ServicesSQL extends SQLiteOpenHelper {
                 COLUMNS.get(5) + " INTEGER)");
         ContentValues initialValues = new ContentValues();
         db.beginTransaction();
-        for (String[] data : kaliserviceData) {
+        for (String[] data : ServicesData) {
             initialValues.put(COLUMNS.get(0), data[0]);
             initialValues.put(COLUMNS.get(1), data[1]);
             initialValues.put(COLUMNS.get(2), data[2]);
@@ -156,7 +156,7 @@ public class ServicesSQL extends SQLiteOpenHelper {
                 COLUMNS.get(4) + " TEXT, " + COLUMNS.get(5) + " INTEGER)");
         ContentValues initialValues = new ContentValues();
         db.beginTransaction();
-        for (String[] data : kaliserviceData) {
+        for (String[] data : ServicesData) {
             initialValues.put(COLUMNS.get(0), data[0]);
             initialValues.put(COLUMNS.get(1), data[1]);
             initialValues.put(COLUMNS.get(2), data[2]);
