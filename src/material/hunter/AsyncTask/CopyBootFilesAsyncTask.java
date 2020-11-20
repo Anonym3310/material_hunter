@@ -92,15 +92,6 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
             assetsToFiles(NhPaths.SD_PATH, "", "sdcard");
             publishProgress("Fixing permissions for new files");
             exe.RunAsRoot(new String[]{"chmod -R 700 " + NhPaths.APP_SCRIPTS_PATH + "/*", "chmod -R 700 " + NhPaths.APP_INITD_PATH + "/*"});
-            /*exe.RunAsRoot(new String[]{"mount -o rw,remount /"});
-            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali /system/xbin/bootkali"});
-            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_bash /system/xbin/bootkali_bash"});
-            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_env /system/xbin/bootkali_env"});
-            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_init /system/xbin/bootkali_init"});
-            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_log /system/xbin/bootkali_log"});
-            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_PATH + "/bootkali_login /system/xbin/bootkali_login"});
-            exe.RunAsRoot(new String[]{"ln -sf " + NhPaths.APP_SCRIPTS_BIN_PATH + "/busybox_nh /system/xbin/busybox_nh"});
-            exe.RunAsRoot(new String[]{"mount -o ro,remount /"});*/
             // disable the magisk notification for materialhunter app as it will keep popping up bunch of toast message when executing runtime command.
             disableMagiskNotification();
             SharedPreferences.Editor ed = prefs.edit();
@@ -124,23 +115,6 @@ public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
             } else {
                 publishProgress("Chroot not Found, install it in Chroot Manager");
             }
-
-            // This is required to install the additional apks in Android Oreo and newer
-            // We can no longer install user apps through TWRP so we copy them across and install them here
-            // Get the list of *.apk files in /sdcard/nh_files/cache/apk and install them using "pm install"
-            /*publishProgress("Installing additional apps...");
-            String ApkCachePath = NhPaths.APP_SD_FILES_PATH + "/cache/apk/";
-            ArrayList<String> filenames = FetchFiles(ApkCachePath);
-            int i, x;
-
-            for (String object : filenames) {
-                if (object.contains(".apk")) {
-                    String apk = ApkCachePath + object;
-                    //publishProgress("Installing additional apps.\nThe device may be unresponsive for a few minutes\nInstalling " + object);
-                    ShellExecuter install = new ShellExecuter();
-                    install.RunAsRoot(new String[]{"mv " + apk + " /data/local/tmp/ && pm install /data/local/tmp/" + object + " && rm -f /data/local/tmp/" + object});
-                }
-            }*/
         }
         return result;
     }

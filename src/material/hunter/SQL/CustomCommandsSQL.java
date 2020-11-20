@@ -27,23 +27,17 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
     private static final String TABLE_NAME = DATABASE_NAME;
     private static final ArrayList<String> COLUMNS = new ArrayList<>();
     private static final String[][] customcommandsData = {
-            {"1", "Update Metapackages",
+            {"1", "Update chroot Metapackages",
                     "apt update && apt-get -y upgrade",
                     "chroot", "interactive", "0"},
-            {"2", "Launch Wifite",
-                    "wifite",
-                    "chroot", "interactive", "0"},
-            {"3", "Launch Metasploit",
-                    "msfconsole",
-                    "chroot", "interactive", "0"},
-            {"4", "Start wlan0 in monitor mode",
+            {"2", "Start wlan0 in monitor mode",
                     "su -c \"ip link set wlan0 down; echo 4 > /sys/module/wlan/parameters/con_mode;ip link set wlan0 up\";exit",
                     "android", "interactive", "0"},
-            {"5", "Stop wlan0 monitor mode",
+            {"3", "Stop wlan0 monitor mode",
                     "su -c \"ip link set wlan0 down; echo 0 > /sys/module/wlan/parameters/con_mode;ip link set wlan0 up; svc wifi enable\";exit",
                     "android", "interactive", "0"},
-            {"6", "Start wlan2 in monitor mode",
-                    "ip link set wlan2 down && iw wlan2 set monitor control && ip link set wlan2 up;exit",
+            {"4", "Start wlan1 in monitor mode",
+                    "ip link set wlan1 down && iw wlan1 set monitor control && ip link set wlan1 up;exit",
                     "chroot", "interactive", "0"}
     };
     private static CustomCommandsSQL instance;

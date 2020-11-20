@@ -80,7 +80,7 @@
         android:id="@+id/searchResultsList"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:divider="#333"
-        android:dividerHeight="1dp" />
+        android:divider="#00000000"
+        android:dividerHeight="16dp" />
 
 </LinearLayout>

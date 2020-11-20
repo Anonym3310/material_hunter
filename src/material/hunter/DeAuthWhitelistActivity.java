@@ -10,6 +10,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 
@@ -26,6 +28,8 @@ public class DeAuthWhitelistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activity = this;
         setContentView(R.layout.deauth_whitelist);
+        MaterialToolbar t = findViewById(R.id.appbar);
+        setSupportActionBar(t);
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorBars));
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));

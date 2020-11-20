@@ -3,7 +3,7 @@
     <string name="app_name">MaterialHunter</string>
     <string name="app_nav_home_label">MaterialHunter</string>
 
-    <!--string name="materialhunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, settings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
+    <!--string name="materialhunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, mhsettings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
     <string name="materialhunter_sysinfo">Системная информация</string>
     <string name="materialhunter_description">Вы можете добавлять, удалять, перемещать, искать, сохранять и сбрасывать ваши горячие команды. Также зажав лейбел команды, вы можете её редактировать.</string>
     <string name="materialhunter_howtouse_cmd">Введите здесь свою команду, она будет запущена в Android среде для получения ответа.</string>
@@ -225,6 +225,10 @@
 
     <!-- BT Main -->
     <string name="bt_description">Экспериментальная версия Bluetooth Arsenal от yesimxev. Разведка, подделка, прослушивание или воспроизведение звука на различных устройствах. Обратите внимание, что RFcomm должен быть включен в вашем ядре для некоторых атак. Кроме того, некоторые устройства могут не поддерживать службу BT.</string>
+    <string name="bt_welcome_title">Добро пожаловать в Bluetooth Arsenal!</string>
+    <string name="bt_welcome_msg">Для уверенности что всё работает, должна быть выполнена установка.</string>
+    <string name="bt_welcome_daa">Больше не спрашивать</string>
+    <string name="bt_check_and_install">Проверить и установить</string>
     <string name="bt_services">Сервисы</string>
     <string name="bt_dbus_service">Dbus сервис:</string>
     <string name="bt_service">Bluetooth сервис:</string>
@@ -232,9 +236,31 @@
     <string name="bt_scantime">Время скан.</string>
     <string name="bt_seconds">сек.</string>
     <string name="bt_scan">Сканировать устройства</string>
+    <string name="bt_no_device_found">Устройства не найдены</string>
+    <string name="bt_no_target">Нет цели!</string>
 
     <!-- BT Tools -->
     <string name="bt_tools">Перебор адресов устройств BT, пинг, и обнаружение их сервисов.</string>
+    <string name="bt_l2ping">l2ping</string>
+    <string name="bt_flood_ping">Flood ping</string>
+    <string name="bt_reverse_ping">Reverse ping</string>
+    <string name="bt_rfcomm_scan">rfcomm scan</string>
+    <string name="bt_redfang">Redfang</string>
+    <string name="bt_range">Range</string>
+    <string name="bt_logfile_path">Logfile path</string>
+    <string name="bt_hunt_for_devices">Hunt for devices</string>
+    <string name="bt_blueranger">Blueranger</string>
+    <string name="bt_check_proximity">Check proximity</string>
+    <string name="bt_sdp_tool">SDP Tool</string>
+    <string name="bt_discover_services">Discover services</string>
+    <string name="bt_iface_down">Интерфейс не запущен</string>
+    <string name="bt_iface_no_selected">Интерфейс не выбран</string>
+    <string name="bt_target_selected">Цель не выбрана</string>
+    <string name="bt_no_target_adress">No target address!</string>
+    <string name="bt_no_target_range">No target range!</string>
+    <string name="bt_least_one_parameter">Please enter at least one parameter!</string>
+    <string name="bt_file_not_found">Файл не найден</string>
+    <string name="bt_discovery_started">Discovery started..\nПроверьте вывод ниже</string>
 
     <!-- BT Spoof -->
     <string name="bt_spoof">Обманывать свой BT адаптер.\nБудет играть существенную роль в предстоящих атаках.</string>
@@ -243,17 +269,18 @@
     <string name="bt_name">Имя</string>
     <string name="bt_apply">Применить</string>
     <string name="bt_check">Проверить</string>
-    <string name="bt_current_adress">Текущий Адрес:</string>
+    <string name="bt_current_address">Текущий Адрес:</string>
     <string name="bt_current_class">Текущий Класс:</string>
     <string name="bt_current_name">Текущее Имя:</string>
 
     <!-- BT Carwhisperer -->
     <string name="bt_use_selected">Исп. выбранную цель</string>
-    <string name="bt_adress">Адрес</string>
+    <string name="bt_address">Адрес</string>
     <string name="bt_channel">Канал</string>
     <string name="bt_mode">Режим</string>
     <string name="bt_launch">Запустить</string>
     <string name="bt_kill">Остановить</string>
+    <string name="bt_killed">Остановлено</string>
     <string name="bt_carwhisperer">Сценарий Carwhisperer из wayback. Слушайте или воспроизводите звук в различных устройствах, таких как динамики, гарнитуры, часы или даже автомобили. Обратите внимание, что цель должна быть отключена от исходного источника. Прямая трансляция будет иметь некоторую задержку. Выборка должна быть 8 кГц, так как мы вводим ее в протокол SCO.</string>
     <string name="bt_carwhisperer_save">Сохранить запись в /sdcard/</string>
     <string name="bt_carwhisperer_select">Файл для инъекции</string>
@@ -318,6 +345,11 @@
     <string name="mitmf_inject_INJECTIP">Inject only IP</string>
     <string name="mitmf_inject_NOINJECTIP">IP not to inject</string>
     <string name="mitmf_config">MITMf конфигурационный файл.</string>
+    <string name="mitmf_started">MITMf Запущен!</string>
+    <string name="mitmf_stopped">MITMf Остановлен!</string>
+    <string name="mitmfcc">Своя команда для mitmf</string>
+    <string name="mitmfcc_setted">Своя команда установлена!</string>
+    <string name="mitmfcc_cleared">Своя команда удалена!</string>
 
     <!-- chroot stuff -->
     <string name="chrootmanager_label">Нажмите РЕДАКТИРОВАТЬ для изменения пути к Chroot.</string>
@@ -347,13 +379,15 @@
     </array>
 
     <string name="aboutchroot">Chroot Manager. \"Chroot\" - полная установка Linux-среды которая разделяет обработку, сеть, память, и прочие ресурсы с Android. Он находится во внутренней области памяти (data) и должен иметь минимум 8ГБ свободного пространства для минимальной или полной установки, просто что-бы не сломать вашу систему.</string>
-    <string name="materialteam">Разработчики:\nt.me/cxblack (Znowu sie upijam)\nt.me/Death_Warrior940 (школо-хуцкер)\n\nСпасибо:\nt.me/Avadamiao (Наш Кот)\nt.me/Bluty4444 (Блютуз)))\nt.me/appahe (Чаек - фот0шопер)\nt.me/dark2048 (Какер)\nt.me/HuntMix (Помощь в фиксах, хацкер 100%)\nt.me/hilledkinged (Мартини, Team kekHunter)\n\nСделано с ❤️</string>
+    <string name="materialteam">t.me/mirivan (Mirivan, Разработчик)\nt.me/Death_Warrior940 (Переводчик)\nt.me/hilledkinged (Мартин, Автор идеи)\nt.me/s133py (Sleepy - KekHunter разработчик)\n\nСделано с ♥\n\nВсе права сохраняются за kali.org</string>
     <string name="attack_launched">Атака запущена!</string>
     <string name="attack_stopped">Атака закончена.</string>
 
     <!-- sidebar menu item titles -->
     <string name="drawertitlematerialhunter">Home</string>
     <string name="drawertitlecreatechroot">Chroot Manager</string>
+    <string name="drawertitlemhsettings">MH Настройки</string>
+    <string name="drawertitleterminal">Terminal</string>
     <string name="drawertitleservices">Сервисы</string>
     <string name="drawertitlecustomcommands">Custom Commands</string>
     <string name="drawertitlemacchanger">MAC Changer</string>
@@ -370,6 +404,7 @@
     <string name="drawertitlepineapple">Pineapple Connector</string>
     <string name="drawertitlegps">Wardriving</string>
     <string name="drawertitledeauth">DeAuth</string>
+    <string name="drawertitlesettings">Настройки</string>
     <string name="InstallAndUpdateButtonText"><![CDATA[Установить и Обновить]]></string>
     <string name="metapackagesExplanation">Выберите несколько \"Метапакетов\". Chroot обновится (через \"apt-get update/dist-upgrade\").\n\nВыбрав метапакеты, которые вы уже установили (или вообще не имеете пакетов), просто обновите/обновите их, ничего не удаляя. \n\nВ зависимости от того, какие метапакеты вы выберете, вас могут попросить сделать что-то (например, установить пароли для служб), поэтому обратите внимание.</string>
     <string name="metapackagesAdditionalInfo">К локальному хранилищу требуется около +-20ГБ. Эта установка/обновление будет выполняться в терминале, так что следите за проблемами.</string>
@@ -423,6 +458,14 @@
     <string name="searchsploit_view_web">Веб-страница</string>
     <string name="searchsploit_view_source">Источник</string>
     <string name="searchsploit_results">результат(ов)</string>
+    <string name="searchsploit_title">Exploit Database Archive</string>
+    <string name="searchsploit_loading">Загрузка...подождите</string>
+    <string name="searchsploit_feeding">Feeding Exploit DB</string>
+    <string name="searchsploit_wait">Это может занять минуту, подождите...</string>
+    <string name="searchsploit_feed_failed">DB FEED FAILED</string>
+    <string name="searchsploit_missing_csv">Не был найден SearchSploit files.csv. Установите exploitdb в chroot</string>
+    <string name="searchsploit_enable_raw">Использовать raw поиск</string>
+    <string name="searchsploit_disable_raw">Отключить raw поиск</string>
 
     <!-- Custom Launcher -->
     <string name="drawer_opened">Drawer открыт</string>
@@ -485,11 +528,22 @@
     <string name="pineapple_webport">1471</string>
     <string name="pineapple_gatewayip">172.16.42.1</string>
     <string name="pineapple_clientip">172.16.42.42/24</string>
+    <string name="pineapple_starting">Запуск eth0 подключения</string>
+    <string name="pineapple_bringing">Bringing down eth0 подключения</string>
     <!-- End PineappleFragment -->
 
     <!-- Start GPSFragment -->
     <string name="gps_description">Конвертировать GPS в nmea затем адресовать в chroot. Идеально подходит для Wardriving с Kismet или просто для обычного GPS сервера для Kali. Небходим OTG и ext wireless.</string>
-    <string name="gps_help">Вы должны дать MaterialHunter права к GPS. Идем в настройки > Приложения > MaterialHunter > Права и разрешения. Когда оно запустится, нажмите: "return" three times, Vol+Up и "t", "return".</string>
+    <string name="gps_help">Вы должны дать MaterialHunter права к GPS. Идем в настройки > Приложения > MaterialHunter > Права и разрешения.</string>
+    <string name="switch_gps_provider">Android GPS Provider</string>
+    <string name="switch_gpsd">GPSd в chroot</string>
+    <string name="gps_button_launch_app">Запустить провайдер в терминале</string>
+    <string name="gps_notification_lat">"Lat: "</string>
+    <string name="gps_notification_long">"Long: "</string>
+    <string name="gps_notification_accuracy">"+/- "</string>
+    <string name="gps_notification_source">"Source: "</string>
+    <string name="gps_notification_age">"Age: "</string>
+    <string name="gps_notification_sats">"Sats: "</string>
     <!-- End GPSFragment -->
 
     <string name="loading_file">Загрузка…  FILE: %s</string>
@@ -500,11 +554,12 @@
     <string name="script_loaded">Скрипт загружен</string>
     <string name="script_saved">Скрипт сохранен</string>
     <string name="file_exists">Файл уже имеется</string>
+    <string name="wrong_name_provider">Неверное имя провайдера</string>
     <string name="unknown_click">Необрабатываемое нажатие</string>
     <string name="cancel">Назад</string>
     <string name="edit_source_updated">Источник обновлен</string>
     <string name="edit_source_not_updated">Источник не обновлен</string>
-    <string name="wlan_interface">Интерфейс (без суффикса mon)</string>
+    <string name="wlan_interface">Интерфейс</string>
     <string name="scan_networks">Сканировать сети</string>
     <string name="channel">Канал</string>
     <string name="whitelist">Whitelist</string>
@@ -551,10 +606,29 @@
     </string-array>
 
     <!-- MaterialHunter Settings fragment strings -->
-    <string name="mh_sett">MaterialHunter Настройки</string>
+    <string name="mh_sett">MaterialHunter — Настройки</string>
     <string name="mh_sett_boot_receive">RunOnBoot receive</string>
-    <string name="mh_sett_bal">Уровень затемненности фона.</string>
+    <string name="mh_sett_bal">Уровень прозрачности фона.</string>
     <string name="mh_devsett">Возможности разработчика</string>
     <string name="mh_devsett_cad">очистить данные приложения</string>
     <string name="mh_sett_need_restart">Необходима перезагрузка</string>
+
+    <!-- Settings fragment strings -->
+    <string name="settings_description">Выберите нужную анимацию загрузки здесь. Обратите внимание, что некоторые старые телефоны предпочитают 90% размер оригинального разрешения экрана, поэтому он может работать плавно. Для этого используйте разрешение изображения и окончательное разрешение вместе. Вы также можете управлять своей папкой nh_files и удалить MaterialHunter, если он установлен - как системное приложение.</string>
+    <string name="settings_screen_size">РАЗМЕР ЭКРАНА:</string>
+    <string name="settings_select_animation">ВЫБЕРИТЕ АНИМАЦИЮ:</string>
+    <string name="settings_convert">Конвертировать</string>
+    <string name="settings_preview">Предпросмотр</string>
+    <string name="settings_image_resolution">РАЗМЕР КАРТИНКИ:</string>
+    <string name="settings_final_resolution">ФИНАЛЬНЫЙ РАЗМЕР:</string>
+    <string name="settings_frame_rate">ЧАСТОТА КАДРОВ:</string>
+    <string name="settings_fps">FPS</string>
+    <string name="settings_path">ПУТЬ:</string>
+    <string name="settings_make_bootanim">Собрать анимацию</string>
+    <string name="settings_install_bootanim">Установить анимацию</string>
+    <string name="settings_backup_title">Сохранение и восстановление</string>
+    <string name="settings_backup">Сохранить</string>
+    <string name="settings_restore">Восстановить</string>
+    <string name="settings_remove_system_mh">Удалить MaterialHunter как системное приложение</string>
+    <string name="settings_uninstall_mh">Удалить MaterialHunter</string>
 </resources>

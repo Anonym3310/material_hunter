@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/nmap_searchbar_layout"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/base_listItem_LR"
             android:text="@string/scanButtonText"
@@ -41,25 +42,14 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/nmap_adv_switch"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical"
-        android:textAlignment="center">
-
-        <Switch
-            android:id="@+id/nmap_adv_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:switchPadding="10dp"
-            android:text="@string/advancedOptionsSwitchText"
-            android:textAlignment="center"
-            tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-    </LinearLayout>
+        android:layout_marginStart="15dp"
+        android:text="@string/advancedOptionsSwitchText"
+        app:switchPadding="10dp"
+        app:useMaterialThemeColors="false" />
 
     <ScrollView
         android:layout_width="match_parent"

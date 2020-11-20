@@ -3,7 +3,7 @@
     <string name="app_name">MaterialHunter</string>
     <string name="app_nav_home_label">MaterialHunter</string>
 
-    <!--string name="materialhunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, settings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
+    <!--string name="materialhunter_description">Welcome to Kali Linux NetHunter by Offensive Security! This application is designed to make it easier to execute attacks and control services. The navigation menu contains links to useful commands, mhsettings, macros, and attack configuration pages. Most configurations work out of the box but some may require some minimal tweaking.</string-->
     <string name="materialhunter_sysinfo">System Information</string>
     <string name="materialhunter_description">You can ADD, DELETE, MOVE, SEARCH, BACKUP and RESET your custom command item. You can also long click on the item label to EDIT the item.</string>
     <string name="materialhunter_howtouse_cmd">Put your own command string here, it will be run in Android environment to get the output displayed.</string>
@@ -235,6 +235,10 @@
 
     <!-- BT Main -->
     <string name="bt_description">Experimental version of Bluetooth Arsenal by yesimxev. Recon, spoof, listen to, or inject audio to various devices. Note that RFcomm needs to be enabled in your kernel for some of the attacks. Also, some devices might not support BT service.</string>
+    <string name="bt_welcome_title">Welcome to Bluetooth Arsenal!</string>
+    <string name="bt_welcome_msg">In order to make sure everything is working, an initial setup needs to be done.</string>
+    <string name="bt_welcome_daa">Don\'t ask again</string>
+    <string name="bt_check_and_install">Check &amp; Install</string>
     <string name="bt_services">Services</string>
     <string name="bt_dbus_service">Dbus Service:</string>
     <string name="bt_service">Bluetooth Service:</string>
@@ -242,6 +246,8 @@
     <string name="bt_scantime">Scan Time</string>
     <string name="bt_seconds">sec.</string>
     <string name="bt_scan">Scan for devices</string>
+    <string name="bt_no_device_found">No devices found</string>
+    <string name="bt_no_target">No target!</string>
 
     <!-- BT Tools -->
     <string name="bt_tools">Brute force BT device addresses, ping, and discover their services.</string>
@@ -264,6 +270,7 @@
     <string name="bt_no_target_range">No target range!</string>
     <string name="bt_least_one_parameter">Please enter at least one parameter!</string>
     <string name="bt_file_not_found">File not found</string>
+    <string name="bt_discovery_started">Discovery started..\nCheck the output below</string>
 
     <!-- BT Spoof -->
     <string name="bt_spoof">Spoof your BT adapters.\nWill play essential role in upcoming attacks.</string>
@@ -272,21 +279,22 @@
     <string name="bt_name">Name</string>
     <string name="bt_apply">Apply</string>
     <string name="bt_check">Check</string>
-    <string name="bt_current_adress">Current Address:</string>
+    <string name="bt_current_address">Current Address:</string>
     <string name="bt_current_class">Current Class:</string>
     <string name="bt_current_name">Current Name:</string>
 
     <!-- BT Carwhisperer -->
     <string name="bt_use_selected">Use selected target</string>
-    <string name="bt_adress">Adress</string>
+    <string name="bt_address">Address</string>
     <string name="bt_channel">Channel</string>
     <string name="bt_mode">Mode</string>
     <string name="bt_launch">Launch</string>
     <string name="bt_kill">Kill</string>
+    <string name="bt_killed">Killed</string>
     <string name="bt_carwhisperer">Carwhisperer script from the wayback. Listen to, or inject audio to various devices like speakers, headsets, watches or even cars. Note that target needs to be disconnected from original source. Live stream will have some delay. The sampling has to be 8kHz as we\'re injecting into SCO protocol.</string>
     <string name="bt_carwhisperer_save">Save recorded sound to /sdcard/</string>
     <string name="bt_carwhisperer_select">Sound file to inject</string>
-
+	
     <!-- MITMf -->
     <string name="mitmf_description">Written by @byt3bl33d3r, MITMf aims to provide a one-stop-shop for Man-In-The-Middle and network attacks while updating and improving existing attacks and techniques.</string>
     <string-array name="mitmf_interface_array">
@@ -347,7 +355,11 @@
     <string name="mitmf_inject_INJECTIP">Inject only IP</string>
     <string name="mitmf_inject_NOINJECTIP">IP not to inject</string>
     <string name="mitmf_config">The MITMf configuration file.</string>
-
+    <string name="mitmf_started">MITMf Started!</string>
+    <string name="mitmf_stopped">MITMf Stopped!</string>
+    <string name="mitmfcc">Custom command for mitmf</string>
+    <string name="mitmfcc_setted">Custom command will setted!</string>
+    <string name="mitmfcc_cleared">Custom command will cleared!</string>
 
     <!-- chroot stuff -->
     <string name="chrootmanager_label">Click EDIT button to change your Chroot Path below.</string>
@@ -377,13 +389,15 @@
     </array>
 
     <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Linux-environment that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
-    <string name="materialteam">Developers:\nt.me/cxblack\nt.me/Death_Warrior940\n\nThanks:\nt.me/Avadamiao\nt.me/Bluty4444\nt.me/appahe\nt.me/dark2048\nt.me/HuntMix\nt.me/hilledkinged\n\nMade with ♥</string>
+    <string name="materialteam">t.me/mirivan (Mirivan, Developer)\nt.me/Death_Warrior940 (Translator)\nt.me/hilledkinged (Martin, Idea author)\nt.me/s133py (Sleepy - KekHunter Developer)\n\nMade with ♥\n\nAll rights reserved by kali.org</string>
     <string name="attack_launched">Attack launched!</string>
     <string name="attack_stopped">Attack execution ended.</string>
 
     <!-- sidebar menu item titles -->
     <string name="drawertitlematerialhunter">Home</string>
     <string name="drawertitlecreatechroot">Chroot Manager</string>
+    <string name="drawertitlemhsettings">MH Settings</string>
+    <string name="drawertitleterminal">Terminal</string>
     <string name="drawertitleservices">Services</string>
     <string name="drawertitlecustomcommands">Custom Commands</string>
     <string name="drawertitlemacchanger">MAC Changer</string>
@@ -400,6 +414,7 @@
     <string name="drawertitlepineapple">Pineapple Connector</string>
     <string name="drawertitlegps">Wardriving</string>
     <string name="drawertitledeauth">DeAuth</string>
+	<string name="drawertitlesettings">Settings</string>
     <string name="InstallAndUpdateButtonText"><![CDATA[Install & Update]]></string>
     <string name="metapackagesExplanation">Choose some \"metapackages\". The chroot will also be upgraded (via \"apt-get update/dist-upgrade\").\n\nSelecting metapackages you already have installed (or no packages at all) simply update/upgrades without removing anything.\n\nDepending on what metapackages you select, you may be asked to do stuff (such as set passwords for services), so pay attention.</string>
     <string name="metapackagesAdditionalInfo">Local storage requirements may be in the 20+ GB range. This installation/update will be performed in a terminal, so watch for issues. When completed, press the back button.</string>
@@ -453,6 +468,14 @@
     <string name="searchsploit_view_web">View in www</string>
     <string name="searchsploit_view_source">View Source</string>
     <string name="searchsploit_results">results</string>
+    <string name="searchsploit_title">Exploit Database Archive</string>
+    <string name="searchsploit_loading">Loading...wait</string>
+    <string name="searchsploit_feeding">Feeding Exploit DB</string>
+    <string name="searchsploit_wait">This can take a minute, wait...</string>
+    <string name="searchsploit_feed_failed">DB FEED FAILED</string>
+    <string name="searchsploit_missing_csv">Unable to find SearchSploit files.csv database. Install exploitdb in chroot</string>
+    <string name="searchsploit_enable_raw">Enable Raw search</string>
+    <string name="searchsploit_disable_raw">Disable Raw search</string>
 
     <!-- Custom Launcher -->
     <string name="drawer_opened">Drawer opened</string>
@@ -515,11 +538,22 @@
     <string name="pineapple_webport">1471</string>
     <string name="pineapple_gatewayip">172.16.42.1</string>
     <string name="pineapple_clientip">172.16.42.42/24</string>
+    <string name="pineapple_starting">Starting eth0 connection</string>
+    <string name="pineapple_bringing">Bringing down eth0 conneciton</string>
     <!-- End PineappleFragment -->
 
     <!-- Start GPSFragment -->
-    <string name="gps_description">Converts your GPS to nmea then provides to chroot. Perfect for wardriving with Kismet or just a generic GPS server for Kali.  Requires OTG and external wireless.</string>
-    <string name="gps_help">You may need to give NetHunter permissions to GPS. Go to Settings > Apps > MaterialHunter > Permissions.  When it starts press: "return" three times, Vol+up and "t", "return.</string>
+    <string name="switch_gps_provider">Android GPS Provider</string>
+    <string name="switch_gpsd">GPSd in chroot</string>
+    <string name="gps_button_launch_app">Launch provider in terminal</string>
+    <string name="gps_description">Converts your GPS to NMEA then provides to Chroot.  Perfect for wardriving with Kismet or just a generic GPS server for Kali.</string>
+    <string name="gps_help">You may need to give MaterialHunter permissions to GPS. Go to Settings > Apps > MaterialHunter > Permissions.</string>
+    <string name="gps_notification_lat">"Lat: "</string>
+    <string name="gps_notification_long">"Long: "</string>
+    <string name="gps_notification_accuracy">"+/- "</string>
+    <string name="gps_notification_source">"Source: "</string>
+    <string name="gps_notification_age">"Age: "</string>
+    <string name="gps_notification_sats">"Sats: "</string>
     <!-- End GPSFragment -->
 
     <string name="loading_file">Loading…  FILE: %s</string>
@@ -535,7 +569,7 @@
     <string name="cancel">Cancel</string>
     <string name="edit_source_updated">Source updated</string>
     <string name="edit_source_not_updated">Source not updated</string>
-    <string name="wlan_interface">Wlan interface (without mon suffix)</string>
+    <string name="wlan_interface">Wlan interface</string>
     <string name="scan_networks">Scan Networks</string>
     <string name="channel">Channel</string>
     <string name="whitelist">Whitelist</string>
@@ -582,10 +616,29 @@
     </string-array>
 
     <!-- MaterialHunter Settings fragment strings -->
-    <string name="mh_sett">MaterialHunter Settings</string>
+    <string name="mh_sett">MaterialHunter — Settings</string>
     <string name="mh_sett_boot_receive">RunOnBoot receive</string>
     <string name="mh_sett_bal">Background alpha level. Use slider.</string>
     <string name="mh_devsett">Developer features</string>
     <string name="mh_devsett_cad">clear app data</string>
     <string name="mh_sett_need_restart">Need restart</string>
+
+    <!-- Settings fragment strings -->
+    <string name="settings_description">Select your desired boot animation here. Please note that some older phones prefer 90% the size of original screen resolution, so it can run smoothly. For that use image resolution and final resolution together. You can also manage your nh_files folder and remove MaterialHunter if flashed as system app.</string>
+    <string name="settings_screen_size">SCREEN SIZE:</string>
+    <string name="settings_select_animation">SELECT ANIMATION:</string>
+    <string name="settings_convert">Convert</string>
+    <string name="settings_preview">Preview</string>
+    <string name="settings_image_resolution">IMAGE RESOLUTION:</string>
+    <string name="settings_final_resolution">FINAL RESOLUTION:</string>
+    <string name="settings_frame_rate">FRAME RATE:</string>
+    <string name="settings_fps">FPS</string>
+    <string name="settings_path">PATH:</string>
+    <string name="settings_make_bootanim">Make bootanimation</string>
+    <string name="settings_install_bootanim">Install bootanimation</string>
+    <string name="settings_backup_title">Backup or restore MaterialHunter files</string>
+    <string name="settings_backup">Backup</string>
+    <string name="settings_restore">Restore</string>
+    <string name="settings_remove_system_mh">Remove MaterialHunter system app</string>
+    <string name="settings_uninstall_mh">Uninstall MaterialHunter App</string>
 </resources>

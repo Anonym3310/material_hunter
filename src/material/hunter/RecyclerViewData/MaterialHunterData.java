@@ -212,5 +212,4 @@ public class MaterialHunterData {
         copyOfMaterialHunterModelListFull.addAll(materialhunterModelListFull);
         return copyOfMaterialHunterModelListFull;
     }
-
 }

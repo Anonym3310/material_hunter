@@ -83,7 +83,7 @@ public class BTFragment extends Fragment {
                 activity.invalidateOptionsMenu();
             }
         });
-        sharedpreferences = activity.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+        sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         setHasOptionsMenu(true);
         return rootView;
 
@@ -110,19 +110,19 @@ public class BTFragment extends Fragment {
 
     public void SetupDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        sharedpreferences = activity.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
-        builder.setTitle("Welcome to Bluetooth Arsenal!")
-                .setMessage("In order to make sure everything is working, an initial setup needs to be done.")
-                .setPositiveButton("Check & Install", (dialog, which) -> {
+        sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+        builder.setTitle(getString(R.string.bt_welcome_title))
+                .setMessage(getString(R.string.bt_welcome_msg))
+                .setPositiveButton(getString(R.string.bt_check_and_install), (dialog, which) -> {
                     RunSetup();
                     sharedpreferences.edit().putBoolean("setup_done", true).apply();
                 })
-                .setNegativeButton("Don't ask again", (dialogInterface, i) -> sharedpreferences.edit().putBoolean("setup_done", true).apply())
+                .setCancelable(false).setNegativeButton((R.string.bt_welcome_daa), (dialogInterface, i) -> sharedpreferences.edit().putBoolean("setup_done", true).apply())
                 .show();
     }
 
     public void RunSetup() {
-        sharedpreferences = activity.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+        sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         intentClickListener_NH(NhPaths.makeTermTitle("Arsenal Setup") + " if [[ -f /usr/bin/hciconfig && -f /usr/bin/l2ping && " +
                 "-f /usr/bin/fang && -f /usr/bin/blueranger &&-f /usr/bin/bluelog && -f /usr/bin/sdptool && -f /usr/bin/spooftooph && -f /usr/bin/sox ]];then echo \"All packages are installed!\"; else " +
                 "apt-get update && apt-get install bluetooth bluez bluez-tools bluez-obexd libbluetooth3 sox spooftooph " +
@@ -134,7 +134,7 @@ public class BTFragment extends Fragment {
     }
 
     public void RunUpdate() {
-        sharedpreferences = activity.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+        sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         intentClickListener_NH(NhPaths.makeTermTitle("Arsenal Update") + " apt-get update && apt-get install bluetooth bluez bluez-tools bluez-obexd libbluetooth3 sox spooftooph " +
                 "libbluetooth-dev redfang bluelog blueranger -y;if [[ -f /usr/bin/carwhisperer && -f /usr/bin/rfcomm_scan ]];then cd /root/carwhisperer/;git pull && make && make install;cd /root/bt_audit; git pull; cd src && make;" +
                 "cp rfcomm_scan /usr/bin/;fi; echo \"Done! Closing in 3secs..\"; sleep 3 && exit ");
@@ -230,7 +230,7 @@ public class BTFragment extends Fragment {
                                  Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.bt_main, container, false);
-            SharedPreferences sharedpreferences = context.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+            SharedPreferences sharedpreferences = context.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
 
             //First run
             Boolean setupdone = sharedpreferences.getBoolean("setup_done", false);
@@ -322,35 +322,26 @@ public class BTFragment extends Fragment {
                     String hci_current = exe.RunAsRootOutput("bootkali custom_cmd hciconfig " + selected_iface + " | grep \"UP RUNNING\" | cut -f2 -d$'\\t'");
                     if (hci_current.equals("UP RUNNING ")) {
                         final String scantime = BTtime.getText().toString();
-                        AsyncTask.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        final ArrayList<String> scanning = new ArrayList<>();
-                                        scanning.add("Scanning..");
-                                        targets.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, scanning));
-                                    }
-                                });
-                                exe.RunAsRoot(new String[]{"bootkali custom_cmd rm /root/blue.log"});
-                                exe.RunAsRoot(new String[]{"bootkali custom_cmd timeout " + scantime + " bluelog -i " + selected_iface + " -ncqo /root/blue.log;hciconfig " + selected_iface + " noscan"});
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        String outputScanLog = exe.RunAsRootOutput("cat " + ScanLog);
-                                        final String[] targetsArray = outputScanLog.split("\n");
-                                        ArrayAdapter targetsadapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, targetsArray);
-                                        if (!outputScanLog.equals("")) {
-                                            targets.setAdapter(targetsadapter);
-                                        } else {
-                                            final ArrayList<String> notargets = new ArrayList<>();
-                                            notargets.add("No devices found");
-                                            targets.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, notargets));
-                                        }
-                                    }
-                                });
-                            }
+                        AsyncTask.execute(() -> {
+                            getActivity().runOnUiThread(() -> {
+                                final ArrayList<String> scanning = new ArrayList<>();
+                                scanning.add("Scanning..");
+                                targets.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, scanning));
+                            });
+                            exe.RunAsRoot(new String[]{"bootkali custom_cmd rm /root/blue.log"});
+                            exe.RunAsRoot(new String[]{"bootkali custom_cmd timeout " + scantime + " bluelog -i " + selected_iface + " -ncqo /root/blue.log;hciconfig " + selected_iface + " noscan"});
+                            getActivity().runOnUiThread(() -> {
+                                String outputScanLog = exe.RunAsRootOutput("cat " + ScanLog);
+                                final String[] targetsArray = outputScanLog.split("\n");
+                                ArrayAdapter targetsadapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, targetsArray);
+                                if (!outputScanLog.equals("")) {
+                                    targets.setAdapter(targetsadapter);
+                                } else {
+                                    final ArrayList<String> notargets = new ArrayList<>();
+                                    notargets.add(getString(R.string.bt_no_device_found));
+                                    targets.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, notargets));
+                                }
+                            });
                         });
                     } else
                         NhPaths.showSnack(getView(), getString(R.string.bt_iface_down), 1);
@@ -362,8 +353,8 @@ public class BTFragment extends Fragment {
             //Target selection
             targets.setOnItemClickListener((adapterView, view, i, l) -> {
                 String selected_target = targets.getItemAtPosition(i).toString();
-                if (selected_target.equals("No devices found"))
-                    Toast.makeText(getActivity().getApplicationContext(), "No target!", Toast.LENGTH_SHORT).show();
+                if (selected_target.equals(getString(R.string.bt_no_device_found)))
+                    Toast.makeText(getActivity().getApplicationContext(), getString(R.string.bt_no_target), Toast.LENGTH_SHORT).show();
                 else {
                     selected_addr = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 1");
                     selected_class = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 2");
@@ -386,7 +377,7 @@ public class BTFragment extends Fragment {
             final Switch btSwitch = BTFragment.findViewById(R.id.bt_switch);
             final Switch hciSwitch = BTFragment.findViewById(R.id.hci_switch);
             final Spinner ifaces = BTFragment.findViewById(R.id.hci_interface);
-            SharedPreferences sharedpreferences = context.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+            SharedPreferences sharedpreferences = context.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
 
             getActivity().runOnUiThread(() -> {
                 String dbus_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service dbus status | grep dbus");
@@ -429,7 +420,6 @@ public class BTFragment extends Fragment {
     }
 
     public static class ToolsFragment extends BTFragment {
-        final ShellExecuter exe = new ShellExecuter();
         private Context context;
         private Activity activity;
         private String reverse = "";
@@ -449,13 +439,8 @@ public class BTFragment extends Fragment {
             final EditText hci_interface = rootView.findViewById(R.id.hci_interface);
             CheckBox floodCheckBox = rootView.findViewById(R.id.l2ping_flood);
             CheckBox reverseCheckBox = rootView.findViewById(R.id.l2ping_reverse);
-
-            //Target address
             final EditText sdp_address = rootView.findViewById(R.id.sdp_address);
-
-            //Set target
             Button SetTarget = rootView.findViewById(R.id.set_target);
-
             SetTarget.setOnClickListener(v -> {
                 String selected_addr = PreferencesData.getString(context, "selected_address", "");
                 sdp_address.setText(selected_addr);
@@ -531,7 +516,7 @@ public class BTFragment extends Fragment {
             //Start SDP Tool
             Button StartSDPButton = rootView.findViewById(R.id.start_sdp);
             StartSDPButton.setOnClickListener(v -> {
-                NhPaths.showSnack(getView(), "Discovery started..\nCheck the output below", 1);
+                NhPaths.showSnack(getView(), getString(R.string.bt_discovery_started), 1);
                 AsyncTask.execute(() -> startSDPtool(rootView));
             });
             return rootView;
@@ -726,7 +711,7 @@ public class BTFragment extends Fragment {
             Button StopCWButton = rootView.findViewById(R.id.stop_cw);
             StopCWButton.setOnClickListener(v -> {
                 exe.RunAsRoot(new String[]{"bootkali custom_cmd pkill carwhisperer"});
-                Toast.makeText(getActivity().getApplicationContext(), "Killed", Toast.LENGTH_SHORT).show();
+                NhPaths.showSnack(getView(), getString(R.string.bt_killed), 1);
             });
 
             //Stream or play audio

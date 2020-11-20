@@ -16,11 +16,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Switch;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import material.hunter.utils.NhPaths;
 
@@ -95,7 +95,7 @@ public class NmapFragment extends Fragment {
         SharedPreferences sharedpreferences = context.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
 
         // Switch to activate open/close of advanced options
-        Switch advswitch = rootView.findViewById(R.id.nmap_adv_switch);
+        SwitchMaterial advswitch = rootView.findViewById(R.id.nmap_adv_switch);
         advswitch.setChecked(false);
         advswitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -148,9 +148,7 @@ public class NmapFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //Another interface callback
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         // NMAP Technique Spinner
@@ -162,7 +160,6 @@ public class NmapFragment extends Fragment {
         techSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String selectedItemText = parent.getItemAtPosition(pos).toString();
                 switch (pos) {
                     case 0:
                         removeFromCmd(technique);
@@ -215,10 +212,7 @@ public class NmapFragment extends Fragment {
                 //Another interface callback
             }
         });
-
-        // Search button
         addClickListener(v -> intentClickListener_NH("nmap " + getCmd()), rootView);
-
         Spinner timeSpinner = rootView.findViewById(R.id.nmap_timing_spinner);
         ArrayAdapter<CharSequence> timeAdapter = ArrayAdapter.createFromResource(context,
                 R.array.nmap_timing_array, android.R.layout.simple_spinner_item);
@@ -227,7 +221,6 @@ public class NmapFragment extends Fragment {
         timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String selectedItemText = parent.getItemAtPosition(pos).toString();
                 switch (pos) {
                     case 0:
                         removeFromCmd(time_template);
@@ -275,12 +268,10 @@ public class NmapFragment extends Fragment {
             if (buttonView.isChecked()) {
                 searchall = " -A";
                 addToCmd(searchall);
-                Log.d(TAG, searchall);
             } else {
                 removeFromCmd(searchall);
-                Log.d(TAG, searchall);
             }
-
+            Log.d(TAG, searchall);
         });
 
         // Checkbox for Fastmode
@@ -406,7 +397,6 @@ public class NmapFragment extends Fragment {
                 addToCmd(" -p" + Ports);
             }
         });
-
         return rootView;
     }
 

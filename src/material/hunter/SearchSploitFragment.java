@@ -37,7 +37,6 @@ import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 
 public class SearchSploitFragment extends Fragment {
-    private static final String TAG = "SearchSploitFragment";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private Boolean withFilters = true;
     private String sel_type;
@@ -80,8 +79,8 @@ public class SearchSploitFragment extends Fragment {
         setHasOptionsMenu(true);
         database = new SearchSploitSQL(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle("Exploit Database Archive");
-        builder.setMessage("Loading...wait");
+        builder.setTitle(getString(R.string.searchsploit_title));
+        builder.setMessage(getString(R.string.searchsploit_loading));
         adi = builder.create();
         adi.setCancelable(false);
         adi.show();
@@ -92,8 +91,8 @@ public class SearchSploitFragment extends Fragment {
         searchSearchSploit.setVisibility(View.GONE);
         searchSearchSploit.setOnClickListener(v -> {
             final ProgressDialog pd = new ProgressDialog(activity);
-            pd.setTitle("Feeding Exploit DB");
-            pd.setMessage("This can take a minute, wait...");
+            pd.setTitle(getString(R.string.searchsploit_feeding));
+            pd.setMessage(getString(R.string.searchsploit_wait));
             pd.setCancelable(false);
             pd.show();
             new Thread(() -> {
@@ -102,9 +101,8 @@ public class SearchSploitFragment extends Fragment {
                     if (isFeeded) {
                         try {
                             // Search List
-                            //String sd = NhPaths.SD_PATH;
-                            String sd = "/sdcard";
-                            String data = "/data/data/material.hunter/files/";
+                            String sd = NhPaths.SD_PATH;
+                            String data = NhPaths.APP_PATH;
                             String DATABASE_NAME = "SearchSploit";
                             String currentDBPath = "../databases/" + DATABASE_NAME;
                             String backupDBPath = "/nh_files/" + DATABASE_NAME; // From SD directory.
@@ -121,11 +119,11 @@ public class SearchSploitFragment extends Fragment {
                             main(rootView);
                             pd.dismiss();
                         } catch (Exception e) {
-                            NhPaths.showSnack(getView(), "DB FEED FAILED", 2);
+                            NhPaths.showSnack(getView(), getString(R.string.searchsploit_feed_failed), 2);
                             pd.dismiss();
                         }
                     } else {
-                        NhPaths.showSnack(getView(), "Unable to find SearchSploit files.csv database. Install exploitdb in chroot", 2);
+                        NhPaths.showSnack(getView(), getString(R.string.searchsploit_missing_csv), 2);
                     }
                 });
             }).start();
@@ -169,35 +167,31 @@ public class SearchSploitFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.rawSearch_ON:
-                if (getView() == null) return true;
-                if (!withFilters) {
-                    getView().findViewById(R.id.search_filters).setVisibility(View.VISIBLE);
-                    withFilters = true;
-                    item.setTitle("Enable Raw search");
-                    loadExploits();
-                    hideSoftKeyboard(getView());
-                } else {
+        if (item.getItemId() == R.id.rawSearch_ON) {
+            if (getView() == null) return true;
+            if (!withFilters) {
+                getView().findViewById(R.id.search_filters).setVisibility(View.VISIBLE);
+                withFilters = true;
+                item.setTitle(getString(R.string.searchsploit_enable_raw));
+            } else {
                     /*AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle("Warning!");
                     builder.setMessage("The exploit db is pretty big (+30K exploits), activating raw search will make the search slow.\nIs useful to do global searches when you don't find a exploit.")
                             .setNegativeButton(getString(R.string.cancel), (dialog, id) -> dialog.dismiss())
                             .setPositiveButton("Enable", (dialog, id) -> {*/
-                    getView().findViewById(R.id.search_filters).setVisibility(View.GONE);
-                    item.setTitle("Disable Raw search");
-                    withFilters = false;
-                    loadExploits();
-                    hideSoftKeyboard(getView());
-                            /*});
+                getView().findViewById(R.id.search_filters).setVisibility(View.GONE);
+                item.setTitle(getString(R.string.searchsploit_disable_raw));
+                withFilters = false;
+                /*});
                     AlertDialog ad = builder.create();
                     ad.setCancelable(false);
                     ad.show();*/
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            }
+            loadExploits();
+            hideSoftKeyboard(getView());
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void main(final View rootView) {
@@ -207,7 +201,7 @@ public class SearchSploitFragment extends Fragment {
         if (exploitCount == 0) {
             searchSearchSploit.setVisibility(View.VISIBLE);
             adi.dismiss();
-            hideSoftKeyboard(getView());
+            hideSoftKeyboard(Objects.requireNonNull(getView()));
             return;
         } else {
             searchSearchSploit.setVisibility(View.GONE);
@@ -292,10 +286,7 @@ class ExploitLoader extends BaseAdapter {
 
     }
 
-    public int getCount() {
-        // return the number of services
-        return _exploitList.size();
-    }
+    public int getCount() { return _exploitList.size(); }
 
     //FILE TO HID
     //FIXME
@@ -319,7 +310,7 @@ class ExploitLoader extends BaseAdapter {
             vH.date = convertView.findViewById(R.id.exploit_date);
             vH.viewSource = convertView.findViewById(R.id.viewSource);
             vH.openWeb = convertView.findViewById(R.id.openWeb);
-            vH.sendHid = convertView.findViewById(R.id.searchsploit_sendhid_button);
+            //vH.sendHid = convertView.findViewById(R.id.searchsploit_sendhid_button);
             convertView.setTag(vH);
         } else {
             vH = (ViewHolderItem) convertView.getTag();
@@ -335,7 +326,6 @@ class ExploitLoader extends BaseAdapter {
 
         vH.viewSource.setOnClickListener(null);
         vH.openWeb.setOnClickListener(null);
-        // set service name
         vH.description.setText(_desc);
         vH.type.setText(_type);
         vH.platform.setText(_platform);
@@ -346,13 +336,11 @@ class ExploitLoader extends BaseAdapter {
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("path", "/data/local/nhsystem/kalifs/usr/share/exploitdb/" + _file);
             _mContext.startActivity(i);
-
         });
-        vH.sendHid.setOnClickListener(v -> {
+        /*vH.sendHid.setOnClickListener(v -> {
             start("usr/share/exploitdb/" + _file);
             //_mContext.startActivity(i);
-
-        });
+        });*/
         vH.openWeb.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -361,7 +349,6 @@ class ExploitLoader extends BaseAdapter {
             _mContext.startActivity(i);
         });
         return convertView;
-
     }
 
     public SearchSploit getItem(int position) {
@@ -380,6 +367,6 @@ class ExploitLoader extends BaseAdapter {
         TextView description;
         Button viewSource;
         Button openWeb;
-        Button sendHid;
+        //Button sendHid;
     }
 }

@@ -17,12 +17,15 @@ public class GPSPosition {
     private float altitude = 0.0f;
     private float velocity = 0.0f;
 
-    public void updateIsfixed() { boolean isFixed = quality > 0; }
+    public void updateIsfixed() {
+        boolean isFixed = quality > 0;
+    }
 
     @Override
     public String toString() {
-        return String.format(Locale.getDefault(), "GPSPosition: latitude: %f, longitude: %f, time: %f, quality: %d, " +
+        return String.format(Locale.getDefault(), "GpsPosition: latitude: %f, longitude: %f, time: %f, quality: %d, " +
                         "direction: %f, altitude: %f, velocity: %f", latitude, longitude, time, quality,
                 direction, altitude, velocity);
     }
+
 }

@@ -157,6 +157,7 @@ else
 	# File2HID will convert any file or string to HID for keyboard goodness
 	# bootkali file2hid-file -f fileinput.txt -l us
 	# bootkali file2hid-string -s "string" -l us
+	# FIXME try send this to android
 
 	if [ "$1" == "file2hid-file" ]; then
 		$BUSYBOX chroot $MNT sudo python3 /sdcard/nh_files/modules/filetohid.py -f $2 -l us
@@ -222,7 +223,7 @@ else
 	# Usage:	bootkali start_gpsd <listen port>
 
 	if [ "$1" == "start_gpsd" ]; then
-		$BUSYBOX chroot $MNT sudo /usr/sbin/gpsd -n tcp://127.0.0.1:$2
+		killall gpsd; sleep 1; $BUSYBOX chroot $MNT sudo /usr/sbin/gpsd -n udp://127.0.0.1:$2
 	fi
 
 

@@ -11,15 +11,15 @@
             android:icon="@drawable/ic_action_android"
             android:title="@string/drawertitlecreatechroot" />
         <item
-            android:id="@+id/settings_item"
+            android:id="@+id/mhsettings_item"
             android:icon="@drawable/ic_settings"
-            android:title="MH Settings" />
+            android:title="@string/drawertitlemhsettings" />
     </group>
     <group android:id="@+id/chrootDependentGroup">
         <item
             android:id="@+id/terminal_item"
             android:icon="@drawable/ic_terminal"
-            android:title="Terminal" />
+            android:title="@string/drawertitleterminal" />
         <item
             android:id="@+id/services_item"
             android:icon="@drawable/ic_action_settings_applications"
@@ -48,10 +48,10 @@
             android:id="@+id/duckhunter_item"
             android:icon="@drawable/ic_keyboard_duckyhid"
             android:title="@string/drawertitleduckhunter" />
-        <item
+        <!--<item
             android:id="@+id/badusb_item"
             android:icon="@drawable/ic_action_usb"
-            android:title="@string/drawertitlebadusb" />
+            android:title="@string/drawertitlebadusb" />-->
         <item
             android:id="@+id/mana_item"
             android:icon="@drawable/ic_action_network_wifi"
@@ -88,5 +88,9 @@
             android:id="@+id/deauth_item"
             android:icon="@drawable/ic_access_point"
             android:title="@string/drawertitledeauth" />
+		<item
+            android:id="@+id/settings_item"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/drawertitlesettings" />
     </group>
 </menu>

@@ -23,7 +23,7 @@ f_start(){
 
 echo '1' > /proc/sys/net/ipv4/ip_forward
 
-# Flush previous settings
+# Flush previous mhsettings
 ip addr flush dev eth0
 
 # Add client IP and call eth0 up
@@ -63,7 +63,7 @@ am start -a android.intent.action.VIEW -d http://$PINEAPPLE_GATEWAY:$PINEAPPLE_P
 }
 
 f_start_noup(){
-# Flush previous settings
+# Flush previous mhsettings
 ip addr flush dev eth0
 
 # Flush IP Tables

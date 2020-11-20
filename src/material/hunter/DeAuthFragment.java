@@ -71,7 +71,7 @@ public class DeAuthFragment extends Fragment {
                 } else {
                     whitelist_command = "";
                 }
-                intentClickListener_NH(NhPaths.makeTermTitle("MDK4 DeAuth") + " mdk4 " + wlan.getText() + "mon d " + whitelist_command + "-c " + channel.getText());
+                intentClickListener_NH(NhPaths.makeTermTitle("MDK4 DeAuth") + " mdk4 " + wlan.getText() + " d " + whitelist_command + "-c " + channel.getText());
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

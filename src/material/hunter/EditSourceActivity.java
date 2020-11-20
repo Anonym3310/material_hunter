@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 
@@ -29,6 +31,8 @@ public class EditSourceActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         configFilePath = b.getString("path");
         setContentView(R.layout.source);
+        MaterialToolbar t = findViewById(R.id.appbar);
+        setSupportActionBar(t);
 
         getWindow().setStatusBarColor(getResources().getColor(R.color.colorBars));
         getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
@@ -56,7 +60,7 @@ public class EditSourceActivity extends AppCompatActivity {
     public void updateSource(View view) {
         EditText source = findViewById(R.id.source);
         String newSource = source.getText().toString();
-        Boolean isSaved = exe.SaveFileContents(newSource, configFilePath);
+        boolean isSaved = exe.SaveFileContents(newSource, configFilePath);
         if (isSaved) {
             NhPaths.showSnack(view, getString(R.string.edit_source_updated), 1);
         } else {

@@ -1,29 +1,48 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/deauth_whitelist"
+    <com.google.android.material.appbar.AppBarLayout
+        style="@style/Widget.Mirivan.AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/appbar"
+            style="@style/Widget.Mirivan.Toolbar"
+            android:layout_width="match_parent"
+            tools:title="Home" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/deauth_modify"
+        <LinearLayout
+            android:id="@+id/deauth_whitelist"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="top"
-            android:includeFontPadding="false"
-            android:lines="18"
-            android:paddingTop="0px" />
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="updatewhitelist"
-            android:text="@string/update" />
-    </LinearLayout>
-</ScrollView>
+            <EditText
+                android:id="@+id/deauth_modify"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:includeFontPadding="false"
+                android:lines="18"
+                android:paddingTop="0px" />
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="updatewhitelist"
+                android:text="@string/update" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

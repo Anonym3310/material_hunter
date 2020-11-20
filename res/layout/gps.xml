@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="end"
     android:orientation="vertical">
 
     <TextView
@@ -9,30 +12,62 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center"
         android:gravity="center"
-        android:padding="4dp"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingTop="4dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/gps_description" />
 
-    <Button
-        android:id="@+id/start_kismet"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_gps_provider"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Kismet with GPS Support" />
+        android:checked="false"
+        android:text="@string/switch_gps_provider"
+        app:useMaterialThemeColors="false" />
 
-    <Button
-        android:id="@+id/gps_stop"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        android:layout_width="wrap_content"
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_gpsd"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop GPSD in chroot" />
+        android:text="@string/switch_gpsd"
+        app:useMaterialThemeColors="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/gps_button_launch_app"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/gps_button_launch_app" />
+
+        <ImageButton
+            android:id="@+id/gps_button_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_action_settings_applications" />
+
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/gps_help"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:padding="4dp"
-        android:text="@string/gps_help" />
+        android:text="@string/gps_help"
+        tools:visibility="visible" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -48,5 +83,4 @@
             android:padding="16sp"
             android:textColor="@android:color/holo_green_light" />
     </ScrollView>
-
 </LinearLayout>

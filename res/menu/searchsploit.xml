@@ -7,6 +7,6 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/rawSearch_ON"
-        android:title="Enable Raw search"
+        android:title="@string/searchsploit_enable_raw"
         app:showAsAction="never" />
 </menu>

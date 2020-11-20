@@ -29,6 +29,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import material.hunter.databinding.MitmfGeneralBinding;
 import material.hunter.databinding.MitmfInjectBinding;
@@ -135,14 +136,14 @@ public class MITMfFragment extends Fragment {
         } else {
             intentClickListener_NH(o.getString(SharePrefTag.MITMF_CC, "") + sb.toString());
         }
-        NhPaths.showSnack(getView(), "MITMf Started!", 1);
+        NhPaths.showSnack(getView(), getString(R.string.mitmf_started), 1);
     }
 
     private void stop() {
         ShellExecuter exe = new ShellExecuter();
         String[] command = new String[1];
         exe.RunAsRoot(command);
-        NhPaths.showSnack(getView(), "MITMf Stopped!", 1);
+        NhPaths.showSnack(getView(), getString(R.string.mitmf_stopped), 1);
     }
 
     private void cc() {
@@ -151,19 +152,19 @@ public class MITMfFragment extends Fragment {
         final EditText o = rootView.findViewById(R.id.mitmf_dialog_cc);
         final Button a = rootView.findViewById(R.id.mitmf_dialog_save);
         final Button b = rootView.findViewById(R.id.mitmf_dialog_clear);
-        final SharedPreferences oa = getActivity().getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
+        final SharedPreferences oa = Objects.requireNonNull(getActivity()).getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         o.setText(oa.getString(SharePrefTag.MITMF_CC, ""));
         a.setOnClickListener(view -> {
-            oa.edit().putString(SharePrefTag.MITMF_CC, o.getText().toString()).commit();
-            NhPaths.showSnack(getView(), "Custom command will setted!", 1);
+            oa.edit().putString(SharePrefTag.MITMF_CC, o.getText().toString()).apply();
+            NhPaths.showSnack(getView(), getString(R.string.mitmfcc_setted), 1);
         });
         b.setOnClickListener(view -> {
-            oa.edit().remove(SharePrefTag.MITMF_CC).commit();
+            oa.edit().remove(SharePrefTag.MITMF_CC).apply();
             o.setText("");
-            NhPaths.showSnack(getView(), "Custom command will cleared!", 1);
+            NhPaths.showSnack(getView(), getString(R.string.mitmfcc_cleared), 1);
         });
-        AlertDialog ad = adb.setTitle("Custom command for mitmf").setView(rootView).create();
-        ad.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        AlertDialog ad = adb.setTitle(getString(R.string.mitmfcc)).setView(rootView).create();
+        Objects.requireNonNull(ad.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         ad.show();
     }
     /* Stop execution menu */
@@ -395,7 +396,6 @@ public class MITMfFragment extends Fragment {
             redirectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                    String selectedItemText = parent.getItemAtPosition(pos).toString();
                     spoofOption = pos;
                     if (pos == 3) { /*dhcp*/
                         viewModel.setShellShockEnabled(true);
@@ -405,9 +405,7 @@ public class MITMfFragment extends Fragment {
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                    //Another interface callback
-                }
+                public void onNothingSelected(AdapterView<?> parent) { }
             });
 
             // ARP Mode Spinner
@@ -417,14 +415,10 @@ public class MITMfFragment extends Fragment {
             spoofBinding.mitmfSpoofArpmodespin.setAdapter(arpAdapter);
             spoofBinding.mitmfSpoofArpmodespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                    String selectedItemText = parent.getItemAtPosition(pos).toString();
-                    arpModeOption = pos;
-                }
+                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) { arpModeOption = pos; }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
+                public void onNothingSelected(AdapterView<?> parent) { }
             });
 
 
@@ -472,7 +466,6 @@ public class MITMfFragment extends Fragment {
             responderBinding = MitmfResponderBinding.inflate(inflater, container, false);
             MITMFViewModel viewModel = new MITMFViewModel();
             responderBinding.setViewModel(viewModel);
-
             return responderBinding.getRoot();
         }
 
@@ -518,7 +511,7 @@ public class MITMfFragment extends Fragment {
             exe.ReadFile_ASYNC(configFilePath, source);
             Button button = rootView.findViewById(R.id.update);
             button.setOnClickListener(v -> {
-                Boolean isSaved = exe.SaveFileContents(source.getText().toString(), configFilePath);
+                boolean isSaved = exe.SaveFileContents(source.getText().toString(), configFilePath);
                 if (isSaved) {
                     NhPaths.showSnack(getView(), getString(R.string.edit_source_updated), 1);
                 } else {

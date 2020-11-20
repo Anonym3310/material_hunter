@@ -1,5 +1,0 @@
-unset LD_PRELOAD
-chroot /data/local/nhsystem/kalifs /bin/sh -c "chmod 777 /dev/null"
-chroot /data/local/nhsystem/kalifs /bin/sh -c "pkill gpsd"
-chroot /data/local/nhsystem/kalifs /bin/sh -c "pkill socat"
-chroot /data/local/nhsystem/kalifs /bin/sh -c "rm -f /tmp/gps*"

@@ -40,6 +40,15 @@ dependencies {
 
 android {
 
+    lintOptions {
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
 
@@ -55,7 +64,7 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 202011006
+        versionCode 202011010
         versionName "2020.11"
         multiDexEnabled true
     }

@@ -44,7 +44,6 @@ public class PineappleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.pineapple, container, false);
-        SharedPreferences sharedpreferences = context.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
 
         Log.d(TAG, NhPaths.APP_SCRIPTS_PATH);
 
@@ -78,7 +77,7 @@ public class PineappleFragment extends Fragment {
                 Log.d(TAG, command);
                 exe.RunAsRootOutput(command);
             }).start();
-            NhPaths.showSnack(getView(), "Starting eth0 connection", 1);
+            NhPaths.showSnack(getView(), getString(R.string.pineapple_starting), 1);
         }, rootView);
 
         // Stop|Close Button
@@ -89,26 +88,17 @@ public class PineappleFragment extends Fragment {
                 Log.d(TAG, command);
                 exe.RunAsRootOutput(command);
             }).start();
-            NhPaths.showSnack(getView(), "Bringing down eth0 conneciton", 1);
+            NhPaths.showSnack(getView(), getString(R.string.pineapple_bringing), 1);
         }, rootView);
 
         return rootView;
     }
 
     private String startConnection(View rootView) {
-        // Port Text Field
         EditText port = rootView.findViewById(R.id.pineapple_webport);
-
-        // Gateway IP Text Field
         EditText gateway_ip = rootView.findViewById(R.id.pineapple_gatewayip);
-
-        // Client IP Text Field
         EditText web_ip = rootView.findViewById(R.id.pineapple_clientip);
-
-        // CIDR Text Field
         EditText CIDR = rootView.findViewById(R.id.pineapple_cidr);
-
-        // Pineapple CIDR Text Field
         return web_ip.getText() + " " + CIDR.getText() + " " + gateway_ip.getText() + " " + port.getText();
     }
 
