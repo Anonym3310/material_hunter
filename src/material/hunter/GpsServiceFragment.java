@@ -33,7 +33,6 @@ import material.hunter.utils.ShellExecuter;
 
 public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Receiver {
 
-    private static final String TAG = "GpsServiceFragment";
     private static final String ARG_SECTION_NUMBER = "section_number";
     private KaliGPSUpdates.Provider gpsProvider = null;
     private TextView gpsTextView;
@@ -43,7 +42,6 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
     private boolean reattachedToRunningService = false;
     private SwitchMaterial switch_gps_provider = null;
     private SwitchMaterial switch_gpsd = null;
-    private Button button_launch_app = null;
 
     public GpsServiceFragment() { }
 
@@ -91,12 +89,12 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         TextView gpsHelpView = view.findViewById(R.id.gps_help);
         switch_gps_provider = view.findViewById(R.id.switch_gps_provider);
         switch_gpsd = view.findViewById(R.id.switch_gpsd);
-        button_launch_app = view.findViewById(R.id.gps_button_launch_app);
+        Button button_launch_app = view.findViewById(R.id.gps_button_launch_app);
         // TODO: make this text dynamic so we can launch other apps besides Kismet
-        button_launch_app.setText("Launch Kismet in NH Terminal");
+        //button_launch_app.setText("Launch Kismet in NH Terminal");
         if(!wantHelpView)
             gpsHelpView.setVisibility(View.GONE);
-        Log.d(TAG, "reattachedToRunningService: " + reattachedToRunningService);
+        //Log.d(TAG, "reattachedToRunningService: " + reattachedToRunningService);
         if(reattachedToRunningService) {
             // gpsTextView.append("Service already running\n");
             setCheckedQuietly(switch_gps_provider, true);
@@ -105,17 +103,14 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         // check if gpsd is already running
         check_gpsd();
 
-        switch_gps_provider.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(switch_gps_provider.getTag() != null)
-                    return;
-                Log.d(TAG, "switch_gps_provider clicked: " + isChecked);
-                if(isChecked) {
-                    startGpsProvider();
-                } else {
-                    stopGpsProvider();
-                }
+        switch_gps_provider.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if(switch_gps_provider.getTag() != null)
+                return;
+            //Log.d(TAG, "switch_gps_provider clicked: " + isChecked);
+            if(isChecked) {
+                startGpsProvider();
+            } else {
+                stopGpsProvider();
             }
         });
 
@@ -132,12 +127,12 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         button_launch_app.setOnClickListener(view1 -> {
             if (!switch_gps_provider.isChecked()) {
                 gpsTextView.append("Android GPS Provider not running!\n");
-                switch_gps_provider.setChecked(true);
+                //switch_gps_provider.setChecked(true);
                 startGpsProvider();
             }
             if (!switch_gpsd.isChecked()) {
                 gpsTextView.append("chroot gpsd not running!\n");
-                switch_gpsd.setChecked(true);
+                //switch_gpsd.setChecked(true);
                 startChrootGpsd();
             }
             wantKismet = true;
@@ -167,9 +162,9 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         new Thread(() -> {
             ShellExecuter exe = new ShellExecuter();
             String command = "su -c '" + NhPaths.APP_SCRIPTS_PATH + File.separator + "bootkali start_gpsd " + NhPaths.GPS_PORT + "'";
-            Log.d(TAG, command);
-            String response = exe.RunAsRootOutput(command);
-            Log.d(TAG, "Response = " + response);
+            /*Log.d(TAG, command);
+            String response =*/ exe.RunAsRootOutput(command);
+            //Log.d(TAG, "Response = " + response);
         }).start();
     }
 
@@ -179,7 +174,7 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         new Thread(() -> {
             ShellExecuter exe = new ShellExecuter();
             String command = "su -c 'killall gpsd'";
-            Log.d(TAG, command);
+            //Log.d(TAG, command);
             exe.RunAsRootOutput(command);
         }).start();
     }
@@ -187,7 +182,7 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume");
+        //Log.d(TAG, "onResume");
         if(LocationUpdateService.isInstanceCreated()) {
             // a LocationUpdateService is already running
             setCheckedQuietly(switch_gps_provider, true);
@@ -223,7 +218,6 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
             // we've already granted permissions, make the nag message go away
             wantHelpView = false;
         }
-
         super.onAttach(context);
     }
 

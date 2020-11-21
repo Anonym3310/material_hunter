@@ -377,7 +377,6 @@ public class LocationUpdateService extends Service implements
         lastNotificationText = updatedText;
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
-        // TODO have this result intent open the NH app
         Intent resultIntent = new Intent(this, AppNavHomeActivity.class);
         resultIntent.putExtra("menuFragment", R.id.gps_item);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);

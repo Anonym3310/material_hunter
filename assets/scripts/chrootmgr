@@ -185,15 +185,14 @@ if [ ! $# -eq 0 ]; then
                         done
 
                         KERNEL="$(uname -r)"
-
                         DIR="/lib/modules/$KERNEL"
-                        if [ -d $DIR ]; then
+                        if [ -d "$DIR" ]; then
                             bklog "[+] kernel modules exists and linked."
-                            if [ -d $DIR/build ]; then
+                            if [ -d "$DIR/build" ]; then
                                 bklog "[!] kernel modules have a build folder."
                             fi
                         else
-                            bklog "[!] ${DIR} doesn't exists or isn't mounted..."
+                            bklog "[-] ${DIR} doesn't exists or isn't mounted..."
                         fi
                         if [ $ISALLREADY -eq 0 ]; then
                             bklog "[+] Chroot environment has been set and started."

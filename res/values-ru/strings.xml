@@ -218,6 +218,14 @@
     <string name="kex_backup">Сохранить</string>
     <string name="kex_restore">Восстановить</string>
     <string name="kex_resolution">KeX РАЗРЕШЕНИЕ</string>
+    <string name="kex_pls_setup">Сначала установите локальный сервер!</string>
+    <string name="kex_cant_remove_root">Нельзя удалить корневого пользователя!</string>
+    <string name="kex_backup_s">Сохранение выполнено!</string>
+    <string name="kex_backup_not_found">Файл сохранения не найден!</string>
+    <string name="kex_restore_s">Восстановление выполнено!</string>
+    <string name="kex_cant_remove_d_resolution">Нельзя удалить стандартное разрешение!</string>
+    <string name="kex_cant_remove_dev_resolution">Нельзя удалить разрешение устройства!</string>
+    <string name="kex_pls_enter_values">Пожалуйста, введите значения!</string>
 
     <!-- BT Attacks -->
     <string name="bt_target_adress">Целевой адрес</string>
@@ -238,6 +246,7 @@
     <string name="bt_scan">Сканировать устройства</string>
     <string name="bt_no_device_found">Устройства не найдены</string>
     <string name="bt_no_target">Нет цели!</string>
+    <string name="bt_dbus_first">Сначала включите dbus!</string>
 
     <!-- BT Tools -->
     <string name="bt_tools">Перебор адресов устройств BT, пинг, и обнаружение их сервисов.</string>
@@ -459,9 +468,9 @@
     <string name="searchsploit_view_source">Источник</string>
     <string name="searchsploit_results">результат(ов)</string>
     <string name="searchsploit_title">Exploit Database Archive</string>
-    <string name="searchsploit_loading">Загрузка...подождите</string>
+    <string name="searchsploit_loading">Загрузка…подождите</string>
     <string name="searchsploit_feeding">Feeding Exploit DB</string>
-    <string name="searchsploit_wait">Это может занять минуту, подождите...</string>
+    <string name="searchsploit_wait">Это может занять минуту, подождите…</string>
     <string name="searchsploit_feed_failed">DB FEED FAILED</string>
     <string name="searchsploit_missing_csv">Не был найден SearchSploit files.csv. Установите exploitdb в chroot</string>
     <string name="searchsploit_enable_raw">Использовать raw поиск</string>
@@ -537,7 +546,7 @@
     <string name="gps_help">Вы должны дать MaterialHunter права к GPS. Идем в настройки > Приложения > MaterialHunter > Права и разрешения.</string>
     <string name="switch_gps_provider">Android GPS Provider</string>
     <string name="switch_gpsd">GPSd в chroot</string>
-    <string name="gps_button_launch_app">Запустить провайдер в терминале</string>
+    <string name="gps_button_launch_app">Запустить Kismet в терминале</string>
     <string name="gps_notification_lat">"Lat: "</string>
     <string name="gps_notification_long">"Long: "</string>
     <string name="gps_notification_accuracy">"+/- "</string>
@@ -631,4 +640,5 @@
     <string name="settings_restore">Восстановить</string>
     <string name="settings_remove_system_mh">Удалить MaterialHunter как системное приложение</string>
     <string name="settings_uninstall_mh">Удалить MaterialHunter</string>
+    <string name="select_file_btn">…</string>
 </resources>

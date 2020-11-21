@@ -228,6 +228,14 @@
     <string name="kex_backup">Backup</string>
     <string name="kex_restore">Restore</string>
     <string name="kex_resolution">KEX SERVER RESOLUTION (OPTIONAL)</string>
+    <string name="kex_pls_setup">Please setup local server first!</string>
+    <string name="kex_cant_remove_root">Can\'t remove root!</string>
+    <string name="kex_backup_s">Backup successful!</string>
+    <string name="kex_backup_not_found">Backup file not found!</string>
+    <string name="kex_restore_s">Restore successful!</string>
+    <string name="kex_cant_remove_d_resolution">Can\'t remove default resolution!</string>
+    <string name="kex_cant_remove_dev_resolution">Can\'t remove device resolution!</string>
+    <string name="kex_pls_enter_values">Please enter the values!</string>
 
     <!-- BT Attacks -->
     <string name="bt_target_adress">Target address</string>
@@ -248,6 +256,7 @@
     <string name="bt_scan">Scan for devices</string>
     <string name="bt_no_device_found">No devices found</string>
     <string name="bt_no_target">No target!</string>
+    <string name="bt_dbus_first">Enable dbus service first!</string>
 
     <!-- BT Tools -->
     <string name="bt_tools">Brute force BT device addresses, ping, and discover their services.</string>
@@ -469,9 +478,9 @@
     <string name="searchsploit_view_source">View Source</string>
     <string name="searchsploit_results">results</string>
     <string name="searchsploit_title">Exploit Database Archive</string>
-    <string name="searchsploit_loading">Loading...wait</string>
+    <string name="searchsploit_loading">Loading…wait</string>
     <string name="searchsploit_feeding">Feeding Exploit DB</string>
-    <string name="searchsploit_wait">This can take a minute, wait...</string>
+    <string name="searchsploit_wait">This can take a minute, wait…</string>
     <string name="searchsploit_feed_failed">DB FEED FAILED</string>
     <string name="searchsploit_missing_csv">Unable to find SearchSploit files.csv database. Install exploitdb in chroot</string>
     <string name="searchsploit_enable_raw">Enable Raw search</string>
@@ -545,7 +554,7 @@
     <!-- Start GPSFragment -->
     <string name="switch_gps_provider">Android GPS Provider</string>
     <string name="switch_gpsd">GPSd in chroot</string>
-    <string name="gps_button_launch_app">Launch provider in terminal</string>
+    <string name="gps_button_launch_app">Launch Kismet in NH Terminal</string>
     <string name="gps_description">Converts your GPS to NMEA then provides to Chroot.  Perfect for wardriving with Kismet or just a generic GPS server for Kali.</string>
     <string name="gps_help">You may need to give MaterialHunter permissions to GPS. Go to Settings > Apps > MaterialHunter > Permissions.</string>
     <string name="gps_notification_lat">"Lat: "</string>
@@ -592,7 +601,7 @@
     <string name="count">Count</string>
     <string name="options_updated">Options updated.</string>
     <string name="options_not_updated">Options not updated.</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="file_q_overwrite">Overwrite?</string>
@@ -641,4 +650,5 @@
     <string name="settings_restore">Restore</string>
     <string name="settings_remove_system_mh">Remove MaterialHunter system app</string>
     <string name="settings_uninstall_mh">Uninstall MaterialHunter App</string>
+    <string name="select_file_btn">…</string>
 </resources>

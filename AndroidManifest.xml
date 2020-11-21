@@ -27,6 +27,7 @@
     <uses-permission
         android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
         tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <supports-screens
         android:anyDensity="true"
@@ -46,7 +47,8 @@
         android:supportsPictureInPicture="false"
         android:theme="@style/Theme.MaterialHunter"
         android:windowSoftInputMode="adjustResize"
-        tools:replace="android:theme">
+        tools:replace="android:theme"
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".AppNavHomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
@@ -94,7 +96,6 @@
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.ACTION_BOOT_COMPLETED" />
                 <action android:name="android.intent.action.REBOOT" />
@@ -119,6 +120,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
             android:name=".GPS.LocationUpdateService"
+            android:foregroundServiceType="location"
             android:enabled="true"
             android:exported="false" />
     </application>

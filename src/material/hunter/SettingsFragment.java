@@ -141,8 +141,7 @@ public class SettingsFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
+            public void onNothingSelected(AdapterView<?> parentView) { }
         });
 
         //   ProgressDialog progressDialog = new ProgressDialog(context);

@@ -64,8 +64,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 202011010
-        versionName "2020.11"
+        versionCode 202011011
+        versionName "2020.11-fk-miui"
         multiDexEnabled true
     }
 

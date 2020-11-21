@@ -289,7 +289,7 @@ class ExploitLoader extends BaseAdapter {
     public int getCount() { return _exploitList.size(); }
 
     //FILE TO HID
-    //FIXME
+    // FIXME check bootkali fixme strings
     private void start(String file) {
         String[] command = new String[1];
         command[0] = "su -c /data/data/material.hunter/files/scripts/bootkali file2hid-file " + file;

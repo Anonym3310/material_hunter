@@ -297,7 +297,7 @@ public class BTFragment extends Fragment {
                         BTstatus.setText("Stopped");
                     }
                 } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Enable dbus service first!", Toast.LENGTH_SHORT).show();
+                    NhPaths.showSnack(getView(), getString(R.string.bt_dbus_first), 1);
                     btSwitch.setChecked(false);
                 }
             });
@@ -354,7 +354,7 @@ public class BTFragment extends Fragment {
             targets.setOnItemClickListener((adapterView, view, i, l) -> {
                 String selected_target = targets.getItemAtPosition(i).toString();
                 if (selected_target.equals(getString(R.string.bt_no_device_found)))
-                    Toast.makeText(getActivity().getApplicationContext(), getString(R.string.bt_no_target), Toast.LENGTH_SHORT).show();
+                    NhPaths.showSnack(getView(), getString(R.string.bt_no_target), 1);
                 else {
                     selected_addr = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 1");
                     selected_class = exe.RunAsRootOutput("echo " + selected_target + " | cut -d , -f 2");
