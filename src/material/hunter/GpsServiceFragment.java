@@ -127,13 +127,13 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         button_launch_app.setOnClickListener(view1 -> {
             if (!switch_gps_provider.isChecked()) {
                 gpsTextView.append("Android GPS Provider not running!\n");
-                //switch_gps_provider.setChecked(true);
-                startGpsProvider();
+                switch_gps_provider.setChecked(true);
+                //startGpsProvider();
             }
             if (!switch_gpsd.isChecked()) {
                 gpsTextView.append("chroot gpsd not running!\n");
-                //switch_gpsd.setChecked(true);
-                startChrootGpsd();
+                switch_gpsd.setChecked(true);
+                //startChrootGpsd();
             }
             wantKismet = true;
             gpsTextView.append("Kismet will launch after next position received.  Waiting...\n");
