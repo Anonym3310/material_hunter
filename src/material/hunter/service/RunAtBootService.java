@@ -37,7 +37,6 @@ public class RunAtBootService extends JobIntentService {
     public void onCreate() {
         super.onCreate();
         NhPaths.getInstance(getApplicationContext());
-        // Create notification channel first.
         createNotificationChannel();
     }
 

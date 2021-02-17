@@ -259,9 +259,7 @@ public class CustomCommandsFragment extends Fragment {
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
+                public void onNothingSelected(AdapterView<?> parent) { }
             });
 
             AlertDialog.Builder adbAdd = new AlertDialog.Builder(activity);

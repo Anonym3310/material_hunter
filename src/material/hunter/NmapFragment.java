@@ -401,12 +401,12 @@ public class NmapFragment extends Fragment {
     }
 
     private String getCmd() {
-        String genCmd = "";
+        StringBuilder genCmd = new StringBuilder();
         for (int j = CommandComposed.size() - 1; j >= 0; j--) {
-            genCmd = genCmd + CommandComposed.get(j);
+            genCmd.append(CommandComposed.get(j));
         }
         Log.d("NMAP CMD OUTPUT: ", "nmap " + genCmd);
-        return genCmd;
+        return genCmd.toString();
     }
 
     private void addClickListener(View.OnClickListener onClickListener, View rootView) {

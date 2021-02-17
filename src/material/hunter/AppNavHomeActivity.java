@@ -97,9 +97,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
         CopyBootFilesAsyncTask copyBootFilesAsyncTask = new CopyBootFilesAsyncTask(getApplicationContext(), this, progressDialog);
         copyBootFilesAsyncTask.setListener(new CopyBootFilesAsyncTask.CopyBootFilesAsyncTaskListener() {
             @Override
-            public void onAsyncTaskPrepare() {
-                // Can run other things here.
-            }
+            public void onAsyncTaskPrepare() { }
 
             @Override
             public void onAsyncTaskFinished(Object result) {
@@ -124,9 +122,9 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 }
 
                 // Secondly, check if busybox is present.
-                if (!CheckForRoot.isBusyboxInstalled()) {
-                    showWarningDialog("MaterialHunter app cannot be run properly", "No busybox is detected, please make sure you have busybox installed!", true);
-                }
+                // if (!CheckForRoot.isBusyboxInstalled()) {
+                    // showWarningDialog("MaterialHunter app cannot be run properly", "No busybox is detected, please make sure you have busybox installed!", true);
+                // }
 
                 // Thirdly, check if NetHunter terminal app has been installed.
                 if (getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.offsec.nhterm") == null) {
@@ -143,11 +141,9 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
 
         int menuFragment = getIntent().getIntExtra("menuFragment", -1);
         if(menuFragment != -1) {
-            Log.d(TAG, "menuFragment = " + menuFragment);
             desiredFragment = menuFragment;
         }
     }
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -315,9 +311,6 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
             setupDrawerContent(navigationView);
         }
 
-        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorBars));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
-
         ImageView o = findViewById(R.id.w);
         o.setAlpha(prefs.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0));
         Drawable b = WallpaperManager.getInstance(this).getDrawable();
@@ -430,9 +423,6 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                     showWarningDialog("", getString(R.string.toast_need_configfs), false);
                 }
                 break;
-            //case R.id.badusb_item:
-                //changeFragment(fragmentManager, BadusbFragment.newInstance(itemId));
-                //break;
             case R.id.mana_item:
                 changeFragment(fragmentManager, ManaFragment.newInstance(itemId));
                 break;
@@ -488,7 +478,7 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 try {
                     Intent intent = new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
                     intent.addCategory(Intent.CATEGORY_DEFAULT);
-                    intent.putExtra("com.offsec.nhterm.iInitialCommand", NhPaths.makeTermTitle("MaterialPromot"));
+                    intent.putExtra("com.offsec.nhterm.iInitialCommand", "");
                     startActivity(intent);
                 } catch (Exception e) {
                     NhPaths.showMessage(this, getString(R.string.toast_install_terminal));
@@ -538,10 +528,10 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
     }
 
     private boolean isAllRequiredPermissionsGranted(){
-        if (!permissionCheck.isAllPermitted(PermissionCheck.DEFAULT_PERMISSIONS)) {
+        if (permissionCheck.isAllPermitted(PermissionCheck.DEFAULT_PERMISSIONS)) {
             permissionCheck.checkPermissions(PermissionCheck.DEFAULT_PERMISSIONS, PermissionCheck.DEFAULT_PERMISSION_RQCODE);
             return false;
-        } else if (!permissionCheck.isAllPermitted(PermissionCheck.NH_TERM_PERMISSIONS)) {
+        } else if (permissionCheck.isAllPermitted(PermissionCheck.NH_TERM_PERMISSIONS)) {
             permissionCheck.checkPermissions(PermissionCheck.NH_TERM_PERMISSIONS, PermissionCheck.NH_TERM_PERMISSIONS_RQCODE);
             return false;
         }

@@ -15,9 +15,9 @@ public class CustomCommandsData {
     public static boolean isDataInitiated = false;
     private static CustomCommandsData instance;
     public List<CustomCommandsModel> customCommandsModelListFull;
-    private ArrayList<CustomCommandsModel> customCommandsModelArrayList = new ArrayList<>();
-    private MutableLiveData<List<CustomCommandsModel>> data = new MutableLiveData<>();
-    private List<CustomCommandsModel> copyOfCustomCommandsModelListFull = new ArrayList<>();
+    private final ArrayList<CustomCommandsModel> customCommandsModelArrayList = new ArrayList<>();
+    private final MutableLiveData<List<CustomCommandsModel>> data = new MutableLiveData<>();
+    private final List<CustomCommandsModel> copyOfCustomCommandsModelListFull = new ArrayList<>();
 
     public synchronized static CustomCommandsData getInstance() {
         if (instance == null) {

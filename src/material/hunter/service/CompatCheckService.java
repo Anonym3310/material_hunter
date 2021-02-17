@@ -18,7 +18,6 @@ import material.hunter.utils.ShellExecuter;
 // IntentService class for keep checking the campatibaility every time user switch back to the app.
 public class CompatCheckService extends IntentService {
 
-    private static final String TAG = "CompatCheckService";
     private String message = "";
     private int RESULTCODE = -1;
     private SharedPreferences sharedPreferences;
@@ -71,10 +70,10 @@ public class CompatCheckService extends IntentService {
             return false;
         }
         // Secondly, check if busybox is present.
-        if (!CheckForRoot.isBusyboxInstalled()) {
-            message = "No busybox is detected, please make sure you have busybox installed!";
-            return false;
-        }
+        // if (!CheckForRoot.isBusyboxInstalled()) {
+            //message = "No busybox is detected, please make sure you have busybox installed!";
+            //return false;
+        //}
         // Lastly, check if materialhunter terminal app has been installed.
         if (getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.offsec.nhterm") == null) {
             message = "NetHunter terminal is not installed yet.";

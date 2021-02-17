@@ -28,11 +28,12 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
             {"1", "Kernel Version", "uname -a", "\\n", "1"},
             {"2", "Device codename", "getprop ro.product.device", "\\n", "1"},
             {"3", "HID Status", "ls /dev/hidg* || echo \"HID interface not found.\"", "\\n", "1"},
-            {"4", "Network Interface Status", "ip -o addr show | awk '{print $2, $3, $4}'", "\\n", "1"},
-            {"5", "External IP", "curl ipv4.icanhazip.com || echo \"No internet connection.\"", "\\n", "0"}
+            {"4", "SAR", "grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && echo True || echo False", "\\n", "1"},
+            {"5", "Network Interface Status", "ip -o addr show | awk '{print $2, $3, $4}'", "\\n", "1"},
+            {"6", "External IP", "curl ipv4.icanhazip.com || echo \"No internet connection.\"", "\\n", "0"}
     };
     private static MaterialHunterSQL instance;
-    private static ArrayList<String> COLUMNS = new ArrayList<>();
+    private static final ArrayList<String> COLUMNS = new ArrayList<>();
 
     private MaterialHunterSQL(Context context) {
         super(context, DATABASE_NAME, null, 1);

@@ -355,7 +355,6 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="/sdcard/nh_files_20201010.tar"
                         android:inputType="text"
                         android:importantForAutofill="no"
                         tools:ignore="LabelFor" />
@@ -413,6 +412,83 @@
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:text="@string/settings_uninstall_mh" />
+
+                <View
+                    android:id="@+id/divider9"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="CURRENT BUSYBOX VERSION"
+                        android:paddingTop="10dp"
+                        android:padding="4dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/busybox_version"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Loading.."
+                        android:paddingTop="10dp"
+                        android:padding="4dp"
+                        android:layout_weight="3"/>
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider8"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="4dp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="NEW VERSION"
+                        android:padding="4dp"/>
+
+                    <Spinner
+                        android:id="@+id/bb_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:dropDownWidth="match_parent"
+                        android:saveEnabled="false" />
+
+                    <Button
+                        android:id="@+id/select_bb"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Apply" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/system_bb"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:singleLine="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Use as default system busybox" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -40,11 +40,7 @@ public class MHSettingsFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.mhsettings, container, false);
         final SharedPreferences oa = Objects.requireNonNull(getActivity()).getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         final SwitchMaterial o = rootView.findViewById(R.id.settings_rob);
-        if (oa.getBoolean(SharePrefTag.BOOT_RECIVIE, true)) {
-            o.setChecked(true);
-        } else {
-            o.setChecked(false);
-        }
+        o.setChecked(oa.getBoolean(SharePrefTag.BOOT_RECIVIE, true));
         o.setOnClickListener(view -> {
             if (o.isChecked()) {
                 oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, true).apply();

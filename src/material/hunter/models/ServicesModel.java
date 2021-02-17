@@ -20,10 +20,6 @@ public class ServicesModel {
         this.Status = Status;
     }
 
-    public ServicesModel() {
-
-    }
-
     public String getServiceName() {
         return ServiceName;
     }

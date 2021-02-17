@@ -17,9 +17,9 @@ public class ServicesData {
     public static boolean isDataInitiated = false;
     private static ServicesData instance;
     public List<ServicesModel> servicesModelListFull;
-    private ArrayList<ServicesModel> servicesModelArrayList = new ArrayList<>();
-    private MutableLiveData<List<ServicesModel>> data = new MutableLiveData<>();
-    private List<ServicesModel> copyOfServicesModelListFull = new ArrayList<>();
+    private final ArrayList<ServicesModel> servicesModelArrayList = new ArrayList<>();
+    private final MutableLiveData<List<ServicesModel>> data = new MutableLiveData<>();
+    private final List<ServicesModel> copyOfServicesModelListFull = new ArrayList<>();
 
     public synchronized static ServicesData getInstance() {
         if (instance == null) {
@@ -259,5 +259,4 @@ public class ServicesData {
         copyOfServicesModelListFull.addAll(servicesModelListFull);
         return copyOfServicesModelListFull;
     }
-
 }

@@ -15,7 +15,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction() != null) {
-            Log.d(TAG, "Actions: " + intent.getAction());
+            //Log.d(TAG, "Actions: " + intent.getAction());
             if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
                 ComponentName comp = new ComponentName(context.getPackageName(),
                         RunAtBootService.class.getName());
@@ -23,6 +23,5 @@ public class BootCompletedReceiver extends BroadcastReceiver {
                 //Log.d(TAG, "MaterialHunter receive boot completed intent!");
             }
         }
-
     }
 }

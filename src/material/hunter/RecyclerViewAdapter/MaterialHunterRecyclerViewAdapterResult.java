@@ -16,9 +16,8 @@ import material.hunter.utils.NhPaths;
 
 public class MaterialHunterRecyclerViewAdapterResult extends RecyclerView.Adapter<MaterialHunterRecyclerViewAdapterResult.ItemViewHolder> {
 
-    private static final String TAG = "MaterialHunterRecyclerView";
-    private String[] resultStrings;
-    private Context context;
+    private final String[] resultStrings;
+    private final Context context;
 
     public MaterialHunterRecyclerViewAdapterResult(Context context, String[] resultStrings) {
         this.context = context;
@@ -29,7 +28,7 @@ public class MaterialHunterRecyclerViewAdapterResult extends RecyclerView.Adapte
     @Override
     public MaterialHunterRecyclerViewAdapterResult.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.materialhunter_recyclerview_result, parent, false);
-        return new MaterialHunterRecyclerViewAdapterResult.ItemViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -54,9 +53,8 @@ public class MaterialHunterRecyclerViewAdapterResult extends RecyclerView.Adapte
         return super.getItemId(position);
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView resultTextView;
-
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final TextView resultTextView;
         private ItemViewHolder(View view) {
             super(view);
             resultTextView = view.findViewById(R.id.f_materialhunter_item_result_tv);

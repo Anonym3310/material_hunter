@@ -13,7 +13,7 @@ fi
 
 ## Validate Chroot path.
 if [ -z "$MNT" ]; then
-    bklog "[-] The \$MNT variable is not defined, please run nethunter app first."
+    bklog "[-] The \$MNT variable is not defined, please the MaterialHunter app first."
     exit 2
 fi
 

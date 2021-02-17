@@ -6,19 +6,19 @@ SCRIPT_PATH=$(readlink -f $0)
 
 ## Validate busybox path.
 if [ -z "$BUSYBOX" ]; then
-    bklog "[-] No busybox_nh is installed or busybox is not granted execute permission, if you did have it installed, please symlink it to /system/bin and grant it the permission."
+    bklog "[-] No busybox_nh is installed or busybox is not granted execute permission, if you did have it installed, please symlink it to /system/xbin and grant it the permission."
     exit 1
 fi
 
 ## Validate Chroot path.
 if [ -z "$MNT" ]; then
-    bklog "[-] The \$MNT variable is not defined, please run nethunter app first."
+    bklog "[-] The \$MNT variable is not defined, please run the MaterialHunter app first."
     exit 2
 fi
 
 if [ ! -d "$MNT" ]; then
-    bklog "[-] \"$MNT\" directory not exist!"
-    bklog "[!] Click the button [INSTALL CHROOT] down below now!"
+    bklog "[-] \"$MNT\" directory does not exist!"
+    bklog "[!] Click the button [INSTALL CHROOT] below next!"
     exit 2
 fi
 
@@ -71,7 +71,7 @@ f_mount_sdcard() {
         /sdcard
     do
         [ -d "$sdcard" ] &&
-            $BUSYBOX mount -o bind "$sdcard" "$MNT/sdcard" && bklog "[+] binded sdcard" &&
+            $BUSYBOX mount -o bind "$sdcard" "$MNT/sdcard" && bklog "[+] mounted sdcard" &&
                 return 0
     done
     return 1
@@ -101,7 +101,7 @@ f_mount_fs_to_kali() {
     if [ ! "$($BUSYBOX mountpoint $MNT/dev 2> /dev/null | grep 'is a')" ]; then
         [ -d $MNT/dev ] && rm -rf $MNT/dev
         [ ! -d $MNT/dev ] && mkdir -p $MNT/dev
-        $BUSYBOX mount -o bind /dev $MNT/dev && bklog "[+] binded /dev"
+        $BUSYBOX mount -o bind /dev $MNT/dev && bklog "[+] mounted /dev"
     fi
 
     ######### SET DEV PTS ########
@@ -133,7 +133,7 @@ f_mount_fs_to_kali() {
     if [ ! "$($BUSYBOX mountpoint $MNT/system 2> /dev/null | grep 'is a')" ]; then
         [ -d $MNT/system ] && rm -rf $MNT/system
         [ ! -d $MNT/system ] && mkdir -p $MNT/system
-        $BUSYBOX mount -o bind /system $MNT/system && bklog "[+] binded /system"
+        $BUSYBOX mount -o bind /system $MNT/system && bklog "[+] mounted /system"
     fi
 
     ######### SET INTERNAL SDCARD ########

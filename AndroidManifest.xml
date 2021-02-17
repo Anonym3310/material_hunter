@@ -12,7 +12,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="com.offsec.nhterm.permission.RUN_SCRIPT" />
     <uses-permission android:name="com.offsec.nhterm.permission.RUN_SCRIPT_SU" />
     <uses-permission android:name="com.offsec.nhterm.permission.RUN_SCRIPT_NH" />
@@ -28,6 +29,8 @@
         android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
 
     <supports-screens
         android:anyDensity="true"
@@ -62,13 +65,6 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!-- for Nougat -->
-            <layout
-                android:defaultWidth="600dp"
-                android:defaultHeight="500dp"
-                android:gravity="top|end"
-                android:minWidth="480dp"
-                android:minHeight="320dp" />
         </activity>
 
         <activity

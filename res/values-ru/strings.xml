@@ -104,12 +104,6 @@
         <item>Только Network Tethering</item>
     </string-array>
 
-    <!-- Bad USB -->
-    <string name="badusb_label">BadUSB MITM Атака</string>
-    <string name="badusb_description">Это наша реализация атаки BadUSB, продемонстрированной на выставке Black Hat USA 2014. Включение этого режима USB-гаджета позволит вашему устройству действовать как сетевой интерфейс USB при подключении к целевому компьютеру. Подключение USB-кабеля к ПК приведет к тому, что весь трафик с этого компьютера (Windows или Linux) будет проходить через устройство NetHunter, где трафик может быть MITM\'ed. \n\nВнимание! Не работает на новых устройствах с QCRndis.</string>
-    <string name="badusb_started">BadUSB атака начата! Смотрите /sdcard/nh_files/badusb.log</string>
-    <string name="badusb_stopped">BadUSB атака остановлена!</string>
-
     <string name="mana_hostapd">hostapd конфигурационный файл.</string>
     <string name="mana_hostapd_wpe">hostapd конфигурационный файл для 802.1x/EAP атак (hostapd-wpe) Не используется с Mana.</string>
     <string name="mana_hostapd_wpe_certs">Генерировать сертификаты (1 раз)</string>
@@ -141,9 +135,6 @@
     <string name="start_mitmf">Начать MITMf атаку</string>
     <string name="stop_mitmf">Остановить MITMf атаку</string>
     <string name="change_command_mitmf">Изменить команду для mitmf</string>
-
-    <string name="start_badusb">Начать BadUSB атаку</string>
-    <string name="stop_badusb">Остановить BadUSB атаку</string>
 
     <string name="update">Обновить</string>
     <string name="load">Загрузить с SDCARD</string>
@@ -388,7 +379,7 @@
     </array>
 
     <string name="aboutchroot">Chroot Manager. \"Chroot\" - полная установка Linux-среды которая разделяет обработку, сеть, память, и прочие ресурсы с Android. Он находится во внутренней области памяти (data) и должен иметь минимум 8ГБ свободного пространства для минимальной или полной установки, просто что-бы не сломать вашу систему.</string>
-    <string name="materialteam">t.me/mirivan (Mirivan, Разработчик)\nt.me/Death_Warrior940 (Переводчик)\nt.me/hilledkinged (Мартин, Автор идеи)\nt.me/s133py (Sleepy - KekHunter разработчик)\n\nСделано с ♥\n\nВсе права сохраняются за kali.org</string>
+    <string name="materialteam">t.me/mirivan (Mirivan, Разработчик)\nt.me/hilledkinged (Мартин, Автор идеи)\nt.me/s133py (Sleepy - KekHunter разработчик)\n\nСделано с ♥\n\nВсе права сохраняются за kali.org</string>
     <string name="attack_launched">Атака запущена!</string>
     <string name="attack_stopped">Атака закончена.</string>
 

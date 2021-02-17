@@ -16,7 +16,6 @@ import material.hunter.R;
 
 import java.io.File;
 
-
 public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "NhPaths";
     public static String APP_PATH;
@@ -39,8 +38,7 @@ public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListen
     public static String MAGISK_DB_PATH;
     public static int GPS_PORT;
     private static NhPaths instance;
-    private static String BASE_PATH;
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     @SuppressLint("SdCardPath")
     private NhPaths(Context context) {
@@ -56,7 +54,7 @@ public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListen
         APP_SD_FILES_PATH = SD_PATH + "/" + NH_SD_FOLDER_NAME;
         APP_SD_FILES_IMG_PATH = APP_SD_FILES_PATH + "/diskimage";
         APP_SD_SQLBACKUP_PATH = APP_SD_FILES_PATH + "/nh_sql_backups";
-        BASE_PATH = "/data/local";
+        String BASE_PATH = "/data/local";
         NH_SYSTEM_PATH = BASE_PATH + "/nhsystem";
         ARCH_FOLDER = sharedPreferences.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, "kali-arm64");
         CHROOT_SUDO = "/usr/bin/sudo";

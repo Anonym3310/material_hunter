@@ -24,9 +24,8 @@ public class USBArmorySQL extends SQLiteOpenHelper {
     private static final String USBSWITCH_TABLE_NAME = "USBSwitch";
     private static final String USBNETWORK_TABLE_NAME = "USBNetwork";
     private static USBArmorySQL instance;
-    private static ArrayList<String> COLUMNS_USBSWITCH = new ArrayList<>();
-    private static ArrayList<String> COLUMNS_USBNETWORK = new ArrayList<>();
-    private boolean isDBValid;
+    private static final ArrayList<String> COLUMNS_USBSWITCH = new ArrayList<>();
+    private static final ArrayList<String> COLUMNS_USBNETWORK = new ArrayList<>();
 
     private USBArmorySQL(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -279,7 +278,7 @@ public class USBArmorySQL extends SQLiteOpenHelper {
 
     private boolean verifyDB(String storedDBpath) {
         SQLiteDatabase tempDB = SQLiteDatabase.openDatabase(storedDBpath, null, SQLiteDatabase.OPEN_READWRITE);
-        isDBValid = true;
+        boolean isDBValid = true;
         if (ifTableExists(tempDB, USBSWITCH_TABLE_NAME)) {
             Cursor c = tempDB.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + USBSWITCH_TABLE_NAME + "'", null);
             if (c.getCount() == 1) {

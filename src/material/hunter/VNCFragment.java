@@ -54,9 +54,6 @@ public class VNCFragment extends Fragment {
     private Integer posu;
     private Integer posd = 0;
 
-    public VNCFragment() {
-    }
-
     public static VNCFragment newInstance(int sectionNumber) {
         VNCFragment fragment = new VNCFragment();
         Bundle args = new Bundle();
@@ -87,11 +84,7 @@ public class VNCFragment extends Fragment {
         showingAdvanced = sharedpreferences.getBoolean("advanced_visible", false);
 
         boolean localhost = sharedpreferences.getBoolean("localhost", true);
-        if (!localhost) {
-            localhostCheckBox.setChecked(false);
-        } else {
-            localhostCheckBox.setChecked(true);
-        }
+        localhostCheckBox.setChecked(localhost);
         AdvancedView.setVisibility(showingAdvanced ? View.VISIBLE : View.INVISIBLE);
         if (showingAdvanced) {
             Advanced.setText(getString(R.string.kex_advanced_hide));
@@ -266,10 +259,7 @@ public class VNCFragment extends Fragment {
         final CheckBox vnc_serviceCheckBox = rootView.findViewById(R.id.vnc_serviceCheckBox);
         final String initfile = exe.RunAsRootOutput("su -c 'cat " + kex_init + "'");
 
-        if (initfile.contains("vncserver"))
-            vnc_serviceCheckBox.setChecked(true);
-        else
-            vnc_serviceCheckBox.setChecked(false);
+        vnc_serviceCheckBox.setChecked(initfile.contains("vncserver"));
 
         vnc_serviceCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -303,7 +293,7 @@ public class VNCFragment extends Fragment {
         refreshVNC(rootView);
 
         addClickListener(SetupVNCButton, v -> {
-            intentClickListener_NH(NhPaths.makeTermTitle("Setting up Server") + " echo $'\n'\"Please enter your new VNC server password\"$'\n' && sudo -u " + selected_user + " vncpasswd && sleep 2 && exit"); // since is a kali command we can send it as is
+            intentClickListener_NH(NhPaths.makeTermTitle("Setting up Server") + " chmod +x ~" + selected_user + "/.vnc/xstartup && clear;echo $'\n'\"Please enter your new VNC server password\"$'\n' && sudo -u " + selected_user + " vncpasswd && sleep 2 && exit"); // since is a kali command we can send it as is
         });
         addClickListener(StartVNCButton, v -> {
             if (selected_user.equals("root")) {
@@ -527,7 +517,7 @@ public class VNCFragment extends Fragment {
         SharedPreferences sharedpreferences = context.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
         final AlertDialog.Builder confirmbuilder = new AlertDialog.Builder(getActivity());
         confirmbuilder.setTitle("Do you want to keep the resolution?");
-        confirmbuilder.setMessage("Loading..");
+        confirmbuilder.setMessage("Loading...");
         confirmbuilder.setPositiveButton("Keep resolution", (dialogInterface, i) -> {
             sharedpreferences.edit().putBoolean("confirm_res", false).apply();
             dialogInterface.cancel();

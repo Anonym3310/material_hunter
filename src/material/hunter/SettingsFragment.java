@@ -1,6 +1,7 @@
 package material.hunter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +27,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import material.hunter.utils.NhPaths;
+import material.hunter.utils.SharePrefTag;
 import material.hunter.utils.ShellExecuter;
 
 public class SettingsFragment extends Fragment {
@@ -45,9 +46,7 @@ public class SettingsFragment extends Fragment {
     private SharedPreferences prefs;
     private ShellExecuter exe;
     private String selected_animation;
-
-    public SettingsFragment() {
-    }
+    private String selected_version;
 
     public static SettingsFragment newInstance(int sectionNumber) {
         SettingsFragment fragment = new SettingsFragment();
@@ -91,13 +90,17 @@ public class SettingsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         //First run
-        Boolean setupdone = prefs.getBoolean("animation_setup_done", false);
+        Boolean setupdone = prefs.getBoolean(SharePrefTag.ANIMATION_SETUP_DONE, false);
         if (!setupdone.equals(true))
             SetupDialog();
 
         //Bootanimation spinner
-        String[] animations = new String[]{"Classic", "Burning", "New Kali", "ctOS"};
+        String[] animations = new String[]{"Classic", "Burning", "New Kali", "ctOS", "Glitch"};
         Spinner animation_spinner = rootView.findViewById(R.id.animation_spinner);
+        TextView pathtobackup = rootView.findViewById(R.id.restorefilename);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+        String currentDateandTime = sdf.format(new Date());
+        pathtobackup.setHint(NhPaths.APP_SD_FILES_PATH + "_" + currentDateandTime + ".tar");
         animation_spinner.setAdapter(new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_list_item_1, animations));
 
@@ -137,12 +140,17 @@ public class SettingsFragment extends Fragment {
                         bootanimation_start();
                         break;
                     }
+                    case "Glitch": {
+                    String path = ("android.resource://" + context.getPackageName() + "/" + R.raw.boot_glitch);
+                    videoview.setVideoURI(Uri.parse(path));
+                    animation_dir[0] = "src_glitch";
+                    bootanimation_start();
+                    }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
-        });
+            public void onNothingSelected(AdapterView<?> parentView) { }});
 
         //   ProgressDialog progressDialog = new ProgressDialog(context);
         //   progressDialog.setMessage("Loading...");
@@ -225,7 +233,7 @@ public class SettingsFragment extends Fragment {
             }
             String finalRES = FinalWidth.getText().toString() + "x" + FinalHeight.getText().toString();
             String finalFPS = FPS.getText().toString();
-            intentClickListener_NH("echo -ne \"\\033]0;Building animation\\007\" && clear;cd /root/nethunter-bootanimation &&" + imagesCMD + " && cp " + animation_dir[0] +
+            intentClickListener_NH(NhPaths.makeTermTitle("Building animation") + "cd /root/nethunter-bootanimation &&" + imagesCMD + " && cp " + animation_dir[0] +
                     "/desc.txt new/ && sed -i '1s/.*/" + finalRES + " " + finalFPS + "/' new/desc.txt && sed -i 's/x/ /g' new/desc.txt && cd new && zip -0 -FSr -q /sdcard/bootanimation.zip * && cd .. && rm -r new && echo \"Done. Head back to MaterialHunter to install the bootanimation! Exiting in 3secs..\" && sleep 3 && exit");
         });
 
@@ -236,17 +244,15 @@ public class SettingsFragment extends Fragment {
             if (AnimationZip.length() == 0)
                 NhPaths.showSnack(getView(), "Bootanimation zip is not created!", 1);
             else {
-                intentClickListener_NHSU("echo -ne \"\\033]0;Installing animation\\007\" && clear;if [ \"$(getprop ro.build.system_root_image)\" == \"true\" ]; then export SYSTEM=/; else export SYSTEM=/system; " +
-                        "fi && mount -o rw,remount $SYSTEM && cp " + NhPaths.SD_PATH + "/bootanimation.zip " + bootanimation_path +
+                intentClickListener_NHSU(NhPaths.makeTermTitle("Installing animation") + "grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system && " +
+                        "mount -o rw,remount $SYSTEM && cp " + NhPaths.SD_PATH + "/bootanimation.zip " + bootanimation_path +
                         "&& echo \"Done. Please reboot to check the result! Exiting in 3secs..\" && sleep 3 && exit");
             }
         });
 
         //Backup
         Button BackupButton = rootView.findViewById(R.id.backup);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
         addClickListener(BackupButton, v -> {
-            String currentDateandTime = sdf.format(new Date());
             exe.RunAsRoot(new String[]{"cd " + NhPaths.SD_PATH + "/nh_files && tar -czvf /sdcard/nh_files_" + currentDateandTime + ".tar *"});
             NhPaths.showSnack(getView(), "Backup has been saved to /sdcard/nh_files_" + currentDateandTime, 2);
         });
@@ -281,9 +287,58 @@ public class SettingsFragment extends Fragment {
             if (NhSystemApp.length() == 0) {
                 NhPaths.showSnack(getView(), "MaterialHunter was not flashed as system app! Please remove it from Android Settings.", 1);
             } else {
-                intentClickListener_NHSU("echo -ne \"\\033]0;Uninstalling MaterialHunter\\007\" && clear;if [ \"$(getprop ro.build.system_root_image)\" == \"true\" ]; then export SYSTEM=/; else export SYSTEM=/system; " +
-                        "fi && mount -o rw,remount $SYSTEM && rm " + NhSystemApp + " && pm clear material.hunter && echo \"Done! Reboot your device to complete the process. Exiting in 3secs..\" && sleep 3 && exit");
+                intentClickListener_NHSU("echo -ne \"\\033]0;Uninstalling MaterialHunter\\007\" && clear;grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system && " +
+                        "mount -o rw,remount $SYSTEM && rm " + NhSystemApp + " && pm clear material.hunter && echo \"Done! Reboot your device to complete the process. Exiting in 3secs..\" && sleep 3 && exit");
             }
+        });
+
+        //Busybox
+        TextView BusyboxVersion = rootView.findViewById(R.id.busybox_version);
+
+        String busybox_ver = exe.RunAsRootOutput("/system/xbin/busybox | head -n1 | cut -c 10-13");
+        BusyboxVersion.setText(busybox_ver);
+
+        final String[] busybox_file = {null};
+        Spinner busybox_spinner = rootView.findViewById(R.id.bb_spinner);
+        String commandBB = ("ls /system/xbin | grep busybox_nh- | cut -f 2 -d '-'");
+        String outputBB = exe.RunAsRootOutput(commandBB);
+        final String[] bbArray = outputBB.split("\n");
+        ArrayAdapter usersadapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1, bbArray);
+        busybox_spinner.setAdapter(usersadapter);
+
+        //Select Version
+        busybox_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int pos, long id) {
+                selected_version = parentView.getItemAtPosition(pos).toString();
+                if (selected_version.equals("1.25")) {
+                    busybox_file[0] = "busybox_nh-1.25";
+                } else if (selected_version.equals("1.32.0")){
+                    busybox_file[0] = "busybox_nh-1.32";
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) { }
+        });
+
+        final Button BusyboxButton = rootView.findViewById(R.id.select_bb);
+        BusyboxButton.setOnClickListener( v -> {
+            File busybox = new File("/system/xbin/" + busybox_file[0]);
+            exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm /system/xbin/busybox_nh;ln -s " + busybox + " /system/xbin/busybox_nh"});
+            NhPaths.showSnack(getView(), "NetHunter BusyBox version has been successfully modified", 1);
+        });
+        final Button BusyboxSystemButton = rootView.findViewById(R.id.system_bb);
+        String busybox_system = exe.RunAsRootOutput("/system/xbin/busybox | head -n1 | grep -iF nethunter");
+        if (busybox_system.equals("")) {
+            BusyboxSystemButton.setEnabled(true);
+            BusyboxSystemButton.setTextColor(Color.parseColor("#FFFFFFFF"));
+        } else {
+            BusyboxSystemButton.setEnabled(false);
+            BusyboxSystemButton.setTextColor(Color.parseColor("#40FFFFFF"));
+        }
+        BusyboxSystemButton.setOnClickListener( v -> {
+            exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm /system/xbin/busybox;ln -s /system/xbin/busybox_nh /system/xbin/busybox"});
+            NhPaths.showSnack(getView(), "Default system BusyBox has been changed", 1);
         });
         return rootView;
     }
@@ -297,8 +352,7 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001) {
             if (resultCode == Activity.RESULT_OK) {
@@ -312,27 +366,27 @@ public class SettingsFragment extends Fragment {
 
     public void SetupDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Welcome to Settings!");
-        builder.setMessage(getString(R.string.bt_welcome_msg));
-        builder.setPositiveButton(getString(R.string.bt_check_and_install), (dialog, which) -> {
-            RunSetup();
-            prefs.edit().putBoolean("animation_setup_done", true).apply();
-        });
-        builder.show();
-
+        builder.setTitle("Welcome to Settings!")
+        .setMessage(getString(R.string.bt_welcome_msg))
+                .setPositiveButton(getString(R.string.bt_check_and_install), (dialog, which) -> {
+                    RunSetup();
+                    prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply();
+                })
+                .setCancelable(false).setNegativeButton((R.string.bt_welcome_daa), (dialogInterface, i) -> prefs.edit().putBoolean("animation_setup_done", true).apply())
+                .show();
     }
 
     public void RunSetup() {
         intentClickListener_NH("echo -ne \"\\033]0;Bootanimation Setup\\007\" && clear;if [[ -f /usr/bin/convert ]];then echo \"Imagemagick is installed!\"; else " +
                 "apt-get update && apt-get install imagemagick -y;fi; if [[ -f /root/nethunter-bootanimation ]];then echo \"Nethunter-bootanimation is installed!\"; else " +
                 "git clone https://gitlab.com/kalilinux/nethunter/apps/kali-nethunter-bootanimation /root/nethunter-bootanimation;fi; echo \"Everything is ready! Closing in 3secs..\"; sleep 3 && exit ");
-        prefs.edit().putBoolean("animation_setup_done", true).apply();
+        prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply();
     }
 
     public void RunUpdate() {
         intentClickListener_NH("echo -ne \"\\033]0;Bootanimation Update\\007\" && clear;apt-get update && apt-get install imagemagick -y;if [[ -d /root/nethunter-bootanimation ]];then cd /root/nethunter-bootanimation;git pull" +
                 ";fi; echo \"Done! Closing in 3secs..\"; sleep 3 && exit ");
-        prefs.edit().putBoolean("animation_setup_done", true).apply();
+        prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply();
     }
 
 
@@ -342,8 +396,7 @@ public class SettingsFragment extends Fragment {
 
     private void intentClickListener_NH(final String command) {
         try {
-            Intent intent =
-                    new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
+            Intent intent = new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.putExtra("com.offsec.nhterm.iInitialCommand", command);
             startActivity(intent);
@@ -354,8 +407,7 @@ public class SettingsFragment extends Fragment {
 
     private void intentClickListener_NHSU(final String command) {
         try {
-            Intent intent =
-                    new Intent("com.offsec.nhterm.RUN_SCRIPT_SU");
+            Intent intent = new Intent("com.offsec.nhterm.RUN_SCRIPT_SU");
             intent.addCategory(Intent.CATEGORY_DEFAULT);
             intent.putExtra("com.offsec.nhterm.iInitialCommand", command);
             startActivity(intent);

@@ -15,9 +15,9 @@ public class MaterialHunterData {
     public static boolean isDataInitiated = false;
     private static MaterialHunterData instance;
     public List<MaterialHunterModel> materialhunterModelListFull;
-    private ArrayList<MaterialHunterModel> materialhunterModelArrayList = new ArrayList<>();
-    private MutableLiveData<List<MaterialHunterModel>> data = new MutableLiveData<>();
-    private List<MaterialHunterModel> copyOfMaterialHunterModelListFull = new ArrayList<>();
+    private final ArrayList<MaterialHunterModel> materialhunterModelArrayList = new ArrayList<>();
+    private final MutableLiveData<List<MaterialHunterModel>> data = new MutableLiveData<>();
+    private final List<MaterialHunterModel> copyOfMaterialHunterModelListFull = new ArrayList<>();
 
     public synchronized static MaterialHunterData getInstance() {
         if (instance == null) {

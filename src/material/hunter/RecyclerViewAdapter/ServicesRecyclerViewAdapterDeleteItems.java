@@ -16,9 +16,8 @@ import java.util.List;
 
 public class ServicesRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<ServicesRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 
-    private static final String TAG = "ServiceRecycleViewChild";
-    private Context context;
-    private List<ServicesModel> servicesModelList;
+    private final Context context;
+    private final List<ServicesModel> servicesModelList;
 
     public ServicesRecyclerViewAdapterDeleteItems(Context context, List<ServicesModel> servicesModelList) {
         this.context = context;
@@ -29,7 +28,7 @@ public class ServicesRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter
     @Override
     public ServicesRecyclerViewAdapterDeleteItems.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.services_recyclerview_dialog_delete, viewGroup, false);
-        return new ServicesRecyclerViewAdapterDeleteItems.ItemViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -42,9 +41,8 @@ public class ServicesRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter
         return servicesModelList.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox runOnChrootStartCheckBox;
-
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final CheckBox runOnChrootStartCheckBox;
         private ItemViewHolder(View view) {
             super(view);
             runOnChrootStartCheckBox = view.findViewById(R.id.f_services_recyclerview_dialog_chkbox);

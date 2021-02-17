@@ -22,10 +22,6 @@ public class PineappleFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private String start_type = "start ";
     private String proxy_type;
-    private Context context;
-
-    public PineappleFragment() {
-    }
 
     public static PineappleFragment newInstance(int sectionNumber) {
         PineappleFragment fragment = new PineappleFragment();
@@ -38,7 +34,6 @@ public class PineappleFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getContext();
     }
 
     @Override

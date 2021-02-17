@@ -22,13 +22,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -48,9 +46,7 @@ import material.hunter.utils.ShellExecuter;
 
 public class BTFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private ViewPager mViewPager;
     private SharedPreferences sharedpreferences;
-    private Context context;
     private Activity activity;
 
     public static BTFragment newInstance(int sectionNumber) {
@@ -64,7 +60,7 @@ public class BTFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getContext();
+        Context context = getContext();
         activity = getActivity();
     }
 
@@ -74,7 +70,7 @@ public class BTFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.bt, container, false);
         BTFragment.TabsPagerAdapter tabsPagerAdapter = new TabsPagerAdapter(getChildFragmentManager());
 
-        mViewPager = rootView.findViewById(R.id.pagerBt);
+        ViewPager mViewPager = rootView.findViewById(R.id.pagerBt);
         mViewPager.setAdapter(tabsPagerAdapter);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -124,7 +120,7 @@ public class BTFragment extends Fragment {
     public void RunSetup() {
         sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         intentClickListener_NH(NhPaths.makeTermTitle("Arsenal Setup") + " if [[ -f /usr/bin/hciconfig && -f /usr/bin/l2ping && " +
-                "-f /usr/bin/fang && -f /usr/bin/blueranger &&-f /usr/bin/bluelog && -f /usr/bin/sdptool && -f /usr/bin/spooftooph && -f /usr/bin/sox ]];then echo \"All packages are installed!\"; else " +
+                "-f /usr/bin/fang && -f /usr/bin/blueranger &&-f /usr/bin/bluelog && -f /usr/bin/sdptool && -f /usr/bin/spooftooph && -f /usr/bin/sox && -f /usr/include/bluetooth/bluetooth.h ]];then echo \"All packages are installed!\"; else " +
                 "apt-get update && apt-get install bluetooth bluez bluez-tools bluez-obexd libbluetooth3 sox spooftooph " +
                 "libbluetooth-dev redfang bluelog blueranger -y;fi; if [[ -f /usr/bin/carwhisperer && -f /usr/bin/rfcomm_scan ]];then echo \"All scripts are installed!\"; else " +
                 "git clone https://github.com/yesimxev/carwhisperer-0.2 /root/carwhisperer;" +
@@ -216,7 +212,6 @@ public class BTFragment extends Fragment {
         String selected_class;
         String selected_name;
         private Context context;
-        private NhPaths nh;
         private String selected_iface;
 
         @Override
@@ -421,7 +416,6 @@ public class BTFragment extends Fragment {
 
     public static class ToolsFragment extends BTFragment {
         private Context context;
-        private Activity activity;
         private String reverse = "";
         private String flood = "";
 
@@ -429,7 +423,6 @@ public class BTFragment extends Fragment {
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             context = getContext();
-            activity = getActivity();
         }
 
         @Override

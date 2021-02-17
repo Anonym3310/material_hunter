@@ -31,9 +31,6 @@ public class MPCFragment extends Fragment {
     private String stagerVar;
     private Context context;
 
-    public MPCFragment() {
-    }
-
     public static MPCFragment newInstance(int sectionNumber) {
         MPCFragment fragment = new MPCFragment();
         Bundle args = new Bundle();
@@ -65,7 +62,6 @@ public class MPCFragment extends Fragment {
         typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                String selectedItemText = parent.getItemAtPosition(pos).toString();
                 switch (pos) {
                     case 0:
                         typeVar = "asp";
@@ -110,9 +106,7 @@ public class MPCFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //Another interface callback
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         // Payload Spinner
@@ -185,9 +179,7 @@ public class MPCFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //Another interface callback
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         // Callback Type SPinner
@@ -219,9 +211,7 @@ public class MPCFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //Another interface callback
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         // Port Text Field

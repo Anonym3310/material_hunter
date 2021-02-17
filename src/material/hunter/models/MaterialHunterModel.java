@@ -18,8 +18,6 @@ public class MaterialHunterModel {
         this.result = result;
     }
 
-    public MaterialHunterModel() { }
-
     public String getTitle() {
         return title;
     }

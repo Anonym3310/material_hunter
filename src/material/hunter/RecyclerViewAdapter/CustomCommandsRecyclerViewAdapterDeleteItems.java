@@ -16,9 +16,8 @@ import java.util.List;
 
 public class CustomCommandsRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<CustomCommandsRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 
-    private static final String TAG = "CustomCommandsRVA_Delete";
-    private Context context;
-    private List<CustomCommandsModel> customCommandsModelList;
+    private final Context context;
+    private final List<CustomCommandsModel> customCommandsModelList;
 
     public CustomCommandsRecyclerViewAdapterDeleteItems(Context context, List<CustomCommandsModel> customCommandsModelList) {
         this.context = context;
@@ -29,7 +28,7 @@ public class CustomCommandsRecyclerViewAdapterDeleteItems extends RecyclerView.A
     @Override
     public CustomCommandsRecyclerViewAdapterDeleteItems.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.customcommands_recyclerview_dialog_delete, viewGroup, false);
-        return new CustomCommandsRecyclerViewAdapterDeleteItems.ItemViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -42,8 +41,8 @@ public class CustomCommandsRecyclerViewAdapterDeleteItems extends RecyclerView.A
         return customCommandsModelList.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox runOnChrootStartCheckBox;
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final CheckBox runOnChrootStartCheckBox;
 
         private ItemViewHolder(View view) {
             super(view);

@@ -1,6 +1,5 @@
 package material.hunter;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.EditText;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -22,20 +20,15 @@ public class EditSourceActivity extends AppCompatActivity {
 
     private final ShellExecuter exe = new ShellExecuter();
     private String configFilePath = "";
-    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = this;
         Bundle b = getIntent().getExtras();
         configFilePath = b.getString("path");
         setContentView(R.layout.source);
         MaterialToolbar t = findViewById(R.id.appbar);
         setSupportActionBar(t);
-
-        getWindow().setStatusBarColor(getResources().getColor(R.color.colorBars));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
 
         EditText source = findViewById(R.id.source);
         source.setText(String.format(Locale.getDefault(), getString(R.string.loading_file), configFilePath));

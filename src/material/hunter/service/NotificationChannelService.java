@@ -45,7 +45,6 @@ public class NotificationChannelService extends IntentService {
                     "MaterialHunterChannelService",
                     NotificationManager.IMPORTANCE_HIGH
             );
-
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(serviceChannel);
         }

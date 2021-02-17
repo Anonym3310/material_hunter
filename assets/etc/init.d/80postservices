@@ -6,7 +6,7 @@ if [ ! $? -eq 0 ]; then
     exit 1
 fi
 
-## Define the nethunter app package name.
+## Define the MaterialHunter app package name.
 APP_PGK_NAME=material.hunter
 
 USERINIT_SCRIPT_PATH=$(readlink -f $0)
@@ -26,7 +26,7 @@ if [ ! -d "$MNT" ]; then
     exit 2
 fi
 if [ -z "$MNT" ]; then
-    bklog "[-] The \$MNT variable is not defined, please run nethunter app first."
+    bklog "[-] The \$MNT variable is not defined, please the MaterialHunter app first."
     exit 2
 fi
 

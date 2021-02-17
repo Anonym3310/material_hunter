@@ -54,15 +54,10 @@ public class MacchangerFragment extends Fragment {
     private EditText mac6;
     private TextView currentMacTextView;
     private Button reloadImageButton;
-    private Context context;
     private Activity activity;
 
     private Button setKHost;
     private TextInputEditText KHost;
-
-    public MacchangerFragment() {
-
-    }
 
     public static MacchangerFragment newInstance(int sectionNumber) {
         MacchangerFragment fragment = new MacchangerFragment();
@@ -100,7 +95,6 @@ public class MacchangerFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(false);
-        context = getContext();
         activity = getActivity();
     }
 

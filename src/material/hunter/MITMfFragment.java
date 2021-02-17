@@ -45,16 +45,7 @@ public class MITMfFragment extends Fragment {
     // static String CommandComposed = "";
     private static final ArrayList<String> CommandComposed = new ArrayList<>();
     private static final String ARG_SECTION_NUMBER = "section_number";
-    View.OnClickListener checkBoxListener;
-    String M_Responder; // --responder
 
-    /* All MITMf Provider Command Variables */
-    String M_Responder_Analyze; // --analyze
-    String M_Responder_Fingerprint; // --fingerprint
-    String M_Responder_Downgrade; // --lm
-    String M_Responder_NBTNS; // --nbtns
-    String M_Responder_WPAD; // --wpad
-    String M_Responder_WRedir; // --wredir
     private TabsPagerAdapter tabsPagerAdapter;
     private Context context;
     private Activity activity;
@@ -68,8 +59,8 @@ public class MITMfFragment extends Fragment {
     }
 
     private static void cleanCmd() {
-        for (int j = CommandComposed.size() - 1; j >= 0; j--) {
-            CommandComposed.remove(j);
+        if (CommandComposed.size() > 0) {
+            CommandComposed.subList(0, CommandComposed.size()).clear();
         }
     }
 
@@ -189,7 +180,7 @@ public class MITMfFragment extends Fragment {
 
     private static class TabsPagerAdapter extends FragmentPagerAdapter {
 
-        private List<CommandProvider> commandProviders = new ArrayList<>(5);
+        private final List<CommandProvider> commandProviders = new ArrayList<>(5);
 
         TabsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -367,10 +358,8 @@ public class MITMfFragment extends Fragment {
     public static class MITMfSpoof extends Fragment implements CommandProvider {
 
         private int spoofOption;
-        private ArrayAdapter<CharSequence> redirectAdapter;
         private MitmfSpoofBinding spoofBinding;
         private int arpModeOption;
-        private MITMFViewModel viewModel;
         private Context context;
 
         @Override
@@ -383,30 +372,16 @@ public class MITMfFragment extends Fragment {
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             spoofBinding = MitmfSpoofBinding.inflate(inflater, container, false);
-            viewModel = new MITMFViewModel();
+            MITMFViewModel viewModel = new MITMFViewModel();
             spoofBinding.setViewModel(viewModel);
 
 
             // Redirect Spinner
             final Spinner redirectSpinner = spoofBinding.mitmfSpoofRedirectspin;
-            redirectAdapter = ArrayAdapter.createFromResource(context,
+            ArrayAdapter<CharSequence> redirectAdapter = ArrayAdapter.createFromResource(context,
                     R.array.mitmf_spoof_type, android.R.layout.simple_spinner_item);
             redirectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             redirectSpinner.setAdapter(redirectAdapter);
-            redirectSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-                    spoofOption = pos;
-                    if (pos == 3) { /*dhcp*/
-                        viewModel.setShellShockEnabled(true);
-                    } else {
-                        viewModel.setShellShockEnabled(false);
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) { }
-            });
 
             // ARP Mode Spinner
             ArrayAdapter<CharSequence> arpAdapter = ArrayAdapter.createFromResource(context,

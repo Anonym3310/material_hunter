@@ -28,7 +28,7 @@ public class ServicesSQL extends SQLiteOpenHelper {
             {"4", "DNSMASQ", "service dnsmasq start", "service dnsmasq stop", "dnsmasq", "0"}
     };
     private static ServicesSQL instance;
-    private static ArrayList<String> COLUMNS = new ArrayList<>();
+    private static final ArrayList<String> COLUMNS = new ArrayList<>();
 
     private ServicesSQL(Context context) {
         super(context, DATABASE_NAME, null, 1);

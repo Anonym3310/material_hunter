@@ -1,14 +1,12 @@
 package material.hunter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
@@ -20,19 +18,14 @@ import java.util.Locale;
 public class DeAuthWhitelistActivity extends AppCompatActivity {
 
     private final ShellExecuter exe = new ShellExecuter();
-    private Activity activity;
 
     @SuppressLint("SdCardPath")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = this;
         setContentView(R.layout.deauth_whitelist);
         MaterialToolbar t = findViewById(R.id.appbar);
         setSupportActionBar(t);
-
-        getWindow().setStatusBarColor(getResources().getColor(R.color.colorBars));
-        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.colorBars));
 
         EditText whitelist = findViewById(R.id.deauth_modify);
         whitelist.setText(String.format(Locale.getDefault(), getString(R.string.loading_file), "/sdcard/nh_files/deauth/whitelist.txt"));

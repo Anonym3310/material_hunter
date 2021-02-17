@@ -30,10 +30,9 @@ import material.hunter.utils.NhPaths;
 
 public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<MaterialHunterRecyclerViewAdapter.ItemViewHolder> implements Filterable {
 
-    private static final String TAG = "MaterialHunterRecyclerView";
-    private Context context;
-    private List<MaterialHunterModel> materialhunterModelList;
-    private Filter MaterialHunterModelListFilter = new Filter() {
+    private final Context context;
+    private final List<MaterialHunterModel> materialhunterModelList;
+    private final Filter MaterialHunterModelListFilter = new Filter() {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -70,7 +69,7 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
     @Override
     public MaterialHunterRecyclerViewAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.materialhunter_recyclerview_main, parent, false);
-        return new MaterialHunterRecyclerViewAdapter.ItemViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -184,10 +183,10 @@ public class MaterialHunterRecyclerViewAdapter extends RecyclerView.Adapter<Mate
         return MaterialHunterModelListFilter;
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView titleTextView;
-        private RecyclerView resultRecyclerView;
-        private Button runButton;
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final TextView titleTextView;
+        private final RecyclerView resultRecyclerView;
+        private final Button runButton;
 
         private ItemViewHolder(View view) {
             super(view);

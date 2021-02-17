@@ -112,12 +112,6 @@
         <item>Network Tethering Only</item>
     </string-array>
 
-    <!-- Bad USB -->
-    <string name="badusb_label">BadUSB MITM Attack</string>
-    <string name="badusb_description">This is our implementation of the BadUSB attack as demonstrated at Black Hat USA 2014. Enabling this USB gadget mode will allow your device to act as a USB network interface when plugged into a target computer. Connecting the USB cable to a PC will force all traffic from that PC (Windows or Linux) through the NetHunter device, where the traffic can be MITM\'ed. \n\nAttention! Not working on new devices with QCRndis.</string>
-    <string name="badusb_started">BadUSB attack started! Check /sdcard/nh_files/badusb.log</string>
-    <string name="badusb_stopped">BadUSB attack stopped!</string>
-
     <string name="mana_hostapd">The hostapd configuration file used by Mana.</string>
     <string name="mana_hostapd_wpe">The hostapd configuration file used for 802.1x/EAP authentication attack (hostapd-wpe)  This is not used with MANA.</string>
     <string name="mana_hostapd_wpe_certs">Generate certificates (1st time only)</string>
@@ -150,10 +144,6 @@
     <string name="start_mitmf">Start MITMf attack</string>
     <string name="stop_mitmf">Stop MITMf attack</string>
     <string name="change_command_mitmf">Change mitmf command</string>
-
-    <string name="start_badusb">Start BadUSB attack</string>
-    <string name="stop_badusb">Stop BadUSB attack</string>
-
 
     <string name="update">Update</string>
     <string name="load">Load from SDCARD</string>
@@ -398,7 +388,7 @@
     </array>
 
     <string name="aboutchroot">This is Chroot Manager for Kali. The \"chroot\" is a full installation of Linux-environment that shares processing, networking, storage, and other resources with Android. It resides in your internal app storage area and is required to have at least 8 Gb free space for the minimal or full installation, just to make sure it won\'t break your system.</string>
-    <string name="materialteam">t.me/mirivan (Mirivan, Developer)\nt.me/Death_Warrior940 (Translator)\nt.me/hilledkinged (Martin, Idea author)\nt.me/s133py (Sleepy - KekHunter Developer)\n\nMade with ♥\n\nAll rights reserved by kali.org</string>
+    <string name="materialteam">t.me/mirivan (Mirivan, Developer)\nt.me/hilledkinged (Martin, Idea author)\nt.me/s133py (Sleepy - KekHunter Developer)\n\nMade with ♥\n\nAll rights reserved by kali.org</string>
     <string name="attack_launched">Attack launched!</string>
     <string name="attack_stopped">Attack execution ended.</string>
 

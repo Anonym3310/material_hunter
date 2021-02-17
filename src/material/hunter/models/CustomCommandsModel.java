@@ -18,10 +18,6 @@ public class CustomCommandsModel {
         this.RunOnBoot = RunOnBoot;
     }
 
-    public CustomCommandsModel() {
-
-    }
-
     public String getCommandLabel() {
         return CommandLabel;
     }

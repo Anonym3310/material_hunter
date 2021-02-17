@@ -33,10 +33,10 @@ import material.hunter.models.ServicesModel;
 import material.hunter.utils.NhPaths;
 
 public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRecyclerViewAdapter.ItemViewHolder> implements Filterable {
-    private static final String TAG = "ServiceRecycleView";
-    private Context context;
-    private List<ServicesModel> servicesModelList;
-    private Filter ServicesModelListFilter = new Filter() {
+
+    private final Context context;
+    private final List<ServicesModel> servicesModelList;
+    private final Filter ServicesModelListFilter = new Filter() {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -73,7 +73,7 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
     @Override
     public ServicesRecyclerViewAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.services_recyclerview_servicetitle, viewGroup, false);
-        return new ServicesRecyclerViewAdapter.ItemViewHolder(view);
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -81,7 +81,6 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
         Spannable tempStatusTextView = new SpannableString(servicesModelList.get(position).getStatus());
         tempStatusTextView.setSpan(new ForegroundColorSpan(servicesModelList.get(position).getStatus().startsWith("[+]") ? Color.GREEN : Color.parseColor("#D81B60")), 0, servicesModelList.get(position).getStatus().length(), 0);
         itemViewHolder.nametextView.setText(servicesModelList.get(position).getServiceName());
-        //itemViewHolder.runOnChrootStartCheckbox.setChecked(servicesModelList.get(position).getRunOnChrootStart().equals("1"));
         itemViewHolder.mSwitch.setChecked(servicesModelList.get(position).getStatus().startsWith("[+]"));
         itemViewHolder.statustextView.setText(tempStatusTextView);
         itemViewHolder.nametextView.setOnLongClickListener(v -> {
@@ -186,20 +185,6 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
             return false;
         });
 
-        //itemViewHolder.runOnChrootStartCheckbox.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            //ArrayList<String> dataArrayList = new ArrayList<>();
-            //dataArrayList.add(servicesModelList.get(position).getServiceName());
-            //dataArrayList.add(servicesModelList.get(position).getCommandforStartService());
-            //dataArrayList.add(servicesModelList.get(position).getCommandforStopService());
-            //dataArrayList.add(servicesModelList.get(position).getCommandforCheckServiceStatus());
-            //if (isChecked) {
-                //dataArrayList.add("1");
-            //} else {
-                //dataArrayList.add("0");
-            //}
-            //ServicesData.getInstance().updateRunOnChrootStartServices(position, dataArrayList, ServicesSQL.getInstance(context));
-        //});
-
         itemViewHolder.mSwitch.setOnClickListener(v -> {
             if (itemViewHolder.mSwitch.isChecked()) {
                 ServicesData.getInstance().startServiceforItem(position, itemViewHolder.mSwitch, context);
@@ -224,16 +209,14 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
         return ServicesModelListFilter;
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-        private TextView nametextView;
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private final TextView nametextView;
         private Switch mSwitch;
-        //private CheckBox runOnChrootStartCheckbox;
-        private TextView statustextView;
+        private final TextView statustextView;
 
         private ItemViewHolder(View view) {
             super(view);
             nametextView = view.findViewById(R.id.f_services_recyclerview_servicetitle_tv);
-            //runOnChrootStartCheckbox = view.findViewById(R.id.f_services_recyclerview_runonchrootstart_checkbox);
             mSwitch = view.findViewById(R.id.f_services_recyclerview_switch_toggle);
             statustextView = view.findViewById(R.id.f_services_recyclerview_serviceresult_tv);
         }

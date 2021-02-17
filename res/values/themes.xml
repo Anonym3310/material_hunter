@@ -8,6 +8,8 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <!-- material features -->
         <item name="fontFamily">@font/google_sans</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Widget.MaterialComponents.Button.OutlinedNewButton" parent="Widget.MaterialComponents.Button.OutlinedButton">

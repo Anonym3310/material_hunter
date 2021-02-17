@@ -13,7 +13,6 @@ public class MITMFViewModel extends BaseObservable {
 
     private boolean injectionEnabled = false;
     private boolean spoofEnabled = false;
-    private boolean shellShockEnabled = false;
     private boolean responderChecked = false;
     private boolean injectJSEmpty = true;
     public TextWatcher injectJSWatcher = new TextWatcherAdapter() {
@@ -40,11 +39,6 @@ public class MITMFViewModel extends BaseObservable {
         }
     };
 
-    @InverseBindingAdapter(attribute = "android:checked", event = "android:checked")
-    public static boolean getViewChecked(CheckBox view) {
-        return view.isChecked();
-    }
-
     public void clickInject(View view) {
         injectionEnabled = ((CheckBox) view).isChecked();
         notifyPropertyChanged(BR.injectionEnabled);
@@ -54,7 +48,6 @@ public class MITMFViewModel extends BaseObservable {
     public void clickSpoof(View view) {
         spoofEnabled = ((CheckBox) view).isChecked();
         notifyPropertyChanged(BR.spoofEnabled);
-        notifyPropertyChanged(BR.shellShockEnabled);
     }
 
     @Bindable
@@ -84,16 +77,6 @@ public class MITMFViewModel extends BaseObservable {
     }
 
     @Bindable
-    public boolean isShellShockEnabled() {
-        return shellShockEnabled && spoofEnabled;
-    }
-
-    public void setShellShockEnabled(boolean enabled) {
-        shellShockEnabled = enabled;
-        notifyPropertyChanged(BR.shellShockEnabled);
-    }
-
-    @Bindable
     public boolean isSpoofEnabled() {
         return spoofEnabled;
     }
@@ -111,24 +94,17 @@ public class MITMFViewModel extends BaseObservable {
     public void responderClicked(View view) {
         responderChecked = ((CheckBox) view).isChecked();
         notifyPropertyChanged(BR.responderChecked);
-
-    }
-
-    public void onClick(View view) {
     }
 
     private static class TextWatcherAdapter implements TextWatcher {
 
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-        }
+        public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
         @Override
-        public void afterTextChanged(Editable s) {
-        }
+        public void afterTextChanged(Editable s) { }
     }
 }
