@@ -27,4 +27,4 @@ Kali NetHunter app with [Google Material Design](https://material.io/design)
 - [Kali.org](https://kali.org) - founding company
 
 # Donation
-<a href="https://qiwi.com/n/mirivan" target="_blank"><img src="https://img.shields.io/badge/QIWI%20Wallet-Mirivan-orange?style=for-the-badge&logo=qiwi" /></a>
+<img src="https://img.shields.io/badge/ЮMoney-4100116649195378-yellow?style=for-the-badge&logo=yandex" />
