@@ -92,7 +92,9 @@ f_umount_fs() {
 
 ########## umount if chroot directory is NOT a mountpoint(directory method) ##########
 f_dir_umount() {
-    $BUSYBOX sync
+    if [ -f "/system/bin/sync" ]; then
+        sync
+    fi
     f_kill_pids
     f_restore_setup
     bklog "[!] Removing all fs mounts.."
