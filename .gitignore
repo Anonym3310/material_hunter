@@ -45,17 +45,13 @@ tmp/**/*
 
 # Locally stored "Eclipse launch configurations"
 *.launch
-nethunter-app.iml
 # CDT-specific
 .cproject
 
 # PDT-specific
 .buildpath
 /lint.xml
-libsuperuser-release/libsuperuser-release.iml
-androidwversionmanager/androidwversionmanager.iml
 *.iml
 /release
 
-/res/values/secrets.xml
 signing.properties
