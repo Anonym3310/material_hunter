@@ -8,7 +8,7 @@
 Kali NetHunter app with [Google Material Design](https://material.io/design)
 
 # Supporting
-- Android 5.1-10 (11 Unstable)
+- Android 5.1-11
 - SuperSU
 
 # Notes
