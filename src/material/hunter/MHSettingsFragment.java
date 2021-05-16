@@ -54,14 +54,14 @@ public class MHSettingsFragment extends Fragment {
         c.setProgress(cb);
         c.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                int ca = c.getProgress();
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {}
+            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+                int ca = seekBar.getProgress();
                 int cb = ca*10;
                 oa.edit().putInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, cb).apply();
                 NhPaths.showSnack(rootView, getString(R.string.mh_sett_need_restart), 1);
             }
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
         final Button cd = rootView.findViewById(R.id.settings__clear_data);
         cd.setOnClickListener(view -> ((ActivityManager) Objects.requireNonNull(getContext()).getSystemService(Context.ACTIVITY_SERVICE)).clearApplicationUserData());
