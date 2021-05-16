@@ -246,16 +246,13 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
     }
 
     @Override
-    public void onFirstPositionUpdate() {
-    }
+    public void onFirstPositionUpdate() {}
 
     private void startKismet() {
         try {
-            Intent intent =
-                    new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
+            Intent intent = new Intent("com.offsec.nhterm.RUN_SCRIPT_NH");
             intent.addCategory(Intent.CATEGORY_DEFAULT);
-
-            intent.putExtra("com.offsec.nhterm.iInitialCommand", "/usr/bin/start-kismet");
+            intent.putExtra("com.offsec.nhterm.iInitialCommand", "start-kismet");
             startActivity(intent);
         } catch (Exception e) {
             NhPaths.showMessage(context, getString(R.string.toast_install_terminal));
