@@ -2,14 +2,3 @@
 
 USERINIT_SCRIPT_PATH=$(readlink -f $0)
 sh ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bootkali_init
-grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM_IMAGE=/ || SYSTEM_IMAGE=/system
-mount -o rw,remount $SYSTEM_IMAGE
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/chrootmgr /system/bin/
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bootkali /system/bin/
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bootkali_bash /system/bin/
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bootkali_env /system/bin/
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bootkali_init /system/bin/
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bootkali_log /system/bin/
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bootkali_login /system/bin/
-ln -sf ${USERINIT_SCRIPT_PATH%/*/*/*}/scripts/bin/busybox_nh /system/bin/
-mount -o ro,remount $SYSTEM_IMAGE
