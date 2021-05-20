@@ -1,6 +1,6 @@
 #!/system/bin/sh
 
-# This runs after the KaliChroot has been started.
+# This runs after the Chroot has been started.
 
 if [ ! $? -eq 0 ]; then
     exit 1
