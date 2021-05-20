@@ -1,6 +1,6 @@
 #!/system/bin/sh
 
-# this runs before the Kaliservices
+# this runs before the chroot services
 
 if [ ! $? -eq 0 ]; then
     exit 1
