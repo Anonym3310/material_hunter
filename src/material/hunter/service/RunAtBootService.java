@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import material.hunter.AppNavHomeActivity;
 import material.hunter.BuildConfig;
 import material.hunter.R;
@@ -18,9 +21,6 @@ import material.hunter.utils.CheckForRoot;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.SharePrefTag;
 import material.hunter.utils.ShellExecuter;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class RunAtBootService extends JobIntentService {

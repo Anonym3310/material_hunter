@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
+
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 

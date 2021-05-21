@@ -1,5 +1,7 @@
 package material.hunter;
 
+import static material.hunter.R.id.f_materialhunter_action_search;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,6 +33,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.RecyclerViewAdapter.MaterialHunterRecyclerViewAdapter;
 import material.hunter.RecyclerViewAdapter.MaterialHunterRecyclerViewAdapterDeleteItems;
 import material.hunter.RecyclerViewData.MaterialHunterData;
@@ -38,11 +44,6 @@ import material.hunter.SQL.MaterialHunterSQL;
 import material.hunter.models.MaterialHunterModel;
 import material.hunter.utils.NhPaths;
 import material.hunter.viewmodels.MaterialHunterViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static material.hunter.R.id.f_materialhunter_action_search;
 
 public class MaterialHunterFragment extends Fragment {
 
@@ -156,7 +157,7 @@ public class MaterialHunterFragment extends Fragment {
                         String returnedResult = MaterialHunterData.getInstance().backupData(MaterialHunterSQL.getInstance(context), storedpathEditText.getText().toString());
                         if (returnedResult == null) {
                             NhPaths.showSnack(getView(), "db is successfully backup to " + storedpathEditText.getText().toString(), 1);
-                       } else {
+                        } else {
                             dialog.dismiss();
                             new AlertDialog.Builder(context).setTitle("Failed to backup the DB.").setMessage(returnedResult).create().show();
                         }

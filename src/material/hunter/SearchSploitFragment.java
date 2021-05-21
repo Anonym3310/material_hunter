@@ -286,7 +286,9 @@ class ExploitLoader extends BaseAdapter {
 
     }
 
-    public int getCount() { return _exploitList.size(); }
+    public int getCount() {
+        return _exploitList.size();
+    }
 
     //FILE TO HID
     // FIXME check bootkali fixme strings

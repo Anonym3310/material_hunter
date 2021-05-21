@@ -108,6 +108,7 @@
         <item>Enable</item>
         <item>Disable</item>
     </string-array>
+    <string name="usbarmory_usb_adb_s">Enable</string>
     <string-array name="usbarmory_usb_network_attack_mode">
         <item>Network Tethering Only</item>
     </string-array>

@@ -55,6 +55,7 @@ public class MaterialHunterRecyclerViewAdapterResult extends RecyclerView.Adapte
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         private final TextView resultTextView;
+
         private ItemViewHolder(View view) {
             super(view);
             resultTextView = view.findViewById(R.id.f_materialhunter_item_result_tv);

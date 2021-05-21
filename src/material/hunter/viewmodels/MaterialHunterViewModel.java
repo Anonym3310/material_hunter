@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
 import material.hunter.RecyclerViewData.MaterialHunterData;
 import material.hunter.models.MaterialHunterModel;
-
-import java.util.List;
 
 /*
     ViewModel class for materialhunter model, this is to be observed the List of MaterialHunterModel class.

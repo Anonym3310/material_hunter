@@ -176,7 +176,8 @@ public class ManaFragment extends Fragment {
             }
             NhPaths.showSnack(getView(), getString(R.string.attack_launched), 1);
         });
-        builder.setNegativeButton("Quit", (dialog, which) -> { });
+        builder.setNegativeButton("Quit", (dialog, which) -> {
+        });
         builder.setSingleChoiceItems(scripts, selectedScriptIndex, (dialog, which) -> selectedScriptIndex = which);
         builder.show();
     }

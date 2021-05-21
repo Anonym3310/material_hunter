@@ -9,8 +9,8 @@ import java.util.Locale;
 
 public class GPSPosition {
 
-    public float time = 0.0f;
     private final int quality = 0;
+    public float time = 0.0f;
 
     public void updateIsfixed() {
         boolean isFixed = quality > 0;

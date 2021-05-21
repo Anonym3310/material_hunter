@@ -49,6 +49,7 @@ public class ChrootManagerFragment extends Fragment {
     public static boolean isAsyncTaskRunning = false;
     private static String ARCH = "";
     private static String MINORFULL = "";
+    private final Intent backPressedintent = new Intent();
     private TextView mountStatsTextView;
     private TextView baseChrootPathTextView;
     private TextView resultViewerLoggerTextView;
@@ -62,7 +63,6 @@ public class ChrootManagerFragment extends Fragment {
     private Button backupChrootButton;
     private SharedPreferences sharedPreferences;
     private ChrootManagerAsynctask chrootManagerAsynctask;
-    private final Intent backPressedintent = new Intent();
     private Context context;
     private Activity activity;
 
@@ -157,7 +157,7 @@ public class ChrootManagerFragment extends Fragment {
             chrootPathEditText.setLayoutParams(editTextParams);
             availableChrootPathextview.setLayoutParams(editTextParams);
             availableChrootPathextview.setTextColor(getResources().getColor(R.color.clearTitle));
-            availableChrootPathextview.setText("\n " + getString(R.string.f_chrootmanager_list_folders) +"\n\"" + NhPaths.NH_SYSTEM_PATH + "/\":\n\n");
+            availableChrootPathextview.setText("\n " + getString(R.string.f_chrootmanager_list_folders) + "\n\"" + NhPaths.NH_SYSTEM_PATH + "/\":\n\n");
             File chrootDir = new File(NhPaths.NH_SYSTEM_PATH);
             int count = 0;
             for (File file : Objects.requireNonNull(chrootDir.listFiles())) {
@@ -196,10 +196,13 @@ public class ChrootManagerFragment extends Fragment {
             chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.MOUNT_CHROOT);
             chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
                 @Override
-                public void onAsyncTaskPrepare() { setAllButtonEnable(false); }
+                public void onAsyncTaskPrepare() {
+                    setAllButtonEnable(false);
+                }
 
                 @Override
-                public void onAsyncTaskProgressUpdate(int progress) { }
+                public void onAsyncTaskProgressUpdate(int progress) {
+                }
 
                 @Override
                 public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -221,10 +224,13 @@ public class ChrootManagerFragment extends Fragment {
             chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.UNMOUNT_CHROOT);
             chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
                 @Override
-                public void onAsyncTaskPrepare() { setAllButtonEnable(false); }
+                public void onAsyncTaskPrepare() {
+                    setAllButtonEnable(false);
+                }
 
                 @Override
-                public void onAsyncTaskProgressUpdate(int progress) { }
+                public void onAsyncTaskProgressUpdate(int progress) {
+                }
 
                 @Override
                 public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -318,7 +324,8 @@ public class ChrootManagerFragment extends Fragment {
                         }
 
                         @Override
-                        public void onAsyncTaskProgressUpdate(int progress) { }
+                        public void onAsyncTaskProgressUpdate(int progress) {
+                        }
 
                         @Override
                         public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -355,7 +362,8 @@ public class ChrootManagerFragment extends Fragment {
                                         }
 
                                         @Override
-                                        public void onAsyncTaskProgressUpdate(int progress) { }
+                                        public void onAsyncTaskProgressUpdate(int progress) {
+                                        }
 
                                         @Override
                                         public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -418,7 +426,8 @@ public class ChrootManagerFragment extends Fragment {
                         }
 
                         @Override
-                        public void onAsyncTaskProgressUpdate(int progress) { }
+                        public void onAsyncTaskProgressUpdate(int progress) {
+                        }
 
                         @Override
                         public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -516,7 +525,8 @@ public class ChrootManagerFragment extends Fragment {
                             }
 
                             @Override
-                            public void onAsyncTaskProgressUpdate(int progress) { }
+                            public void onAsyncTaskProgressUpdate(int progress) {
+                            }
 
                             @Override
                             public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -538,7 +548,8 @@ public class ChrootManagerFragment extends Fragment {
                         }
 
                         @Override
-                        public void onAsyncTaskProgressUpdate(int progress) { }
+                        public void onAsyncTaskProgressUpdate(int progress) {
+                        }
 
                         @Override
                         public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
@@ -562,10 +573,13 @@ public class ChrootManagerFragment extends Fragment {
         chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.CHECK_CHROOT);
         chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
             @Override
-            public void onAsyncTaskPrepare() { broadcastBackPressedIntent(false); }
+            public void onAsyncTaskPrepare() {
+                broadcastBackPressedIntent(false);
+            }
 
             @Override
-            public void onAsyncTaskProgressUpdate(int progress) { }
+            public void onAsyncTaskProgressUpdate(int progress) {
+            }
 
             @Override
             public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {

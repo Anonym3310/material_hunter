@@ -72,6 +72,7 @@ public class MacchangerAsyncTask extends AsyncTask<String, Void, Void> {
 
     public interface MacchangerAsyncTaskListener {
         void onAsyncTaskPrepare();
+
         void onAsyncTaskFinished(Object result);
     }
 }

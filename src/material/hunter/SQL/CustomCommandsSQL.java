@@ -12,14 +12,14 @@ import android.util.Log;
 
 import androidx.multidex.BuildConfig;
 
-import material.hunter.models.CustomCommandsModel;
-import material.hunter.utils.NhPaths;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+
+import material.hunter.models.CustomCommandsModel;
+import material.hunter.utils.NhPaths;
 
 public class CustomCommandsSQL extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "CustomCommandsFragment";
@@ -88,7 +88,8 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) { }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    }
 
     public ArrayList<CustomCommandsModel> bindData(ArrayList<CustomCommandsModel> customCommandsModelArrayList) {
         SQLiteDatabase db = getWritableDatabase();

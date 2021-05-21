@@ -48,7 +48,9 @@ public class CustomCommandsFragment extends Fragment {
     private Button addButton;
     private Button deleteButton;
     private Button moveButton;
-    public CustomCommandsFragment() { }
+
+    public CustomCommandsFragment() {
+    }
 
     public static CustomCommandsFragment newInstance(int sectionNumber) {
         CustomCommandsFragment fragment = new CustomCommandsFragment();
@@ -259,7 +261,8 @@ public class CustomCommandsFragment extends Fragment {
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) { }
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
             });
 
             AlertDialog.Builder adbAdd = new AlertDialog.Builder(activity);

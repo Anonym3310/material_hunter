@@ -3,7 +3,6 @@ package material.hunter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -178,7 +177,8 @@ public class MacchangerFragment extends Fragment {
         MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.GETHOSTNAME);
         macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
             @Override
-            public void onAsyncTaskPrepare() {}
+            public void onAsyncTaskPrepare() {
+            }
 
             @Override
             public void onAsyncTaskFinished(Object result) {
@@ -197,7 +197,8 @@ public class MacchangerFragment extends Fragment {
             MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.SETHOSTNAME);
             macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
                 @Override
-                public void onAsyncTaskPrepare() {}
+                public void onAsyncTaskPrepare() {
+                }
 
                 @Override
                 public void onAsyncTaskFinished(Object result) {
@@ -381,12 +382,13 @@ public class MacchangerFragment extends Fragment {
         });
     }
 
-    private void setKHostName(){
+    private void setKHostName() {
         setKHost.setOnClickListener(v -> {
             MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.SETKHOSTNAME);
             macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
                 @Override
-                public void onAsyncTaskPrepare() {}
+                public void onAsyncTaskPrepare() {
+                }
 
                 @Override
                 public void onAsyncTaskFinished(Object result) {
@@ -406,7 +408,8 @@ public class MacchangerFragment extends Fragment {
         MacchangerAsyncTask macchangerAsyncTask = new MacchangerAsyncTask(MacchangerAsyncTask.GETKHOSTNAME);
         macchangerAsyncTask.setListener(new MacchangerAsyncTask.MacchangerAsyncTaskListener() {
             @Override
-            public void onAsyncTaskPrepare() {}
+            public void onAsyncTaskPrepare() {
+            }
 
             @Override
             public void onAsyncTaskFinished(Object result) {

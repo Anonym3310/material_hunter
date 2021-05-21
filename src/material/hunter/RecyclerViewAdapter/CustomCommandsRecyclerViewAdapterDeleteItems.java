@@ -9,10 +9,10 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import material.hunter.R;
 import material.hunter.models.CustomCommandsModel;
-
-import java.util.List;
 
 public class CustomCommandsRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<CustomCommandsRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 

@@ -5,21 +5,21 @@ import android.widget.Switch;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.AsyncTask.ServicesAsyncTask;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.models.ServicesModel;
 import material.hunter.utils.NhPaths;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ServicesData {
     public static boolean isDataInitiated = false;
     private static ServicesData instance;
-    public List<ServicesModel> servicesModelListFull;
     private final ArrayList<ServicesModel> servicesModelArrayList = new ArrayList<>();
     private final MutableLiveData<List<ServicesModel>> data = new MutableLiveData<>();
     private final List<ServicesModel> copyOfServicesModelListFull = new ArrayList<>();
+    public List<ServicesModel> servicesModelListFull;
 
     public synchronized static ServicesData getInstance() {
         if (instance == null) {

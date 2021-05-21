@@ -4,20 +4,20 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.AsyncTask.CustomCommandsAsyncTask;
 import material.hunter.SQL.CustomCommandsSQL;
 import material.hunter.models.CustomCommandsModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CustomCommandsData {
     public static boolean isDataInitiated = false;
     private static CustomCommandsData instance;
-    public List<CustomCommandsModel> customCommandsModelListFull;
     private final ArrayList<CustomCommandsModel> customCommandsModelArrayList = new ArrayList<>();
     private final MutableLiveData<List<CustomCommandsModel>> data = new MutableLiveData<>();
     private final List<CustomCommandsModel> copyOfCustomCommandsModelListFull = new ArrayList<>();
+    public List<CustomCommandsModel> customCommandsModelListFull;
 
     public synchronized static CustomCommandsData getInstance() {
         if (instance == null) {
@@ -43,7 +43,8 @@ public class CustomCommandsData {
         CustomCommandsAsyncTask customCommandsAsyncTask = new CustomCommandsAsyncTask(CustomCommandsAsyncTask.RUNCMD, position, context);
         customCommandsAsyncTask.setListener(new CustomCommandsAsyncTask.CustomCommandsAsyncTaskListener() {
             @Override
-            public void onAsyncTaskPrepare() { }
+            public void onAsyncTaskPrepare() {
+            }
 
             @Override
             public void onAsyncTaskFinished(List<CustomCommandsModel> customCommandsModelList) {

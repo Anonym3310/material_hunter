@@ -2,7 +2,6 @@ package material.hunter.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Environment;
 import android.view.Gravity;
@@ -11,10 +10,9 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import material.hunter.BuildConfig;
-import material.hunter.R;
-
 import java.io.File;
+
+import material.hunter.BuildConfig;
 
 public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "NhPaths";

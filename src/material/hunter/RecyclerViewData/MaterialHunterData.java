@@ -4,20 +4,20 @@ import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.AsyncTask.MaterialHunterAsynctask;
 import material.hunter.SQL.MaterialHunterSQL;
 import material.hunter.models.MaterialHunterModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MaterialHunterData {
     public static boolean isDataInitiated = false;
     private static MaterialHunterData instance;
-    public List<MaterialHunterModel> materialhunterModelListFull;
     private final ArrayList<MaterialHunterModel> materialhunterModelArrayList = new ArrayList<>();
     private final MutableLiveData<List<MaterialHunterModel>> data = new MutableLiveData<>();
     private final List<MaterialHunterModel> copyOfMaterialHunterModelListFull = new ArrayList<>();
+    public List<MaterialHunterModel> materialhunterModelListFull;
 
     public synchronized static MaterialHunterData getInstance() {
         if (instance == null) {

@@ -8,14 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import material.hunter.BuildConfig;
-import material.hunter.models.ServicesModel;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+
+import material.hunter.BuildConfig;
+import material.hunter.models.ServicesModel;
 
 public class ServicesSQL extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ServicesFragment";
@@ -27,8 +27,8 @@ public class ServicesSQL extends SQLiteOpenHelper {
             {"3", "POSTGRESQL", "service postgresql start", "service postgresql stop", "postgres", "0"},
             {"4", "DNSMASQ", "service dnsmasq start", "service dnsmasq stop", "dnsmasq", "0"}
     };
-    private static ServicesSQL instance;
     private static final ArrayList<String> COLUMNS = new ArrayList<>();
+    private static ServicesSQL instance;
 
     private ServicesSQL(Context context) {
         super(context, DATABASE_NAME, null, 1);

@@ -53,13 +53,27 @@
         tools:replace="android:theme"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name=".AppNavHomeActivity"
+            android:name=".MHSSFBT"
             android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/Theme.MaterialHunter">
             <intent-filter android:label="@string/app_nav_home_label">
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".AppNavHomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.MaterialHunter">
+            <intent-filter android:label="@string/app_nav_home_label">
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>

@@ -120,7 +120,7 @@ public class BTFragment extends Fragment {
     public void RunSetup() {
         sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         intentClickListener_NH(NhPaths.makeTermTitle("Arsenal Setup") + " if [[ -f /usr/bin/hciconfig && -f /usr/bin/l2ping && " +
-                "-f /usr/bin/fang && -f /usr/bin/blueranger &&-f /usr/bin/bluelog && -f /usr/bin/sdptool && -f /usr/bin/spooftooph && -f /usr/bin/sox && -f /usr/include/bluetooth/bluetooth.h ]];then echo \"All packages are installed!\"; else " +
+                "-f /usr/bin/fang && -f /usr/bin/blueranger &&-f /usr/bin/bluelog && -f /usr/bin/sdptool && -f /usr/bin/spooftooph && -f /usr/bin/sox && -f /usr/include/bluetooth/bluetooth.h ]];then echo 'All packages are installed!'; else " +
                 "apt-get update && apt-get install bluetooth bluez bluez-tools bluez-obexd libbluetooth3 sox spooftooph " +
                 "libbluetooth-dev redfang bluelog blueranger -y;fi; if [[ -f /usr/bin/carwhisperer && -f /usr/bin/rfcomm_scan ]];then echo \"All scripts are installed!\"; else " +
                 "git clone https://github.com/yesimxev/carwhisperer-0.2 /root/carwhisperer;" +
@@ -165,6 +165,7 @@ public class BTFragment extends Fragment {
         TabsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
         @Override
         public Fragment getItem(int i) {
             switch (i) {
@@ -283,7 +284,7 @@ public class BTFragment extends Fragment {
             });
             btSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 String dbus_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service dbus status | grep dbus");
-                if (dbus_statusCMD.equals("dbus is running.")) {
+                if (dbus_statusCMD.equals(" * dbus is running.")) {
                     if (isChecked) {
                         exe.RunAsRoot(new String[]{"bootkali custom_cmd service bluetooth start"});
                         BTstatus.setText("Running");
@@ -376,7 +377,7 @@ public class BTFragment extends Fragment {
 
             getActivity().runOnUiThread(() -> {
                 String dbus_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service dbus status | grep dbus");
-                if (dbus_statusCMD.equals("dbus is running.")) {
+                if (dbus_statusCMD.equals(" * dbus is running.")) {
                     DBUSstatus.setText("Running");
                     dbusSwitch.setChecked(true);
                 } else {
@@ -384,7 +385,7 @@ public class BTFragment extends Fragment {
                     dbusSwitch.setChecked(false);
                 }
                 String bt_statusCMD = exe.RunAsRootOutput("bootkali custom_cmd service bluetooth status | grep bluetooth");
-                if (bt_statusCMD.equals("bluetooth is running.")) {
+                if (bt_statusCMD.equals(" * bluetooth is running.")) {
                     BTstatus.setText("Running");
                     btSwitch.setChecked(true);
                 } else {
@@ -733,7 +734,8 @@ public class BTFragment extends Fragment {
                                 synchronized (audioTrack) {
                                     audioTrack.write(data, 0, n);
                                 }
-                        } catch (IOException ignored) { }
+                        } catch (IOException ignored) {
+                        }
                     });
                 }
             });

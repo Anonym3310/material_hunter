@@ -9,10 +9,10 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import material.hunter.R;
 import material.hunter.models.MaterialHunterModel;
-
-import java.util.List;
 
 public class MaterialHunterRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<MaterialHunterRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 
@@ -43,6 +43,7 @@ public class MaterialHunterRecyclerViewAdapterDeleteItems extends RecyclerView.A
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         private final CheckBox checkBox;
+
         private ItemViewHolder(View view) {
             super(view);
             checkBox = view.findViewById(R.id.f_materialhunter_recyclerview_dialog_chkbox);

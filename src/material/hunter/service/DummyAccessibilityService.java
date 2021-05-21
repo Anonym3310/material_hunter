@@ -5,8 +5,10 @@ import android.view.accessibility.AccessibilityEvent;
 
 public class DummyAccessibilityService extends AccessibilityService {
     @Override
-    public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) { }
+    public void onAccessibilityEvent(AccessibilityEvent accessibilityEvent) {
+    }
 
     @Override
-    public void onInterrupt() { }
+    public void onInterrupt() {
+    }
 }

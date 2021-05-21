@@ -141,22 +141,18 @@ public class SettingsFragment extends Fragment {
                         break;
                     }
                     case "Glitch": {
-                    String path = ("android.resource://" + context.getPackageName() + "/" + R.raw.boot_glitch);
-                    videoview.setVideoURI(Uri.parse(path));
-                    animation_dir[0] = "src_glitch";
-                    bootanimation_start();
+                        String path = ("android.resource://" + context.getPackageName() + "/" + R.raw.boot_glitch);
+                        videoview.setVideoURI(Uri.parse(path));
+                        animation_dir[0] = "src_glitch";
+                        bootanimation_start();
                     }
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }});
-
-        //   ProgressDialog progressDialog = new ProgressDialog(context);
-        //   progressDialog.setMessage("Loading...");
-        //   progressDialog.setCancelable(false);
-        //   progressDialog.show();
-        //        progressDialog.dismiss();
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
 
         //Convert Checkbox
         CheckBox ConvertCheckbox = rootView.findViewById(R.id.convert);
@@ -164,20 +160,66 @@ public class SettingsFragment extends Fragment {
         EditText ImageHeight = rootView.findViewById(R.id.image_height);
         EditText FinalWidth = rootView.findViewById(R.id.final_width);
         EditText FinalHeight = rootView.findViewById(R.id.final_height);
+        final Button ImageResMinus = rootView.findViewById(R.id.imageresminus);
+        final Button ImageResPlus = rootView.findViewById(R.id.imageresplus);
+        final Button FinalResMinus = rootView.findViewById(R.id.finalresminus);
+        final Button FinalResPlus = rootView.findViewById(R.id.finalresplus);
         ImageWidth.setEnabled(false);
         ImageHeight.setEnabled(false);
+        ImageResMinus.setEnabled(false);
+        ImageResPlus.setEnabled(false);
         ConvertCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 ImageWidth.setEnabled(true);
                 ImageWidth.setTextColor(Color.parseColor("#FFFFFF"));
                 ImageHeight.setEnabled(true);
                 ImageHeight.setTextColor(Color.parseColor("#FFFFFF"));
+                ImageResMinus.setEnabled(true);
+                ImageResMinus.setTextColor(Color.parseColor("#FFFFFF"));
+                ImageResPlus.setEnabled(true);
+                ImageResPlus.setTextColor(Color.parseColor("#FFFFFF"));
             } else {
                 ImageWidth.setEnabled(false);
                 ImageWidth.setTextColor(Color.parseColor("#40FFFFFF"));
                 ImageHeight.setEnabled(false);
                 ImageHeight.setTextColor(Color.parseColor("#40FFFFFF"));
+                ImageResMinus.setEnabled(false);
+                ImageResMinus.setTextColor(Color.parseColor("#40FFFFFF"));
+                ImageResPlus.setEnabled(false);
+                ImageResPlus.setTextColor(Color.parseColor("#40FFFFFF"));
             }
+        });
+        addClickListener(ImageResMinus, v -> {
+            String imagewidth = ImageWidth.getText().toString();
+            int finalValueIW = Integer.parseInt(imagewidth) - 108;
+            ImageWidth.setText(String.valueOf(finalValueIW));
+            String imageheight = ImageHeight.getText().toString();
+            int finalValueIH = Integer.parseInt(imageheight) - 192;
+            ImageHeight.setText(String.valueOf(finalValueIH));
+        });
+        addClickListener(ImageResPlus, v -> {
+            String imagewidth = ImageWidth.getText().toString();
+            int finalValueIW = Integer.parseInt(imagewidth) + 108;
+            ImageWidth.setText(String.valueOf(finalValueIW));
+            String imageheight = ImageHeight.getText().toString();
+            int finalValueIH = Integer.parseInt(imageheight) + 192;
+            ImageHeight.setText(String.valueOf(finalValueIH));
+        });
+        addClickListener(FinalResMinus, v -> {
+            String finalwidth = FinalWidth.getText().toString();
+            int finalValueFW = Integer.parseInt(finalwidth) - 108;
+            FinalWidth.setText(String.valueOf(finalValueFW));
+            String finalheight = FinalHeight.getText().toString();
+            int finalValueFH = Integer.parseInt(finalheight) - 192;
+            FinalHeight.setText(String.valueOf(finalValueFH));
+        });
+        addClickListener(FinalResPlus, v -> {
+            String finalwidth = FinalWidth.getText().toString();
+            int finalValueFW = Integer.parseInt(finalwidth) + 108;
+            FinalWidth.setText(String.valueOf(finalValueFW));
+            String finalheight = FinalHeight.getText().toString();
+            int finalValueFH = Integer.parseInt(finalheight) + 192;
+            FinalHeight.setText(String.valueOf(finalValueFH));
         });
 
         //Preview Checkbox
@@ -227,14 +269,14 @@ public class SettingsFragment extends Fragment {
                 imagesCMD = " mkdir -p new/part0" + foldersCMD + " && echo \"Converting images...\"" +
                         "&& for i in {0000..0100}; do convert" + resizeCMD + animation_dir[0] + "/part0/$i.jpg new/part0/$i.jpg >/dev/null 2>&1; done; echo \"[+] part0 done\" " +
                         "&& if [ -d new/part1 ]; then for i in {0000..0200}; do convert" + resizeCMD + animation_dir[0] + "/part1/$i.jpg new/part1/$i.jpg >/dev/null 2>&1; done; fi; echo \"[+] part1 done\" " +
-                        "&& if [ -d new/part2 ]; then for i in {0000..0100}; do convert" + resizeCMD + animation_dir[0] + "/part2/$i.jpg new/part2/$i.jpg >/dev/null 2>&1; done; fi; echo \"[+] part2 done\" ";
+                        "&& if [ -d new/part2 ]; then for i in {0000..0200}; do convert" + resizeCMD + animation_dir[0] + "/part2/$i.jpg new/part2/$i.jpg >/dev/null 2>&1; done; fi; echo \"[+] part2 done\" ";
             } else {
                 imagesCMD = " mkdir new && cp -r " + animation_dir[0] + "/part* new/";
             }
             String finalRES = FinalWidth.getText().toString() + "x" + FinalHeight.getText().toString();
             String finalFPS = FPS.getText().toString();
             intentClickListener_NH(NhPaths.makeTermTitle("Building animation") + "cd /root/nethunter-bootanimation &&" + imagesCMD + " && cp " + animation_dir[0] +
-                    "/desc.txt new/ && sed -i '1s/.*/" + finalRES + " " + finalFPS + "/' new/desc.txt && sed -i 's/x/ /g' new/desc.txt && cd new && zip -0 -FSr -q /sdcard/bootanimation.zip * && cd .. && rm -r new && echo \"Done. Head back to MaterialHunter to install the bootanimation! Exiting in 3secs..\" && sleep 3 && exit");
+                    "/desc.txt new/ && sed -i '1s/.*/" + finalRES + " " + finalFPS + "/' new/desc.txt && sed -i 's/x/ /g' new/desc.txt && cd new && zip -0 -FSr -q /sdcard/bootanimation.zip * && cd .. && rm -r new && echo 'Done. Head back to MaterialHunter to install the bootanimation! Exiting in 3secs..' && sleep 3 && exit");
         });
 
         //Install bootanimation
@@ -246,7 +288,7 @@ public class SettingsFragment extends Fragment {
             else {
                 intentClickListener_NHSU(NhPaths.makeTermTitle("Installing animation") + "grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system && " +
                         "mount -o rw,remount $SYSTEM && cp " + NhPaths.SD_PATH + "/bootanimation.zip " + bootanimation_path +
-                        "&& echo \"Done. Please reboot to check the result! Exiting in 3secs..\" && sleep 3 && exit");
+                        "&& echo 'Done. Please reboot to check the result! Exiting in 3secs..' && sleep 3 && exit");
             }
         });
 
@@ -288,7 +330,7 @@ public class SettingsFragment extends Fragment {
                 NhPaths.showSnack(getView(), "MaterialHunter was not flashed as system app! Please remove it from Android Settings.", 1);
             } else {
                 intentClickListener_NHSU("echo -ne \"\\033]0;Uninstalling MaterialHunter\\007\" && clear;grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system && " +
-                        "mount -o rw,remount $SYSTEM && rm " + NhSystemApp + " && pm clear material.hunter && echo \"Done! Reboot your device to complete the process. Exiting in 3secs..\" && sleep 3 && exit");
+                        "mount -o rw,remount $SYSTEM && rm " + NhSystemApp + " && pm clear material.hunter && echo 'Done! Reboot your device to complete the process. Exiting in 3secs..' && sleep 3 && exit");
             }
         });
 
@@ -303,26 +345,28 @@ public class SettingsFragment extends Fragment {
         String commandBB = ("ls /system/xbin | grep busybox_nh- | cut -f 2 -d '-'");
         String outputBB = exe.RunAsRootOutput(commandBB);
         final String[] bbArray = outputBB.split("\n");
-        ArrayAdapter usersadapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1, bbArray);
+        ArrayAdapter usersadapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, bbArray);
         busybox_spinner.setAdapter(usersadapter);
 
         //Select Version
         busybox_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int pos, long id) {
-                selected_version = parentView.getItemAtPosition(pos).toString();
+                String selected_version = parentView.getItemAtPosition(pos).toString();
                 if (selected_version.equals("1.25")) {
                     busybox_file[0] = "busybox_nh-1.25";
-                } else if (selected_version.equals("1.32.0")){
+                } else if (selected_version.equals("1.32.0")) {
                     busybox_file[0] = "busybox_nh-1.32";
                 }
             }
+
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
         });
 
         final Button BusyboxButton = rootView.findViewById(R.id.select_bb);
-        BusyboxButton.setOnClickListener( v -> {
+        BusyboxButton.setOnClickListener(v -> {
             File busybox = new File("/system/xbin/" + busybox_file[0]);
             exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm /system/xbin/busybox_nh;ln -s " + busybox + " /system/xbin/busybox_nh"});
             NhPaths.showSnack(getView(), "NetHunter BusyBox version has been successfully modified", 1);
@@ -336,7 +380,7 @@ public class SettingsFragment extends Fragment {
             BusyboxSystemButton.setEnabled(false);
             BusyboxSystemButton.setTextColor(Color.parseColor("#40FFFFFF"));
         }
-        BusyboxSystemButton.setOnClickListener( v -> {
+        BusyboxSystemButton.setOnClickListener(v -> {
             exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm /system/xbin/busybox;ln -s /system/xbin/busybox_nh /system/xbin/busybox"});
             NhPaths.showSnack(getView(), "Default system BusyBox has been changed", 1);
         });
@@ -367,7 +411,7 @@ public class SettingsFragment extends Fragment {
     public void SetupDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Welcome to Settings!")
-        .setMessage(getString(R.string.bt_welcome_msg))
+                .setMessage(getString(R.string.bt_welcome_msg))
                 .setPositiveButton(getString(R.string.bt_check_and_install), (dialog, which) -> {
                     RunSetup();
                     prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply();
@@ -377,15 +421,15 @@ public class SettingsFragment extends Fragment {
     }
 
     public void RunSetup() {
-        intentClickListener_NH("echo -ne \"\\033]0;Bootanimation Setup\\007\" && clear;if [[ -f /usr/bin/convert ]];then echo \"Imagemagick is installed!\"; else " +
-                "apt-get update && apt-get install imagemagick -y;fi; if [[ -f /root/nethunter-bootanimation ]];then echo \"Nethunter-bootanimation is installed!\"; else " +
-                "git clone https://gitlab.com/kalilinux/nethunter/apps/kali-nethunter-bootanimation /root/nethunter-bootanimation;fi; echo \"Everything is ready! Closing in 3secs..\"; sleep 3 && exit ");
+        intentClickListener_NH("echo -ne \"\\033]0;Bootanimation Setup\\007\" && clear;if [[ -f /usr/bin/convert ]];then echo 'Imagemagick is installed!'; else " +
+                "apt-get update && apt-get install imagemagick -y;fi; if [[ -f /root/nethunter-bootanimation ]];then echo 'Nethunter-bootanimation is installed!'; else " +
+                "git clone https://gitlab.com/kalilinux/nethunter/apps/kali-nethunter-bootanimation /root/nethunter-bootanimation;fi; echo 'Everything is ready! Closing in 3secs..'; sleep 3 && exit ");
         prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply();
     }
 
     public void RunUpdate() {
         intentClickListener_NH("echo -ne \"\\033]0;Bootanimation Update\\007\" && clear;apt-get update && apt-get install imagemagick -y;if [[ -d /root/nethunter-bootanimation ]];then cd /root/nethunter-bootanimation;git pull" +
-                ";fi; echo \"Done! Closing in 3secs..\"; sleep 3 && exit ");
+                ";fi; echo 'Done! Closing in 3secs..'; sleep 3 && exit ");
         prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply();
     }
 

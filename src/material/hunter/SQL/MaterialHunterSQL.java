@@ -8,14 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.text.TextUtils;
 
-import material.hunter.BuildConfig;
-import material.hunter.models.MaterialHunterModel;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+
+import material.hunter.BuildConfig;
+import material.hunter.models.MaterialHunterModel;
 
 /*
    SQLiteOpenHelper class for materialhunter fragment.
@@ -30,10 +30,10 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
             {"3", "HID Status", "ls /dev/hidg* || echo \"HID interface not found.\"", "\\n", "1"},
             {"4", "SAR", "grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && echo True || echo False", "\\n", "1"},
             {"5", "Network Interface Status", "ip -o addr show | awk '{print $2, $3, $4}'", "\\n", "1"},
-            {"6", "External IP", "curl ipv4.icanhazip.com || echo \"No internet connection.\"", "\\n", "0"}
+            {"6", "External IP", "busybox curl ipv4.icanhazip.com || echo \"No internet connection.\"", "\\n", "0"}
     };
-    private static MaterialHunterSQL instance;
     private static final ArrayList<String> COLUMNS = new ArrayList<>();
+    private static MaterialHunterSQL instance;
 
     private MaterialHunterSQL(Context context) {
         super(context, DATABASE_NAME, null, 1);

@@ -8,24 +8,24 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 import android.util.Log;
 
-import material.hunter.BuildConfig;
-import material.hunter.models.USBArmoryUSBNetworkModel;
-import material.hunter.models.USBArmoryUSBSwitchModel;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 
+import material.hunter.BuildConfig;
+import material.hunter.models.USBArmoryUSBNetworkModel;
+import material.hunter.models.USBArmoryUSBSwitchModel;
+
 public class USBArmorySQL extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "USBArmoryFragment";
     private static final String TAG = "USBArmorySQLSQL";
     private static final String USBSWITCH_TABLE_NAME = "USBSwitch";
     private static final String USBNETWORK_TABLE_NAME = "USBNetwork";
-    private static USBArmorySQL instance;
     private static final ArrayList<String> COLUMNS_USBSWITCH = new ArrayList<>();
     private static final ArrayList<String> COLUMNS_USBNETWORK = new ArrayList<>();
+    private static USBArmorySQL instance;
 
     private USBArmorySQL(Context context) {
         super(context, DATABASE_NAME, null, 1);

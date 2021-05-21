@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 
+import java.util.Locale;
+
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
-
-import java.util.Locale;
 
 public class DeAuthWhitelistActivity extends AppCompatActivity {
 

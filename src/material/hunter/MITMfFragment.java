@@ -390,10 +390,13 @@ public class MITMfFragment extends Fragment {
             spoofBinding.mitmfSpoofArpmodespin.setAdapter(arpAdapter);
             spoofBinding.mitmfSpoofArpmodespin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) { arpModeOption = pos; }
+                public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+                    arpModeOption = pos;
+                }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) { }
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
             });
 
 

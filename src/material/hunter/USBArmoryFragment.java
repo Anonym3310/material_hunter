@@ -215,7 +215,7 @@ public class USBArmoryFragment extends Fragment {
                         targetOSSpinner.getSelectedItem().toString().equals("Linux") ? "lnx" :
                                 targetOSSpinner.getSelectedItem().toString().equals("Mac OS") ? "mac" : "";
                 String functions = usbFuncSpinner.getSelectedItem().toString();
-                String adbEnable = adbSpinner.getSelectedItem().toString().equals("Enable") ? ",adb" : "";
+                String adbEnable = adbSpinner.getSelectedItem().toString().equals(getString(R.string.usbarmory_usb_adb_s)) ? ",adb" : "";
                 String idVendor = " -v '" + usbSwitchInfoEditTextGroup[0].getText().toString() + "'";
                 String idProduct = " -p '" + usbSwitchInfoEditTextGroup[1].getText().toString() + "'";
                 String manufacturer = usbSwitchInfoEditTextGroup[2].getText().toString().isEmpty() ? "" : " -m '" + usbSwitchInfoEditTextGroup[2].getText().toString() + "'";

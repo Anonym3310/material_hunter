@@ -9,13 +9,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
 
-import material.hunter.AppNavHomeActivity;
-import material.hunter.BuildConfig;
-import material.hunter.utils.CheckForRoot;
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.SharePrefTag;
-import material.hunter.utils.ShellExecuter;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,6 +18,13 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import material.hunter.AppNavHomeActivity;
+import material.hunter.BuildConfig;
+import material.hunter.utils.CheckForRoot;
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.SharePrefTag;
+import material.hunter.utils.ShellExecuter;
 
 public class CopyBootFilesAsyncTask extends AsyncTask<String, String, String> {
 

@@ -100,6 +100,7 @@
         <item>Использовать</item>
         <item>Не использовать</item>
     </string-array>
+    <string name="usbarmory_usb_adb_s">Использовать</string>
     <string-array name="usbarmory_usb_network_attack_mode">
         <item>Только Network Tethering</item>
     </string-array>

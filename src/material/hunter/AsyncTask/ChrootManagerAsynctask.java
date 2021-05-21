@@ -3,10 +3,6 @@ package material.hunter.AsyncTask;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
-import material.hunter.ChrootManagerFragment;
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.ShellExecuter;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
@@ -16,6 +12,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import material.hunter.ChrootManagerFragment;
+import material.hunter.utils.NhPaths;
+import material.hunter.utils.ShellExecuter;
 
 public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
     public static final int CHECK_CHROOT = 0;

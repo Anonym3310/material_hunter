@@ -2,15 +2,15 @@ package material.hunter.AsyncTask;
 
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import material.hunter.ChrootManagerFragment;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.models.ServicesModel;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List<ServicesModel>> {
     public static final int GETITEMSTATUS = 0;

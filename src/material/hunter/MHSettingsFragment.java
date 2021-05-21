@@ -44,21 +44,27 @@ public class MHSettingsFragment extends Fragment {
         o.setOnClickListener(view -> {
             if (o.isChecked()) {
                 oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, true).apply();
-            }else{
+            } else {
                 oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, false).apply();
             }
         });
         final SeekBar c = rootView.findViewById(R.id.settings_swtl_bar);
-        int ca = oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL,0);
-        int cb = ca/10;
+        int ca = oa.getInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, 0);
+        int cb = ca / 10;
         c.setProgress(cb);
         c.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {}
-            @Override public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override public void onStopTrackingTouch(SeekBar seekBar) {
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
                 int ca = seekBar.getProgress();
-                int cb = ca*10;
+                int cb = ca * 10;
                 oa.edit().putInt(SharePrefTag.BACKGROUND_ALPHA_LEVEL, cb).apply();
                 NhPaths.showSnack(rootView, getString(R.string.mh_sett_need_restart), 1);
             }

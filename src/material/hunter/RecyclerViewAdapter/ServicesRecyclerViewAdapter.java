@@ -211,8 +211,8 @@ public class ServicesRecyclerViewAdapter extends RecyclerView.Adapter<ServicesRe
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         private final TextView nametextView;
-        private Switch mSwitch;
         private final TextView statustextView;
+        private Switch mSwitch;
 
         private ItemViewHolder(View view) {
             super(view);

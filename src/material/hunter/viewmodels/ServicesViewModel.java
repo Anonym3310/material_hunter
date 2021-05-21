@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
 import material.hunter.RecyclerViewData.ServicesData;
 import material.hunter.models.ServicesModel;
-
-import java.util.List;
 
 /*
     ViewModel class for services model, this is to be observed the List of ServicesModel class.

@@ -22,9 +22,10 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
-import material.hunter.utils.NhPaths;
 
 import java.util.ArrayList;
+
+import material.hunter.utils.NhPaths;
 
 public class NmapFragment extends Fragment {
 
@@ -148,7 +149,8 @@ public class NmapFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         // NMAP Technique Spinner

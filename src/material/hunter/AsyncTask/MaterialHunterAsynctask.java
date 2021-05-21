@@ -2,13 +2,13 @@ package material.hunter.AsyncTask;
 
 import android.os.AsyncTask;
 
-import material.hunter.SQL.MaterialHunterSQL;
-import material.hunter.models.MaterialHunterModel;
-import material.hunter.utils.ShellExecuter;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import material.hunter.SQL.MaterialHunterSQL;
+import material.hunter.models.MaterialHunterModel;
+import material.hunter.utils.ShellExecuter;
 
 public class MaterialHunterAsynctask extends AsyncTask<List<MaterialHunterModel>, Void, List<MaterialHunterModel>> {
 

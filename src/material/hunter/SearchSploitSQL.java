@@ -7,11 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.ShellExecuter;
-
 import java.util.LinkedList;
 import java.util.List;
+
+import material.hunter.utils.ShellExecuter;
 
 class SearchSploitSQL extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;

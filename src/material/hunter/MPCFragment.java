@@ -17,9 +17,9 @@ import android.widget.Spinner;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import material.hunter.utils.NhPaths;
-
 import java.util.Locale;
+
+import material.hunter.utils.NhPaths;
 
 public class MPCFragment extends Fragment {
 
@@ -106,7 +106,8 @@ public class MPCFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         // Payload Spinner
@@ -179,7 +180,8 @@ public class MPCFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         // Callback Type SPinner
@@ -211,7 +213,8 @@ public class MPCFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         // Port Text Field

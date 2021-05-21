@@ -17,14 +17,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import material.hunter.R;
 import material.hunter.RecyclerViewData.CustomCommandsData;
 import material.hunter.SQL.CustomCommandsSQL;
 import material.hunter.models.CustomCommandsModel;
 import material.hunter.utils.NhPaths;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CustomCommandsRecyclerViewAdapter extends RecyclerView.Adapter<CustomCommandsRecyclerViewAdapter.ItemViewHolder> implements Filterable {
     private static final String TAG = "CustomCommandsRecycleView";
@@ -78,7 +78,7 @@ public class CustomCommandsRecyclerViewAdapter extends RecyclerView.Adapter<Cust
         itemViewHolder.runOnBootTextView.setText(customCommandsModelList.get(position).getRunOnBoot().equals("1") ? "yes" : "no");
         itemViewHolder.commandLabelTextView.setOnLongClickListener(v -> {
             final LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View promptViewEdit = mInflater.inflate(R.layout.customcommands_edit_dialog_view, null );
+            final View promptViewEdit = mInflater.inflate(R.layout.customcommands_edit_dialog_view, null);
             final EditText commandLabelEditText = promptViewEdit.findViewById(R.id.f_customcommands_edit_adb_et_commandlabel);
             final EditText commandEditText = promptViewEdit.findViewById(R.id.f_customcommands_edit_adb_et_command);
             final Spinner sendToSpinner = promptViewEdit.findViewById(R.id.f_customcommands_edit_adb_spr_sendto);

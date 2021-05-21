@@ -9,10 +9,10 @@ import android.widget.CheckBox;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 import material.hunter.R;
 import material.hunter.models.ServicesModel;
-
-import java.util.List;
 
 public class ServicesRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter<ServicesRecyclerViewAdapterDeleteItems.ItemViewHolder> {
 
@@ -43,6 +43,7 @@ public class ServicesRecyclerViewAdapterDeleteItems extends RecyclerView.Adapter
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         private final CheckBox runOnChrootStartCheckBox;
+
         private ItemViewHolder(View view) {
             super(view);
             runOnChrootStartCheckBox = view.findViewById(R.id.f_services_recyclerview_dialog_chkbox);

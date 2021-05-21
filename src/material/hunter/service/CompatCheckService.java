@@ -71,8 +71,8 @@ public class CompatCheckService extends IntentService {
         }
         // Secondly, check if busybox is present.
         // if (!CheckForRoot.isBusyboxInstalled()) {
-            //message = "No busybox is detected, please make sure you have busybox installed!";
-            //return false;
+        //message = "No busybox is detected, please make sure you have busybox installed!";
+        //return false;
         //}
         // Lastly, check if materialhunter terminal app has been installed.
         if (getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.offsec.nhterm") == null) {

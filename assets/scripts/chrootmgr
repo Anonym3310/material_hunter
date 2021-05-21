@@ -184,16 +184,6 @@ if [ ! $# -eq 0 ]; then
                             fi
                         done
 
-                        KERNEL="$(uname -r)"
-                        DIR="/lib/modules/$KERNEL"
-                        if [ -d "$DIR" ]; then
-                            bklog "[+] kernel modules exists or linked."
-                            if [ -d "$DIR/build" ]; then
-                                bklog "[!] kernel modules have a build folder."
-                            fi
-                        else
-                            bklog "[-] ${DIR} doesn't exists or isn't mounted. That's not a bad thing."
-                        fi
                         if [ $ISALLREADY -eq 0 ]; then
                             bklog "[+] Chroot environment has been set and started."
                             bklog "[!] You may click \"STOP CHROOT\" to shutdown the chroot environment."

@@ -4,17 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import material.hunter.ChrootManagerFragment;
 import material.hunter.SQL.CustomCommandsSQL;
 import material.hunter.models.CustomCommandsModel;
 import material.hunter.service.NotificationChannelService;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
-
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class CustomCommandsAsyncTask extends AsyncTask<List<CustomCommandsModel>, Void, List<CustomCommandsModel>> {
     public static final int RUNCMD = 0;
