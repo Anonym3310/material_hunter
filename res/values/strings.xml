@@ -642,4 +642,9 @@
     <string name="settings_remove_system_mh">Remove MaterialHunter system app</string>
     <string name="settings_uninstall_mh">Uninstall MaterialHunter App</string>
     <string name="select_file_btn">…</string>
+    <string name="current_bb_version">CURRENT BUSYBOX VERSION</string>
+    <string name="settings_bb_loading">Loading..</string>
+    <string name="settings_bb_new_version">NEW VERSION</string>
+    <string name="settings_bb_apply">APPLY</string>
+    <string name="settings_system_bb">USE AS DEFAULT SYSTEM BUSYBOX</string>
 </resources>
