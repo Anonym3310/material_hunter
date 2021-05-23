@@ -256,7 +256,7 @@
     <string name="bt_discover_services">Discover services</string>
     <string name="bt_iface_down">Интерфейс не запущен</string>
     <string name="bt_iface_no_selected">Интерфейс не выбран</string>
-    <string name="bt_target_selected">Цель не выбрана</string>
+    <string name="bt_target_selected">Цель выбрана</string>
     <string name="bt_no_target_adress">No target address!</string>
     <string name="bt_no_target_range">No target range!</string>
     <string name="bt_least_one_parameter">Please enter at least one parameter!</string>
@@ -633,4 +633,9 @@
     <string name="settings_remove_system_mh">Удалить MaterialHunter как системное приложение</string>
     <string name="settings_uninstall_mh">Удалить MaterialHunter</string>
     <string name="select_file_btn">…</string>
+    <string name="settings_current_bb_version">Текущая версия Busybox</string>
+    <string name="settings_bb_loading">Загрузка..</string>
+    <string name="settings_bb_new_version">Новая версия</string>
+    <string name="settings_bb_apply">Применить</string>
+    <string name="settings_system_bb">Применить как стандарт.систем</string>
 </resources>
