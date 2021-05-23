@@ -502,7 +502,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="CURRENT BUSYBOX VERSION"
+                        android:text="@string/settings_current_bb_version"
                         android:paddingTop="10dp"
                         android:padding="4dp"
                         android:layout_weight="1"/>
@@ -511,7 +511,7 @@
                         android:id="@+id/busybox_version"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Loading.."
+                        android:text="@string/settings_bb_loading"
                         android:paddingTop="10dp"
                         android:padding="4dp"
                         android:layout_weight="3"/>
@@ -535,7 +535,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="NEW VERSION"
+                        android:text="@string/settings_bb_new_version"
                         android:padding="4dp"/>
 
                     <Spinner
@@ -551,7 +551,7 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:text="Apply" />
+                        android:text="@string/settings_bb_apply" />
 
                 </LinearLayout>
 
@@ -561,7 +561,7 @@
                     android:singleLine="true"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Use as default system busybox" />
+                    android:text="@string/settings_system_bb" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
