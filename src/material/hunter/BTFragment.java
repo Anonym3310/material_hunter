@@ -125,7 +125,7 @@ public class BTFragment extends Fragment {
                 "libbluetooth-dev redfang bluelog blueranger -y;fi; if [[ -f /usr/bin/carwhisperer && -f /usr/bin/rfcomm_scan && -f /usr/bin/bluebinder ]];then echo 'All scripts are installed!'; else " +
                 "git clone https://github.com/yesimxev/carwhisperer-0.2 /root/carwhisperer;" +
                 "cd /root/carwhisperer;make && make install;git clone https://github.com/yesimxev/bt_audit /root/bt_audit;cd /root/bt_audit/src;make;" +
-                "cp rfcomm_scan /usr/bin/; git clone https://github.com/mer-hybris/bluebinder /root/bluebinder --depth 1; git clone https://github.com/mer-hybris/libgbinder /root/libgbinder --depth 1; git clone https://github.com/mer-hybris/libglibutil /root/libglibutil --depth 1; cd /root/libglibutil; make && make install-dev; cd /root/libgbinder; make && make install-dev; cd /root/bluebinder; make && make install; echo 'Everything is installed! Closing in 3secs..'; sleep 3 && exit");
+                "cp rfcomm_scan /usr/bin/; git clone https://github.com/mer-hybris/bluebinder /root/bluebinder --depth 1; git clone https://github.com/mer-hybris/libgbinder /root/libgbinder --depth 1; git clone https://github.com/mer-hybris/libglibutil /root/libglibutil --depth 1; cd /root/libglibutil; make && make install-dev; cd /root/libgbinder; make && make install-dev; cd /root/bluebinder; make && make install;fi; echo 'Everything is installed! Closing in 3secs..'; sleep 3 && exit");
         sharedpreferences.edit().putBoolean(SharePrefTag.SETUP_DONE, true).apply();
     }
 
