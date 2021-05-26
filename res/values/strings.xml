@@ -249,6 +249,11 @@
     <string name="bt_no_target">No target!</string>
     <string name="bt_dbus_first">Enable dbus service first!</string>
 
+    <!-- BT Bluebinder -->
+    <string name="bt_bb_title">Bluebinder at</string>
+    <string name="bt_bb_description">bluebinder is a simple proxy for using android binder based bluetooth through vhci.\nThe API which this depends on was introduced in Android 8 and should not disappear soon.\nThe kernel API this depends on can be enabled with CONFIG_BT_HCIVHCI.</string>
+    <string name="bt_bb_status">Bluebinder:</string>
+
     <!-- BT Tools -->
     <string name="bt_tools">Brute force BT device addresses, ping, and discover their services.</string>
     <string name="bt_l2ping">l2ping</string>

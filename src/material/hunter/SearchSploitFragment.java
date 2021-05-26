@@ -294,7 +294,7 @@ class ExploitLoader extends BaseAdapter {
     // FIXME check bootkali fixme strings
     private void start(String file) {
         String[] command = new String[1];
-        command[0] = "su -c /data/data/material.hunter/files/scripts/bootkali file2hid-file " + file;
+        command[0] = "/data/data/material.hunter/files/scripts/bootkali file2hid-file " + file;
         ShellExecuter exe = new ShellExecuter();
         exe.RunAsRoot(command);
     }

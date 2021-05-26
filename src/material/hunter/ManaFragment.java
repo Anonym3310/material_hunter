@@ -34,6 +34,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import material.hunter.utils.NhPaths;
+import material.hunter.utils.SharePrefTag;
 import material.hunter.utils.ShellExecuter;
 
 public class ManaFragment extends Fragment {
@@ -45,7 +46,6 @@ public class ManaFragment extends Fragment {
     private SharedPreferences sharedpreferences;
     private Integer selectedScriptIndex = 0;
     private String configFilePath;
-    private Context context;
     private Activity activity;
 
     public static ManaFragment newInstance(int sectionNumber) {
@@ -60,7 +60,7 @@ public class ManaFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getContext();
+        Context context = getContext();
         activity = getActivity();
         configFilePath = NhPaths.APP_SD_FILES_PATH + "/configs/hostapd-karma.conf";
     }
@@ -185,16 +185,16 @@ public class ManaFragment extends Fragment {
     public void Firstrun() {
         sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         intentClickListener_NH(NhPaths.makeTermTitle("Mana first setup") + " apt update && apt install mana-toolkit hostapd hostapd-wpe");
-        sharedpreferences.edit().putBoolean("setup_done", true).apply();
+        sharedpreferences.edit().putBoolean(SharePrefTag.SETUP_DONE, true).apply();
     }
 
     private void stopMana() {
         ShellExecuter exe = new ShellExecuter();
         String[] command = new String[1];
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali mana-lollipop stop'";
+            command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali mana-lollipop stop";
         } else {
-            command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali mana-kitkat stop'";
+            command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali mana-kitkat stop";
         }
         exe.RunAsRoot(command);
         NhPaths.showSnack(getView(), "Mana Stopped", 1);
@@ -214,13 +214,12 @@ public class ManaFragment extends Fragment {
 
     public static class HostapdFragment extends Fragment {
 
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             configFilePath = NhPaths.APP_SD_FILES_PATH + "/configs/hostapd-karma.conf";
         }
 
@@ -357,13 +356,12 @@ public class ManaFragment extends Fragment {
 
     public static class HostapdFragmentWPE extends Fragment {
 
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             configFilePath = NhPaths.APP_SD_FILES_PATH + "/configs/hostapd-wpe.conf";
         }
 
@@ -498,13 +496,12 @@ public class ManaFragment extends Fragment {
     public static class DhcpdFragment extends Fragment {
 
         final ShellExecuter exe = new ShellExecuter();
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             configFilePath = NhPaths.CHROOT_PATH() + "/etc/dhcp/dhcpd.conf";
         }
 
@@ -534,13 +531,12 @@ public class ManaFragment extends Fragment {
 
     public static class DnsspoofFragment extends Fragment {
         final ShellExecuter exe = new ShellExecuter();
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             configFilePath = NhPaths.CHROOT_PATH() + "/etc/mana-toolkit/dnsspoof.conf";
         }
 
@@ -570,13 +566,12 @@ public class ManaFragment extends Fragment {
     }
 
     public static class ManaNatFullFragment extends Fragment {
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 configFilePath = NhPaths.CHROOT_PATH() + "/usr/share/mana-toolkit/run-mana/start-nat-full-lollipop.sh";
             } else {
@@ -611,13 +606,12 @@ public class ManaFragment extends Fragment {
     }
 
     public static class ManaNatSimpleFragment extends Fragment {
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 configFilePath = NhPaths.CHROOT_PATH() + "/usr/share/mana-toolkit/run-mana/start-nat-simple-lollipop.sh";
             } else {
@@ -655,13 +649,12 @@ public class ManaFragment extends Fragment {
     }
 
     public static class ManaNatBettercapFragment extends Fragment {
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             configFilePath = NhPaths.CHROOT_PATH() + "/usr/bin/start-nat-transproxy-lollipop.sh";
         }
 
@@ -695,13 +688,12 @@ public class ManaFragment extends Fragment {
     }
 
     public static class BdfProxyConfigFragment extends Fragment {
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             configFilePath = NhPaths.APP_SD_FILES_PATH + "/configs/bdfproxy.cfg";
         }
 
@@ -733,13 +725,12 @@ public class ManaFragment extends Fragment {
     }
 
     public static class ManaStartNatSimpleBdfFragment extends Fragment {
-        private Context context;
         private String configFilePath;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            context = getContext();
+            Context context = getContext();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 configFilePath = NhPaths.CHROOT_PATH() + "/usr/share/mana-toolkit/run-mana/start-nat-simple-bdf-lollipop.sh";
             } else {

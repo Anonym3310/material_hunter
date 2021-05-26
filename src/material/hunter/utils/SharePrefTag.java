@@ -11,4 +11,5 @@ public abstract class SharePrefTag {
     public static final String BOOT_RECIVIE = "do_bootnotify";
     public static final String BACKGROUND_ALPHA_LEVEL = "bg_alpha_level";
     public static final String ANIMATION_SETUP_DONE = "animation_setup_done";
+    public static final String SETUP_DONE = "setup_done";
 }

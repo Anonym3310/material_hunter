@@ -10,6 +10,7 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.List;
 
+import material.hunter.utils.NhPaths;
 import material.hunter.utils.ShellExecuter;
 
 class SearchSploitSQL extends SQLiteOpenHelper {
@@ -51,7 +52,7 @@ class SearchSploitSQL extends SQLiteOpenHelper {
     }
 
     Boolean doDbFeed() {
-        String _cmd1 = "su -c bootkali custom_cmd '" +
+        String _cmd1 = NhPaths.APP_SCRIPTS_PATH + "/bootkali custom_cmd '" +
                 "/usr/bin/python3 /sdcard/nh_files/modules/csv2sqlite.py /usr/share/exploitdb/files_exploits.csv /sdcard/nh_files/SearchSploit " + SearchSploit.TABLE + "'";
         exe.RunAsRootOutput(_cmd1);
         return true;

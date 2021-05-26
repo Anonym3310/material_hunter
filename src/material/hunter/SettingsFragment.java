@@ -416,7 +416,7 @@ public class SettingsFragment extends Fragment {
                     RunSetup();
                     prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply();
                 })
-                .setCancelable(false).setNegativeButton((R.string.bt_welcome_daa), (dialogInterface, i) -> prefs.edit().putBoolean("animation_setup_done", true).apply())
+                .setCancelable(false).setNegativeButton((R.string.bt_welcome_daa), (dialogInterface, i) -> prefs.edit().putBoolean(SharePrefTag.ANIMATION_SETUP_DONE, true).apply())
                 .show();
     }
 

@@ -161,7 +161,7 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         // do this in a thread because it takes a second or two and lags the UI
         new Thread(() -> {
             ShellExecuter exe = new ShellExecuter();
-            String command = "su -c '" + NhPaths.APP_SCRIPTS_PATH + File.separator + "bootkali start_gpsd " + NhPaths.GPS_PORT + "'";
+            String command = NhPaths.APP_SCRIPTS_PATH + File.separator + "bootkali start_gpsd " + NhPaths.GPS_PORT;
             /*Log.d(TAG, command);
             String response =*/
             exe.RunAsRootOutput(command);
@@ -174,7 +174,7 @@ public class GpsServiceFragment extends Fragment implements KaliGPSUpdates.Recei
         // do this in a thread because it takes a second or two and lags the UI
         new Thread(() -> {
             ShellExecuter exe = new ShellExecuter();
-            String command = "su -c 'killall gpsd'";
+            String command = "killall gpsd";
             //Log.d(TAG, command);
             exe.RunAsRootOutput(command);
         }).start();

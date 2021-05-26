@@ -180,16 +180,16 @@ public class HidFragment extends Fragment {
         if (pageNum == 0) {
             switch (UACBypassIndex) {
                 case 0:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met --" + lang;
                     break;
                 case 1:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met-elevated-win7 --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met-elevated-win7 --" + lang;
                     break;
                 case 2:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met-elevated-win8 --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met-elevated-win8 --" + lang;
                     break;
                 case 3:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met-elevated-win10 --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali start-rev-met-elevated-win10 --" + lang;
                     break;
                 default:
                     NhPaths.showSnack(getView(), "No option selected 1", 1);
@@ -198,16 +198,16 @@ public class HidFragment extends Fragment {
         } else if (pageNum == 1) {
             switch (UACBypassIndex) {
                 case 0:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd --" + lang;
                     break;
                 case 1:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd-elevated-win7 --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd-elevated-win7 --" + lang;
                     break;
                 case 2:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd-elevated-win8 --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd-elevated-win8 --" + lang;
                     break;
                 case 3:
-                    command[0] = "su -c '" + NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd-elevated-win10 --" + lang + "'";
+                    command[0] = NhPaths.APP_SCRIPTS_PATH + "/bootkali hid-cmd-elevated-win10 --" + lang;
                     break;
                 default:
                     NhPaths.showSnack(getView(), "No option selected 2", 1);
