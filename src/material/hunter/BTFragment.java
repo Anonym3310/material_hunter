@@ -464,6 +464,7 @@ public class BTFragment extends Fragment {
                 } else {
                     BBstatus.setText("Stopped");
                     BBswitch.setChecked(false);
+                    BBinterface.setText("");
                 }
             });
             BBswitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
