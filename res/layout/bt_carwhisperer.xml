@@ -36,7 +36,7 @@
                 android:id="@+id/hci_interface"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="hci0"
+                android:text="hci0"
                 android:inputType="text" />
 
         </LinearLayout>
