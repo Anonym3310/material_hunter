@@ -62,7 +62,7 @@ f_restore_setup() {
 ########## umount the fs one by one ##########
 f_umount_fs() {
     if $BUSYBOX mountpoint -q $MNT/$1; then
-        if $BUSYBOX umount -f $MNT/$1; then
+        if $BUSYBOX umount -l "$MNT/$1" || $BUSYBOX umount -f "$MNT/$1"; then
             bklog "[+] umounted $MNT/$1"
             if [ ! "$1" = "dev/pts" -a ! "$1" = "dev/shm" ]; then
                 if rm -rf $MNT/$1; then
