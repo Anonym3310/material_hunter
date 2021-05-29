@@ -298,7 +298,7 @@ if [ ! $# -eq 0 ]; then
                     if echo $TARGET_TARBALL_PATH | $BUSYBOX grep -q ".tar.gz$"; then
                         TARBALL_ROOTDIR_NAME=$($BUSYBOX tar -tf $TARGET_TARBALL_PATH | $BUSYBOX sed -e 's@/.*@@' | uniq | $BUSYBOX sed 's/\/.*$//')
                         if [ $(echo $TARBALL_ROOTDIR_NAME | $BUSYBOX sed 's/ /\n/g' | wc -l) -eq 1 ]; then
-                            $BUSYBOX tar xzf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/
+                            $BUSYBOX tar xzf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/ --exclude `echo "$TARBALL_ROOTDIR_NAME/dev"`
                             $BUSYBOX sync
                         else
                             bklog "[-] $TARGET_TARBALL_PATH is not a valid tarball file for Chroot, make sure there is only one root directory at the top level of the tarball file."
@@ -306,7 +306,7 @@ if [ ! $# -eq 0 ]; then
                     elif echo $TARGET_TARBALL_PATH | $BUSYBOX grep -q ".tar.xz$"; then
                         TARBALL_ROOTDIR_NAME=$($BUSYBOX tar -tf $TARGET_TARBALL_PATH | $BUSYBOX sed -e 's@/.*@@' | $BUSYBOX uniq | $BUSYBOX sed 's/\/.*$//')
                         if [ $(echo $TARBALL_ROOTDIR_NAME | $BUSYBOX sed 's/ /\n/g' | wc -l) -eq 1 ]; then
-                            $BUSYBOX tar xJf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/
+                            $BUSYBOX tar xJf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/ --exclude `echo "$TARBALL_ROOTDIR_NAME/dev"`
                             $BUSYBOX sync
                         else
                             bklog "[-] $TARGET_TARBALL_PATH is not a valid tarball file for Chroot, make sure there is only one root directory at the top level of the tarball file."
