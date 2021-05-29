@@ -168,7 +168,7 @@ public class ManaFragment extends Fragment {
                     break;
                 case 5:
                     NhPaths.showSnack(getView(), "Starting HOSTAPD-WPE with Karma", 1);
-                    intentClickListener_NH(NhPaths.makeTermTitle("HOSTAPD-WPE-KARMA") + "ifconfig wlan1 up && /usr/sbin/hostapd-wpe -k /sdcard/nh_files/configs/hostapd-wpe.conf");
+                    intentClickListener_NH(NhPaths.makeTermTitle("HOSTAPD-WPE-KARMA") + "ifconfig wlan1 up && /usr/sbin/hostapd-wpe -k /sdcard/nh_files/configs/hostapd-karma.conf");
                     break;
                 default:
                     NhPaths.showSnack(getView(), "Invalid script!", 1);
