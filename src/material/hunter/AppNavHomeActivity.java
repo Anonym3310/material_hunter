@@ -417,11 +417,14 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 changeFragment(fragmentManager, DuckHunterFragment.newInstance(itemId));
                 break;
             case R.id.usbarmory_item:
-                if (new File("/config/usb_gadget/g1").exists()) {
+                if (new File("/config/usb_gadget").exists()) {
                     changeFragment(fragmentManager, USBArmoryFragment.newInstance(itemId));
                 } else {
                     showWarningDialog("", getString(R.string.toast_need_configfs), false);
                 }
+                break;
+	    case R.id.badusb_item:
+                changeFragment(fragmentManager, BadusbFragment.newInstance(itemId));
                 break;
             case R.id.mana_item:
                 changeFragment(fragmentManager, ManaFragment.newInstance(itemId));

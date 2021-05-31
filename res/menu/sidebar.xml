@@ -46,10 +46,10 @@
             android:id="@+id/duckhunter_item"
             android:icon="@drawable/ic_keyboard_duckyhid"
             android:title="@string/drawertitleduckhunter" />
-        <!--<item
+        <item
             android:id="@+id/badusb_item"
             android:icon="@drawable/ic_action_usb"
-            android:title="@string/drawertitlebadusb" />-->
+            android:title="Bad USB MITM Attack" />
         <item
             android:id="@+id/mana_item"
             android:icon="@drawable/ic_action_network_wifi"

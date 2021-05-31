@@ -94,6 +94,21 @@ public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListen
         return "";
     }
 
+    public static String getBusyboxRaw() {
+        String[] BB_PATHS = {
+                "/system/xbin",
+                "/system/bin",
+                APP_SCRIPTS_BIN_PATH
+        };
+        for (String BB_RAW : BB_PATHS) {
+            File busybox = new File(BB_RAW + "/busybox_nh");
+            if (busybox.exists()) {
+                return BB_RAW;
+            }
+        }
+        return "";
+    }
+
     public static String makeTermTitle(String title) {
         return "echo -ne \"\\033]0;" + title + "\\007\" && clear;";
     }

@@ -336,13 +336,15 @@ public class SettingsFragment extends Fragment {
 
         //Busybox
         TextView BusyboxVersion = rootView.findViewById(R.id.busybox_version);
+	String BB_PATH = NhPaths.getBusyboxPath();
+	String BB_RAW = NhPaths.getBusyboxRaw();
 
-        String busybox_ver = exe.RunAsRootOutput("/system/xbin/busybox | head -n1 | cut -c 10-13");
+        String busybox_ver = exe.RunAsRootOutput(BB_PATH + " | head -n1 | cut -c 10-13");
         BusyboxVersion.setText(busybox_ver);
 
         final String[] busybox_file = {null};
         Spinner busybox_spinner = rootView.findViewById(R.id.bb_spinner);
-        String commandBB = ("ls /system/xbin | grep busybox_nh- | cut -f 2 -d '-'");
+        String commandBB = ("ls " + BB_RAW + " | grep busybox_nh- | cut -f 2 -d '-'");
         String outputBB = exe.RunAsRootOutput(commandBB);
         final String[] bbArray = outputBB.split("\n");
         ArrayAdapter usersadapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, bbArray);
@@ -367,12 +369,12 @@ public class SettingsFragment extends Fragment {
 
         final Button BusyboxButton = rootView.findViewById(R.id.select_bb);
         BusyboxButton.setOnClickListener(v -> {
-            File busybox = new File("/system/xbin/" + busybox_file[0]);
-            exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm /system/xbin/busybox_nh;ln -s " + busybox + " /system/xbin/busybox_nh"});
+            File busybox = new File(BB_RAW + "/" + busybox_file[0]);
+            exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm " + BB_PATH + ";ln -s " + busybox + " /system/bin/busybox_nh"});
             NhPaths.showSnack(getView(), "NetHunter BusyBox version has been successfully modified", 1);
         });
         final Button BusyboxSystemButton = rootView.findViewById(R.id.system_bb);
-        String busybox_system = exe.RunAsRootOutput("/system/xbin/busybox | head -n1 | grep -iF nethunter");
+        String busybox_system = exe.RunAsRootOutput(BB_PATH + " | head -n1 | grep -iF nethunter");
         if (busybox_system.equals("")) {
             BusyboxSystemButton.setEnabled(true);
             BusyboxSystemButton.setTextColor(Color.parseColor("#FFFFFFFF"));
@@ -381,7 +383,7 @@ public class SettingsFragment extends Fragment {
             BusyboxSystemButton.setTextColor(Color.parseColor("#40FFFFFF"));
         }
         BusyboxSystemButton.setOnClickListener(v -> {
-            exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm /system/xbin/busybox;ln -s /system/xbin/busybox_nh /system/xbin/busybox"});
+            exe.RunAsRoot(new String[]{"grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && SYSTEM=/ || SYSTEM=/system;mount -o rw,remount $SYSTEM && rm /system/xbin/busybox;ln -s " + BB_PATH + " /system/bin/busybox"});
             NhPaths.showSnack(getView(), "Default system BusyBox has been changed", 1);
         });
         return rootView;

@@ -119,7 +119,7 @@ public class BTFragment extends Fragment {
 
     public void RunSetup() {
         sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
-        intentClickListener_NH(NhPaths.makeTermTitle("Arsenal Setup") + " if [[ -f /usr/bin/hciconfig && -f /usr/bin/l2ping && -f /usr/bin/fang && -f /usr/bin/blueranger &&-f /usr/bin/bluelog && -f /usr/bin/sdptool && -f /usr/bin/spooftooph && -f /usr/bin/sox && -f /usr/include/bluetooth/bluetooth.h ]];then echo \'All packages are installed!\'; else apt-get update && apt-get install build-essentials gcc git make libglib2.0-dev libsystemd-dev bluetooth bluez bluez-tools bluez-obexd libbluetooth3 sox spooftooph libbluetooth-dev redfang bluelog blueranger -y;fi; if [[ -f /usr/bin/carwhisperer && -f /usr/bin/rfcomm_scan && -f /usr/sbin/bluebinder ]];then echo \'All scripts are installed!\'; else git clone https://github.com/yesimxev/carwhisperer-0.2 /root/carwhisperer;cd /root/carwhisperer;make && make install;git clone https://github.com/yesimxev/bt_audit /root/bt_audit;cd /root/bt_audit/src;make;cp rfcomm_scan /usr/bin/; git clone https://github.com/mer-hybris/bluebinder /root/bluebinder --depth 1; git clone https://github.com/mer-hybris/libgbinder /root/libgbinder --depth 1; git clone https://github.com/monich/libglibutil /root/libglibutil --depth 1; cd /root/libglibutil; make && make install-dev; cd /root/libgbinder; make && make install-dev; cd /root/bluebinder; make && make install;fi; echo \'Everything is installed! Closing in 3secs..\'; sleep 3 && exit");
+        intentClickListener_NH(NhPaths.makeTermTitle("Arsenal Setup") + " if [[ -f /usr/bin/hciconfig && -f /usr/bin/l2ping && -f /usr/bin/fang && -f /usr/bin/blueranger &&-f /usr/bin/bluelog && -f /usr/bin/sdptool && -f /usr/bin/spooftooph && -f /usr/bin/sox && -f /usr/include/bluetooth/bluetooth.h ]];then echo \'All packages are installed!\'; else apt-get update && apt-get install build-essential gcc git make libglib2.0-dev libsystemd-dev bluetooth bluez bluez-tools bluez-obexd libbluetooth3 sox spooftooph libbluetooth-dev redfang bluelog blueranger -y;fi; if [[ -f /usr/bin/carwhisperer && -f /usr/bin/rfcomm_scan && -f /usr/sbin/bluebinder ]];then echo \'All scripts are installed!\'; else git clone https://github.com/yesimxev/carwhisperer-0.2 /root/carwhisperer;cd /root/carwhisperer;make && make install;git clone https://github.com/yesimxev/bt_audit /root/bt_audit;cd /root/bt_audit/src;make;cp rfcomm_scan /usr/bin/; git clone https://github.com/mer-hybris/bluebinder /root/bluebinder --depth 1; git clone https://github.com/mer-hybris/libgbinder /root/libgbinder --depth 1; git clone https://github.com/monich/libglibutil /root/libglibutil --depth 1; cd /root/libglibutil; make && make install-dev; cd /root/libgbinder; make && make install-dev; cd /root/bluebinder; make && make install;fi; echo \'Everything is installed! Closing in 3secs..\'; sleep 3 && exit");
         sharedpreferences.edit().putBoolean(SharePrefTag.SETUP_DONE, true).apply();
     }
 
@@ -127,7 +127,7 @@ public class BTFragment extends Fragment {
         sharedpreferences = activity.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
         intentClickListener_NH(NhPaths.makeTermTitle("Arsenal Update") + " apt-get update && apt-get install bluetooth bluez bluez-tools bluez-obexd libbluetooth3 sox spooftooph " +
                 "libbluetooth-dev redfang bluelog blueranger -y;if [[ -f /usr/bin/carwhisperer && -f /usr/bin/rfcomm_scan ]];then cd /root/carwhisperer/;git pull && make && make install;cd /root/bt_audit; git pull; cd src && make;" +
-                "cp rfcomm_scan /usr/bin/;fi; echo 'Done! Closing in 3secs..'; sleep 3 && exit ");
+                "cp rfcomm_scan /usr/bin/;fi; echo 'Done! Closing in 3secs..'; sleep 3 && exit");
         sharedpreferences.edit().putBoolean(SharePrefTag.SETUP_DONE, true).apply();
     }
 
@@ -166,10 +166,8 @@ public class BTFragment extends Fragment {
                 case 0:
                     return new MainFragment();
                 case 1:
-                    return new BluebinderFragment();
-                case 2:
                     return new ToolsFragment();
-                case 3:
+                case 2:
                     return new SpoofFragment();
                 default:
                     return new CWFragment();
@@ -183,20 +181,18 @@ public class BTFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case 4:
-                    return "Carwhisperer";
                 case 3:
-                    return "Spoof";
+                    return "Carwhisperer";
                 case 2:
-                    return "Tools";
+                    return "Spoof";
                 case 1:
-                    return "Bluebinder";
+                    return "Tools";
                 case 0:
                     return "Main Page";
                 default:
@@ -233,7 +229,8 @@ public class BTFragment extends Fragment {
 
             final TextView DBUSstatus = rootView.findViewById(R.id.DBUSstatus);
             final TextView BTstatus = rootView.findViewById(R.id.BTstatus);
-            final TextView HCIstatus = rootView.findViewById(R.id.HCIstatus);
+            final TextView BBstatus = rootView.findViewById(R.id.BBstatus);
+	    final TextView HCIstatus = rootView.findViewById(R.id.HCIstatus);
             final Spinner ifaces = rootView.findViewById(R.id.hci_interface);
 
             //Bluetooth interfaces
@@ -267,7 +264,8 @@ public class BTFragment extends Fragment {
 
             final Switch dbusSwitch = rootView.findViewById(R.id.dbus_switch);
             final Switch btSwitch = rootView.findViewById(R.id.bt_switch);
-            final Switch hciSwitch = rootView.findViewById(R.id.hci_switch);
+            final Switch bbSwitch = rootView.findViewById(R.id.bb_switch);
+	    final Switch hciSwitch = rootView.findViewById(R.id.hci_switch);
 
             dbusSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
@@ -291,6 +289,15 @@ public class BTFragment extends Fragment {
                 } else {
                     NhPaths.showSnack(getView(), getString(R.string.bt_dbus_first), 1);
                     btSwitch.setChecked(false);
+                }
+            });
+	    bbSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    intentClickListener_NH(NhPaths.makeTermTitle("Bluebinder starting") + " bluebinder");
+                    BBstatus.setText("Running");
+                } else {
+                    exe.RunAsRoot(new String[]{"pkill bluebinder"});
+                    BBstatus.setText("Stopped");
                 }
             });
             hciSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -364,10 +371,12 @@ public class BTFragment extends Fragment {
 
             final TextView DBUSstatus = BTFragment.findViewById(R.id.DBUSstatus);
             final TextView BTstatus = BTFragment.findViewById(R.id.BTstatus);
-            final TextView HCIstatus = BTFragment.findViewById(R.id.HCIstatus);
+            final TextView BBstatus = BTFragment.findViewById(R.id.BBstatus);
+	    final TextView HCIstatus = BTFragment.findViewById(R.id.HCIstatus);
             final Switch dbusSwitch = BTFragment.findViewById(R.id.dbus_switch);
             final Switch btSwitch = BTFragment.findViewById(R.id.bt_switch);
-            final Switch hciSwitch = BTFragment.findViewById(R.id.hci_switch);
+            final Switch BBswitch = BTFragment.findViewById(R.id.bb_switch);
+	    final Switch hciSwitch = BTFragment.findViewById(R.id.hci_switch);
             final Spinner ifaces = BTFragment.findViewById(R.id.hci_interface);
             SharedPreferences sharedpreferences = context.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE);
 
@@ -388,7 +397,15 @@ public class BTFragment extends Fragment {
                     BTstatus.setText("Stopped");
                     btSwitch.setChecked(false);
                 }
-                String hci_statusCMD = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/bootkali custom_cmd hciconfig " + selected_iface + " | grep \"UP RUNNING\" | cut -f2 -d$'\\t'");
+                String bb_statusCMD = exe.RunAsRootOutput("pidof bluebinder");
+                if (!bb_statusCMD.equals("")) {
+                    BBstatus.setText("Running");
+                    BBswitch.setChecked(true);
+                } else {
+                    BBstatus.setText("Stopped");
+                    BBswitch.setChecked(false);
+                }
+	        String hci_statusCMD = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/bootkali custom_cmd hciconfig " + selected_iface + " | grep \"UP RUNNING\" | cut -f2 -d$'\\t'");
                 if (hci_statusCMD.equals("UP RUNNING ")) {
                     HCIstatus.setText("Up");
                     hciSwitch.setChecked(true);
@@ -406,68 +423,6 @@ public class BTFragment extends Fragment {
                     ifaces.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, ifacesArray));
                     Integer lastiface = sharedpreferences.getInt("selected_iface", 0);
                     ifaces.setSelection(lastiface);
-                }
-            });
-        }
-    }
-
-    public static class BluebinderFragment extends BTFragment {
-        final ShellExecuter exe = new ShellExecuter();
-
-        @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.bt_bluebinder, container, false);
-            refresh(rootView);
-            Button RefreshStatus = rootView.findViewById(R.id.refreshStatus);
-            RefreshStatus.setOnClickListener(v -> refresh(rootView));
-            return rootView;
-        }
-
-        private void refresh(View rootView){
-
-            final TextView BBinterface = rootView.findViewById(R.id.bb_interface);
-            final TextView DBUSstatus = rootView.findViewById(R.id.DBUSstatus);
-            final TextView BTstatus = rootView.findViewById(R.id.BTstatus);
-            final TextView BBstatus = rootView.findViewById(R.id.BBstatus);
-            final Switch BBswitch = rootView.findViewById(R.id.bb_switch);
-
-            getActivity().runOnUiThread(() -> {
-                String dbus_statusCMD = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/bootkali custom_cmd service dbus status | grep dbus");
-                if (dbus_statusCMD.equals("dbus is running.")) {
-                    DBUSstatus.setText("Running");
-                } else {
-                    DBUSstatus.setText("Stopped");
-                }
-                String bt_statusCMD = exe.RunAsRootOutput(NhPaths.APP_SCRIPTS_PATH + "/bootkali custom_cmd service bluetooth status | grep bluetooth");
-                if (bt_statusCMD.equals("bluetooth is running.")) {
-                    BTstatus.setText("Running");
-                } else {
-                    BTstatus.setText("Stopped");
-                }
-                String bb_statusCMD = exe.RunAsRootOutput("pidof bluebinder");
-                if (!bb_statusCMD.equals("")) {
-                    BBstatus.setText("Running");
-                    BBswitch.setChecked(true);
-                    BBinterface.setText(bb_statusCMD);
-                } else {
-                    BBstatus.setText("Stopped");
-                    BBswitch.setChecked(false);
-                    BBinterface.setText("");
-                }
-            });
-            BBswitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if (isChecked) {
-                    intentClickListener_NH(NhPaths.makeTermTitle("Bluebinder starting") + " bluebinder");
-                    BBstatus.setText("Running");
-                } else {
-                    exe.RunAsRoot(new String[]{"pkill bluebinder"});
-                    BBstatus.setText("Stopped");
                 }
             });
         }
