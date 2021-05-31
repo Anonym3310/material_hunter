@@ -12,13 +12,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BadUSB MITM Attack"
-            android:textSize="28sp"
-            android:padding="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:padding="4dp"
             android:layout_gravity="center_horizontal|center" 
             android:gravity="center"

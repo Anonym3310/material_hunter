@@ -1,4 +1,4 @@
-package com.offsec.nethunter;
+package material.hunter;
 
 import android.app.Activity;
 import android.content.Context;
