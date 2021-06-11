@@ -378,6 +378,7 @@
     <string name="chrootmanager_dwnld_path">Path of the folder you want to donwload to:</string>
     <string name="chrootmanager_dwnld_download">DOWNLOAD LATEST CHROOT FROM OFFICIAL IMAGE</string>
     <string name="chrootmanager_dwnld_restore">RESTORE FROM LOCAL STORAGE\n(.TAR.GZ /.TAR.XZ)</string>
+    <string name="chrootmanager_restore_path">Enter path to file with chroot (.tar.gz /.tar.xz)</string>
     <string name="f_chrootmanager_list_folders">List of available folder(s) in</string>
     <string name="f_chrootmanager_setup_path">Setup Chroot Path</string>
     <string name="f_chrootmanager_chroot_prefix">The Chroot Path is prefixed to</string>

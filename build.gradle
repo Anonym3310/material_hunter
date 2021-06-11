@@ -78,7 +78,6 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
-
     }
 
     signingConfigs {

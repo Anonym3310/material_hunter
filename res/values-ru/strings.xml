@@ -364,6 +364,7 @@
     <string name="chrootmanager_dwnld_path">Путь до папки, куда вы загрузите архив:</string>
     <string name="chrootmanager_dwnld_download">ЗАГРУЗИТЬ ПОСЛЕДНИЙ CHROOT С ОФИЦИАЛЬНОГО СЕРВЕРА</string>
     <string name="chrootmanager_dwnld_restore">ВОССТАНОВИТЬ ИЗ ЛОКАЛЬНЫХ ДАННЫХ\n(.TAR.GZ /.TAR.XZ)</string>
+    <string name="chrootmanager_restore_path">Введите путь до файла с chroot (.tar.gz /.tar.xz)</string>
     <string name="f_chrootmanager_list_folders">Список доступных директорий в</string>
     <string name="f_chrootmanager_setup_path">Установить путь до chroot</string>
     <string name="f_chrootmanager_chroot_prefix">Путь до chroot префиксирован к</string>

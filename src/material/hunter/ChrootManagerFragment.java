@@ -21,11 +21,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -296,24 +300,14 @@ public class ChrootManagerFragment extends Fragment {
                 adb1.create().show();
             });
             rb.setOnClickListener(view12 -> {
-                AlertDialog.Builder adb2 = new AlertDialog.Builder(activity);
-                LinearLayout ll1 = new LinearLayout(activity);
-                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                ll1.setOrientation(LinearLayout.VERTICAL);
-                ll1.setLayoutParams(layoutParams1);
-                TextView chrootTarHintTextView = new TextView(activity);
-                EditText chrootTarFileEditText = new EditText(activity);
-                LinearLayout.LayoutParams editTextParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                editTextParams.setMargins(58, 40, 58, 0);
-                chrootTarHintTextView.setText("Type the full path of your Chroot tarball file:");
-                chrootTarHintTextView.setLayoutParams(editTextParams);
-                chrootTarFileEditText.setText(sharedPreferences.getString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, ""));
-                chrootTarFileEditText.setLayoutParams(editTextParams);
-                ll1.addView(chrootTarHintTextView);
-                ll1.addView(chrootTarFileEditText);
-                adb2.setView(ll1);
+            	AlertDialog.Builder adb2 = new AlertDialog.Builder(activity);
+            	final View rootViewR = getLayoutInflater().inflate(R.layout.chroot_restore, null);
+                final TextInputEditText et = rootViewR.findViewById(R.id.chrootRestorePath);
+                et.setText(sharedPreferences.getString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, ""));
+
+                adb2.setView(rootViewR);
                 adb2.setPositiveButton("OK", (dialogInterface, i) -> {
-                    sharedPreferences.edit().putString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, chrootTarFileEditText.getText().toString()).apply();
+                    sharedPreferences.edit().putString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, et.getText().toString()).apply();
                     chrootManagerAsynctask = new ChrootManagerAsynctask(ChrootManagerAsynctask.INSTALL_CHROOT);
                     chrootManagerAsynctask.setListener(new ChrootManagerAsynctask.ChrootManagerAsyncTaskListener() {
                         @Override
@@ -322,11 +316,8 @@ public class ChrootManagerFragment extends Fragment {
                             broadcastBackPressedIntent(false);
                             setAllButtonEnable(false);
                         }
-
                         @Override
-                        public void onAsyncTaskProgressUpdate(int progress) {
-                        }
-
+                        public void onAsyncTaskProgressUpdate(int progress) { }
                         @Override
                         public void onAsyncTaskFinished(int resultCode, ArrayList<String> resultString) {
                             broadcastBackPressedIntent(true);
@@ -334,11 +325,9 @@ public class ChrootManagerFragment extends Fragment {
                             compatCheck();
                         }
                     });
-                    chrootManagerAsynctask.execute(resultViewerLoggerTextView, chrootTarFileEditText.getText().toString(), NhPaths.CHROOT_PATH());
+                    chrootManagerAsynctask.execute(resultViewerLoggerTextView, et.getText().toString(), NhPaths.CHROOT_PATH());
                 });
-                final AlertDialog ad2 = adb2.create();
-                ad2.show();
-                ad.cancel();
+                adb2.create().show();
             });
         });
     }
