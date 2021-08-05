@@ -313,13 +313,17 @@ public class VNCFragment extends Fragment {
             if (vnc_passwd.equals("")) {
                 NhPaths.showSnack(getView(), getString(R.string.kex_pls_setup), 1);
             } else {
-                String arch_path = exe.RunAsRootOutput("ls " + NhPaths.CHROOT_PATH() + "/usr/lib/ | grep linux-gnu");
-                if (selected_user.equals("root")) {
-                    intentClickListener_NH("echo -ne \"\\033]0;Starting Server\\007\" && clear;HOME=/root;USER=root;sudo -u root LD_PRELOAD=/usr/lib/" + arch_path + "libgcc_s.so.1 nohup vncserver :" + selected_display + " " + localhostonly + "-name \"NetHunter KeX\" " + selected_vncresCMD + " >/dev/null 2>&1 </dev/null;echo \"Server started! Closing terminal..\" && sleep 2 && exit");
+                # fixed by @ka0x1alina
+                String get_arch = exe.RunAsRootOutput("dirs=ls " + NhPaths.CHROOT_PATH() + "/usr/lib | grep linux-gnu; for i in $dirs; do if [ -f \"" + NhPaths.CHROOT_PATH() + "/usr/lib/$i/libgcc_s.so.1\" ]; then echo \$i\"; break; fi; done");
+                if (get_arch.equals("")) {
+                    NhPaths.showSnack(getView(), "Cannot get chroot arch, try install gcc.", 1);
                 } else {
-                    intentClickListener_NH("echo -ne \"\\033]0;Starting Server\\007\" && clear;HOME=/home/" + selected_user + ";USER=" + selected_user + ";sudo -u " + selected_user + " LD_PRELOAD=/usr/lib/" + arch_path + "/libgcc_s.so.1 nohup vncserver :" + selected_display + " " + localhostonly + "-name \"NetHunter KeX\" " + selected_vncresCMD + " >/dev/null 2>&1 </dev/null;echo \"Server started! Closing terminal..\" && sleep 2 && exit");
+                    if (selected_user.equals("root")) {
+                        intentClickListener_NH("echo -ne \"\\033]0;Starting Server\\007\" && clear;HOME=/root;USER=root;sudo -u root LD_PRELOAD=/usr/lib/" + get_arch + "libgcc_s.so.1 nohup vncserver :" + selected_display + " " + localhostonly + "-name \"NetHunter KeX\" " + selected_vncresCMD + " >/dev/null 2>&1 </dev/null;echo \"Server started! Closing terminal..\" && sleep 2 && exit");
+                    } else {
+                        intentClickListener_NH("echo -ne \"\\033]0;Starting Server\\007\" && clear;HOME=/home/" + selected_user + ";USER=" + selected_user + ";sudo -u " + selected_user + " LD_PRELOAD=/usr/lib/" + arch_path + "/libgcc_s.so.1 nohup vncserver :" + selected_display + " " + localhostonly + "-name \"NetHunter KeX\" " + selected_vncresCMD + " >/dev/null 2>&1 </dev/null;echo \"Server started! Closing terminal..\" && sleep 2 && exit");
+                    }
                 }
-                // Log.d(TAG, localhostonly);
             }
         });
         addClickListener(StopVNCButton, v -> {
