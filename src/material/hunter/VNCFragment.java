@@ -314,7 +314,7 @@ public class VNCFragment extends Fragment {
                 NhPaths.showSnack(getView(), getString(R.string.kex_pls_setup), 1);
             } else {
                 # fixed by @ka0x1alina
-                String get_arch = exe.RunAsRootOutput("dirs=ls " + NhPaths.CHROOT_PATH() + "/usr/lib | grep linux-gnu; for i in $dirs; do if [ -f \"" + NhPaths.CHROOT_PATH() + "/usr/lib/$i/libgcc_s.so.1\" ]; then echo \$i\"; break; fi; done");
+                String get_arch = exe.RunAsRootOutput("dirs=ls " + NhPaths.CHROOT_PATH() + "/usr/lib | grep linux-gnu; for i in $dirs; do if [ -f \"" + NhPaths.CHROOT_PATH() + "/usr/lib/$i/libgcc_s.so.1\" ]; then echo \"$i\"; break; fi; done");
                 if (get_arch.equals("")) {
                     NhPaths.showSnack(getView(), "Cannot get chroot arch, try install gcc.", 1);
                 } else {
