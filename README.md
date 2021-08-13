@@ -12,7 +12,7 @@ Kali NetHunter app with [Google Material Design](https://material.io/design)
 - SuperSU
 
 # Notes
-- Now Android R is unstable, many features won't work, because MaterialHunter cannot access device ROM.
+- Now Android S not supported fully.
 
 # Instructions
 - Download and install app
