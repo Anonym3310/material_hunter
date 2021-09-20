@@ -157,7 +157,30 @@ public class AppNavHomeActivity extends AppCompatActivity implements KaliGPSUpda
                 }
             }
         });
-        copyBootFilesAsyncTask.execute();
+        // We must not attempt to copy files unless we have storage permissions
+        if (isAllRequiredPermissionsGranted()) {
+            copyBootFilesAsyncTask.execute();
+        } else {
+            // Crude way of waiting for the permissions to be granted before we continue
+            int t=0;
+            while (!permissionCheck.isAllPermitted(PermissionCheck.DEFAULT_PERMISSIONS)) {
+                try {
+                    Thread.sleep(1000);
+                    t++;
+                    Log.d(TAG, "Permissions missing. Waiting ..." + t);
+                } catch (InterruptedException e) {
+                    Log.d(TAG, "Permissions missing. Waiting ...");
+                }
+                if (t>=10) {
+                    break;
+                }
+            }
+            if (permissionCheck.isAllPermitted(PermissionCheck.DEFAULT_PERMISSIONS)) {
+                copyBootFilesAsyncTask.execute();
+            } else {
+                showWarningDialog("Permissions required", "Please restart application to finalize setup", true);
+            }
+        }
 
         int menuFragment = getIntent().getIntExtra("menuFragment", -1);
         if (menuFragment != -1) {
