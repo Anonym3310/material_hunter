@@ -25,6 +25,3 @@ Kali NetHunter app with [Google Material Design](https://material.io/design)
 - [Martin Välba](https://t.me/hilledkinged) - idea author
 - [Mirivan](https://t.me/cxfuck) - commander-in-chief of development
 - [Kali.org](https://kali.org) - founding company
-
-# Donation
-<img src="https://img.shields.io/badge/ЮMoney-4100116649195378-yellow?style=for-the-badge&logo=yandex" />
