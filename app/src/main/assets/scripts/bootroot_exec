@@ -1,0 +1,35 @@
+#!/system/bin/sh
+###
+shels=$(readlink -f $0)
+. ${shels%/*}/bootroot
+###
+
+## Validate Chroot path.
+if [ -z "$MNT" ]; then
+    echo "[-] Failed to parse MNT variable. Error [-3]"
+    exit 2
+fi
+
+if [ ! -d "$MNT" ]; then
+    echo "[-] \"$MNT\" directory doesnt exist."
+    echo "[!] Don't do stupid things."
+    exit 2
+fi
+
+## Define chroot sudo executable path.
+if [ ! -x $MNT$CHROOT_EXEC ]; then
+    echo "[-] Your chroot has no \"sudo\" installed, please install it manually first."
+    echo "[-] Also make sure your chroot isn't corrupted."
+    exit 2
+fi
+
+## Unset Android-Termux variables for stability
+unset ANDROID_ART_ROOT
+unset ANDROID_DATA
+unset ANDROID_ROOT
+unset LD_PRELOAD
+unset PREFIX
+unset TMPDIR
+
+clear
+$BUSYBOX chroot $MNT $CHROOT_EXEC -E PATH=$PATH su -c $*

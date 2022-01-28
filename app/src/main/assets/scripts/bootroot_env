@@ -1,0 +1,42 @@
+#!/system/bin/sh
+### Bootroot environment
+
+## Define chroot sudo path
+CHROOT_EXEC=/usr/bin/sudo
+
+## Define base system path
+NHSYSTEM_PATH=/data/local/nhsystem
+
+## Combine android $PATH to chroot $PATH
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
+
+## Define busybox path
+BUSYBOX=`which busybox | head -n1`
+if [ -z "$BUSYBOX" ]; then
+    if [ -x "/system/xbin/busybox" ]; then
+        BUSYBOX="/system/xbin/busybox"
+    elif [ -x "/system/bin/busybox" ]; then
+        BUSYBOX="/system/bin/busybox"
+    fi
+fi
+
+## Def chroot settings
+## SDCARD=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"mount_sd\"" | sed "s/^.*\"mount_sd\">\(.*\)<\/string>/\1/g"`
+## if [ "$SDCARD" == "true" ]; then
+##    MOUNT_SDCARD=""
+## fi
+## SYSTEM=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"mount_system\"" | sed "s/^.*\"mount_system\">\(.*\)<\/string>/\1/g"`
+## if [ "$SYSTEM" == "true" ]; then
+##    MOUNT_SYSTEM=""
+## fi
+## unset SDCARD
+## unset SYSTEM
+
+## Define executable variables
+MNT=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"chroot_path\"" | sed "s/^.*\"chroot_path\">\(.*\)<\/string>/\1/g"`
+HOSTNAME=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"hostname\"" | sed "s/^.*\"hostname\">\(.*\)<\/string>/\1/g"`
+
+## Validate hostname
+if [ -z $HOSTNAME ]; then
+    HOSTNAME="android"
+fi

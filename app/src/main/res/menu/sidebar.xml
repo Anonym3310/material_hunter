@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/materialhunter_item"
+            android:icon="@drawable/ic_action_home"
+            android:title="Main" />
+        <item
+            android:id="@+id/createchroot_item"
+            android:icon="@drawable/ic_action_android"
+            android:title="Manager" />
+		<item
+            android:id="@+id/usbarmory_item"
+            android:icon="@drawable/ic_action_hid"
+            android:title="USB Armory" />
+        <item
+            android:id="@+id/mhsettings_item"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+    </group>
+    <group android:id="@+id/chrootDependentGroup">
+        <item
+            android:id="@+id/terminal_item"
+			android:icon="@drawable/ic_static_termux"
+            android:title="Terminal" />
+		<item
+            android:id="@+id/services_item"
+            android:icon="@drawable/ic_action_settings_application"
+            android:title="Services" />
+    </group>
+</menu>

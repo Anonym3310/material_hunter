@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/f_customcommands_action_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom" />
+
+    <group android:id="@+id/f_customcommands_menu_group1">
+        <item
+            android:id="@+id/f_customcommands_menu_backupDB"
+            android:orderInCategory="100"
+            android:title="Backup"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/f_customcommands_menu_restoreDB"
+            android:orderInCategory="100"
+            android:title="Restore"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/f_customcommands_menu_ResetToDefault"
+            android:orderInCategory="100"
+            android:title="Reset"
+            app:showAsAction="never" />
+    </group>
+</menu>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MaterialHunter</string>
+    <string name="app_nav_home_label">MaterialHunter</string>
+    
+    <string name="materialteam">t.me/mirivan (Mirivan, Developer)\nt.me/hilledkinged (Martin, Idea author)\nt.me/zalexdev (Zalex - Stryker developer, fix boss)\nt.me/Avadamiao (Avada - icon designer)\n\nMade with ♥\n</string>
+
+	<!--Custom Spinner Array-->
+    <string-array name="array_move_position">
+        <item>Before:</item>
+        <item>After:</item>
+    </string-array>
+
+    <string-array name="array_insert_position">
+        <item>Insert to Top</item>
+        <item>Insert to Bottom</item>
+        <item>Insert Before:</item>
+        <item>Insert After:</item>
+    </string-array>
+	
+	<string name="drawer_opened">opened</string>
+	<string name="drawer_closed">closed</string>
+
+	<string-array name="usbarmory_target_platform">
+        <item>Windows</item>
+        <item>Linux</item>
+        <item>Mac OS</item>
+    </string-array>
+    <string-array name="usbarmory_usb_states_win_lin">
+        <item>reset</item>
+        <item>hid</item>
+        <item>mass_storage</item>
+        <item>rndis</item>
+        <item>hid,mass_storage</item>
+        <item>rndis,hid</item>
+        <item>rndis,mass_storage</item>
+        <item>rndis,hid,mass_storage</item>
+    </string-array>
+    <string-array name="usbarmory_usb_states_mac">
+        <item>reset</item>
+        <item>hid</item>
+        <item>mass_storage</item>
+        <item>acm,ecm</item>
+        <item>hid,mass_storage</item>
+        <item>acm,ecm,hid</item>
+        <item>acm,ecm,mass_storage</item>
+        <item>acm,ecm,hid,mass_storage</item>
+    </string-array>
+    <string-array name="usbarmory_usb_adb">
+        <item>Enable</item>
+        <item>Disable</item>
+    </string-array>
+    <string-array name="usbarmory_usb_network_attack_mode">
+        <item>Network Tethering Only</item>
+    </string-array>
+	<string-array name="custom_commands_sendto_array">
+        <item>android</item>
+        <item>chroot</item>
+    </string-array>
+	<string-array name="custom_commands_execmode_array">
+        <item>interactive</item>
+        <item>background</item>
+    </string-array>
+</resources>
