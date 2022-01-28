@@ -1,6 +1,6 @@
 <h1>MaterialHunter</h1>
 <p align="center">
-  <img src="https://github.com/Mirivan/material_hunter/raw/master/res/drawable/mh_logo.png">
+  <img src="https://raw.githubusercontent.com/Mirivan/material_hunter/master/app/src/main/res/drawable/mh_logo.png">
   <a href="https://t.me/kali_nh"><img src="https://img.shields.io/badge/Telegram-Group-blue.svg"></a>
   <img src="https://img.shields.io/github/repo-size/mirivan/material_hunter">
 </p>
