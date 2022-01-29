@@ -17,7 +17,7 @@ f_chk_chroot() {
 ######### CHECK IF FS IS ALL MOUNTED ALREADY #########
 f_isAllReady(){
     local FS
-    FS=(proc sys dev dev/pts system sdcard)
+    FS=(proc sys dev dev/pts $system_part $sdcard_part)
     for i in "${FS[@]}"; do
         if [ "$(grep $MNT/$i /proc/mounts)" ]; then
             echo "[+] $i was mounted already."
@@ -33,7 +33,6 @@ f_isAllReady(){
 }
 
 ######### MOUNT SDCARD #########
-
 f_mount_sdcard() {
     if [ -d "$MNT/sdcard" ]; then
         $BUSYBOX mountpoint -q "$MNT/sdcard" && return 0
@@ -107,14 +106,18 @@ f_mount_fs() {
     fi
 
     ######### SET SYSTEM ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/system 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/system ] && rm -rf $MNT/system
-        [ ! -d $MNT/system ] && mkdir -p $MNT/system
-        $BUSYBOX mount -o bind /system $MNT/system && echo "[+] mounted /system"
+    if [ -n "$system_part" ]; then
+        if [ ! "$($BUSYBOX mountpoint $MNT/system 2> /dev/null | grep 'is a')" ]; then
+            [ -d $MNT/system ] && rm -rf $MNT/system
+            [ ! -d $MNT/system ] && mkdir -p $MNT/system
+            $BUSYBOX mount -o bind /system $MNT/system && echo "[+] mounted /system"
+        fi
     fi
 
     ######### SET INTERNAL SDCARD ########
-    f_mount_sdcard
+    if [ -n "$sdcard_part" ]; then
+        f_mount_sdcard
+    fi
 
     ######### SET 250MB TO ALLOW POSTGRESQL #########
     $BUSYBOX sysctl -w kernel.shmmax=268435456

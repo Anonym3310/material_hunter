@@ -1,31 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
+    <group
+        android:checkableBehavior="single">
         <item
             android:id="@+id/materialhunter_item"
-            android:icon="@drawable/ic_action_home"
+            android:icon="@drawable/menu_home"
+			android:checked="true"
             android:title="Main" />
         <item
             android:id="@+id/createchroot_item"
-            android:icon="@drawable/ic_action_android"
+            android:icon="@drawable/menu_android"
             android:title="Manager" />
 		<item
             android:id="@+id/usbarmory_item"
-            android:icon="@drawable/ic_action_hid"
+            android:icon="@drawable/menu_usbarmory"
             android:title="USB Armory" />
         <item
             android:id="@+id/mhsettings_item"
-            android:icon="@drawable/ic_settings"
+            android:icon="@drawable/menu_settings"
             android:title="Settings" />
     </group>
-    <group android:id="@+id/chrootDependentGroup">
+    <group
+		android:id="@+id/chrootDependentGroup"
+		android:checkableBehavior="single">
         <item
             android:id="@+id/terminal_item"
 			android:icon="@drawable/ic_static_termux"
             android:title="Terminal" />
 		<item
             android:id="@+id/services_item"
-            android:icon="@drawable/ic_action_settings_application"
+            android:icon="@drawable/menu_services"
             android:title="Services" />
     </group>
 </menu>

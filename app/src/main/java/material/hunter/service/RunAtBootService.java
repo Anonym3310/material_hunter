@@ -90,7 +90,6 @@ public class RunAtBootService extends JobIntentService {
             }
             doNotification(
                 "Root: " + hashMap.get("ROOT") + "\n" +
-                "Busybox: " + hashMap.get("BUSYBOX") + "\n" +
                 "Chroot: " + hashMap.get("CHROOT") + "\n" +
                 resultMsg);
         }

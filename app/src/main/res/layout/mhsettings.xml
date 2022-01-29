@@ -58,6 +58,40 @@
                         android:textStyle="bold"
                         tools:ignore="MissingConstraints" />
 
+					<com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/settings_swb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Show wallpaper as background"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+						app:layout_constraintTop_toBottomOf="@id/settings_rob"
+                        tools:ignore="MissingConstraints" />
+
+					<TextView
+                        android:id="@+id/settings_tv1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Background alpha level"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+						android:textColor="?attr/colorOnSurface"
+						android:layout_marginTop="12dp"
+                        app:layout_constraintTop_toBottomOf="@id/settings_swb"
+                        tools:ignore="MissingConstraints" />
+
+					<SeekBar
+                        android:id="@+id/settings_bal"
+                        style="@style/Widget.AppCompat.SeekBar.Discrete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+						android:min="0"
+						android:max="10"
+						android:progress="10"
+						android:layout_marginTop="16dp"
+						android:layout_marginBottom="16dp"
+                        app:layout_constraintTop_toBottomOf="@id/settings_tv1"
+						tools:ignore="MissingConstraints" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
 

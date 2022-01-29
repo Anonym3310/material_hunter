@@ -171,7 +171,7 @@ if [ ! $# -eq 0 ]; then
                             fi
                         fi
                         ISALLREADY=0
-                        FS=(proc sys dev dev/pts system sdcard)
+                        FS=(proc sys dev dev/pts $system_part $sdcard_part)
                         for i in "${FS[@]}"; do
                             if [ "$($BUSYBOX grep $MNT/$i /proc/mounts)" ]; then
                                 echo "[+] $i was mounted already."

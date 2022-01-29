@@ -24,8 +24,6 @@ public class NotificationChannelService extends IntentService {
     public static final String DOWNLOADING = "material.hunter.DOWNLOADING";
     public static final String INSTALLING = "material.hunter.INSTALLING";
     public static final String BACKINGUP = "material.hunter.BACKINGUP";
-	public static final String CUSTOMCOMMAND_START = "material.hunter.CUSTOMCOMMAND_START";
-    public static final String CUSTOMCOMMAND_FINISH = "material.hunter.CUSTOMCOMMAND_FINISH";
     public Intent resultIntent = null;
     public PendingIntent resultPendingIntent = null;
     public TaskStackBuilder stackBuilder = null;

@@ -6,10 +6,9 @@
         <item name="colorPrimaryDark">@color/colorBars</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <!-- material features -->
         <item name="fontFamily">@font/google_sans</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">?attr/colorSurface</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
     </style>
 
     <style name="Widget.MaterialComponents.Button.OutlinedNewButton" parent="Widget.Material3.Button.OutlinedButton">
@@ -36,7 +35,6 @@
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_marginLeft">16dp</item>
         <item name="android:layout_marginRight">16dp</item>
-        <!--<item name="cardBackgroundColor">#121212</item>!-->
         <item name="cardCornerRadius">10dp</item>
         <item name="cardElevation">5dp</item>
         <item name="cardPreventCornerOverlap">false</item>
@@ -68,8 +66,9 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-	<style name="Widget.App.NavigationView" parent="Widget.Material3.NavigationView">
-        <item name="itemIconTint">@color/item_color</item>
-        <item name="itemTextColor">@color/item_color</item>
+	<style name="Widget.App.NavigationView" parent="Widget.MaterialComponents.NavigationView">
+        <item name="itemIconTint">@color/menu_item</item>
+        <item name="itemTextColor">@color/menu_item</item>
+		<item name="itemShapeFillColor">@color/menu_item_shape</item>
     </style>
 </resources>

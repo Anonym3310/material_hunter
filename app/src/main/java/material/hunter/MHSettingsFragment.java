@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.util.Objects;
+import material.hunter.utils.NhPaths;
 import material.hunter.utils.SharePrefTag;
 
 public class MHSettingsFragment extends Fragment {
@@ -37,13 +39,70 @@ public class MHSettingsFragment extends Fragment {
         final SwitchMaterial o = rootView.findViewById(R.id.settings_rob);
         o.setChecked(oa.getBoolean(SharePrefTag.BOOT_RECIVIE, true));
         o.setOnClickListener(
-                view -> {
-                    if (o.isChecked()) {
-                        oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, true).apply();
-                    } else {
-                        oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, false).apply();
-                    }
-                });
-        return rootView;
+            view -> {
+                if (o.isChecked()) {
+                    oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, true).apply();
+                } else {
+                    oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, false).apply();
+                }
+            });
+		final SwitchMaterial swb = rootView.findViewById(R.id.settings_swb);
+        swb.setChecked(oa.getBoolean("show_wallpaper", false));
+		final SeekBar bal = rootView.findViewById(R.id.settings_bal);
+		if (swb.isChecked()) bal.setEnabled(true);
+		else bal.setEnabled(false);
+        int ca = oa.getInt("background_alpha_level", 0);
+		bal.setProgress(ca / 10);
+        bal.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            }
+
+			@Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+			@Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                oa.edit().putInt("background_alpha_level", seekBar.getProgress() * 10).apply();
+                NhPaths.showSnack(rootView, "Need restart!", false);
+            }
+        });
+		swb.setOnClickListener(
+            view -> {
+                if (swb.isChecked()) {
+                    oa.edit().putBoolean("show_wallpaper", true).apply();
+					bal.setEnabled(true);
+                } else {
+                    oa.edit().putBoolean("show_wallpaper", false).apply();
+					bal.setEnabled(false);
+                }
+				NhPaths.showSnack(getView(), "Need restart!", false);
+            });
+		final SwitchMaterial msdp = rootView.findViewById(R.id.settings_msdp);
+        if (oa.getString("sdcard_part", "") != "") {
+			msdp.setChecked(true);
+		}
+        msdp.setOnClickListener(
+            view -> {
+                if (msdp.isChecked()) {
+                    oa.edit().putString("sdcard_part", "sdcard").apply();
+                } else {
+                    oa.edit().putString("sdcard_part", "").apply();
+                }
+            });
+		final SwitchMaterial msysp = rootView.findViewById(R.id.settings_msysp);
+        if (oa.getString("system_part", "") != "") {
+			msysp.setChecked(true);
+		}
+        msysp.setOnClickListener(
+            view -> {
+                if (msysp.isChecked()) {
+                    oa.edit().putString("system_part", "system").apply();
+                } else {
+                    oa.edit().putString("system_part", "").apply();
+                }
+            });
+		return rootView;
     }
 }

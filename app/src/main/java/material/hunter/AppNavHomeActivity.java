@@ -11,6 +11,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -19,10 +21,12 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,6 +62,7 @@ import material.hunter.utils.SharePrefTag;
 
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.SQL.USBArmorySQL;
+import mirivan.TransparentQ;
 
 public class AppNavHomeActivity extends AppCompatActivity {
     public final static String TAG = "AppNavHomeActivity";
@@ -65,7 +70,6 @@ public class AppNavHomeActivity extends AppCompatActivity {
     public static final String GPS_BACKGROUND_FRAGMENT_TAG = "BG_FRAGMENT_TAG";
     public static final String BOOT_CHANNEL_ID = "BOOT_CHANNEL";
 	public static MenuItem lastSelectedMenuItem;
-    private final Stack<String> titles = new Stack<>();
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -84,6 +88,16 @@ public class AppNavHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		DynamicColors.applyIfAvailable(this);
+		prefs = getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+		if (prefs.getBoolean("show_wallpaper", false)) {
+		    getWindow().setFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER, WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
+			int alpha_level = prefs.getInt("background_alpha_level", 100);
+			TypedValue typedValue = new TypedValue();
+            getTheme().resolveAttribute(R.attr.colorSurface, typedValue, true);
+            String color = Integer.toHexString(ContextCompat.getColor(this, typedValue.resourceId)).substring(2);
+		    // getWindow().setBackground(new ColorDrawable(Color.parseColor(TransparentQ.p2c(color, alpha_level))));
+			getWindow().getDecorView().setBackground(new ColorDrawable(Color.parseColor(TransparentQ.p2c(color, alpha_level))));
+		}
         nhPaths = NhPaths.getInstance(getApplicationContext());
         permissionCheck = new PermissionCheck(this, getApplicationContext());
 		materialhunterReceiver = new MaterialHunterReceiver();
@@ -92,7 +106,6 @@ public class AppNavHomeActivity extends AppCompatActivity {
         AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.CHECKCHROOT);
         AppNavHomeIntentFilter.addAction("ChrootManager");
         registerReceiver(materialhunterReceiver, new IntentFilter(AppNavHomeIntentFilter));
-        prefs = getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
 
         // Start copying the app files to the corresponding path.
         ProgressDialog progressDialog = new ProgressDialog(this);
@@ -264,8 +277,6 @@ public class AppNavHomeActivity extends AppCompatActivity {
                 .replace(R.id.container, MaterialHunterFragment.newInstance(R.id.materialhunter_item))
                 .commit();
 
-        // and put the title in the queue for when you need to back through them
-        titles.push(navigationView.getMenu().getItem(0).getTitle().toString());
         // disable all fragment first until it passes the compat check.
         navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
 
@@ -302,7 +313,6 @@ public class AppNavHomeActivity extends AppCompatActivity {
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
                 mTitle = menuItem.getTitle();
-                titles.push(mTitle.toString());
 
                 int itemId = menuItem.getItemId();
                 changeDrawer(itemId);
