@@ -14,7 +14,7 @@ Kali NetHunter app with [Google Material Design](https://material.io/design)
 # Instructions
 - Download and install app
 - Grant all permissions (including root)
-- Navigate to Menu>Chroot Manager>Install>Download official image..>Wait
+- Navigate to Menu > Chroot Manager > Install > Download > Enter a direct link to choot traball > Wait
 - Reboot your device
 - Profit!
 
