@@ -8,7 +8,7 @@
 Kali NetHunter app with [Google Material Design](https://material.io/design)
 
 # Supporting
-- Android 5.1-12
+- Android 7-12
 - SuperSU
 
 # Instructions
@@ -19,6 +19,8 @@ Kali NetHunter app with [Google Material Design](https://material.io/design)
 - Profit!
 
 # Credits
+- [Mirivan](https://t.me/janivanovich) - developer
 - [Martin Välba](https://t.me/hilledkinged) - idea author
-- [Mirivan](https://t.me/cxfuck) - commander-in-chief of development
-- [Kali.org](https://kali.org) - founding company
+- [ZAlexDev](https://t.me/zalexdev) - [Stryker](https://github.com/stryker-project) developer, fix boss
+- [Avada](https://t.me/Avadamiao) - icon designer
+- Kali developers are shit
