@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<item name="colorSurface" type="color">?attr/colorSurface</item>
     <item name="colorPrimary" type="color">#eee</item>
     <item name="colorAccent" type="color">#eeeeff</item>
     <item name="clearTitle" type="color">#fcfcfc</item>

@@ -28,6 +28,10 @@
 			android:icon="@drawable/ic_static_termux"
             android:title="Terminal" />
 		<item
+            android:id="@+id/custom_commands_item"
+            android:icon="@drawable/menu_custom_commands"
+            android:title="Custom Commands" />
+		<item
             android:id="@+id/services_item"
             android:icon="@drawable/menu_services"
             android:title="Services" />

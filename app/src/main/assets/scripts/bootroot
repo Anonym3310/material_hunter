@@ -8,7 +8,11 @@ shels=$(readlink -f $0)
 f_chk_chroot() {
     [ ! -f $MNT$CHROOT_EXEC ] && echo "[-] sudo not installed." && return 1
     if ! $BUSYBOX chroot $MNT /bin/uname; then
-        echo "[-] Chroot is corrupted or architecture isn't supported."
+        echo "[-] Chroot is corrupted. This is not a MaterialHunter problem!"
+        echo "Solutions:"
+        echo "1. Check the permissions of the chroot directories"
+        echo "2. Try using busybox to login and see errors (busybox chroot $MNT /bin/uname)"
+        echo "3. Contact chroot builder"
         return 1
     fi
     return 0

@@ -46,13 +46,6 @@
         <item>acm,ecm,mass_storage</item>
         <item>acm,ecm,hid,mass_storage</item>
     </string-array>
-    <string-array name="usbarmory_usb_adb">
-        <item>Enable</item>
-        <item>Disable</item>
-    </string-array>
-    <string-array name="usbarmory_usb_network_attack_mode">
-        <item>Network Tethering Only</item>
-    </string-array>
 	<string-array name="custom_commands_sendto_array">
         <item>android</item>
         <item>chroot</item>

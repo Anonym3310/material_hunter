@@ -42,176 +42,116 @@
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+					android:hint="Select target OS"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="Target:"
-                        android:textSize="14sp" />
+					<AutoCompleteTextView
+						android:id="@+id/f_usbarmory_spr_targetplatform"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="Windows"
+						android:inputType="none" />
+				</com.google.android.material.textfield.TextInputLayout>
 
-                    <Spinner
-                        android:id="@+id/f_usbarmory_spr_targetplatform"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:baselineAligned="false"
-                        android:entries="@array/usbarmory_target_platform"
-                        android:textSize="14sp" />
-                </LinearLayout>
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+					android:hint="Functions"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
+					<AutoCompleteTextView
+						android:id="@+id/f_usbarmory_spr_usbfunctions"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="reset"
+						android:inputType="none" />
+				</com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="Function:"
-                        android:textSize="14sp" />
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+					android:hint="ADB"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
 
-                    <Spinner
-                        android:id="@+id/f_usbarmory_spr_usbfunctions"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:entries="@array/usbarmory_usb_states_win_lin"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="ADB:"
-                        android:textSize="14sp" />
-
-                    <Spinner
-                        android:id="@+id/f_usbarmory_spr_adb"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:entries="@array/usbarmory_usb_adb"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="idVendor:"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/f_usbarmory_et_idvendor"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="idProduct:"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/f_usbarmory_et_idproduct"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:hint=""
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="manufacturer:"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/f_usbarmory_et_manufacturer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:hint=""
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="product:"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/f_usbarmory_et_product"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:textSize="14sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.4"
-                        android:text="serialNumber:"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/f_usbarmory_et_serialnumber"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:hint=""
-                        android:textSize="14sp" />
-                </LinearLayout>
-
+					<AutoCompleteTextView
+						android:id="@+id/f_usbarmory_spr_adb"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="Disable"
+						android:enabled="false"
+						android:inputType="none" />
+				</com.google.android.material.textfield.TextInputLayout>
+				
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="idVendor:">
+					
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/f_usbarmory_et_idvendor"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="0x1234"
+						android:singleLine="true" />
+				</com.google.android.material.textfield.TextInputLayout>
+				
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="idProduct:">
+					
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/f_usbarmory_et_idproduct"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:text="0x5678"
+						android:singleLine="true" />
+				</com.google.android.material.textfield.TextInputLayout>
+				
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="manufacturer:">
+					
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/f_usbarmory_et_manufacturer"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:singleLine="true" />
+				</com.google.android.material.textfield.TextInputLayout>
+				
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="product:">
+					
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/f_usbarmory_et_product"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:singleLine="true" />
+				</com.google.android.material.textfield.TextInputLayout>
+				
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hint="serialNumber:">
+					
+					<com.google.android.material.textfield.TextInputEditText
+						android:id="@+id/f_usbarmory_et_serialnumber"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:singleLine="true" />
+				</com.google.android.material.textfield.TextInputLayout>
+				
                 <Button
                     android:id="@+id/f_usbarmory_btn_setusbinterface"
                     style="@style/Widget.Material3.Button.OutlinedButton"
@@ -235,19 +175,22 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+						android:layout_marginTop="8dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Enabled functions:"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+							style="@style/Widget.Mirivan.Title" />
 
                         <TextView
                             android:id="@+id/f_usbarmory_tv_current_usb_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+							style="@style/Widget.Mirivan.Subtitle" />
                     </LinearLayout>
 
                     <Button
@@ -313,10 +256,17 @@
                     android:text="Select image"
                     style="@style/Widget.Mirivan.Title" />
 
-                <Spinner
-                    android:id="@+id/f_usbarmory_spr_img_files"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+				<com.google.android.material.textfield.TextInputLayout
+					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content">
+
+					<AutoCompleteTextView
+						android:id="@+id/f_usbarmory_spr_img_files"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:inputType="none" />
+				</com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -354,6 +304,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -366,14 +317,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mounted:"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+							style="@style/Widget.Mirivan.Title" />
 
                         <TextView
                             android:id="@+id/f_usbarmory_tv_mount_state"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="No image is mounted."
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+							style="@style/Widget.Mirivan.Subtitle" />
                     </LinearLayout>
 
                     <Button
@@ -386,196 +339,6 @@
                         android:cropToPadding="false"
                         app:icon="@drawable/ic_action_refresh" />
                 </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- USB Network Tethering -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:background="@color/cardview_shadow_start_color"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:text="Network tethering"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/f_usbarmory_ll_tv_usbnetworktethering_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text=".." />
-
-            <LinearLayout
-                android:id="@+id/f_usbarmory_ll_usbnetworktethering_sub2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:orientation="vertical"
-                android:visibility="visible">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:text="Attack mode"
-                        android:textSize="18sp" />
-
-                    <Spinner
-                        android:id="@+id/f_usbarmory_spr_networkattackmode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:baselineAligned="false"
-                        android:entries="@array/usbarmory_usb_network_attack_mode"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Design.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="0.6"
-                        android:hint="Upstream">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/f_usbarmory_et_usbnetwork_upstreamiface"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.4"
-                            android:textSize="18sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Design.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.6"
-                        android:hint="Interface">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/f_usbarmory_et_usbnetwork_usbfunc"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.4"
-                            android:textSize="18sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Design.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="0.6"
-                        android:hint="Traget">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/f_usbarmory_et_usbnetwork_targetip"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.4"
-                            android:textSize="18sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Design.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Gateway">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/f_usbarmory_et_usbnetwork_gatewayip"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Design.TextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Submack">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/f_usbarmory_et_usbnetwork_ipsubnetmask"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/f_usbarmory_btn_runusbnetworktethering"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Run" />
-
-                <Button
-                    android:id="@+id/f_usbarmory_btn_saveusbnetworktethering"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Save config" />
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
