@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/github/repo-size/mirivan/material_hunter">
 </p>
 
-Kali NetHunter app with [Google Material Design](https://material.io/design)
+Chroot Manager app with [Google Material Design](https://material.io/design)
 
 # Supporting
 - Android 7-12
