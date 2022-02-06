@@ -375,9 +375,9 @@ public class ServicesFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewDelete =
-              inflater.inflate(R.layout.services_delete_dialog_view, null, false);
+              inflater.inflate(R.layout.materialhunter_delete_dialog_view, null, false);
           final RecyclerView recyclerViewDeleteItem =
-              promptViewDelete.findViewById(R.id.f_services_delete_recyclerview);
+              promptViewDelete.findViewById(R.id.f_materialhunter_delete_recyclerview);
           ServicesRecyclerViewAdapterDeleteItems servicesRecyclerViewAdapterDeleteItems =
               new ServicesRecyclerViewAdapterDeleteItems(context, servicesModelList);
 
@@ -407,7 +407,7 @@ public class ServicesFragment extends Fragment {
                         if (viewHolder != null) {
                           CheckBox box =
                               viewHolder.itemView.findViewById(
-                                  R.id.f_services_recyclerview_dialog_chkbox);
+                                  R.id.f_materialhunter_recyclerview_dialog_chkbox);
                           if (box.isChecked()) {
                             selectedPosition.add(i);
                             selectedTargetIds.add(i + 1);

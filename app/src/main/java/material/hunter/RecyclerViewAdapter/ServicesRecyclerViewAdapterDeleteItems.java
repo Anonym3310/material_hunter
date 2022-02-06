@@ -29,7 +29,7 @@ public class ServicesRecyclerViewAdapterDeleteItems
       @NonNull ViewGroup viewGroup, int i) {
     View view =
         LayoutInflater.from(context)
-            .inflate(R.layout.services_recyclerview_dialog_delete, viewGroup, false);
+            .inflate(R.layout.materialhunter_recyclerview_dialog_delete, viewGroup, false);
     return new ItemViewHolder(view);
   }
 
@@ -48,7 +48,7 @@ public class ServicesRecyclerViewAdapterDeleteItems
 
     private ItemViewHolder(View view) {
       super(view);
-      runOnChrootStartCheckBox = view.findViewById(R.id.f_services_recyclerview_dialog_chkbox);
+      runOnChrootStartCheckBox = view.findViewById(R.id.f_materialhunter_recyclerview_dialog_chkbox);
     }
   }
 }

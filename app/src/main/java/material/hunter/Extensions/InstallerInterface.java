@@ -48,7 +48,7 @@ public class InstallerInterface {
   }
 
   private void copyBootFiles() {
-    if (CheckForRoot.isRoot()) {
+    if (!CheckForRoot.isRoot()) {
       prefs.edit().putBoolean(AppNavHomeActivity.CHROOT_INSTALLED_TAG, false).apply();
       return;
     }

@@ -361,9 +361,9 @@ public class CustomCommandsFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewDelete =
-              inflater.inflate(R.layout.customcommands_delete_dialog_view, null, false);
+              inflater.inflate(R.layout.materialhunter_delete_dialog_view, null, false);
           final RecyclerView recyclerViewDeleteItem =
-              promptViewDelete.findViewById(R.id.f_customcommands_delete_recyclerview);
+              promptViewDelete.findViewById(R.id.f_materialhunter_delete_recyclerview);
           CustomCommandsRecyclerViewAdapterDeleteItems
               customCommandsRecyclerViewAdapterDeleteItems =
                   new CustomCommandsRecyclerViewAdapterDeleteItems(
@@ -393,7 +393,7 @@ public class CustomCommandsFragment extends Fragment {
                         if (viewHolder != null) {
                           CheckBox box =
                               viewHolder.itemView.findViewById(
-                                  R.id.f_customcommands_recyclerview_dialog_chkbox);
+                                  R.id.f_materialhunter_recyclerview_dialog_chkbox);
                           if (box.isChecked()) {
                             selectedPosition.add(i);
                             selectedTargetIds.add(i + 1);

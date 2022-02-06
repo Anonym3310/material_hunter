@@ -4,7 +4,10 @@ public class CheckForRoot {
 
   public static boolean isRoot() {
     ShellExecuter exe = new ShellExecuter();
-    return exe.Executer("su -c id").isEmpty();
+    if (exe.Executer("su -c id").isEmpty()) {
+      return false;
+    }
+    return true;
   }
 
   public static boolean isEnforce() {

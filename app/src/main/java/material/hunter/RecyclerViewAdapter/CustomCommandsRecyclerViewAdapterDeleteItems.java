@@ -29,7 +29,7 @@ public class CustomCommandsRecyclerViewAdapterDeleteItems
       @NonNull ViewGroup viewGroup, int i) {
     View view =
         LayoutInflater.from(context)
-            .inflate(R.layout.customcommands_recyclerview_dialog_delete, viewGroup, false);
+            .inflate(R.layout.materialhunter_recyclerview_dialog_delete, viewGroup, false);
     return new ItemViewHolder(view);
   }
 
@@ -50,7 +50,7 @@ public class CustomCommandsRecyclerViewAdapterDeleteItems
     private ItemViewHolder(View view) {
       super(view);
       runOnChrootStartCheckBox =
-          view.findViewById(R.id.f_customcommands_recyclerview_dialog_chkbox);
+          view.findViewById(R.id.f_materialhunter_recyclerview_dialog_chkbox);
     }
   }
 }

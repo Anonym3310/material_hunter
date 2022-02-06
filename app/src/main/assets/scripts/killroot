@@ -47,7 +47,7 @@ f_restore_setup() {
 f_umount_fs() {
     if $BUSYBOX mountpoint -q $MNT/$1; then
         if $BUSYBOX umount -l "$MNT/$1" || $BUSYBOX umount -f "$MNT/$1"; then
-            echo "[+] Umounted $MNT/$1"
+            echo "[+] Unmounted $MNT/$1"
             if [ ! "$1" = "dev/pts" -a ! "$1" = "dev/shm" ]; then
                 if rm -rf $MNT/$1; then
                     echo "[+] Removed $MNT/$1"
@@ -99,7 +99,7 @@ f_is_mntpoint() {
 ### (This may need's more attention from someone else)
 f_umount_sdcard() {
     $BUSYBOX umount -l $MNT/sdcard
-    echo "[+] Umounted $MNT/sdcard"
+    echo "[+] Unmounted $MNT/sdcard"
 }
 
 #################
@@ -110,7 +110,7 @@ f_is_mntpoint
 res=$?
 case $res in
 1)
-    echo "[!] $MNT unmounting chroot now..."
+    echo "[!] Unmounting $MNT now..."
     f_dir_umount
     ;;
 *)

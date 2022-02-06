@@ -66,8 +66,9 @@ public class RunAtBootService extends JobIntentService {
       doNotification("Doing boot checks...");
 
       HashMap<String, String> hashMap = new HashMap<>();
-      hashMap.put("ROOT", "Root access isn't granted.");
-      hashMap.put("CHROOT", "Chroot isn't yet installed.");
+      hashMap.put("ROOT", "access isn't granted.");
+      hashMap.put("SELINUX", "enforcing.");
+      hashMap.put("CHROOT", "isn't yet installed.");
 
       if (CheckForRoot.isRoot()) {
         hashMap.put("ROOT", isOK);
@@ -80,7 +81,11 @@ public class RunAtBootService extends JobIntentService {
         hashMap.put("CHROOT", isOK);
       }
 
-      String resultMsg = "Boot completed.\nEveryting is fine and chroot has been started!";
+      if (!CheckForRoot.isEnforce()) {
+        hashMap.put("SELINUX", isOK);
+	  }
+
+      String resultMsg = "Boot completed.\nEveryting is fine and chroot has been started.";
       for (Map.Entry<String, String> entry : hashMap.entrySet()) {
         if (!entry.getValue().equals(isOK)) {
           resultMsg = "Make sure the above requirements are met.";
@@ -90,6 +95,9 @@ public class RunAtBootService extends JobIntentService {
       doNotification(
           "Root: "
               + hashMap.get("ROOT")
+              + "\n"
+              + "Selinux: "
+              + hashMap.get("SELINUX")
               + "\n"
               + "Chroot: "
               + hashMap.get("CHROOT")

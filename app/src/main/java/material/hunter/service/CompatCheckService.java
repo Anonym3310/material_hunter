@@ -63,7 +63,7 @@ public class CompatCheckService extends IntentService {
 
   private boolean checkCompat() {
     // First, check for root access
-    if (CheckForRoot.isRoot()) {
+    if (!CheckForRoot.isRoot()) {
       message = "Root permission isn't granted.";
       return false;
     }
