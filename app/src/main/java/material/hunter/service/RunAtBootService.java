@@ -23,6 +23,7 @@ public class RunAtBootService extends JobIntentService {
   static final int SERVICE_JOB_ID = 1;
   private static final String TAG = "MaterialHunter: Startup";
   private NotificationCompat.Builder n = null;
+  private Context context;
 
   public static void enqueueWork(Context context, Intent work) {
     enqueueWork(context, RunAtBootService.class, SERVICE_JOB_ID, work);
@@ -31,15 +32,14 @@ public class RunAtBootService extends JobIntentService {
   @Override
   public void onCreate() {
     super.onCreate();
-    NhPaths.getInstance(AppNavHomeActivity.context);
+    context = getApplicationContext();
+    NhPaths.getInstance(context);
     createNotificationChannel();
   }
 
   private void doNotification(String contents) {
     if (n == null) {
-      n =
-          new NotificationCompat.Builder(
-              getApplicationContext(), AppNavHomeActivity.BOOT_CHANNEL_ID);
+      n = new NotificationCompat.Builder(context, AppNavHomeActivity.BOOT_CHANNEL_ID);
     }
     n.setStyle(new NotificationCompat.BigTextStyle().bigText(contents))
         .setContentTitle(RunAtBootService.TAG)
