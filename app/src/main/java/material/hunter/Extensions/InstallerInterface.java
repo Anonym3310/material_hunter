@@ -108,6 +108,7 @@ public class InstallerInterface {
       if (!Environment.isExternalStorageManager()){
         Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
         intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setData(Uri.parse(String.format("package:%s", context.getPackageName())));
         context.startActivity(intent);
       }
