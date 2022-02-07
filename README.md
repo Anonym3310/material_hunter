@@ -1,3 +1,5 @@
+<h2>sorry, I thought I could do better, but these were just my expectations, nothing will come of this, and I won’t try further, thank you all for your support in difficult times🥲</h2>
+
 <h1>MaterialHunter</h1>
 <p align="center">
   <img src="https://raw.githubusercontent.com/Mirivan/material_hunter/master/app/src/main/res/drawable/mh_logo.png">
