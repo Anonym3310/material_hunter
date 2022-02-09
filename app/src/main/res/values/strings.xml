@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MaterialHunter</string>
     <string name="app_nav_home_label">MaterialHunter</string>
-    <string name="materialteam">Mirivan, dev - (t.me/janivanovich)\nMartin, idea author - (t.me/hilledkinged)\nZalex, Stryker developer, fix boss - (t.me/zalexdev)\nAvada, icon designer - (t.me/Avadamiao)\n\nMade with ♥\n</string>
+    <string name="materialteam">Mirivan, dev - (t.me/itrmirc)\nMartin, idea author - (t.me/hilledkinged)\nZalex, Stryker developer, fix boss - (t.me/zalexdev)\nAvada, icon designer - (t.me/Avadamiao)\n\nMade with ♥\n</string>
 
     <!-- Custom Spinner Array -->
     <string-array name="array_move_position">
