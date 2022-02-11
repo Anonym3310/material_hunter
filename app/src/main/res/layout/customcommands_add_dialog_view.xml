@@ -1,28 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="20dp" >
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="Title"
                 android:textSize="18sp" />
 
@@ -30,40 +23,30 @@
                 android:id="@+id/f_customcommands_add_adb_et_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:hint="Enter your title name here"
                 android:inputType="text" />
 
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Command"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                android:text="Command"
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/f_customcommands_add_adb_et_command"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:hint="Enter your command string here" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
                     android:layout_weight="0.4"
                     android:text="Send to"
                     android:textSize="18sp" />
@@ -80,12 +63,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
                     android:layout_weight="0.4"
                     android:text="Exec mode"
                     android:textSize="18sp" />
@@ -98,25 +80,17 @@
                     android:entries="@array/custom_commands_execmode_array" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <CheckBox
+                android:id="@+id/f_customcommands_add_adb_checkbox_runonboot"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/f_customcommands_add_adb_checkbox_runonboot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="Run On Boot"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                android:text="Run On Boot"
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="Position"
                 android:textSize="18sp" />
 
@@ -124,20 +98,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <Spinner
                     android:id="@+id/f_customcommands_add_adb_spr_positions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
                     android:entries="@array/array_insert_position" />
 
                 <Spinner
                     android:id="@+id/f_customcommands_add_adb_spr_labels"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

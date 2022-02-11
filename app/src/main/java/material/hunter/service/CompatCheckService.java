@@ -1,6 +1,7 @@
 package material.hunter.service;
 
 import android.app.IntentService;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
@@ -124,12 +125,18 @@ public class CompatCheckService extends IntentService {
     // Check chroot status, push notification to user and disable all the fragments if chroot is
     // not yet up.
     // if intent is NOT sent by chrootmanager, run the check asynctask again.
+    final int status = new ShellExecuter().RunAsRootReturnValue(
+        NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\" -p " + NhPaths.CHROOT_PATH());
     if (RESULTCODE == -1) {
-      if ((new ShellExecuter()
-              .RunAsRootReturnValue(
-                  NhPaths.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\" -p " + NhPaths.CHROOT_PATH())
-          != 0)) {
-        if (AppNavHomeActivity.lastSelectedMenuItem.getItemId() != R.id.createchroot_item) {
+      if (status != 0) {
+        if (status == 3) {
+          startService(
+              new Intent(AppNavHomeActivity.context, NotificationChannelService.class)
+                  .setAction(NotificationChannelService.CHROOT_CORRUPTED));
+          AppNavHomeActivity.context.sendBroadcast(
+              new Intent()
+                  .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHROOT_CORRUPTED));
+		} else if (AppNavHomeActivity.lastSelectedMenuItem.getItemId() != R.id.createchroot_item) {
           startService(
               new Intent(AppNavHomeActivity.context, NotificationChannelService.class)
                   .setAction(NotificationChannelService.REMINDMOUNTCHROOT));
@@ -147,31 +154,29 @@ public class CompatCheckService extends IntentService {
         AppNavHomeActivity.context.sendBroadcast(
             new Intent()
                 .putExtra("ENABLEFRAGMENT", true)
+                .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHECKCHROOT));
+      }
+    } else if (RESULTCODE != 0) {
+      // if intent is sent by chrootmanager, no need to run the check asynctask again.
+      if (AppNavHomeActivity.lastSelectedMenuItem.getItemId() != R.id.createchroot_item) {
+        startService(
+            new Intent(AppNavHomeActivity.context, NotificationChannelService.class)
+                .setAction(NotificationChannelService.REMINDMOUNTCHROOT));
+        AppNavHomeActivity.context.sendBroadcast(
+            new Intent()
+                .putExtra("ENABLEFRAGMENT", false)
+                .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHECKCHROOT));
+      } else {
+        sendBroadcast(
+            new Intent()
+                .putExtra("ENABLEFRAGMENT", false)
                 .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHECKCHROOT));
       }
     } else {
-      // if intent is sent by chrootmanager, no need to run the check asynctask again.
-      if (RESULTCODE != 0) {
-        if (AppNavHomeActivity.lastSelectedMenuItem.getItemId() != R.id.createchroot_item) {
-          startService(
-              new Intent(AppNavHomeActivity.context, NotificationChannelService.class)
-                  .setAction(NotificationChannelService.REMINDMOUNTCHROOT));
-          AppNavHomeActivity.context.sendBroadcast(
-              new Intent()
-                  .putExtra("ENABLEFRAGMENT", false)
-                  .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHECKCHROOT));
-        } else {
-          sendBroadcast(
-              new Intent()
-                  .putExtra("ENABLEFRAGMENT", false)
-                  .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHECKCHROOT));
-        }
-      } else {
-        AppNavHomeActivity.context.sendBroadcast(
-            new Intent()
-                .putExtra("ENABLEFRAGMENT", true)
-                .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHECKCHROOT));
-      }
+      AppNavHomeActivity.context.sendBroadcast(
+          new Intent()
+              .putExtra("ENABLEFRAGMENT", true)
+              .setAction(AppNavHomeActivity.MaterialHunterReceiver.CHECKCHROOT));
     }
     return true;
   }

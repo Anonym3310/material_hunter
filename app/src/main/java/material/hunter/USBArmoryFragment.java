@@ -60,6 +60,7 @@ public class USBArmoryFragment extends Fragment {
   private Button mountImgButton;
   private Button unmountImgButton;
   private Button saveUSBFunctionConfigButton;
+  private CheckBox readOnlyCheckBox;
   private AutoCompleteTextView targetOSSpinner;
   private AutoCompleteTextView usbFuncSpinner;
   private AutoCompleteTextView adbSpinner;
@@ -102,7 +103,7 @@ public class USBArmoryFragment extends Fragment {
     reloadUSBStateImageButton = view.findViewById(R.id.f_usbarmory_imgbtn_reloadUSBStatus);
     reloadMountStateButton = view.findViewById(R.id.f_usbarmory_imgbtn_reloadMountStatus);
     saveUSBFunctionConfigButton = view.findViewById(R.id.f_usbarmory_btn_saveusbfuncswitch);
-    CheckBox readOnlyCheckBox = view.findViewById(R.id.f_usbarmory_chkbox_ReadOrWrite);
+    readOnlyCheckBox = view.findViewById(R.id.f_usbarmory_chkbox_ReadOrWrite);
     usbStatusTextView = view.findViewById(R.id.f_usbarmory_tv_current_usb_state);
     mountedImageTextView = view.findViewById(R.id.f_usbarmory_tv_mount_state);
     mountedImageHintTextView = view.findViewById(R.id.f_usbarmory_ll_tv_imagemounter_hint);
@@ -121,24 +122,39 @@ public class USBArmoryFragment extends Fragment {
       usbArmoryHandlerThread.getHandler().sendMessage(msg);
     }
 
+    File sql_folder = new File(NhPaths.APP_SD_SQLBACKUP_PATH);
+    if (!sql_folder.exists()) {
+      NhPaths.showSnack(getView(), "Creating directory for backing up dbs...", false);
+      try {
+        sql_folder.mkdir();
+      } catch (Exception e) {
+        e.printStackTrace();
+        NhPaths.showSnack(
+            getView(),
+            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            false);
+        return;
+      }
+    }
+
     ArrayAdapter<String> usb_target =
         new ArrayAdapter<String>(
-            AppNavHomeActivity.context,
+            activity,
             R.layout.mhspinner,
             new String[] {"Windows", "Linux", "Mac OS"});
     ArrayAdapter<String> usb_functions =
         new ArrayAdapter<String>(
-            AppNavHomeActivity.context,
+            activity,
             R.layout.mhspinner,
             getResources().getStringArray(R.array.usbarmory_usb_states_win_lin));
     ArrayAdapter<String> usb_functions_mac =
         new ArrayAdapter<String>(
-            AppNavHomeActivity.context,
+            activity,
             R.layout.mhspinner,
             getResources().getStringArray(R.array.usbarmory_usb_states_mac));
     ArrayAdapter<String> adb_enable =
         new ArrayAdapter<String>(
-            AppNavHomeActivity.context, R.layout.mhspinner, new String[] {"Enable", "Disable"});
+            activity, R.layout.mhspinner, new String[] {"Enable", "Disable"});
 
     targetOSSpinner.setAdapter(usb_target);
     usbFuncSpinner.setAdapter(usb_functions);
@@ -309,14 +325,14 @@ public class USBArmoryFragment extends Fragment {
         v -> {
           if (!usbSwitchInfoEditTextGroup[0].getText().toString().matches("0x[0-9a-fA-F]{4}")
               || !usbSwitchInfoEditTextGroup[1].getText().toString().matches("0x[0-9a-fA-F]{4}")) {
-            new AlertDialog.Builder(context)
+            new MaterialAlertDialogBuilder(context)
                 .setTitle("Invalid Format")
                 .setMessage("The regex must be 0x[0-9a-fA-F]{4}")
                 .create()
                 .show();
           } else if (!usbSwitchInfoEditTextGroup[2].getText().toString().matches("\\w+|^$")
               || !usbSwitchInfoEditTextGroup[3].getText().toString().matches("\\w+|^$")) {
-            new AlertDialog.Builder(context)
+            new MaterialAlertDialogBuilder(context)
                 .setTitle("Invalid Format")
                 .setMessage("The regex must be \\w*|^$")
                 .create()
@@ -325,7 +341,7 @@ public class USBArmoryFragment extends Fragment {
               .getText()
               .toString()
               .matches("[0-9A-Z]{10}|^$")) {
-            new AlertDialog.Builder(context)
+            new MaterialAlertDialogBuilder(context)
                 .setTitle("Invalid Format")
                 .setMessage("The regex must be [0-9A-Z]{10}|^$")
                 .create()
@@ -343,9 +359,8 @@ public class USBArmoryFragment extends Fragment {
                     "Something's wrong when processing "
                         + usbSwitchInfoEditTextGroup[i].getText().toString().toLowerCase(),
                     false);
-              } else {
-                NhPaths.showSnack(getView(), "Saved", false);
               }
+              NhPaths.showSnack(getView(), "Saved", false);
             }
           }
         });
@@ -513,6 +528,7 @@ public class USBArmoryFragment extends Fragment {
   @Override
   public void onStart() {
     super.onStart();
+    refreshUSBSwitchInfos(gettargetOSSpinnerString(), getusbFuncSpinnerString());
     reloadUSBStateImageButton.performClick();
     if (imageMounterLL.getVisibility() == View.VISIBLE) {
       reloadMountStateButton.performClick();
@@ -647,7 +663,7 @@ public class USBArmoryFragment extends Fragment {
     mountImgButton.setEnabled(false);
     unmountImgButton.setEnabled(false);
     ArrayList<String> result = new ArrayList<>();
-    File image_folder = new File(NhPaths.SD_PATH + "/MassStorage");
+    File image_folder = new File(NhPaths.APP_SD_FILES_IMG_PATH);
     if (!image_folder.exists()) {
       NhPaths.showSnack(getView(), "Creating directory for storing image files...", false);
       try {
@@ -677,6 +693,7 @@ public class USBArmoryFragment extends Fragment {
     }
     ArrayAdapter<String> imageAdapter = new ArrayAdapter<>(activity, R.layout.mhspinner, result);
     imgFileSpinner.setAdapter(imageAdapter);
+    
     if (result.size() > 0) imgFileSpinner.setText(result.get(0).toString());
     mountImgButton.setEnabled(true);
     unmountImgButton.setEnabled(true);

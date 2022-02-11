@@ -4,5 +4,5 @@
 	android:padding="16dp"
 	android:ellipsize="end"
 	android:maxLines="1"
-	android:textColor="@android:color/white"
+	android:textColor="@color/colorAccent"
 	android:textSize="16dp" />

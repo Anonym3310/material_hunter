@@ -1,38 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <!-- USB interface switch -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/cardview_shadow_start_color"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <TextView
+                    style="@style/Widget.Mirivan.Subtitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:text="Header"
-                    style="@style/Widget.Mirivan.Subtitle"
+                    android:textColor="@android:color/background_light"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -40,118 +41,116 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical" >
 
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-					android:hint="Select target OS"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Select target OS" >
 
-					<AutoCompleteTextView
-						android:id="@+id/f_usbarmory_spr_targetplatform"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Windows"
-						android:inputType="none" />
-				</com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/f_usbarmory_spr_targetplatform"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:text="Windows" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-					android:hint="Functions"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Functions" >
 
-					<AutoCompleteTextView
-						android:id="@+id/f_usbarmory_spr_usbfunctions"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="reset"
-						android:inputType="none" />
-				</com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/f_usbarmory_spr_usbfunctions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:text="reset" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-					android:hint="ADB"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="ADB" >
 
-					<AutoCompleteTextView
-						android:id="@+id/f_usbarmory_spr_adb"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="Disable"
-						android:enabled="false"
-						android:inputType="none" />
-				</com.google.android.material.textfield.TextInputLayout>
-				
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="idVendor:">
-					
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/f_usbarmory_et_idvendor"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="0x1234"
-						android:singleLine="true" />
-				</com.google.android.material.textfield.TextInputLayout>
-				
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="idProduct:">
-					
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/f_usbarmory_et_idproduct"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:text="0x5678"
-						android:singleLine="true" />
-				</com.google.android.material.textfield.TextInputLayout>
-				
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="manufacturer:">
-					
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/f_usbarmory_et_manufacturer"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:singleLine="true" />
-				</com.google.android.material.textfield.TextInputLayout>
-				
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="product:">
-					
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/f_usbarmory_et_product"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:singleLine="true" />
-				</com.google.android.material.textfield.TextInputLayout>
-				
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:hint="serialNumber:">
-					
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/f_usbarmory_et_serialnumber"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:singleLine="true" />
-				</com.google.android.material.textfield.TextInputLayout>
-				
+                    <AutoCompleteTextView
+                        android:id="@+id/f_usbarmory_spr_adb"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:inputType="none"
+                        android:text="Disable" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="idVendor:" >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/f_usbarmory_et_idvendor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="idProduct:" >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/f_usbarmory_et_idproduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="manufacturer:" >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/f_usbarmory_et_manufacturer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="product:" >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/f_usbarmory_et_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="serialNumber:" >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/f_usbarmory_et_serialnumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <Button
                     android:id="@+id/f_usbarmory_btn_setusbinterface"
                     style="@style/Widget.Material3.Button.OutlinedButton"
@@ -169,28 +168,28 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal" >
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_weight="0.8"
-						android:layout_marginTop="8dp"
-                        android:orientation="vertical">
+                        android:orientation="vertical" >
 
                         <TextView
+                            style="@style/Widget.Mirivan.Title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Enabled functions:"
-                            android:textSize="16sp"
-							style="@style/Widget.Mirivan.Title" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/f_usbarmory_tv_current_usb_state"
+                            style="@style/Widget.Mirivan.Subtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
-							style="@style/Widget.Mirivan.Subtitle" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <Button
@@ -207,27 +206,28 @@
         </LinearLayout>
 
         <!-- Image Mounter -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="@color/cardview_shadow_start_color"
-                android:orientation="horizontal">
+                android:orientation="horizontal" >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="4dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:text="ImageMounter"
                     android:textColor="@android:color/background_light"
@@ -247,31 +247,31 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="gone" >
 
                 <TextView
+                    style="@style/Widget.Mirivan.Title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Select image"
-                    style="@style/Widget.Mirivan.Title" />
+                    android:text="Select image" />
 
-				<com.google.android.material.textfield.TextInputLayout
-					style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
 
-					<AutoCompleteTextView
-						android:id="@+id/f_usbarmory_spr_img_files"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:inputType="none" />
-				</com.google.android.material.textfield.TextInputLayout>
+                    <AutoCompleteTextView
+                        android:id="@+id/f_usbarmory_spr_img_files"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal" >
 
                     <Button
                         android:id="@+id/f_usbarmory_btn_mountImage"
@@ -296,37 +296,37 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.4"
-                        android:paddingTop="5dp"
                         android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
                         android:text="R/o" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-					android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal" >
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:orientation="vertical">
+                        android:orientation="vertical" >
 
                         <TextView
+                            style="@style/Widget.Mirivan.Title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Mounted:"
-                            android:textSize="16sp"
-							style="@style/Widget.Mirivan.Title" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/f_usbarmory_tv_mount_state"
+                            style="@style/Widget.Mirivan.Subtitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="No image is mounted."
-                            android:textSize="14sp"
-							style="@style/Widget.Mirivan.Subtitle" />
+                            android:textSize="14sp" />
                     </LinearLayout>
 
                     <Button

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import material.hunter.RecyclerViewAdapter.ServicesRecyclerViewAdapter;
@@ -103,8 +105,23 @@ public class ServicesFragment extends Fragment {
     o.setOnRefreshListener(
         () -> {
           MaterialHunterData.getInstance().refreshData();
-          new Handler().postDelayed(() -> o.setRefreshing(false), 512);
+          new Handler(Looper.getMainLooper()).postDelayed(() -> o.setRefreshing(false), 512);
         });
+
+    File sql_folder = new File(NhPaths.APP_SD_SQLBACKUP_PATH);
+    if (!sql_folder.exists()) {
+      NhPaths.showSnack(getView(), "Creating directory for backing up dbs...", false);
+      try {
+        sql_folder.mkdir();
+      } catch (Exception e) {
+        e.printStackTrace();
+        NhPaths.showSnack(
+            getView(),
+            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            false);
+        return;
+      }
+    }
 
     onAddItemSetup();
     onDeleteItemSetup();
@@ -276,10 +293,6 @@ public class ServicesFragment extends Fragment {
                   context, android.R.layout.simple_spinner_item, serviceNameArrayList);
           arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-          startCmdEditText.setHint("service servicename start");
-          stopCmdEditText.setHint("service servicename stop");
-          checkstatusCmdEditText.setHint("servicename");
-
           insertPositions.setOnItemSelectedListener(
               new AdapterView.OnItemSelectedListener() {
 
@@ -442,12 +455,12 @@ public class ServicesFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewMove =
-              inflater.inflate(R.layout.services_move_dialog_view, null, false);
+              inflater.inflate(R.layout.materialhunter_move_dialog_view, null, false);
           final Spinner titlesBefore =
-              promptViewMove.findViewById(R.id.f_services_move_adb_spr_titlesbefore);
+              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesbefore);
           final Spinner titlesAfter =
-              promptViewMove.findViewById(R.id.f_services_move_adb_spr_titlesafter);
-          final Spinner actions = promptViewMove.findViewById(R.id.f_services_move_adb_spr_actions);
+              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesafter);
+          final Spinner actions = promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_actions);
 
           ArrayList<String> serviceNameArrayList = new ArrayList<>();
           for (ServicesModel servicesModel : servicesModelList) {

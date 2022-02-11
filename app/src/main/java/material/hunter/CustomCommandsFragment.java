@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import material.hunter.RecyclerViewAdapter.CustomCommandsRecyclerViewAdapter;
@@ -70,7 +71,7 @@ public class CustomCommandsFragment extends Fragment {
   public View onCreateView(
       @NonNull LayoutInflater inflater,
       ViewGroup container,
-      Bundle savedInstanceState) { // this runs BEFORE the ui is available
+      Bundle savedInstanceState) {
     return inflater.inflate(R.layout.customcommands, container, false);
   }
 
@@ -95,6 +96,21 @@ public class CustomCommandsFragment extends Fragment {
         new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(customCommandsRecyclerViewAdapter);
+
+    File sql_folder = new File(NhPaths.APP_SD_SQLBACKUP_PATH);
+    if (!sql_folder.exists()) {
+      NhPaths.showSnack(getView(), "Creating directory for backing up dbs...", false);
+      try {
+        sql_folder.mkdir();
+      } catch (Exception e) {
+        e.printStackTrace();
+        NhPaths.showSnack(
+            getView(),
+            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            false);
+        return;
+      }
+    }
 
     addButton = view.findViewById(R.id.f_customcommands_addItemButton);
     deleteButton = view.findViewById(R.id.f_customcommands_deleteItemButton);
@@ -429,13 +445,13 @@ public class CustomCommandsFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewMove =
-              inflater.inflate(R.layout.customcommands_move_dialog_view, null, false);
+              inflater.inflate(R.layout.materialhunter_move_dialog_view, null, false);
           final Spinner titlesBefore =
-              promptViewMove.findViewById(R.id.f_customcommands_move_adb_spr_labelsbefore);
+              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesbefore);
           final Spinner titlesAfter =
-              promptViewMove.findViewById(R.id.f_customcommands_move_adb_spr_labelsafter);
+              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesafter);
           final Spinner actions =
-              promptViewMove.findViewById(R.id.f_customcommands_move_adb_spr_actions);
+              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_actions);
 
           ArrayList<String> commandLabelArrayList = new ArrayList<>();
           for (CustomCommandsModel customCommandsModel : customCommandsModelList) {

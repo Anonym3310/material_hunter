@@ -29,7 +29,7 @@ public class MaterialHunterAsynctask
   private ArrayList<Integer> selectedTargetIds;
   private ArrayList<String> dataArrayList;
   private MaterialHunterSQL materialhunterSQL;
-  private List<MaterialHunterModel> materialhunterModelList;
+  private MaterialHunterModel materialhunterModelList;
 
   public MaterialHunterAsynctask(int actionCode) {
     this.actionCode = actionCode;
@@ -89,6 +89,7 @@ public class MaterialHunterAsynctask
   @Override
   protected List<MaterialHunterModel> doInBackground(
       List<MaterialHunterModel>... copyOfmaterialhunterModelList) {
+    List<MaterialHunterModel> materialhunterModelList;
     switch (actionCode) {
       case GETITEMRESULTS:
         materialhunterModelList = copyOfmaterialhunterModelList[0];
@@ -100,8 +101,7 @@ public class MaterialHunterAsynctask
                     materialhunterModelList.get(i).getRunOnCreate().equals("1")
                         ? new ShellExecuter()
                             .RunAsRootOutput(materialhunterModelList.get(i).getCommand())
-                                .split("\\n")
-                        : "Please click RUN button manually.".split("\\n"));
+                        : "Please click RUN button manually.");
           }
         }
         break;
@@ -112,8 +112,7 @@ public class MaterialHunterAsynctask
               .get(position)
               .setResult(
                   new ShellExecuter()
-                      .RunAsRootOutput(materialhunterModelList.get(position).getCommand())
-                          .split("\\n"));
+                      .RunAsRootOutput(materialhunterModelList.get(position).getCommand()));
         }
         break;
       case EDITDATA:
@@ -121,14 +120,13 @@ public class MaterialHunterAsynctask
         if (materialhunterModelList != null) {
           materialhunterModelList.get(position).setTitle(dataArrayList.get(0));
           materialhunterModelList.get(position).setCommand(dataArrayList.get(1));
-          materialhunterModelList.get(position).setDelimiter(dataArrayList.get(2));
-          materialhunterModelList.get(position).setRunOnCreate(dataArrayList.get(3));
-          if (dataArrayList.get(3).equals("1")) {
+          materialhunterModelList.get(position).setRunOnCreate(dataArrayList.get(2));
+          if (dataArrayList.get(2).equals("1")) {
             materialhunterModelList
                 .get(position)
                 .setResult(
                     new ShellExecuter()
-                        .RunAsRootOutput(dataArrayList.get(1)).split(dataArrayList.get(2)));
+                        .RunAsRootOutput(dataArrayList.get(1)));
           }
           materialhunterSQL.editData(position, dataArrayList);
         }
@@ -143,14 +141,13 @@ public class MaterialHunterAsynctask
                   dataArrayList.get(0),
                   dataArrayList.get(1),
                   dataArrayList.get(2),
-                  dataArrayList.get(3),
-                  "".split(dataArrayList.get(2))));
-          if (dataArrayList.get(3).equals("1")) {
+                  ""));
+          if (dataArrayList.get(2).equals("1")) {
             materialhunterModelList
                 .get(position - 1)
                 .setResult(
                     new ShellExecuter()
-                        .RunAsRootOutput(dataArrayList.get(1)).split(dataArrayList.get(2)));
+                        .RunAsRootOutput(dataArrayList.get(1)));
           }
           materialhunterSQL.addData(position, dataArrayList);
         }
@@ -173,7 +170,6 @@ public class MaterialHunterAsynctask
               new MaterialHunterModel(
                   materialhunterModelList.get(originalPositionIndex).getTitle(),
                   materialhunterModelList.get(originalPositionIndex).getCommand(),
-                  materialhunterModelList.get(originalPositionIndex).getDelimiter(),
                   materialhunterModelList.get(originalPositionIndex).getRunOnCreate(),
                   materialhunterModelList.get(originalPositionIndex).getResult());
           materialhunterModelList.remove(originalPositionIndex);

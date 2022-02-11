@@ -35,7 +35,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
                     android:layout_marginStart="12dp"
-                    android:text="Click `Edit` to change chroot path" />
+                    android:text="Click `Edit` to change chroot path"
+                    android:textColor="@color/colorAccent" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -47,14 +48,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="/data/local/nhsystem/" />
+                        android:text="/data/local/nhsystem/"
+                        android:textColor="@color/colorAccent" />
 
                     <TextView
                         android:id="@+id/f_chrootmanager_kalifolder_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
-                        android:text="chroot" />
+                        android:text="chroot"
+                        android:textColor="@color/colorAccent" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -78,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:layout_marginStart="12dp"
-                android:text="Status:" />
+                android:text="Status:"
+                android:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/f_chrootmanager_mountresult_tv"
@@ -148,15 +152,6 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/f_chrootmanager_options_btn"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/f_chrootmanager_unmount_btn"
-                android:text="Options" />
-
-            <Button
                 android:id="@+id/f_chrootmanager_install_btn"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
@@ -185,6 +180,15 @@
                 app:layout_constraintStart_toEndOf="@+id/f_chrootmanager_backupchroot_btn"
                 android:text="Remove"
                 android:visibility="gone" />
+
+            <Button
+                android:id="@+id/f_chrootmanager_options_btn"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/f_chrootmanager_removechroot_btn"
+                android:text="Options" />
         </LinearLayout>
     </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

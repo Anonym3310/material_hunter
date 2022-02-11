@@ -17,6 +17,7 @@ public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListen
   public static String APP_SCRIPTS_PATH;
   public static String APP_SCRIPTS_BIN_PATH;
   public static String SD_PATH;
+  public static String APP_SD_PATH;
   public static String NH_SYSTEM_PATH;
   public static String ARCH_FOLDER;
   public static String CHROOT_SD_PATH;
@@ -43,7 +44,9 @@ public class NhPaths implements SharedPreferences.OnSharedPreferenceChangeListen
     APP_SCRIPTS_PATH = APP_PATH + "/scripts";
     APP_SCRIPTS_BIN_PATH = APP_SCRIPTS_PATH + "/bin";
     SD_PATH = getSdcardPath();
+    APP_SD_PATH = SD_PATH + "/MaterialHunter";
     APP_SD_SQLBACKUP_PATH = SD_PATH + "/MaterialHunter/sql_backup";
+    APP_SD_FILES_IMG_PATH = SD_PATH + "/MaterialHunter/Images";
     String BASE_PATH = "/data/local";
     NH_SYSTEM_PATH = BASE_PATH + "/nhsystem";
     ARCH_FOLDER = sharedPreferences.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, "chroot");

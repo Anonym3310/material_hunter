@@ -1,5 +1,7 @@
 package material.hunter.RecyclerViewAdapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
@@ -88,10 +90,17 @@ public class MaterialHunterRecyclerViewAdapter
     holder.titleTextView.setText(materialhunterModelList.get(position).getTitle());
     LinearLayoutManager linearLayoutManager =
         new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
-    holder.resultRecyclerView.setLayoutManager(linearLayoutManager);
-    holder.resultRecyclerView.setAdapter(
-        new MaterialHunterRecyclerViewAdapterResult(
-            context, materialhunterModelList.get(position).getResult()));
+    holder.resultTextView.setText(materialhunterModelList.get(position).getResult());
+    holder.resultTextView.setOnLongClickListener(
+        v -> {
+          ClipboardManager cm =
+              (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+          ClipData cData = ClipData.newPlainText("text", holder.resultTextView.getText());
+          cm.setPrimaryClip(cData);
+          NhPaths.showMessage(
+              context, "Copied to clipboard: " + holder.resultTextView.getText(), false);
+          return true;
+        });
     holder.runButton.setOnClickListener(
         v -> MaterialHunterData.getInstance().runCommandforItem(position));
     holder.titleTextView.setOnLongClickListener(
@@ -104,8 +113,6 @@ public class MaterialHunterRecyclerViewAdapter
               promptViewEdit.findViewById(R.id.f_materialhunter_edit_adb_et_title);
           final EditText cmdEditText =
               promptViewEdit.findViewById(R.id.f_materialhunter_edit_adb_et_command);
-          final EditText delimiterEditText =
-              promptViewEdit.findViewById(R.id.f_materialhunter_edit_adb_et_delimiter);
           final CheckBox runOnCreateCheckbox =
               promptViewEdit.findViewById(R.id.f_materialhunters_edit_adb_checkbox_runoncreate);
           titleEditText.setText(
@@ -124,14 +131,6 @@ public class MaterialHunterRecyclerViewAdapter
                           .materialhunterModelListFull
                           .indexOf(materialhunterModelList.get(position)))
                   .getCommand());
-          delimiterEditText.setText(
-              MaterialHunterData.getInstance()
-                  .materialhunterModelListFull
-                  .get(
-                      MaterialHunterData.getInstance()
-                          .materialhunterModelListFull
-                          .indexOf(materialhunterModelList.get(position)))
-                  .getDelimiter());
           runOnCreateCheckbox.setChecked(
               MaterialHunterData.getInstance()
                   .materialhunterModelListFull
@@ -156,13 +155,10 @@ public class MaterialHunterRecyclerViewAdapter
                         NhPaths.showMessage(context, "Title cannot be empty", false);
                       } else if (cmdEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Command cannot be empty", false);
-                      } else if (delimiterEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Delimiter cannot be empty", false);
                       } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(titleEditText.getText().toString());
                         dataArrayList.add(cmdEditText.getText().toString());
-                        dataArrayList.add(delimiterEditText.getText().toString());
                         dataArrayList.add(runOnCreateCheckbox.isChecked() ? "1" : "0");
                         MaterialHunterData.getInstance()
                             .editData(
@@ -209,13 +205,13 @@ public class MaterialHunterRecyclerViewAdapter
 
   static class ItemViewHolder extends RecyclerView.ViewHolder {
     private final TextView titleTextView;
-    private final RecyclerView resultRecyclerView;
+    private final TextView resultTextView;
     private final Button runButton;
 
     private ItemViewHolder(View view) {
       super(view);
       titleTextView = view.findViewById(R.id.f_materialhunter_item_title_tv);
-      resultRecyclerView = view.findViewById(R.id.f_materialhunter_item_result_recyclerview);
+      resultTextView = view.findViewById(R.id.f_materialhunter_recyclerview_result_tv);
       runButton = view.findViewById(R.id.f_materialhunter_item_run_btn);
     }
   }

@@ -1,7 +1,6 @@
 package material.hunter;
 
-import static material.hunter.R.id.f_materialhunter_action_search;
-
+import android.os.Looper;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -30,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import material.hunter.RecyclerViewAdapter.MaterialHunterRecyclerViewAdapter;
@@ -103,13 +103,27 @@ public class MaterialHunterFragment extends Fragment {
     deleteButton = view.findViewById(R.id.f_materialhunter_deleteItemButton);
     moveButton = view.findViewById(R.id.f_materialhunter_moveItemButton);
 
-    // MaterialFeatures
     SwipeRefreshLayout o = view.findViewById(R.id.f_materialhunter_scrollView);
     o.setOnRefreshListener(
         () -> {
           MaterialHunterData.getInstance().refreshData();
-          new Handler().postDelayed(() -> o.setRefreshing(false), 512);
+          new Handler(Looper.getMainLooper()).postDelayed(() -> o.setRefreshing(false), 512);
         });
+
+    File sql_folder = new File(NhPaths.APP_SD_SQLBACKUP_PATH);
+    if (!sql_folder.exists()) {
+      NhPaths.showSnack(getView(), "Creating directory for backing up dbs...", false);
+      try {
+        sql_folder.mkdir();
+      } catch (Exception e) {
+        e.printStackTrace();
+        NhPaths.showSnack(
+            getView(),
+            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            false);
+        return;
+      }
+    }
 
     onAddItemSetup();
     onDeleteItemSetup();
@@ -120,7 +134,7 @@ public class MaterialHunterFragment extends Fragment {
   public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
     super.onCreateOptionsMenu(menu, inflater);
     inflater.inflate(R.menu.materialhunter, menu);
-    final MenuItem searchItem = menu.findItem(f_materialhunter_action_search);
+    final MenuItem searchItem = menu.findItem(R.id.f_materialhunter_action_search);
     final SearchView searchView = (SearchView) searchItem.getActionView();
     searchView.setOnSearchClickListener(
         v -> menu.setGroupVisible(R.id.f_materialhunter_menu_group1, false));
@@ -261,8 +275,6 @@ public class MaterialHunterFragment extends Fragment {
               promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_et_title);
           final EditText cmdEditText =
               promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_et_command);
-          final EditText delimiterEditText =
-              promptViewAdd.findViewById(R.id.f_materialhunter_add_adb_et_delimiter);
           final CheckBox runOnCreateCheckbox =
               promptViewAdd.findViewById(R.id.f_materialhunters_add_adb_checkbox_runoncreate);
           final Spinner insertPositions =
@@ -277,7 +289,6 @@ public class MaterialHunterFragment extends Fragment {
               new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, titleArrayList);
           arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-          delimiterEditText.setText("\\n");
           runOnCreateCheckbox.setChecked(true);
 
           insertPositions.setOnItemSelectedListener(
@@ -345,13 +356,10 @@ public class MaterialHunterFragment extends Fragment {
                         NhPaths.showMessage(context, "Title cannot be empty", true);
                       } else if (cmdEditText.getText().toString().isEmpty()) {
                         NhPaths.showMessage(context, "Command cannot be empty", true);
-                      } else if (delimiterEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Delimiter cannot be empty", true);
                       } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(titleEditText.getText().toString());
                         dataArrayList.add(cmdEditText.getText().toString());
-                        dataArrayList.add(delimiterEditText.getText().toString());
                         dataArrayList.add(runOnCreateCheckbox.isChecked() ? "1" : "0");
                         MaterialHunterData.getInstance()
                             .addData(

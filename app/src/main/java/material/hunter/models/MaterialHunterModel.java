@@ -6,15 +6,13 @@ package material.hunter.models;
 public class MaterialHunterModel {
   private String title;
   private String command;
-  private String delimiter;
   private String runOnCreate;
-  private String[] result;
+  private String result;
 
   public MaterialHunterModel(
-      String title, String command, String delimiter, String runOnCreate, String[] result) {
+      String title, String command, String runOnCreate, String result) {
     this.title = title;
     this.command = command;
-    this.delimiter = delimiter;
     this.runOnCreate = runOnCreate;
     this.result = result;
   }
@@ -35,14 +33,6 @@ public class MaterialHunterModel {
     this.command = command;
   }
 
-  public String getDelimiter() {
-    return delimiter;
-  }
-
-  public void setDelimiter(String delimiter) {
-    this.delimiter = delimiter;
-  }
-
   public String getRunOnCreate() {
     return runOnCreate;
   }
@@ -51,11 +41,11 @@ public class MaterialHunterModel {
     this.runOnCreate = runOnCreate;
   }
 
-  public String[] getResult() {
+  public String getResult() {
     return result;
   }
 
-  public void setResult(String[] result) {
+  public void setResult(String result) {
     this.result = result;
   }
 }

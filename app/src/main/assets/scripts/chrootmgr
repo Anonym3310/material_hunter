@@ -180,13 +180,13 @@ if [ ! $# -eq 0 ]; then
                             return 1
                         fi
                     else
-                        echo "[-] Chroot is corrupted. This is not a MaterialHunter problem!"
+                        echo "[-] Chroot corrupted. This is not a MaterialHunter problem!"
                         echo "[!] If the error occurs..."
                         echo "Solutions:"
                         echo "1. Check the permissions of the chroot directories"
                         echo "2. Try using busybox to login and see errors (busybox chroot $MNT /bin/uname)"
                         echo "3. Contact chroot builder"
-                        return 2
+                        return 3
                     fi
                     ;;
                 *)

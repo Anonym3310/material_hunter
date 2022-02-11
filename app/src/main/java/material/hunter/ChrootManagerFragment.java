@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
@@ -28,8 +30,8 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import material.hunter.AsyncTask.ChrootManagerAsynctask;
 import material.hunter.service.CompatCheckService;
@@ -44,6 +46,7 @@ public class ChrootManagerFragment extends Fragment {
   private static final int IS_MOUNTED = 0;
   private static final int IS_UNMOUNTED = 1;
   private static final int NEED_TO_INSTALL = 2;
+  private static final int CHROOT_CORRUPTED = 3;
   public static boolean isAsyncTaskRunning = false;
   private Intent backPressedintent = new Intent();
   private TextView mountStatsTextView;
@@ -111,6 +114,21 @@ public class ChrootManagerFragment extends Fragment {
     setInstallChrootButton();
     setRemoveChrootButton();
     setBackupChrootButton();
+
+    File temp = new File(NhPaths.APP_SD_PATH + "/Temporary");
+    if (!temp.exists()) {
+      NhPaths.showSnack(getView(), "Creating temporary directory...", false);
+      try {
+        temp.mkdir();
+      } catch (Exception e) {
+        e.printStackTrace();
+        NhPaths.showSnack(
+            getView(),
+            "Failed to create directory " + temp.getPath().toString(),
+            false);
+        return;
+      }
+    }
   }
 
   @Override
@@ -329,18 +347,11 @@ public class ChrootManagerFragment extends Fragment {
                           .putString(
                               SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, chroot_url)
                           .apply();
-                      String filename;
-                      try {
-                        filename =
-                            Paths.get(new URL(chroot_url).getPath()).getFileName().toString();
-                      } catch (MalformedURLException e) {
-                        NhPaths.showMessage(context, "Runtime exception throwed!", false);
-                        throw new RuntimeException(e);
-                      }
+                      String filename = chroot_url.substring(chroot_url.lastIndexOf('/') + 1, chroot_url.length());
                       context.startService(
                           new Intent(context, NotificationChannelService.class)
                               .setAction(NotificationChannelService.DOWNLOADING));
-                      File chroot = new File("/sdcard/" + filename);
+                      File chroot = new File(NhPaths.SD_PATH + "/Download/" + filename);
                       chrootManagerAsynctask =
                           new ChrootManagerAsynctask(ChrootManagerAsynctask.DOWNLOAD_CHROOT);
                       chrootManagerAsynctask.setListener(
@@ -389,6 +400,7 @@ public class ChrootManagerFragment extends Fragment {
                                         setAllButtonEnable(true);
                                         compatCheck();
                                         progressbar.hide();
+                                        chroot.delete();
                                       }
                                     });
                                 chrootManagerAsynctask.execute(
@@ -400,7 +412,6 @@ public class ChrootManagerFragment extends Fragment {
                           });
                       chrootManagerAsynctask.execute(
                           resultViewerLoggerTextView, chroot_url, chroot);
-                      chroot.delete();
                     });
                 adb1.create().show();
               });
@@ -653,10 +664,13 @@ public class ChrootManagerFragment extends Fragment {
       mountStatsTextView.setText("Chroot is now running!");
     } else if (MODE == IS_UNMOUNTED) {
       mountStatsTextView.setTextColor(Color.CYAN);
-      mountStatsTextView.setText("Chroot hasn't yet started!");
+      mountStatsTextView.setText("Chroot hasn't yet started.");
     } else if (MODE == NEED_TO_INSTALL) {
       mountStatsTextView.setTextColor(Color.parseColor("#D81B60"));
-      mountStatsTextView.setText("Chroot isn't yet installed!");
+      mountStatsTextView.setText("Chroot isn't yet installed.");
+    } else if (MODE == CHROOT_CORRUPTED) {
+      mountStatsTextView.setTextColor(Color.parseColor("#D81B60"));
+      mountStatsTextView.setText("Chroot corrupted!");
     }
   }
 
@@ -683,6 +697,12 @@ public class ChrootManagerFragment extends Fragment {
         removeChrootButton.setVisibility(View.GONE);
         backupChrootButton.setVisibility(View.GONE);
         break;
+      case CHROOT_CORRUPTED:
+        mountChrootButton.setVisibility(View.GONE);
+        unmountChrootButton.setVisibility(View.GONE);
+        installChrootButton.setVisibility(View.GONE);
+        removeChrootButton.setVisibility(View.VISIBLE);
+        backupChrootButton.setVisibility(View.GONE);
     }
   }
 

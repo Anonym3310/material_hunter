@@ -3,9 +3,9 @@ package material.hunter.AsyncTask;
 import android.os.AsyncTask;
 import android.widget.TextView;
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -112,22 +112,19 @@ public class ChrootManagerAsynctask extends AsyncTask<Object, Integer, Void> {
 
           connection.setConnectTimeout(10000);
           connection.setReadTimeout(10000);
-          InputStream input = connection.getInputStream();
-          BufferedInputStream reader = new BufferedInputStream(input);
-          BufferedOutputStream writer =
-              new BufferedOutputStream(new FileOutputStream(objects[2].toString()));
+          InputStream input = new BufferedInputStream(url.openStream(), 8192);
+          OutputStream output = new FileOutputStream(objects[2].toString());
 
-          byte[] data = new byte[4096];
-          long bytes = -1;
+          byte[] data = new byte[1024];
+          long total = 0;
 
-          while ((count = reader.read(data)) != -1) {
-            bytes += count;
-            int progress = (int) ((bytes / (float) lengthOfFile) * 100);
-            publishProgress(progress);
-            writer.write(data, 0, count);
+          while ((count = input.read(data)) != -1) {
+            total += count;
+            publishProgress((int) ((total * 100) / lengthOfFile));
+            output.write(data, 0, count);
           }
-          writer.close();
-          reader.close();
+          output.close();
+          input.close();
           exe.RunAsRootOutput("echo \"[+] Download completed.\"", ((TextView) objects[0]));
         } catch (Exception e) {
           exe.RunAsRootOutput("echo \"[-] " + e.getMessage() + "\"", ((TextView) objects[0]));

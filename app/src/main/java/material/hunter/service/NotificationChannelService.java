@@ -19,6 +19,7 @@ public class NotificationChannelService extends IntentService {
   public static final String CHANNEL_ID = "MaterialHunterNotifyChannel";
   public static final int NOTIFY_ID = 1002;
   public static final String REMINDMOUNTCHROOT = "material.hunter.REMINDMOUNTCHROOT";
+  public static final String CHROOT_CORRUPTED = "material.hunter.CHROOT_CORRUPTED";
   public static final String USENETHUNTER = "material.hunter.USENETHUNTER";
   public static final String DOWNLOADING = "material.hunter.DOWNLOADING";
   public static final String INSTALLING = "material.hunter.INSTALLING";
@@ -69,7 +70,23 @@ public class NotificationChannelService extends IntentService {
                                 "Please open MaterialHunter and navigate to Chroot Manager to setup"
                                     + " your chroot."))
                     .setContentTitle("Chroot isn't up or isn't installed.")
-                    .setContentText("Please navigate to Chroot Manager to setup your Chroot.")
+                    .setContentText("Navigate to Chroot Manager to setup your Chroot.")
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setContentIntent(resultPendingIntent);
+            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+            break;
+          case CHROOT_CORRUPTED:
+            builder =
+                new NotificationCompat.Builder(AppNavHomeActivity.context, CHANNEL_ID)
+                    .setAutoCancel(true)
+                    .setSmallIcon(R.drawable.ic_stat_ic_nh_notificaiton)
+                    .setStyle(
+                        new NotificationCompat.BigTextStyle()
+                            .bigText(
+                                "Please open MaterialHunter and navigate to Chroot Manager to see"
+                                    + " solutions to this problem."))
+                    .setContentTitle("Chroot corrupted!")
+                    .setContentText("Navigate to Chroot Manager to see solutions.")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setContentIntent(resultPendingIntent);
             notificationManagerCompat.notify(NOTIFY_ID, builder.build());
@@ -95,7 +112,7 @@ public class NotificationChannelService extends IntentService {
                         new NotificationCompat.BigTextStyle()
                             .bigText("Please don't kill the app! The download will be cancelled."))
                     .setContentTitle("Downloading chroot")
-                    .setContentText("Please don't kill the app! The download will be cancelled.")
+                    .setContentText("Don't kill the app! The download will be cancelled.")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setContentIntent(resultPendingIntent);
             notificationManagerCompat.notify(NOTIFY_ID, builder.build());
@@ -114,8 +131,7 @@ public class NotificationChannelService extends IntentService {
                                     + " by yourself."))
                     .setContentTitle("Installing chroot")
                     .setContentText(
-                        "Please don't kill the app as it will still keep running on the background!"
-                            + " Otherwise you'll need to kill the tar process by yourself.")
+                        "Don't kill the app as it will still keep running on the background!")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setContentIntent(resultPendingIntent);
             notificationManagerCompat.notify(NOTIFY_ID, builder.build());
@@ -134,8 +150,7 @@ public class NotificationChannelService extends IntentService {
                                     + " by yourself."))
                     .setContentTitle("Creating chroot backup")
                     .setContentText(
-                        "Please don't kill the app as it will still keep running on the background!"
-                            + " Otherwise you'll need to kill the tar process by yourself.")
+                        "Don't kill the app as it will still keep running on the background!")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setContentIntent(resultPendingIntent);
             notificationManagerCompat.notify(NOTIFY_ID, builder.build());

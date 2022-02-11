@@ -8,6 +8,7 @@ import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.PowerManager;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -63,6 +64,21 @@ public class InstallerInterface {
     // toast message when executing runtime command.
     disableMagiskNotification();
 
+    File mh_folder = new File(NhPaths.APP_SD_PATH);
+    if (!mh_folder.exists()) {
+      NhPaths.showMessage(context, "Creating directory for backing up dbs...", false);
+      try {
+        mh_folder.mkdir();
+      } catch (Exception e) {
+        e.printStackTrace();
+        NhPaths.showMessage(
+            context,
+            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            false);
+        return;
+      }
+    }
+
     String command =
         "if [ -d " + NhPaths.CHROOT_PATH() + " ]; then echo Exists; fi"; // check the dir existence
     final String _res = exe.RunAsRootOutput(command);
@@ -101,6 +117,19 @@ public class InstallerInterface {
     }
     if (prefs.getString(SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, null) == null) {
       prefs.edit().putString(SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, "");
+    }
+
+    // Request to remove battery optimization mode
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      PowerManager pm = (PowerManager) context.getSystemService(context.POWER_SERVICE);
+      String packageName = context.getPackageName();
+      if (!pm.isIgnoringBatteryOptimizations(packageName)) {
+          Intent intent = new Intent();
+          intent.setAction(android.provider.Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+          intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+          intent.setData(Uri.parse(String.format("package:%s", packageName)));
+          context.startActivity(intent);
+      }
     }
 
     // Grant "Manage All Files" permission for Android 11+
@@ -204,8 +233,8 @@ public class InstallerInterface {
   }
 
   private boolean intAssist() {
-    int now = prefs.getInt("version", 10);
-	if (now < version.latest) return true;
+    int now = prefs.getInt("version", 0);
+	if (now != version.latest) return true;
 	else return false;
   }
 

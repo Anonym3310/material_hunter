@@ -28,6 +28,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -377,6 +378,7 @@ public class AppNavHomeActivity extends AppCompatActivity {
   public class MaterialHunterReceiver extends BroadcastReceiver {
     public static final String CHECKCOMPAT = "material.hunter.CHECKCOMPAT";
     public static final String CHECKCHROOT = "material.hunter.CHECKCHROOT";
+    public static final String CHROOT_CORRUPTED = "material.hunter.CHROOT_CORRUPTED";
     public static final String WORKING = "material.hunter.WORKING";
 
     @Override
@@ -389,14 +391,8 @@ public class AppNavHomeActivity extends AppCompatActivity {
                 intent.getStringExtra("message"),
                 true);
             break;
-          case WORKING:
-            isBackPressDisabled = intent.getBooleanExtra("working", true);
-            if (isBackPressDisabled) {
-              blockActionBar();
-            } else {
-              restoreActionBar();
-            }
-            break;
+          case CHROOT_CORRUPTED:
+            navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
           case CHECKCHROOT:
             try {
               if (intent.getBooleanExtra("ENABLEFRAGMENT", false)) {
@@ -405,6 +401,14 @@ public class AppNavHomeActivity extends AppCompatActivity {
                 navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
               }
             } catch (Exception e) {
+            }
+            break;
+          case WORKING:
+            isBackPressDisabled = intent.getBooleanExtra("working", true);
+            if (isBackPressDisabled) {
+              blockActionBar();
+            } else {
+              restoreActionBar();
             }
             break;
         }

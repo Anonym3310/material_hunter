@@ -1,105 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp" >
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="Title"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/f_services_edit_adb_et_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:inputType="text" />
+        android:layout_height="wrap_content" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical" >
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="0.9"
+                android:text="Title"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/f_services_edit_adb_et_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Command for starting"
                 android:textSize="18sp" />
-        </LinearLayout>
 
-        <EditText
-            android:id="@+id/f_services_edit_adb_et_startcommand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/f_services_edit_adb_et_startcommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="0.9"
                 android:text="Command for stopping"
                 android:textSize="18sp" />
-        </LinearLayout>
 
-        <EditText
-            android:id="@+id/f_services_edit_adb_et_stopcommand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/f_services_edit_adb_et_stopcommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="0.9"
                 android:text="String for checking"
                 android:textSize="18sp" />
-        </LinearLayout>
 
-        <EditText
-            android:id="@+id/f_services_edit_adb_et_checkstatuscommand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            <EditText
+                android:id="@+id/f_services_edit_adb_et_checkstatuscommand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <CheckBox
                 android:id="@+id/f_services_edit_adb_checkbox_runonboot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="RunOnChrootStart"
                 android:textSize="18sp" />
         </LinearLayout>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

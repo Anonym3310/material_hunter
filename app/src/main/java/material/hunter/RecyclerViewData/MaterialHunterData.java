@@ -209,6 +209,7 @@ public class MaterialHunterData {
             getMaterialHunterModels().getValue().clear();
             getMaterialHunterModels().getValue().addAll(materialhunterModelList);
             getMaterialHunterModels().postValue(getMaterialHunterModels().getValue());
+			
             refreshData();
           }
         });

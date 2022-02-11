@@ -14,6 +14,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import material.hunter.AppNavHomeActivity;
 import material.hunter.models.MaterialHunterModel;
+import material.hunter.utils.NhPaths;
 
 /*
    SQLiteOpenHelper class for materialhunter fragment.
@@ -23,23 +24,21 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
   private static final String TAG = "MaterialHunterSQL";
   private static final String TABLE_NAME = DATABASE_NAME;
   private static final String[][] materialhunterData = {
-    {"1", "Kernel Version", "uname -a", "\\n", "1"},
-    {"2", "Device Codename", "getprop ro.product.device", "\\n", "1"},
-    {"3", "HID Status", "ls /dev/hidg* || echo \"HID interface not found.\"", "\\n", "1"},
+    {"1", "Kernel info", "uname -a", "1"},
+    {"2", "Device Codename", "getprop ro.product.device", "1"},
+    {"3", "HID Status", "ls /dev/hidg* || echo \"HID interface not found.\"", "1"},
     {
       "4",
       "SAR",
       "grep ' / ' /proc/mounts | grep -qv 'rootfs' || grep -q ' /system_root ' /proc/mounts && echo"
           + " True || echo False",
-      "\\n",
       "1"
     },
-    {"5", "Network Interface Status", "ip -o addr show | awk '{print $2, $3, $4}'", "\\n", "1"},
+    {"5", "Network Interface Status", "ip -o addr show | awk '{print $2, $3, $4}'", "1"},
     {
       "6",
       "External IP",
       "curl ifconfig.me || echo \"No internet connection or busybox isn't installed.\"",
-      "\\n",
       "0"
     }
   };
@@ -48,11 +47,9 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
 
   private MaterialHunterSQL(Context context) {
     super(context, DATABASE_NAME, null, 1);
-    // Add your default column here;
     COLUMNS.add("id");
     COLUMNS.add("TitleName");
     COLUMNS.add("CommandforResult");
-    COLUMNS.add("Delimiter");
     COLUMNS.add("RunOnCreate");
   }
 
@@ -74,10 +71,8 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
             + COLUMNS.get(1)
             + " TEXT, "
             + COLUMNS.get(2)
-            + " TEXT, "
-            + COLUMNS.get(3)
             + " INTEGER, "
-            + COLUMNS.get(4)
+            + COLUMNS.get(3)
             + " TEXT)");
     ContentValues initialValues = new ContentValues();
     db.beginTransaction();
@@ -86,7 +81,6 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
       initialValues.put(COLUMNS.get(1), data[1]);
       initialValues.put(COLUMNS.get(2), data[2]);
       initialValues.put(COLUMNS.get(3), data[3]);
-      initialValues.put(COLUMNS.get(4), data[4]);
       db.insert(TABLE_NAME, null, initialValues);
     }
     db.setTransactionSuccessful();
@@ -110,8 +104,7 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
               cursor.getString(cursor.getColumnIndex(COLUMNS.get(1))),
               cursor.getString(cursor.getColumnIndex(COLUMNS.get(2))),
               cursor.getString(cursor.getColumnIndex(COLUMNS.get(3))),
-              cursor.getString(cursor.getColumnIndex(COLUMNS.get(4))),
-              "".split("\\n")));
+              ""));
     }
     cursor.close();
     db.close();
@@ -137,7 +130,6 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
     initialValues.put(COLUMNS.get(1), addData.get(0));
     initialValues.put(COLUMNS.get(2), addData.get(1));
     initialValues.put(COLUMNS.get(3), addData.get(2));
-    initialValues.put(COLUMNS.get(4), addData.get(3));
     db.beginTransaction();
     db.insert(TABLE_NAME, null, initialValues);
     db.setTransactionSuccessful();
@@ -253,11 +245,7 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
             + COLUMNS.get(3)
             + " = '"
             + editData.get(2).replace("'", "''")
-            + "', "
-            + COLUMNS.get(4)
-            + " = '"
-            + editData.get(3).replace("'", "''")
-            + "'"
+            + "' "
             + " WHERE "
             + COLUMNS.get(0)
             + " = "
@@ -277,10 +265,8 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
             + COLUMNS.get(1)
             + " TEXT, "
             + COLUMNS.get(2)
-            + " TEXT, "
-            + COLUMNS.get(3)
             + " INTEGER, "
-            + COLUMNS.get(4)
+            + COLUMNS.get(3)
             + " TEXT)");
     ContentValues initialValues = new ContentValues();
     db.beginTransaction();
@@ -289,7 +275,6 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
       initialValues.put(COLUMNS.get(1), data[1]);
       initialValues.put(COLUMNS.get(2), data[2]);
       initialValues.put(COLUMNS.get(3), data[3]);
-      initialValues.put(COLUMNS.get(4), data[4]);
       db.insert(TABLE_NAME, null, initialValues);
     }
     db.setTransactionSuccessful();
@@ -311,12 +296,8 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
           src.close();
           dst.close();
         }
-        // return "db is successfully backup to " + storedDBpath;
-        // NhPaths.showMessage(context, "db is successfully backup to " + storedDBpath);
       }
     } catch (Exception e) {
-      // new AlertDialog.Builder(context).setTitle("Failed to backup the
-      // DB.").setMessage(e.getMessage()).create().show();
       e.printStackTrace();
       return e.toString();
     }
@@ -325,13 +306,9 @@ public class MaterialHunterSQL extends SQLiteOpenHelper {
 
   public String restoreData(String storedDBpath) {
     if (!new File(storedDBpath).exists()) {
-      // new AlertDialog.Builder(context).setTitle("Failed to restore the DB.").setMessage("db file
-      // not found.").create().show();
       return "db file not found.";
     }
     if (!verifyDB(storedDBpath)) {
-      // new AlertDialog.Builder(context).setTitle("Failed to restore the DB.").setMessage("invalid
-      // columns format.").create().show();
       return "invalid columns format.";
     }
     try {

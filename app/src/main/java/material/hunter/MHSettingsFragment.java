@@ -9,11 +9,16 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.SeekBar;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import java.util.ArrayList;
 import java.util.Objects;
 import material.hunter.utils.NhPaths;
 import material.hunter.utils.SharePrefTag;
@@ -129,6 +134,36 @@ public class MHSettingsFragment extends Fragment {
             oa.edit().putBoolean("show_timestamp", false).apply();
           }
         });
+    final AutoCompleteTextView them = rootView.findViewById(R.id.settings_apptheme);
+    final int theme = oa.getInt("theme", 0);
+    if (theme == 0) {
+      them.setText("Night");
+    } else if (theme == 1) {
+      them.setText("Day");
+    } else {
+      them.setText("Follow system");
+    }
+    final ArrayList<String> themes = new ArrayList<>();
+    themes.add("Night");
+    themes.add("Day");
+    themes.add("Follow system");
+    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.mhspinner, themes);
+    them.setAdapter(adapter);
+    them.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View v, int i, long l) {
+          if (i == 0) {
+            oa.edit().putInt("theme", 0).apply();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+          } else if (i == 1) {
+            oa.edit().putInt("theme", 1).apply();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+          } else {
+            oa.edit().putInt("theme", 2).apply();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+          }
+        }
+    });
     return rootView;
   }
 }

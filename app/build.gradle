@@ -9,8 +9,8 @@ android {
         applicationId "material.hunter"
         minSdk 24
         targetSdk 31
-        versionCode 1
-        versionName "1.7"
+        versionCode 2
+        versionName "2.0"
     }
 
     buildTypes {

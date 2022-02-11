@@ -139,13 +139,15 @@ public class ShellExecuter {
                 : new SpannableString("");
         timestamp.setSpan(
             new ForegroundColorSpan(Color.parseColor("#FFD561")), 0, timestamp.length(), 0);
-        tempText.setSpan(
-            new ForegroundColorSpan(
+            tempText.setSpan(
+              new ForegroundColorSpan(
                 line.startsWith("[!]")
-                    ? Color.CYAN
+                    ? Color.parseColor("#3F3FFF")
                     : line.startsWith("[+]")
-                        ? Color.GREEN
-                        : line.startsWith("[-]") ? Color.parseColor("#D81B60") : Color.WHITE),
+                        ? Color.parseColor("#00DC00")
+                        : line.startsWith("[-]")
+                            ? Color.parseColor("#D81B60")
+                            : Color.GRAY),
             0,
             tempText.length(),
             0);
@@ -153,7 +155,8 @@ public class ShellExecuter {
             () -> {
               viewLogger.append(timestamp);
               viewLogger.append(tempText);
-            });
+            }
+        );
       }
       viewLogger.post(
           () ->

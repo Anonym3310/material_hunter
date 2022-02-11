@@ -1,0 +1,7 @@
+<resources>
+
+    <item name="colorPrimary" type="color">#eee</item>
+    <item name="colorAccent" type="color">#eeeeff</item>
+    <item name="colorBars" type="color">#121212</item>
+
+</resources>
