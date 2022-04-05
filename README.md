@@ -11,6 +11,9 @@ Chroot Manager app with [Google Material Design](https://material.io/design)
 - Android 7-12
 - SuperSU
 
+# Issuses
+- Android 12L not supported
+
 # Instructions
 - Download and install app
 - Grant all permissions (including root)
