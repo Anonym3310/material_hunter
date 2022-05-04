@@ -25,10 +25,9 @@ sdcard_part=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | g
 system_part=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"system_part\"" | sed "s/^.*\"system_part\">\(.*\)<\/string>/\1/g"`
 
 ## Define executable variables
-MNT=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"chroot_path\"" | sed "s/^.*\"chroot_path\">\(.*\)<\/string>/\1/g"`
-HOSTNAME=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"hostname\"" | sed "s/^.*\"hostname\">\(.*\)<\/string>/\1/g"`
+MNT=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"chroot_directory_path\"" | sed "s/^.*\"chroot_directory_path\">\(.*\)<\/string>/\1/g"`
 
-## Validate hostname
+HOSTNAME=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"hostname\"" | sed "s/^.*\"hostname\">\(.*\)<\/string>/\1/g"`
 if [ -z $HOSTNAME ]; then
     HOSTNAME="android"
 fi

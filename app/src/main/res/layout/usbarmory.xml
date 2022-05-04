@@ -72,16 +72,17 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/f_usbarmory_spr_adb_lauout"
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:hint="ADB" >
 
                     <AutoCompleteTextView
                         android:id="@+id/f_usbarmory_spr_adb"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
                         android:inputType="none"
                         android:text="Disable" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -342,4 +343,5 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

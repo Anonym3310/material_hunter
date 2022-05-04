@@ -22,7 +22,7 @@ import material.hunter.R;
 import material.hunter.RecyclerViewData.CustomCommandsData;
 import material.hunter.SQL.CustomCommandsSQL;
 import material.hunter.models.CustomCommandsModel;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 
 public class CustomCommandsRecyclerViewAdapter
     extends RecyclerView.Adapter<CustomCommandsRecyclerViewAdapter.ItemViewHolder>
@@ -170,9 +170,9 @@ public class CustomCommandsRecyclerViewAdapter
                 buttonEdit.setOnClickListener(
                     v1 -> {
                       if (commandLabelEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Label cannot be empty", false);
+                        PathsUtil.showMessage(context, "Label cannot be empty", false);
                       } else if (commandEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Command string cannot be empty", false);
+                        PathsUtil.showMessage(context, "Command string cannot be empty", false);
                       } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(commandLabelEditText.getText().toString());

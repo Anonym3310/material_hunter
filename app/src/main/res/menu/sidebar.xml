@@ -25,7 +25,7 @@
 		android:checkableBehavior="single">
         <item
             android:id="@+id/terminal_item"
-			android:icon="@drawable/ic_static_termux"
+			android:icon="@drawable/ic_termux"
             android:title="Terminal" />
 		<item
             android:id="@+id/custom_commands_item"

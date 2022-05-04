@@ -26,7 +26,7 @@ import material.hunter.R;
 import material.hunter.RecyclerViewData.ServicesData;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.models.ServicesModel;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 
 public class ServicesRecyclerViewAdapter
     extends RecyclerView.Adapter<ServicesRecyclerViewAdapter.ItemViewHolder> implements Filterable {
@@ -167,13 +167,13 @@ public class ServicesRecyclerViewAdapter
                 buttonEdit.setOnClickListener(
                     v1 -> {
                       if (titleEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Title cannot be empty", false);
+                        PathsUtil.showMessage(context, "Title cannot be empty", false);
                       } else if (startCmdEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Start Command cannot be empty", false);
+                        PathsUtil.showMessage(context, "Start Command cannot be empty", false);
                       } else if (stopCmdEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Stop Command cannot be empty", false);
+                        PathsUtil.showMessage(context, "Stop Command cannot be empty", false);
                       } else if (checkstatusCmdEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "String cannot be empty", false);
+                        PathsUtil.showMessage(context, "String cannot be empty", false);
                       } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(titleEditText.getText().toString());

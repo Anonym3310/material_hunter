@@ -12,11 +12,10 @@ import material.hunter.CustomCommandsFragment;
 import material.hunter.SQL.CustomCommandsSQL;
 import material.hunter.models.CustomCommandsModel;
 import material.hunter.service.NotificationChannelService;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 import material.hunter.utils.ShellExecuter;
 
-public class CustomCommandsAsyncTask
-    extends AsyncTask<List<CustomCommandsModel>, Void, List<CustomCommandsModel>> {
+public class CustomCommandsAsyncTask extends AsyncTask<List<CustomCommandsModel>, Void, List<CustomCommandsModel>> {
   public static final int RUNCMD = 0;
   public static final int EDITDATA = 1;
   public static final int ADDDATA = 2;
@@ -125,21 +124,17 @@ public class CustomCommandsAsyncTask
                     "-c",
                     (customCommandsModelList.get(position).getRuntimeEnv().equals("android")
                         ? command
-                        : NhPaths.APP_SCRIPTS_PATH
+                        : PathsUtil.APP_SCRIPTS_PATH
                             + "/bootroot_exec \""
                             + command.replace("\"", "\\\"")
                             + "\"")
                   });
-              // To be honest, I didn't like this method, but it still works great, so I will
-              // continue to use it..and hardly refuse.
-              // intent.putExtra("com.termux.RUN_COMMAND_ARGUMENTS", new String[]{"-c", "echo 'Hello
-              // world!'"});
               intent.putExtra("com.termux.RUN_COMMAND_WORKDIR", "/data/data/com.termux/files/home");
               intent.putExtra("com.termux.RUN_COMMAND_BACKGROUND", false);
               intent.putExtra("com.termux.RUN_COMMAND_SESSION_ACTION", "0");
               context.get().startService(intent);
             } catch (RuntimeException e) {
-              NhPaths.showSnack(
+              PathsUtil.showSnack(
                   CustomCommandsFragment.customCommandsView, "Termux uid isn't exists.", false);
             }
           } else {
@@ -287,7 +282,7 @@ public class CustomCommandsAsyncTask
     new ShellExecuter()
         .RunAsRootOutput(
             "cat << 'EOF' > "
-                + NhPaths.APP_SCRIPTS_PATH
+                + PathsUtil.APP_SCRIPTS_PATH
                 + "/runonboot_services"
                 + "\n"
                 + tmpStringBuilder.toString()

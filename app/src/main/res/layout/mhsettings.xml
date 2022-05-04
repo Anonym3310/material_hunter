@@ -110,13 +110,24 @@
                         android:textStyle="bold"
                         app:useMaterialThemeColors="false"
                         tools:ignore="MissingConstraints" />
+						
+						<com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/settings_mih"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/settings_sts"
+                        android:text="Hide Magisk information"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:useMaterialThemeColors="false"
+                        tools:ignore="MissingConstraints" />
 
                     <TextView
                         android:id="@+id/settings_apptheme_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
-                        app:layout_constraintTop_toBottomOf="@id/settings_sts"
+                        app:layout_constraintTop_toBottomOf="@id/settings_mih"
                         android:text="Use .. theme"
                         android:textColor="?attr/colorOnSurface"
                         android:textSize="15sp"

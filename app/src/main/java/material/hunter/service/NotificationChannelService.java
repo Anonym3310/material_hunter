@@ -7,100 +7,96 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
+
 import material.hunter.AppNavHomeActivity;
 import material.hunter.AsyncTask.CustomCommandsAsyncTask;
 import material.hunter.R;
 
 public class NotificationChannelService extends IntentService {
-  public static final String CHANNEL_ID = "MaterialHunterNotifyChannel";
-  public static final int NOTIFY_ID = 1002;
-  public static final String REMINDMOUNTCHROOT = "material.hunter.REMINDMOUNTCHROOT";
-  public static final String CHROOT_CORRUPTED = "material.hunter.CHROOT_CORRUPTED";
-  public static final String USENETHUNTER = "material.hunter.USENETHUNTER";
-  public static final String DOWNLOADING = "material.hunter.DOWNLOADING";
-  public static final String INSTALLING = "material.hunter.INSTALLING";
-  public static final String BACKINGUP = "material.hunter.BACKINGUP";
-  public static final String CUSTOMCOMMAND_START = "material.hunter.CUSTOMCOMMAND_START";
-  public static final String CUSTOMCOMMAND_FINISH = "material.hunter.CUSTOMCOMMAND_FINISH";
-  public Intent resultIntent = null;
-  public PendingIntent resultPendingIntent = null;
-  public TaskStackBuilder stackBuilder = null;
 
-  public NotificationChannelService() {
-    super("NotificationChannelService");
-  }
+    public static final String CHANNEL_ID = "MaterialHunterNotifyChannel";
+    public static final int CHROOT_ID = 1001;
+    public static final int CUSTOMCOMMAND_ID = 1002;
+    public static final String REMINDMOUNTCHROOT = "material.hunter.REMINDMOUNTCHROOT";
+    public static final String CHROOT_CORRUPTED = "material.hunter.CHROOT_CORRUPTED";
+    public static final String FINE = "material.hunter.FINE";
+    public static final String DOWNLOADING = "material.hunter.DOWNLOADING";
+    public static final String INSTALLING = "material.hunter.INSTALLING";
+    public static final String BACKINGUP = "material.hunter.BACKINGUP";
+    public static final String CUSTOMCOMMAND_START = "material.hunter.CUSTOMCOMMAND_START";
+    public static final String CUSTOMCOMMAND_FINISH = "material.hunter.CUSTOMCOMMAND_FINISH";
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      NotificationChannel serviceChannel =
-          new NotificationChannel(
-              CHANNEL_ID, "MaterialHunterChannelService", NotificationManager.IMPORTANCE_DEFAULT);
-      NotificationManager manager = getSystemService(NotificationManager.class);
-      manager.createNotificationChannel(serviceChannel);
+    public NotificationChannelService() {
+        super("NotificationChannelService");
     }
-  }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel serviceChannel =
+                new NotificationChannel(
+                    CHANNEL_ID, "MaterialHunter: Notification", NotificationManager.IMPORTANCE_HIGH);
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(serviceChannel);
+        }
+    }
 
   @Override
   protected void onHandleIntent(@Nullable Intent intent) {
     if (intent != null) {
       if (intent.getAction() != null) {
         NotificationCompat.Builder builder;
-        NotificationManagerCompat notificationManagerCompat =
-            NotificationManagerCompat.from(AppNavHomeActivity.context);
-        notificationManagerCompat.cancelAll();
-        resultIntent = new Intent();
-        stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntentWithParentStack(resultIntent);
-        resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(AppNavHomeActivity.context);
+        Intent appIntent = new Intent(AppNavHomeActivity.context, AppNavHomeActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(AppNavHomeActivity.context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         switch (intent.getAction()) {
           case REMINDMOUNTCHROOT:
             builder =
                 new NotificationCompat.Builder(AppNavHomeActivity.context, CHANNEL_ID)
                     .setAutoCancel(true)
                     .setSmallIcon(R.drawable.ic_stat_ic_nh_notificaiton)
+                    .setContentTitle("Manager")
+                    .setContentText("Chroot isn't up or isn't yet installed.")
                     .setStyle(
                         new NotificationCompat.BigTextStyle()
                             .bigText(
-                                "Please open MaterialHunter and navigate to Chroot Manager to setup"
-                                    + " your chroot."))
-                    .setContentTitle("Chroot isn't up or isn't installed.")
-                    .setContentText("Navigate to Chroot Manager to setup your Chroot.")
+                                "Chroot isn't up or isn't yet installed. Navigate to Manager to setup your chroot."))
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CHROOT_ID, builder.build());
             break;
           case CHROOT_CORRUPTED:
             builder =
                 new NotificationCompat.Builder(AppNavHomeActivity.context, CHANNEL_ID)
                     .setAutoCancel(true)
                     .setSmallIcon(R.drawable.ic_stat_ic_nh_notificaiton)
+                    .setContentTitle("Manager")
+                    .setContentText("Chroot corrupted!")
                     .setStyle(
                         new NotificationCompat.BigTextStyle()
                             .bigText(
-                                "Please open MaterialHunter and navigate to Chroot Manager to see"
-                                    + " solutions to this problem."))
-                    .setContentTitle("Chroot corrupted!")
-                    .setContentText("Navigate to Chroot Manager to see solutions.")
+                                "Chroot corrupted! Navigate to Chroot Manager to see solutions."))
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CHROOT_ID, builder.build());
             break;
-          case USENETHUNTER:
+          case FINE:
             builder =
                 new NotificationCompat.Builder(AppNavHomeActivity.context, CHANNEL_ID)
                     .setAutoCancel(true)
                     .setSmallIcon(R.drawable.ic_stat_ic_nh_notificaiton)
                     .setTimeoutAfter(10000)
-                    .setContentTitle("Chroot botted successfully.")
+                    .setContentTitle("Manager")
+                    .setContentText("Chroot booted successfully.")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CHROOT_ID, builder.build());
             break;
           case DOWNLOADING:
             builder =
@@ -108,14 +104,15 @@ public class NotificationChannelService extends IntentService {
                     .setAutoCancel(true)
                     .setSmallIcon(R.drawable.ic_stat_ic_nh_notificaiton)
                     .setTimeoutAfter(15000)
+                    .setContentTitle("Manager")
+                    .setContentText("Downloading chroot...")
                     .setStyle(
                         new NotificationCompat.BigTextStyle()
-                            .bigText("Please don't kill the app! The download will be cancelled."))
-                    .setContentTitle("Downloading chroot")
-                    .setContentText("Don't kill the app! The download will be cancelled.")
+                            .bigText(
+                                "Downloading chroot... Don't kill the app! The download will be cancelled."))
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CHROOT_ID, builder.build());
             break;
           case INSTALLING:
             builder =
@@ -126,15 +123,15 @@ public class NotificationChannelService extends IntentService {
                     .setStyle(
                         new NotificationCompat.BigTextStyle()
                             .bigText(
-                                "Please don't kill the app as it will still keep running on the"
+                                "Installing chroot... Please don't kill the app as it will still keep running on the"
                                     + " background! Otherwise you'll need to kill the tar process"
                                     + " by yourself."))
-                    .setContentTitle("Installing chroot")
+                    .setContentTitle("Manager")
                     .setContentText(
-                        "Don't kill the app as it will still keep running on the background!")
+                        "Installing chroot... Don't kill the app as it will still keep running on the background!")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CHROOT_ID, builder.build());
             break;
           case BACKINGUP:
             builder =
@@ -145,15 +142,15 @@ public class NotificationChannelService extends IntentService {
                     .setStyle(
                         new NotificationCompat.BigTextStyle()
                             .bigText(
-                                "Please don't kill the app as it will still keep running on the"
+                                "Creating chroot backup... Please don't kill the app as it will still keep running on the"
                                     + " background! Otherwise you'll need to kill the tar process"
                                     + " by yourself."))
-                    .setContentTitle("Creating chroot backup")
+                    .setContentTitle("Manager")
                     .setContentText(
-                        "Don't kill the app as it will still keep running on the background!")
+                        "Creating chroot backup... Don't kill the app as it will still keep running on the background!")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CHROOT_ID, builder.build());
             break;
           case CUSTOMCOMMAND_START:
             builder =
@@ -176,8 +173,8 @@ public class NotificationChannelService extends IntentService {
                             + intent.getStringExtra("ENV")
                             + " environment.")
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CUSTOMCOMMAND_ID, builder.build());
             break;
           case CUSTOMCOMMAND_FINISH:
             final int returnCode = intent.getIntExtra("RETURNCODE", 0);
@@ -212,27 +209,27 @@ public class NotificationChannelService extends IntentService {
                     .setContentTitle("Custom Commands")
                     .setContentText(resultString)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
-                    .setContentIntent(resultPendingIntent);
-            notificationManagerCompat.notify(NOTIFY_ID, builder.build());
+                    .setContentIntent(pendingIntent);
+            notificationManagerCompat.notify(CUSTOMCOMMAND_ID, builder.build());
             break;
         }
       }
     }
   }
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-  }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 
-  @Nullable
-  @Override
-  public IBinder onBind(Intent intent) {
-    return super.onBind(intent);
-  }
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return super.onBind(intent);
+    }
 
-  @Override
-  public void onTaskRemoved(Intent rootIntent) {
-    super.onTaskRemoved(rootIntent);
-  }
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+    }
 }

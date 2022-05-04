@@ -7,7 +7,7 @@ import java.util.List;
 import material.hunter.ChrootManagerFragment;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.models.ServicesModel;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 import material.hunter.utils.ShellExecuter;
 
 public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List<ServicesModel>> {
@@ -95,7 +95,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
                 .setStatus(
                     new ShellExecuter()
                                 .RunAsRootReturnValue(
-                                    NhPaths.BUSYBOX
+                                    PathsUtil.BUSYBOX
                                         + " ps | grep -v grep | grep '"
                                         + servicesModelList.get(i).getCommandforCheckServiceStatus()
                                         + "'")
@@ -244,7 +244,7 @@ public class ServicesAsyncTask extends AsyncTask<List<ServicesModel>, Void, List
     new ShellExecuter()
         .RunAsRootOutput(
             "cat << 'EOF' > "
-                + NhPaths.APP_SCRIPTS_PATH
+                + PathsUtil.APP_SCRIPTS_PATH
                 + "/services"
                 + "\n"
                 + tmpStringBuilder.toString()

@@ -61,6 +61,23 @@ public class ShellExecuter {
     return output.toString();
   }
 
+  public void RunAsRoot(String command) {
+    try {
+      Process process = Runtime.getRuntime().exec("su -mm");
+      DataOutputStream os = new DataOutputStream(process.getOutputStream());
+      os.writeBytes(command + '\n');
+      os.writeBytes("exit\n");
+      os.flush();
+      try {
+        process.waitFor();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void RunAsRoot(String[] command) {
     try {
       Process process = Runtime.getRuntime().exec("su -mm");
@@ -211,11 +228,11 @@ public class ShellExecuter {
       InputStream stderr = process.getErrorStream();
       InputStream stdout = process.getInputStream();
       stdin.write(
-          (NhPaths.BUSYBOX
+          (PathsUtil.BUSYBOX
                   + " chroot "
-                  + NhPaths.CHROOT_PATH()
+                  + PathsUtil.CHROOT_PATH()
                   + " "
-                  + NhPaths.CHROOT_SUDO
+                  + PathsUtil.CHROOT_SUDO
                   + " -E PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH su"
                   + '\n')
               .getBytes());
@@ -251,11 +268,11 @@ public class ShellExecuter {
       Process process = Runtime.getRuntime().exec("su -mm");
       OutputStream stdin = process.getOutputStream();
       stdin.write(
-          (NhPaths.BUSYBOX
+          (PathsUtil.BUSYBOX
                   + " chroot "
-                  + NhPaths.CHROOT_PATH()
+                  + PathsUtil.CHROOT_PATH()
                   + " "
-                  + NhPaths.CHROOT_SUDO
+                  + PathsUtil.CHROOT_SUDO
                   + " -E PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH su"
                   + '\n')
               .getBytes());

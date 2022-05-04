@@ -1,13 +1,7 @@
 #!/system/bin/sh
-###
+
 shels=$(readlink -f $0)
 . ${shels%/*}/bootroot_env
-###
-
-if [ -z "$MNT" ]; then
-    echo "[-] The \$MNT variable is not defined, logic error."
-    exit 2
-fi
 
 isAllunmounted=0
 
@@ -15,9 +9,9 @@ isAllunmounted=0
 #### DEFINE FUNCTIONS ####
 #######################
 
-### Kill all running services and processes ###
-f_kill_pids() {
-    echo "[!] Killing all running services..."
+# Kill all chroot processes
+kill_processes() {
+    echo "[!] Killing all running processes..."
     local lsof_full=$($BUSYBOX lsof | awk '{print $1}' | grep -c '^lsof')
     if [ "${lsof_full}" -eq 0 ]; then
         local pids=$($BUSYBOX lsof | grep "$MNT" | awk '{print $1}' | uniq)
@@ -28,98 +22,95 @@ f_kill_pids() {
         kill -9 ${pids} 2> /dev/null
         return $?
     fi
+
+    echo "[!] Removing all the remaining chroot VNC sessions pid and log files..."
+    rm -rf $MNT/tmp/.X11* $MNT/tmp/.X*-lock $MNT/root/.vnc/*.pid $MNT/root/.vnc/*.log > /dev/null 2>&1
+
     return 0
 }
 
-########## Restore the setup ##########
-f_restore_setup() {
-    echo "[!] Restoring the setup to previous state..."
+# Restoring the device to its original state
+restore_state() {
+    echo "[!] Restoring the device to its original state..."
 
-    ## Set shmmax to 128mb to free memory ##
+    # Restore shared memory
     $BUSYBOX sysctl -w kernel.shmmax=134217728
 
-    ## Remove all the remaining chroot VNC session pid and log files..##
-    echo "[!] Removing all the remaining chroot VNC session pid and log files..."
-    rm -rf $MNT/tmp/.X11* $MNT/tmp/.X*-lock $MNT/root/.vnc/*.pid $MNT/root/.vnc/*.log > /dev/null 2>&1
+    # i
 }
 
-########## Umount the fs one by one ##########
-f_umount_fs() {
-    if $BUSYBOX mountpoint -q $MNT/$1; then
-        if $BUSYBOX umount -l "$MNT/$1" || $BUSYBOX umount -f "$MNT/$1"; then
-            echo "[+] Unmounted $MNT/$1"
-            if [ ! "$1" = "dev/pts" -a ! "$1" = "dev/shm" ]; then
-                if rm -rf $MNT/$1; then
-                    echo "[+] Removed $MNT/$1"
+# Unbinding filesystem
+do_unmount() {
+    sync
+    kill_processes
+    restore_state
+
+    echo "[!] Removing all fs mounts..."
+
+    # Safely try to unmount internal storage partition
+    $BUSYBOX umount -l $MNT/sdcard
+    echo "[+] Internal storage partition is unmounted."
+    if [ ! "$($BUSYBOX mountpoint $MNT/sdcard 2> /dev/null | grep 'is a')" ]; then
+        echo "[+] Internal storage partition isn't a mountpoint now, everything fine."
+    fi
+
+    FS=(dev/pts dev/shm dev proc sys system)
+    for i in "${FS[@]}"; do
+        if $BUSYBOX mountpoint -q $MNT/$i; then
+            if $BUSYBOX umount -l "$MNT/$i" || $BUSYBOX umount -f "$MNT/$i"; then
+                echo "[+] /$i partition is unmounted."
+                if [ ! "$i" = "dev/pts" -a ! "$i" = "dev/shm" ]; then
+                    if rm -rf $MNT/$i; then
+                        echo "[+] $MNT/$i is removed."
+                    else
+                        echo "[-] Failed to remove $MNT/$i"
+                        isAllunmounted=1
+                    fi
+                fi
+            else
+                echo "[-] Failed to unmount $i partition."
+                isAllunmounted=1
+            fi
+        else
+            if [ -d $MNT/$i ]; then
+                echo "[+] /$i partition is unmounted already."
+                if rm -rf $MNT/$i; then
+                    echo "[+] $MNT/$i is removed."
                 else
-                    echo "[-] Failed to remove $MNT/$1"
+                    echo "[-] Failed to remove $MNT/$i"
                     isAllunmounted=1
                 fi
             fi
-        else
-            echo "[-] Failed to umount $MNT/$1"
-            isAllunmounted=1
         fi
-    else
-        if [ -d $MNT/$1 ]; then
-            echo "[+] $MNT/$1 is unmounted already."
-            if rm -rf $MNT/$1; then
-                echo "[+] Removed $MNT/$1"
-            else
-                echo "[-] Failed to remove $MNT/$1"
-                isAllunmounted=1
-            fi
-        fi
-    fi
-
-}
-
-########## Umount if chroot directory is NOT a mountpoint(directory method) ##########
-f_dir_umount() {
-    sync
-    f_kill_pids
-    f_restore_setup
-    echo "[!] Removing all fs mounts..."
-    f_umount_sdcard
-    FS=(dev/pts dev/shm dev proc sys system)
-    for i in "${FS[@]}"; do
-        f_umount_fs "$i"
     done
 }
 
-########## Check if chroot directory is a mountpoint ##########
-f_is_mntpoint() {
+# Check chroot is mountpoint
+check_chroot() {
     if [ -d "$MNT" ]; then
         $BUSYBOX mountpoint -q "$MNT" && return 0
         return 1
     fi
 }
 
-########## Unmount sdcard so it wont break internal storage ##########
-### (This may need's more attention from someone else)
-f_umount_sdcard() {
-    $BUSYBOX umount -l $MNT/sdcard
-    echo "[+] Unmounted $MNT/sdcard"
-}
+################################
+########### MAIN PART ##########
+################################
 
-#################
-#### MAIN PART ####
-#################
-
-f_is_mntpoint
+check_chroot
 res=$?
 case $res in
 1)
-    echo "[!] Unmounting $MNT now..."
-    f_dir_umount
+    echo "[!] Unmounting chroot now..."
+    do_unmount
     ;;
 *)
-    echo "[!] $MNT directory is not existed! Aborting..."
+    echo "[!] Something wrong, aborted."
     exit 1
 esac
 
 if [ -z "$(cat /proc/mounts | grep $MNT)" ]; then
-    echo "[+] All done."
+    echo "[+] Chroot unmounted successfully."
     isAllunmounted=0
 else
     echo "[-] There are still mounted points not unmounted yet."

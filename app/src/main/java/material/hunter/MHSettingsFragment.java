@@ -20,8 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import java.util.ArrayList;
 import java.util.Objects;
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.SharePrefTag;
+import material.hunter.utils.PathsUtil;
 import mirivan.TransparentQ;
 
 public class MHSettingsFragment extends Fragment {
@@ -43,24 +42,26 @@ public class MHSettingsFragment extends Fragment {
   public View onCreateView(
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     final View rootView = inflater.inflate(R.layout.mhsettings, container, false);
-    final SharedPreferences oa =
-        Objects.requireNonNull(getActivity())
-            .getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+    final SharedPreferences oa = getActivity().getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+
     final SwitchMaterial o = rootView.findViewById(R.id.settings_rob);
-    o.setChecked(oa.getBoolean(SharePrefTag.BOOT_RECIVIE, true));
+    o.setChecked(oa.getBoolean("mh_runonboot_enabled", true));
     o.setOnClickListener(
         view -> {
           if (o.isChecked()) {
-            oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, true).apply();
+            oa.edit().putBoolean("mh_runonboot_enabled", true).apply();
           } else {
-            oa.edit().putBoolean(SharePrefTag.BOOT_RECIVIE, false).apply();
+            oa.edit().putBoolean("mh_runonboot_enabled", false).apply();
           }
         });
+
     final SwitchMaterial swb = rootView.findViewById(R.id.settings_swb);
     swb.setChecked(oa.getBoolean("show_wallpaper", false));
+
     final SeekBar bal = rootView.findViewById(R.id.settings_bal);
     if (swb.isChecked()) bal.setEnabled(true);
     else bal.setEnabled(false);
+
     int ca = oa.getInt("background_alpha_level", 0);
     TypedValue typedValue = new TypedValue();
     getActivity().getTheme().resolveAttribute(R.attr.colorSurface, typedValue, true);
@@ -80,15 +81,16 @@ public class MHSettingsFragment extends Fragment {
           @Override
           public void onStopTrackingTouch(SeekBar seekBar) {
             oa.edit().putInt("background_alpha_level", seekBar.getProgress() * 10).apply();
-            getActivity()
+            /*getActivity()
                 .getWindow()
                 .getDecorView()
                 .setBackground(
                     new ColorDrawable(
-                        Color.parseColor(TransparentQ.p2c(color, seekBar.getProgress() * 10))));
-            // NhPaths.showSnack(rootView, "Need restart!", false);
+                        Color.parseColor(TransparentQ.p2c(color, seekBar.getProgress() * 10))));*/
+            PathsUtil.showSnack(rootView, "Need restart!", false);
           }
         });
+
     swb.setOnClickListener(
         view -> {
           if (swb.isChecked()) {
@@ -98,8 +100,9 @@ public class MHSettingsFragment extends Fragment {
             oa.edit().putBoolean("show_wallpaper", false).apply();
             bal.setEnabled(false);
           }
-          NhPaths.showSnack(getView(), "Need restart!", false);
+          PathsUtil.showSnack(getView(), "Need restart!", false);
         });
+
     final SwitchMaterial msdp = rootView.findViewById(R.id.settings_msdp);
     if (oa.getString("sdcard_part", "") != "") {
       msdp.setChecked(true);
@@ -112,6 +115,7 @@ public class MHSettingsFragment extends Fragment {
             oa.edit().putString("sdcard_part", "").apply();
           }
         });
+
     final SwitchMaterial msysp = rootView.findViewById(R.id.settings_msysp);
     if (oa.getString("system_part", "") != "") {
       msysp.setChecked(true);
@@ -124,6 +128,7 @@ public class MHSettingsFragment extends Fragment {
             oa.edit().putString("system_part", "").apply();
           }
         });
+
     final SwitchMaterial sts = rootView.findViewById(R.id.settings_sts);
     sts.setChecked(oa.getBoolean("show_timestamp", false));
     sts.setOnClickListener(
@@ -134,6 +139,18 @@ public class MHSettingsFragment extends Fragment {
             oa.edit().putBoolean("show_timestamp", false).apply();
           }
         });
+
+    final SwitchMaterial mih = rootView.findViewById(R.id.settings_mih);
+    mih.setChecked(oa.getBoolean("magisk_info_hide", false));
+    mih.setOnClickListener(
+        view -> {
+          if (mih.isChecked()) {
+            oa.edit().putBoolean("magisk_info_hide", true).apply();
+          } else {
+            oa.edit().putBoolean("magisk_info_hide", false).apply();
+          }
+        });
+
     final AutoCompleteTextView them = rootView.findViewById(R.id.settings_apptheme);
     final int theme = oa.getInt("theme", 0);
     if (theme == 0) {
@@ -164,6 +181,7 @@ public class MHSettingsFragment extends Fragment {
           }
         }
     });
+
     return rootView;
   }
 }

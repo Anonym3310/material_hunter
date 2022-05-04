@@ -14,5 +14,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/killer" />
+        app:lottie_rawRes="@raw/duck_with_knife" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,7 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import material.hunter.AppNavHomeActivity;
 import material.hunter.models.CustomCommandsModel;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 
 public class CustomCommandsSQL extends SQLiteOpenHelper {
   private static final String DATABASE_NAME = "CustomCommandsFragment";
@@ -65,7 +65,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
             + COLUMNS.get(5)
             + " INTEGER)");
     // For devices update from db version 2 to 3 only;
-    if (new File(NhPaths.APP_DATABASE_PATH + "/Launchers").exists()) {
+    if (new File(PathsUtil.APP_DATABASE_PATH + "/Launchers").exists()) {
       convertOldDBtoNewDB(db);
       // else create default value;
     } else {
@@ -464,7 +464,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
 
   private void convertOldDBtoNewDB(SQLiteDatabase currentDB) {
     currentDB.execSQL(
-        "ATTACH DATABASE ? AS oldDB", new String[] {NhPaths.APP_DATABASE_PATH + "/Launchers"});
+        "ATTACH DATABASE ? AS oldDB", new String[] {PathsUtil.APP_DATABASE_PATH + "/Launchers"});
     currentDB.execSQL(
         "INSERT INTO "
             + TABLE_NAME
@@ -488,7 +488,7 @@ public class CustomCommandsSQL extends SQLiteOpenHelper {
         "UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(3) + " = LOWER(" + COLUMNS.get(3) + ");");
     currentDB.execSQL(
         "UPDATE " + TABLE_NAME + " SET " + COLUMNS.get(4) + " = LOWER(" + COLUMNS.get(4) + ");");
-    SQLiteDatabase.deleteDatabase(new File(NhPaths.APP_DATABASE_PATH + "/Launchers"));
+    SQLiteDatabase.deleteDatabase(new File(PathsUtil.APP_DATABASE_PATH + "/Launchers"));
   }
 
   private boolean ifTableExists(SQLiteDatabase tempDB, String tableName) {

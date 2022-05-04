@@ -6,7 +6,6 @@
 # Java class files
 *.class
 # Generated files
-bin/
 gen/
 # Gradle files
 build/
@@ -24,7 +23,6 @@ debug/
 *.pydevproject
 .project
 .metadata
-bin/**
 tmp/**
 tmp/**/*
 *.tmp

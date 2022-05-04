@@ -284,14 +284,10 @@ public class USBArmorySQL extends SQLiteOpenHelper {
         if (tempColumnNames.length == COLUMNS_USBSWITCH.size()) {
           for (int i = 0; i < tempColumnNames.length; i++) {
             if (!tempColumnNames[i].equals(COLUMNS_USBSWITCH.get(i))) {
-              // tempDB.close();
-              // return false;
               isDBValid = false;
               break;
             }
           }
-          // tempDB.close();
-          // return true;
         } else isDBValid = false;
       } else isDBValid = false;
     } else isDBValid = false;

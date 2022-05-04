@@ -10,6 +10,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,25 +22,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import material.hunter.AppNavHomeActivity;
 import material.hunter.AsyncTask.ChrootManagerAsynctask;
 import material.hunter.service.CompatCheckService;
 import material.hunter.service.NotificationChannelService;
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.SharePrefTag;
+import material.hunter.utils.PathsUtil;
 import material.hunter.utils.ShellExecuter;
 
 public class ChrootManagerFragment extends Fragment {
@@ -49,11 +56,8 @@ public class ChrootManagerFragment extends Fragment {
   private static final int CHROOT_CORRUPTED = 3;
   public static boolean isAsyncTaskRunning = false;
   private Intent backPressedintent = new Intent();
-  private TextView mountStatsTextView;
-  private TextView baseChrootPathTextView;
+  private ShellExecuter exe = new ShellExecuter();
   private TextView resultViewerLoggerTextView;
-  private TextView kaliFolderTextView;
-  private Button kaliFolderEditButton;
   private Button mountChrootButton;
   private Button unmountChrootButton;
   private Button optionsChrootButton;
@@ -77,6 +81,7 @@ public class ChrootManagerFragment extends Fragment {
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    setHasOptionsMenu(true);
     context = getContext();
     activity = getActivity();
   }
@@ -86,11 +91,7 @@ public class ChrootManagerFragment extends Fragment {
       LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.chroot_manager, container, false);
     sharedPreferences = activity.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
-    baseChrootPathTextView = rootView.findViewById(R.id.f_chrootmanager_base_path_tv);
-    mountStatsTextView = rootView.findViewById(R.id.f_chrootmanager_mountresult_tv);
     resultViewerLoggerTextView = rootView.findViewById(R.id.f_chrootmanager_viewlogger);
-    kaliFolderTextView = rootView.findViewById(R.id.f_chrootmanager_kalifolder_tv);
-    kaliFolderEditButton = rootView.findViewById(R.id.f_chrootmanager_edit_btn);
     mountChrootButton = rootView.findViewById(R.id.f_chrootmanager_mount_btn);
     unmountChrootButton = rootView.findViewById(R.id.f_chrootmanager_unmount_btn);
     optionsChrootButton = rootView.findViewById(R.id.f_chrootmanager_options_btn);
@@ -105,9 +106,6 @@ public class ChrootManagerFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     resultViewerLoggerTextView.setMovementMethod(new ScrollingMovementMethod());
-    kaliFolderTextView.setText(
-        sharedPreferences.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, NhPaths.ARCH_FOLDER));
-    setEditButton();
     setStopKaliButton();
     setOptionsButton();
     setStartKaliButton();
@@ -115,20 +113,75 @@ public class ChrootManagerFragment extends Fragment {
     setRemoveChrootButton();
     setBackupChrootButton();
 
-    File temp = new File(NhPaths.APP_SD_PATH + "/Temporary");
+    File temp = new File(PathsUtil.APP_SD_PATH + "/Temporary");
     if (!temp.exists()) {
-      NhPaths.showSnack(getView(), "Creating temporary directory...", false);
+      PathsUtil.showSnack(getView(), "Creating temporary directory...", false);
       try {
         temp.mkdir();
       } catch (Exception e) {
         e.printStackTrace();
-        NhPaths.showSnack(
+        PathsUtil.showSnack(
             getView(),
             "Failed to create directory " + temp.getPath().toString(),
             false);
         return;
       }
     }
+  }
+
+  @Override
+  public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+    super.onCreateOptionsMenu(menu, inflater);
+    inflater.inflate(R.menu.chroot_manager, menu);
+    super.onCreateOptionsMenu(menu, inflater);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.edit:
+        MaterialAlertDialogBuilder adb = new MaterialAlertDialogBuilder(activity);
+        final View rootView = getLayoutInflater().inflate(R.layout.chroot_manager_edit, null);
+        final AutoCompleteTextView path =
+          rootView.findViewById(R.id.f_chroot_manager_chroot_select_path);
+        String path_now =
+          sharedPreferences.getString("", "chroot");
+        path.setText(path_now);
+        final ArrayList<String> chroots = new ArrayList<>();
+        for (String file : exe.RunAsRootOutput("for i in $(ls " + PathsUtil.SYSTEM_PATH + "); do test -d " + PathsUtil.SYSTEM_PATH + "/$i && echo $i; done").split("\n")) {
+          if (!file.equals("kalifs") && !file.equals("mhbinder") && !file.equals(""))
+            chroots.add(file);
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, R.layout.mhspinner, chroots);
+        path.setAdapter(adapter);
+        adb.setCancelable(true);
+        adb.setTitle("Edit");
+        adb.setView(rootView);
+        adb.setPositiveButton(
+            "Apply",
+            (dialogInterface, i) -> {
+              if (path.getText().toString().matches("^[a-zA-Z.\\/_~]+$")) {
+                PathsUtil.ARCH_FOLDER = path.getText().toString();
+                sharedPreferences
+                    .edit()
+                    .putString("chroot_directory", PathsUtil.ARCH_FOLDER)
+                    .apply();
+                sharedPreferences
+                    .edit()
+                    .putString("chroot_directory", PathsUtil.CHROOT_PATH())
+                    .apply();
+                new ShellExecuter()
+                    .RunAsRootOutput(
+                        "ln -sfn " + PathsUtil.CHROOT_PATH() + " " + PathsUtil.CHROOT_SYMLINK_PATH);
+                compatCheck();
+              } else
+                PathsUtil.showSnack(getView(), "Invalid name.", false);
+              dialogInterface.dismiss();
+            });
+        adb.setNegativeButton("Cancel", (dialogInterface2, i2) -> { });
+        adb.show();
+    }
+    return super.onOptionsItemSelected(item);
   }
 
   @Override
@@ -143,11 +196,7 @@ public class ChrootManagerFragment extends Fragment {
   @Override
   public void onDestroyView() {
     super.onDestroyView();
-    mountStatsTextView = null;
-    baseChrootPathTextView = null;
     resultViewerLoggerTextView = null;
-    kaliFolderTextView = null;
-    kaliFolderEditButton = null;
     mountChrootButton = null;
     unmountChrootButton = null;
     optionsChrootButton = null;
@@ -156,65 +205,6 @@ public class ChrootManagerFragment extends Fragment {
     backupChrootButton = null;
     chrootManagerAsynctask = null;
     progressbar = null;
-  }
-
-  private void setEditButton() {
-    kaliFolderEditButton.setOnClickListener(
-        view -> {
-          MaterialAlertDialogBuilder adb = new MaterialAlertDialogBuilder(activity);
-          final View rootView = getLayoutInflater().inflate(R.layout.chroot_manager_edit, null);
-          final TextInputEditText path = rootView.findViewById(R.id.f_chroot_manager_chroot_path);
-          final AutoCompleteTextView select_path =
-            rootView.findViewById(R.id.f_chroot_manager_chroot_select_path);
-          String path_now =
-            sharedPreferences.getString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, "chroot");
-          path.setText(path_now);
-          select_path.setText(path_now);
-          final ArrayList<String> chroots = new ArrayList<>();
-          for (File file : new File(NhPaths.NH_SYSTEM_PATH).listFiles()) {
-            if (file.isDirectory()) {
-              if (file.getName().equals("kalifs") || file.getName().equals("mhbinder")) continue;
-              chroots.add(file.getName());
-            }
-          }
-          ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, R.layout.mhspinner, chroots);
-          select_path.setAdapter(adapter);
-          select_path.setOnItemClickListener(
-              new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                  path.setText(chroots.get(position).toString());
-                }
-              });
-          adb.setCancelable(true);
-          adb.setTitle("Edit");
-          adb.setView(rootView);
-          adb.setPositiveButton(
-              "Apply",
-              (dialogInterface, i) -> {
-                if (path.getText().toString().matches("^\\.(.*$)|^\\.\\.(.*$)|^/+(.*$)|^.*/+(.*$)|^$")) {
-                  NhPaths.showMessage(context, "Invalid name.", false);
-                } else {
-                  NhPaths.ARCH_FOLDER = path.getText().toString();
-                  kaliFolderTextView.setText(NhPaths.ARCH_FOLDER);
-                  sharedPreferences
-                      .edit()
-                      .putString(SharePrefTag.CHROOT_ARCH_SHAREPREF_TAG, NhPaths.ARCH_FOLDER)
-                      .apply();
-                  sharedPreferences
-                      .edit()
-                      .putString(SharePrefTag.CHROOT_PATH_SHAREPREF_TAG, NhPaths.CHROOT_PATH())
-                      .apply();
-                  new ShellExecuter()
-                      .RunAsRootOutput(
-                          "ln -sfn " + NhPaths.CHROOT_PATH() + " " + NhPaths.CHROOT_SYMLINK_PATH);
-                  compatCheck();
-                }
-                dialogInterface.dismiss();
-              });
-              adb.setNegativeButton("Cancel", (dialogInterface2, i2) -> { });
-          adb.show();
-        });
   }
 
   private void setStartKaliButton() {
@@ -240,7 +230,7 @@ public class ChrootManagerFragment extends Fragment {
                     compatCheck();
                     context.startService(
                         new Intent(context, NotificationChannelService.class)
-                            .setAction(NotificationChannelService.USENETHUNTER));
+                            .setAction(NotificationChannelService.FINE));
                   }
                 }
               });
@@ -290,11 +280,11 @@ public class ChrootManagerFragment extends Fragment {
               (dialogInterface, i) -> {
                 final String hostname = editText.getText().toString();
                 if (!hostname.matches("([a-zA-Z0-9-]){2,253}")) {
-                  NhPaths.showSnack(getView(), "Invalid hostname", false);
+                  PathsUtil.showSnack(getView(), "Invalid hostname", false);
                   return;
                 }
                 sharedPreferences.edit().putString("hostname", hostname).apply();
-                NhPaths.showSnack(getView(), "Need remounting chroot!", false);
+                PathsUtil.showSnack(getView(), "Need remounting chroot!", false);
               });
           adb.setNegativeButton("Cancel", (dialogInterface, i) -> {});
           adb.show();
@@ -322,7 +312,8 @@ public class ChrootManagerFragment extends Fragment {
                     promtDownloadView.findViewById(R.id.link);
                 storepathEditText.setText(
                     sharedPreferences.getString(
-                        SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, ""));
+                        "chroot_download_url_prev", ""));
+                adb1.setTitle("Download");
                 adb1.setView(promtDownloadView);
                 adb1.setPositiveButton(
                     "Setup",
@@ -334,24 +325,24 @@ public class ChrootManagerFragment extends Fragment {
                           chroot_url = "http://" + chroot_url;
                         }
                         if (!chroot_url.endsWith(".xz") && !chroot_url.endsWith(".gz")) {
-                          NhPaths.showSnack(
+                          PathsUtil.showSnack(
                               getView(), "Tarball must be xz or gz compression.", true);
                           return;
                         }
                       } else {
-                        NhPaths.showSnack(getView(), "URL is incorrect!", false);
+                        PathsUtil.showSnack(getView(), "URL is incorrect!", false);
                         return;
                       }
                       sharedPreferences
                           .edit()
                           .putString(
-                              SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, chroot_url)
+                              "chroot_download_url_prev", chroot_url)
                           .apply();
                       String filename = chroot_url.substring(chroot_url.lastIndexOf('/') + 1, chroot_url.length());
                       context.startService(
                           new Intent(context, NotificationChannelService.class)
                               .setAction(NotificationChannelService.DOWNLOADING));
-                      File chroot = new File(NhPaths.SD_PATH + "/Download/" + filename);
+                      File chroot = new File(PathsUtil.SD_PATH + "/Download/" + filename);
                       chrootManagerAsynctask =
                           new ChrootManagerAsynctask(ChrootManagerAsynctask.DOWNLOAD_CHROOT);
                       chrootManagerAsynctask.setListener(
@@ -404,7 +395,7 @@ public class ChrootManagerFragment extends Fragment {
                                       }
                                     });
                                 chrootManagerAsynctask.execute(
-                                    resultViewerLoggerTextView, chroot, NhPaths.CHROOT_PATH());
+                                    resultViewerLoggerTextView, chroot, PathsUtil.CHROOT_PATH());
                               } else {
                                 progressbar.hide();
                               }
@@ -423,7 +414,8 @@ public class ChrootManagerFragment extends Fragment {
                 final TextInputEditText et = rootViewR.findViewById(R.id.chrootRestorePath);
                 et.setText(
                     sharedPreferences.getString(
-                        SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, ""));
+                        "chroot_restore_path", ""));
+                adb2.setTitle("Restore");
                 adb2.setView(rootViewR);
                 adb2.setPositiveButton(
                     "OK",
@@ -431,7 +423,7 @@ public class ChrootManagerFragment extends Fragment {
                       sharedPreferences
                           .edit()
                           .putString(
-                              SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG,
+                              "chroot_restore_path",
                               et.getText().toString())
                           .apply();
                       chrootManagerAsynctask =
@@ -464,7 +456,7 @@ public class ChrootManagerFragment extends Fragment {
                       chrootManagerAsynctask.execute(
                           resultViewerLoggerTextView,
                           et.getText().toString(),
-                          NhPaths.CHROOT_PATH());
+                          PathsUtil.CHROOT_PATH());
                     });
                 adb2.show();
               });
@@ -480,7 +472,7 @@ public class ChrootManagerFragment extends Fragment {
                   .setTitle("Warning!")
                   .setView(R.layout.noroot)
                   .setMessage(
-                      "Are you sure to remove the below Chroot folder?\n" + NhPaths.CHROOT_PATH())
+                      "Are you sure to remove the below Chroot folder?\n" + PathsUtil.CHROOT_PATH())
                   .setPositiveButton(
                       "I'm sure.",
                       (dialogInterface, i) -> {
@@ -535,18 +527,20 @@ public class ChrootManagerFragment extends Fragment {
           adb.setTitle("Backup Chroot");
           adb.setMessage(
               "Create a backup of the your chroot environment.\n\nPath: \""
-                  + NhPaths.CHROOT_PATH()
+                  + PathsUtil.CHROOT_PATH()
                   + "\" to:");
           backupFullPathEditText.setText(
-              sharedPreferences.getString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, ""));
+              sharedPreferences.getString("chroot_backup_path", ""));
           adb.setView(ll);
           adb.setPositiveButton(
               "OK",
               (dialogInterface, i) -> {
+
+// TODO: fix this shit
                 sharedPreferences
                     .edit()
                     .putString(
-                        SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG,
+                        "chroot_backup_path",
                         backupFullPathEditText.getText().toString())
                     .apply();
                 if (new File(backupFullPathEditText.getText().toString()).exists()) {
@@ -584,7 +578,7 @@ public class ChrootManagerFragment extends Fragment {
                             });
                         chrootManagerAsynctask.execute(
                             resultViewerLoggerTextView,
-                            NhPaths.CHROOT_PATH(),
+                            PathsUtil.CHROOT_PATH(),
                             backupFullPathEditText.getText().toString());
                       });
                   ad2.setNegativeButton("Cancel", (dialogInterface2, i2) -> {});
@@ -618,7 +612,7 @@ public class ChrootManagerFragment extends Fragment {
                       });
                   chrootManagerAsynctask.execute(
                       resultViewerLoggerTextView,
-                      NhPaths.CHROOT_PATH(),
+                      PathsUtil.CHROOT_PATH(),
                       backupFullPathEditText.getText().toString());
                 }
               });
@@ -655,22 +649,18 @@ public class ChrootManagerFragment extends Fragment {
         });
     chrootManagerAsynctask.execute(
         resultViewerLoggerTextView,
-        sharedPreferences.getString(SharePrefTag.CHROOT_PATH_SHAREPREF_TAG, ""));
+        sharedPreferences.getString("chroot_directory_path", ""));
   }
 
   private void setMountStatsTextView(int MODE) {
     if (MODE == IS_MOUNTED) {
-      mountStatsTextView.setTextColor(Color.GREEN);
-      mountStatsTextView.setText("Chroot is now running!");
+      AppNavHomeActivity.actionBar.setSubtitle("Chroot is now running.");
     } else if (MODE == IS_UNMOUNTED) {
-      mountStatsTextView.setTextColor(Color.CYAN);
-      mountStatsTextView.setText("Chroot hasn't yet started.");
+      AppNavHomeActivity.actionBar.setSubtitle("Chroot hasn't yet started.");
     } else if (MODE == NEED_TO_INSTALL) {
-      mountStatsTextView.setTextColor(Color.parseColor("#D81B60"));
-      mountStatsTextView.setText("Chroot isn't yet installed.");
+      AppNavHomeActivity.actionBar.setSubtitle("Chroot isn't yet installed.");
     } else if (MODE == CHROOT_CORRUPTED) {
-      mountStatsTextView.setTextColor(Color.parseColor("#D81B60"));
-      mountStatsTextView.setText("Chroot corrupted!");
+      AppNavHomeActivity.actionBar.setSubtitle("Chroot corrupted!");
     }
   }
 
@@ -711,13 +701,12 @@ public class ChrootManagerFragment extends Fragment {
     unmountChrootButton.setEnabled(isEnable);
     installChrootButton.setEnabled(isEnable);
     removeChrootButton.setEnabled(isEnable);
-    kaliFolderEditButton.setEnabled(isEnable);
     backupChrootButton.setEnabled(isEnable);
   }
 
   private void broadcastWorking(boolean working) {
     context.sendBroadcast(
         new Intent().putExtra("working", working).setAction("material.hunter.WORKING"));
-    setHasOptionsMenu(working);
+    setHasOptionsMenu(!working);
   }
 }

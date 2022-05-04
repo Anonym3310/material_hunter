@@ -1,23 +1,28 @@
 #!/system/bin/sh
-###
+
 shels=$(readlink -f $0)
 . ${shels%/*}/bootroot
-###
+
+if [ -z "$MNT" ]; then
+    echo "[-] \$MNT variable isn't defined, please run the MaterialHunter app first."
+    exit 2
+fi
 
 if [ ! -d "$MNT" ]; then
-    echo "[-] \"$MNT\" directory doesnt exist."
+    echo "[-] Chroot directory doesn't exist."
     echo "[!] Don't do stupid things."
     exit 2
 fi
 
-## Define chroot sudo executable path.
-if [ ! -x $MNT$CHROOT_EXEC ]; then
-    echo "[-] Your chroot has no \"sudo\" installed, please install it manually first."
-    echo "[!] Also make sure your chroot isn't corrupted."
+if [ ! -x "$MNT/$CHROOT_EXEC" ]; then
+    echo "[-] sudo not installed. This is not a MaterialHunter problem!"
+    echo "Solutions:"
+    echo "1. Try using busybox to login and install it"
+    echo "2. Contact chroot builder"
     exit 2
 fi
 
-## Unset Android-Termux variables for stability
+# Unset Android/Termux variables for stability
 unset ANDROID_ART_ROOT
 unset ANDROID_DATA
 unset ANDROID_ROOT

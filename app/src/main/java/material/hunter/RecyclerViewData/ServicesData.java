@@ -9,7 +9,7 @@ import material.hunter.AsyncTask.ServicesAsyncTask;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.ServicesFragment;
 import material.hunter.models.ServicesModel;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 
 public class ServicesData {
   public static boolean isDataInitiated = false;
@@ -74,7 +74,7 @@ public class ServicesData {
             getServicesModels().getValue().addAll(servicesModelList);
             getServicesModels().postValue(getServicesModels().getValue());
             if (!mSwitch.isChecked())
-              NhPaths.showSnack(
+              PathsUtil.showSnack(
                   ServicesFragment.servicesView,
                   "Failed starting "
                       + getServicesModels().getValue().get(position).getServiceName()
@@ -103,7 +103,7 @@ public class ServicesData {
             getServicesModels().getValue().addAll(servicesModelList);
             getServicesModels().postValue(getServicesModels().getValue());
             if (mSwitch.isChecked())
-              NhPaths.showSnack(
+              PathsUtil.showSnack(
                   ServicesFragment.servicesView,
                   "Failed stopping "
                       + getServicesModels().getValue().get(position).getServiceName()

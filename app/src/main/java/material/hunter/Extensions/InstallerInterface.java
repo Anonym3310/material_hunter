@@ -9,44 +9,44 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.PowerManager;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+
 import material.hunter.AppNavHomeActivity;
 import material.hunter.version;
-import material.hunter.SQL.MaterialHunterSQL;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.SQL.USBArmorySQL;
 import material.hunter.utils.CheckForRoot;
-import material.hunter.utils.NhPaths;
-import material.hunter.utils.SharePrefTag;
+import material.hunter.utils.PathsUtil;
 import material.hunter.utils.ShellExecuter;
 
 public class InstallerInterface {
-  private Context context;
-  private File scriptsDir = new File(NhPaths.APP_SCRIPTS_PATH);
-  private File etcDir = new File(NhPaths.APP_INITD_PATH);
-  private SharedPreferences prefs;
-  private ShellExecuter exe = new ShellExecuter();
+    private Context context;
+    private File scriptsDir = new File(PathsUtil.APP_SCRIPTS_PATH);
+    private File etcDir = new File(PathsUtil.APP_INITD_PATH);
+    private SharedPreferences prefs;
+    private ShellExecuter exe = new ShellExecuter();
 
-  public InstallerInterface(Context context, Activity activity) {
-    this.context = context;
-    this.scriptsDir = new File(NhPaths.APP_SCRIPTS_PATH);
-    this.etcDir = new File(NhPaths.APP_INITD_PATH);
-    this.prefs = context.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
-  }
-
-  public void Install() {
-    if (intAssist() || !scriptsDir.isDirectory() || !etcDir.isDirectory()) {
-      copyBootFiles();
-	  prefs.edit().putInt(
-        "version", version.latest
-      ).commit();
+    public InstallerInterface(Context context, Activity activity) {
+        this.context = context;
+        this.scriptsDir = new File(PathsUtil.APP_SCRIPTS_PATH);
+        this.etcDir = new File(PathsUtil.APP_INITD_PATH);
+        this.prefs = context.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
     }
-  }
+
+    public void Install() {
+        if (intAssist() || !scriptsDir.isDirectory() || !etcDir.isDirectory()) {
+            copyBootFiles();
+	        prefs.edit().putInt(
+                "version", version.latest
+            ).commit();
+        }
+    }
 
   private void copyBootFiles() {
     if (!CheckForRoot.isRoot()) {
@@ -54,69 +54,51 @@ public class InstallerInterface {
       return;
     }
     // copy (recursive) of the assets/{scripts, etc, wallpapers} folders to /data/data/...
-    assetsToFiles(NhPaths.APP_PATH, "", "data");
+    assetsToFiles(PathsUtil.APP_PATH, "", "data");
     exe.RunAsRoot(
         new String[] {
-          "chmod -R 700 " + NhPaths.APP_SCRIPTS_PATH + "/*",
-          "chmod -R 700 " + NhPaths.APP_INITD_PATH + "/*"
+          "chmod -R 700 " + PathsUtil.APP_SCRIPTS_PATH + "/*",
+          "chmod -R 700 " + PathsUtil.APP_INITD_PATH + "/*"
         });
-    // disable the magisk notification for materialhunter app as it will keep popping up bunch of
-    // toast message when executing runtime command.
-    disableMagiskNotification();
 
-    File mh_folder = new File(NhPaths.APP_SD_PATH);
+    File mh_folder = new File(PathsUtil.APP_SD_PATH);
     if (!mh_folder.exists()) {
-      NhPaths.showMessage(context, "Creating directory for backing up dbs...", false);
+      PathsUtil.showMessage(context, "Creating directory for backing up dbs...", false);
       try {
         mh_folder.mkdir();
       } catch (Exception e) {
         e.printStackTrace();
-        NhPaths.showMessage(
+        PathsUtil.showMessage(
             context,
-            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            "Failed to create directory " + PathsUtil.APP_SD_SQLBACKUP_PATH,
             false);
         return;
       }
     }
 
     String command =
-        "if [ -d " + NhPaths.CHROOT_PATH() + " ]; then echo Exists; fi"; // check the dir existence
+        "if [ -d " + PathsUtil.CHROOT_PATH() + " ]; then echo Exists; fi"; // check the dir existence
     final String _res = exe.RunAsRootOutput(command);
     if (_res.equals("Exists")) {
       prefs.edit()
         .putBoolean(AppNavHomeActivity.CHROOT_INSTALLED_TAG, true)
         .commit();
-
-      // Mount suid /data && fix sudo - this is definitely needed as of 02/2020, Re4son
-      exe.RunAsRoot(
-          new String[]{
-    	  NhPaths.BUSYBOX
-              + " mount -o remount,suid /data && chmod +s "
-              + NhPaths.CHROOT_PATH()
-              + "/usr/bin/sudo"
-              + " && echo \"Initial setup done!\""});
     }
 
     // Fetch the busybox path again after the busybox_nh is copied.
-    NhPaths.BUSYBOX = NhPaths.getBusyboxPath();
+    PathsUtil.BUSYBOX = PathsUtil.getBusyboxPath();
 
     // Now Initiate all SQL singleton in MainActivity so that it can be less lagged when switching fragments,
     // because it takes time to retrieve data from database.
-    MaterialHunterSQL.getInstance(context);
     ServicesSQL.getInstance(context);
     USBArmorySQL.getInstance(context);
 
     // Setup the default SharePreference value.
-    if (prefs.getString(SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG, null) == null) {
-      prefs
-          .edit()
-          .putString(
-              SharePrefTag.CHROOT_DEFAULT_BACKUP_SHAREPREF_TAG,
-              NhPaths.SD_PATH + "/mh-backup.tar.gz")
-          .apply();
+    if (prefs.getString("chroot_backup_path", null) == null) {
+      prefs.edit().putString("chroot_backup_path", PathsUtil.SD_PATH + "/mh-backup.tar.gz").apply();
     }
-    if (prefs.getString(SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, null) == null) {
-      prefs.edit().putString(SharePrefTag.CHROOT_DEFAULT_STORE_DOWNLOAD_SHAREPREF_TAG, "");
+    if (prefs.getString("chroot_restore_path", null) == null) {
+      prefs.edit().putString("chroot_restore_path", PathsUtil.SD_PATH + "/mh-backup.tar.gz").apply();
     }
 
     // Request to remove battery optimization mode
@@ -232,22 +214,9 @@ public class InstallerInterface {
     return asset;
   }
 
-  private boolean intAssist() {
-    int now = prefs.getInt("version", 0);
-	if (now != version.latest) return true;
-	else return false;
-  }
-
-  private void disableMagiskNotification() {
-    if (exe.RunAsRootReturnValue("[ -f " + NhPaths.MAGISK_DB_PATH + " ]") == 0) {
-      if (exe.RunAsRootOutput(
-              NhPaths.APP_SCRIPTS_BIN_PATH
-                  + "/sqlite3 "
-                  + NhPaths.MAGISK_DB_PATH
-                  + " \"UPDATE policies SET logging='0',notification='0' WHERE package_name='"
-                  + "material.hunter"
-                  + "';\"")
-          .isEmpty()) { }
-    } else { }
-  }
+    private boolean intAssist() {
+        int now = prefs.getInt("version", 0);
+    	if (now != version.latest) return true;
+    	else return false;
+    }
 }

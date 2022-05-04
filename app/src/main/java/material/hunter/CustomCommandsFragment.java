@@ -33,7 +33,7 @@ import material.hunter.RecyclerViewAdapter.CustomCommandsRecyclerViewAdapterDele
 import material.hunter.RecyclerViewData.CustomCommandsData;
 import material.hunter.SQL.CustomCommandsSQL;
 import material.hunter.models.CustomCommandsModel;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 import material.hunter.viewmodels.CustomCommandsViewModel;
 
 public class CustomCommandsFragment extends Fragment {
@@ -97,16 +97,16 @@ public class CustomCommandsFragment extends Fragment {
     recyclerView.setLayoutManager(linearLayoutManager);
     recyclerView.setAdapter(customCommandsRecyclerViewAdapter);
 
-    File sql_folder = new File(NhPaths.APP_SD_SQLBACKUP_PATH);
+    File sql_folder = new File(PathsUtil.APP_SD_SQLBACKUP_PATH);
     if (!sql_folder.exists()) {
-      NhPaths.showSnack(getView(), "Creating directory for backing up dbs...", false);
+      PathsUtil.showSnack(getView(), "Creating directory for backing up dbs...", false);
       try {
         sql_folder.mkdir();
       } catch (Exception e) {
         e.printStackTrace();
-        NhPaths.showSnack(
+        PathsUtil.showSnack(
             getView(),
-            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            "Failed to create directory " + PathsUtil.APP_SD_SQLBACKUP_PATH,
             false);
         return;
       }
@@ -154,12 +154,12 @@ public class CustomCommandsFragment extends Fragment {
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     final LayoutInflater inflater =
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    final View promptView = inflater.inflate(R.layout.materialhunter_custom_dialog_view, null);
+    final View promptView = inflater.inflate(R.layout.custom_dialog_view, null);
     final EditText storedpathEditText = promptView.findViewById(R.id.cdw_et);
 
     switch (item.getItemId()) {
       case R.id.f_customcommands_menu_backupDB:
-        storedpathEditText.setText(NhPaths.APP_SD_SQLBACKUP_PATH + "/FragmentCustomCommands");
+        storedpathEditText.setText(PathsUtil.APP_SD_SQLBACKUP_PATH + "/FragmentCustomCommands");
         MaterialAlertDialogBuilder adbBackup = new MaterialAlertDialogBuilder(activity);
         adbBackup.setTitle("Full path to where you want to save the database:");
         adbBackup.setView(promptView);
@@ -177,7 +177,7 @@ public class CustomCommandsFragment extends Fragment {
                                 CustomCommandsSQL.getInstance(context),
                                 storedpathEditText.getText().toString());
                     if (returnedResult == null) {
-                      NhPaths.showSnack(
+                      PathsUtil.showSnack(
                           getView(),
                           "db is successfully backup to " + storedpathEditText.getText().toString(),
                           false);
@@ -195,7 +195,7 @@ public class CustomCommandsFragment extends Fragment {
         adBackup.show();
         break;
       case R.id.f_customcommands_menu_restoreDB:
-        storedpathEditText.setText(NhPaths.APP_SD_SQLBACKUP_PATH + "/FragmentCustomCommands");
+        storedpathEditText.setText(PathsUtil.APP_SD_SQLBACKUP_PATH + "/FragmentCustomCommands");
         MaterialAlertDialogBuilder adbRestore = new MaterialAlertDialogBuilder(activity);
         adbRestore.setTitle("Full path of the db file from where you want to restore:");
         adbRestore.setView(promptView);
@@ -213,7 +213,7 @@ public class CustomCommandsFragment extends Fragment {
                                 CustomCommandsSQL.getInstance(context),
                                 storedpathEditText.getText().toString());
                     if (returnedResult == null) {
-                      NhPaths.showSnack(
+                      PathsUtil.showSnack(
                           getView(),
                           "db is successfully restored to "
                               + storedpathEditText.getText().toString(),
@@ -345,9 +345,9 @@ public class CustomCommandsFragment extends Fragment {
                 buttonAdd.setOnClickListener(
                     v1 -> {
                       if (commandLabelEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Label cannot be empty", false);
+                        PathsUtil.showMessage(context, "Label cannot be empty", false);
                       } else if (commandEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Command String cannot be empty", false);
+                        PathsUtil.showMessage(context, "Command String cannot be empty", false);
                       } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(commandLabelEditText.getText().toString());
@@ -377,9 +377,9 @@ public class CustomCommandsFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewDelete =
-              inflater.inflate(R.layout.materialhunter_delete_dialog_view, null, false);
+              inflater.inflate(R.layout.delete_dialog_view, null, false);
           final RecyclerView recyclerViewDeleteItem =
-              promptViewDelete.findViewById(R.id.f_materialhunter_delete_recyclerview);
+              promptViewDelete.findViewById(R.id.recyclerview);
           CustomCommandsRecyclerViewAdapterDeleteItems
               customCommandsRecyclerViewAdapterDeleteItems =
                   new CustomCommandsRecyclerViewAdapterDeleteItems(
@@ -409,7 +409,7 @@ public class CustomCommandsFragment extends Fragment {
                         if (viewHolder != null) {
                           CheckBox box =
                               viewHolder.itemView.findViewById(
-                                  R.id.f_materialhunter_recyclerview_dialog_chkbox);
+                                  R.id.checkbox);
                           if (box.isChecked()) {
                             selectedPosition.add(i);
                             selectedTargetIds.add(i + 1);
@@ -422,13 +422,13 @@ public class CustomCommandsFragment extends Fragment {
                                 selectedPosition,
                                 selectedTargetIds,
                                 CustomCommandsSQL.getInstance(context));
-                        NhPaths.showSnack(
+                        PathsUtil.showSnack(
                             getView(),
                             "Successfully deleted " + selectedPosition.size() + " items.",
                             false);
                         adDelete.dismiss();
                       } else {
-                        NhPaths.showMessage(context, "Nothing to be deleted.", false);
+                        PathsUtil.showMessage(context, "Nothing to be deleted.", false);
                       }
                     });
               });
@@ -445,13 +445,13 @@ public class CustomCommandsFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewMove =
-              inflater.inflate(R.layout.materialhunter_move_dialog_view, null, false);
+              inflater.inflate(R.layout.move_dialog_view, null, false);
           final Spinner titlesBefore =
-              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesbefore);
+              promptViewMove.findViewById(R.id.move_titlesbefore);
           final Spinner titlesAfter =
-              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesafter);
+              promptViewMove.findViewById(R.id.move_titlesafter);
           final Spinner actions =
-              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_actions);
+              promptViewMove.findViewById(R.id.move_actions);
 
           ArrayList<String> commandLabelArrayList = new ArrayList<>();
           for (CustomCommandsModel customCommandsModel : customCommandsModelList) {
@@ -483,7 +483,7 @@ public class CustomCommandsFragment extends Fragment {
                               && targetPositionIndex == (originalPositionIndex + 1))
                           || (actions.getSelectedItemPosition() == 1
                               && targetPositionIndex == (originalPositionIndex - 1))) {
-                        NhPaths.showMessage(
+                        PathsUtil.showMessage(
                             context,
                             "You are moving the item to the same position, nothing to be moved.",
                             false);
@@ -494,7 +494,7 @@ public class CustomCommandsFragment extends Fragment {
                                 originalPositionIndex,
                                 targetPositionIndex,
                                 CustomCommandsSQL.getInstance(context));
-                        NhPaths.showSnack(getView(), "Successfully moved item.", false);
+                        PathsUtil.showSnack(getView(), "Successfully moved item.", false);
                         adMove.dismiss();
                       }
                     });

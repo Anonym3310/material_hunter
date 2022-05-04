@@ -5,14 +5,11 @@
   <img src="https://img.shields.io/github/repo-size/mirivan/material_hunter">
 </p>
 
-Chroot Manager app with [Google Material Design](https://material.io/design)
+Chroot Manager app with [Material You Design](https://m3.material.io/)
 
 # Supporting
-- Android 7-12
-- SuperSU
-
-# Issuses
-- Android 12L not supported
+- Android 7-12 (include x86)
+- Windows Subsystem for Android
 
 # Instructions
 - Download and install app
@@ -21,9 +18,4 @@ Chroot Manager app with [Google Material Design](https://material.io/design)
 - Reboot your device
 - Profit!
 
-# Credits
-- [Mirivan](https://t.me/janivanovich) - developer
-- [Martin Välba](https://t.me/hilledkinged) - idea author
-- [ZAlexDev](https://t.me/zalexdev) - [Stryker](https://github.com/stryker-project) developer, fix boss
-- [Avada](https://t.me/Avadamiao) - icon designer
-- Kali developers are shit
+# EOL

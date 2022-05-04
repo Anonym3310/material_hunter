@@ -1,26 +1,22 @@
 #!/system/bin/sh
-###
+
 shels=$(readlink -f $0)
 . ${shels%/*}/bootroot_env
-###
 
 #################################
 #### DEFINE GLOBAL VARIABLES ####
 #################################
 
-## unset the $MNT variables first.
-# unset MNT
-
-## Define the fixed nhsystem path
+# Check directory state
 [ ! -d $NHSYSTEM_PATH ] && mkdir -p $NHSYSTEM_PATH
 
-## Validate busybox path.
+# Check busybox functionality
 if [ -z "$BUSYBOX" ]; then
     echo "[-] Busybox isn't installed or permissions isn't granted to execute it."
     echo "Check has been made for:"
     echo "1. /system/xbin"
     echo "2. /system/bin"
-    exit 1
+    exit 2
 fi
 
 ##########################
@@ -30,73 +26,11 @@ fi
 f_chroot_usage(){
     echo "[!] Usage:"
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"getchtpath\" ---> return the string of current chroot container path."
-    echo "[!] chrootmgr [-p <your chroot folder>] -c \"status\" ---> return 0 if chroot is mounted, return 1 if choot is not yet mounted, return 2 if no chroot is found."
+    echo "[!] chrootmgr [-p <your chroot folder>] -c \"status\" ---> return 0 if chroot is mounted, return 1 if choot is not yet mounted, return 2 if no chroot is found, return 3 if chroot corrupted."
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"backup <full_path_of_your_chroot_folder> <full_path_with_desired_name.tar.[gx]z>\""
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"restore <full_path_of_your_.tar.[gx]z> </data/local/nhsystem/>\""
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"remove <full_path_of_your_chroot_folder>\" ---> Delete your chroot folder without rebooting the device, but not 100% guranteed success"
     echo "[!] If -p option is not specified, then the script will find the chroot path according to the app sharepreference."
-}
-
-## No use for now.
-f_mountfs(){
-    export bin=/system/bin
-    export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
-    export TERM=linux
-    export HOME=/root
-    export USER=root
-    export LOGNAME=root
-    unset LD_PRELOAD
-    if [ ! -e "/dev/fd" -o ! -e "/dev/stdin" -o ! -e "/dev/stdout" -o ! -e "/dev/stderr" ]; then
-        [ -e "/dev/fd" ] || ln -s /proc/self/fd /dev/ && echo "[+] linked /proc/self/fd to /dev/"
-        [ -e "/dev/stdin" ] || ln -s /proc/self/fd/0 /dev/stdin && echo "[+] linked /proc/self/fd/0 to /dev/stdin"
-        [ -e "/dev/stdout" ] || ln -s /proc/self/fd/1 /dev/stdout && echo "[+] linked /proc/self/fd/1 to /dev/stdout"
-        [ -e "/dev/stderr" ] || ln -s /proc/self/fd/2 /dev/stderr && echo "[+] linked /proc/self/fd/2 to /dev/stderr"
-    fi
-
-    ######### SET TUN ########
-    if [ ! -e "/dev/net/tun" ]; then
-        [ ! -d "/dev/net" ] && mkdir -p /dev/net
-        $BUSYBOX mknod /dev/net/tun c 10 200 && echo "[+] created /dev/net/tun"
-    fi
-
-    ######### SET DEV ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/dev 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/dev ] && rm -rf $MNT/dev
-        [ ! -d $MNT/dev ] && mkdir -p $MNT/dev
-        $BUSYBOX mount -o bind /dev $MNT/dev && echo "[+] binded /dev"
-    fi
-
-    ######### SET DEV PTS ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/dev/pts 2> /dev/null | grep 'is a')" ]; then
-        $BUSYBOX mount -t devpts devpts $MNT/dev/pts && echo "[+] mounted /dev/pts"
-    fi
-
-    ######### SET DEV SHM ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/dev/shm 2> /dev/null | grep 'is a')" ]; then
-        [ ! -d $MNT/dev/shm ] && mkdir -p $MNT/dev/shm
-        $BUSYBOX mount -o rw,nosuid,nodev,mode=1777 -t tmpfs tmpfs $MNT/dev/shm && echo "[+] mounted /dev/shm"
-    fi
-
-    ######### SET PROC ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/proc 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/proc ] && rm -rf $MNT/proc
-        [ ! -d $MNT/proc ] && mkdir -p $MNT/proc
-        $BUSYBOX mount -t proc proc $MNT/proc && echo "[+] mounted /proc"
-    fi
-
-    ######### SET SYS ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/sys 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/sys ] && rm -rf $MNT/sys
-        [ ! -d $MNT/sys ] && mkdir -p $MNT/sys
-        $BUSYBOX mount -t sysfs sys $MNT/sys && echo "[+] mounted /sys"
-    fi
-
-    ######### SET SYS ########
-    if [ ! "$($BUSYBOX mountpoint $MNT/system 2> /dev/null | grep 'is a')" ]; then
-        [ -d $MNT/system ] && rm -rf $MNT/system
-        [ ! -d $MNT/system ] && mkdir -p $MNT/system
-        $BUSYBOX mount -o bind /system $MNT/system && echo "[+] binded /system"
-    fi
 }
 
 ###################
@@ -119,7 +53,7 @@ fi
 if [ -z "$MNT" ]; then
     set -- ${COMMAND[@]}
     if [ -z "$MNT" -a ! "$COMMAND" = "findchroot"  ]; then
-        echo "[-] The \$MNT variable isn't defined, please run the MaterialHunter app first."
+        echo "[-] \$MNT variable isn't defined, please run the MaterialHunter app first."
         exit 2
     fi
 else
@@ -146,7 +80,7 @@ if [ ! $# -eq 0 ]; then
                 0)
                     echo "[!] Chroot path is set to -> $MNT"
                     if [ ! -d "$MNT" ]; then
-                        echo "[-] \"$MNT\" chroot not exist!"
+                        echo "[-] Chroot directory doesn't exist."
                         echo "[!] Click the button [Install] down below now!"
                         exit 2
                     fi
@@ -154,10 +88,12 @@ if [ ! $# -eq 0 ]; then
                     echo "[!] Verifying chroot environment..."
                     if [ "$($BUSYBOX chroot $MNT /bin/uname -n)" ]; then
                         echo "[+] Seems you have chroot installed already!"
-                        if [ -x $MNT/usr/bin/sudo ]; then
-                            CHROOT_EXEC=/usr/bin/sudo
-                        else
-                            echo "[-] Your chroot has no \"sudo\" installed."
+                        if [ ! -x "$MNT/$CHROOT_EXEC" ]; then
+                            echo "[-] sudo not installed. This is not a MaterialHunter problem!"
+                            echo "Solutions:"
+                            echo "1. Try using busybox to login and install it"
+                            echo "2. Contact chroot builder"
+                            return 3
                         fi
                         ISALLREADY=0
                         FS=(proc sys dev dev/pts $system_part $sdcard_part)
@@ -298,15 +234,15 @@ if [ ! $# -eq 0 ]; then
             shift 1
             case $# in
                 1)
-                    [ ! -d $MNT ] && echo "[-] \"$MNT\" directory not existed! Please check again first!" && exit 1
+                    [ ! -d $MNT ] && echo "[-] Chroot directory doesn't exist..aborted." && exit 1
                     $SOURCE_PATH/killroot
-                    [ $? -eq 1 ] && echo "[-] Failed to umount the chroot environment..Aborted." && exit 1
-                    [ ! -z `ls $MNT/sdcard` ] && echo "[-] /sdcard isn't unmounted, logic error" && exit 1
-                    echo "[!] Removing $MNT now..."
+                    [ $? -eq 1 ] && echo "[-] Failed to unmount the chroot environment..aborted." && exit 1
+                    [ ! -z "$(ls $MNT/sdcard)" ] && echo "[-] Internal storage partition isn't unmounted..aborted." && exit 1
+                    echo "[!] Removing chroot now..."
                     echo "It may take a while, be patient."
                     rm -rf $MNT
                     $BUSYBOX sync
-                    echo "[+] Chroot $MNT has been removed successfully."
+                    echo "[+] Chroot has been removed successfully."
                     ;;
                 *)
                     f_chroot_usage

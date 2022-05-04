@@ -33,11 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 import material.hunter.RecyclerViewAdapter.ServicesRecyclerViewAdapter;
 import material.hunter.RecyclerViewAdapter.ServicesRecyclerViewAdapterDeleteItems;
-import material.hunter.RecyclerViewData.MaterialHunterData;
 import material.hunter.RecyclerViewData.ServicesData;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.models.ServicesModel;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 import material.hunter.viewmodels.ServicesViewModel;
 
 public class ServicesFragment extends Fragment {
@@ -104,20 +103,20 @@ public class ServicesFragment extends Fragment {
     SwipeRefreshLayout o = view.findViewById(R.id.f_services_scrollView);
     o.setOnRefreshListener(
         () -> {
-          MaterialHunterData.getInstance().refreshData();
+          ServicesData.getInstance().refreshData();
           new Handler(Looper.getMainLooper()).postDelayed(() -> o.setRefreshing(false), 512);
         });
 
-    File sql_folder = new File(NhPaths.APP_SD_SQLBACKUP_PATH);
+    File sql_folder = new File(PathsUtil.APP_SD_SQLBACKUP_PATH);
     if (!sql_folder.exists()) {
-      NhPaths.showSnack(getView(), "Creating directory for backing up dbs...", false);
+      PathsUtil.showSnack(getView(), "Creating directory for backing up dbs...", false);
       try {
         sql_folder.mkdir();
       } catch (Exception e) {
         e.printStackTrace();
-        NhPaths.showSnack(
+        PathsUtil.showSnack(
             getView(),
-            "Failed to create directory " + NhPaths.APP_SD_SQLBACKUP_PATH,
+            "Failed to create directory " + PathsUtil.APP_SD_SQLBACKUP_PATH,
             false);
         return;
       }
@@ -161,12 +160,12 @@ public class ServicesFragment extends Fragment {
   public boolean onOptionsItemSelected(MenuItem item) {
     final LayoutInflater inflater =
         (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    final View promptView = inflater.inflate(R.layout.materialhunter_custom_dialog_view, null);
+    final View promptView = inflater.inflate(R.layout.custom_dialog_view, null);
     final EditText storedpathEditText = promptView.findViewById(R.id.cdw_et);
 
     switch (item.getItemId()) {
       case R.id.f_services_menu_backupDB:
-        storedpathEditText.setText(NhPaths.APP_SD_SQLBACKUP_PATH + "/FragmentServices");
+        storedpathEditText.setText(PathsUtil.APP_SD_SQLBACKUP_PATH + "/FragmentServices");
         MaterialAlertDialogBuilder adbBackup = new MaterialAlertDialogBuilder(activity);
         adbBackup.setTitle("Full path to where you want to save the database:");
         adbBackup.setView(promptView);
@@ -184,7 +183,7 @@ public class ServicesFragment extends Fragment {
                                 ServicesSQL.getInstance(context),
                                 storedpathEditText.getText().toString());
                     if (returnedResult == null) {
-                      NhPaths.showSnack(
+                      PathsUtil.showSnack(
                           getView(),
                           "db is successfully backup to " + storedpathEditText.getText().toString(),
                           false);
@@ -202,7 +201,7 @@ public class ServicesFragment extends Fragment {
         adBackup.show();
         break;
       case R.id.f_services_menu_restoreDB:
-        storedpathEditText.setText(NhPaths.APP_SD_SQLBACKUP_PATH + "/FragmentServices");
+        storedpathEditText.setText(PathsUtil.APP_SD_SQLBACKUP_PATH + "/FragmentServices");
         MaterialAlertDialogBuilder adbRestore = new MaterialAlertDialogBuilder(activity);
         adbRestore.setTitle("Full path of the db file from where you want to restore:");
         adbRestore.setView(promptView);
@@ -220,7 +219,7 @@ public class ServicesFragment extends Fragment {
                                 ServicesSQL.getInstance(context),
                                 storedpathEditText.getText().toString());
                     if (returnedResult == null) {
-                      NhPaths.showSnack(
+                      PathsUtil.showSnack(
                           getView(),
                           "db is successfully restored to "
                               + storedpathEditText.getText().toString(),
@@ -355,13 +354,13 @@ public class ServicesFragment extends Fragment {
                 buttonAdd.setOnClickListener(
                     v1 -> {
                       if (titleEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Title cannot be empty", false);
+                        PathsUtil.showMessage(context, "Title cannot be empty", false);
                       } else if (startCmdEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Start Command cannot be empty", false);
+                        PathsUtil.showMessage(context, "Start Command cannot be empty", false);
                       } else if (stopCmdEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Stop Command cannot be empty", false);
+                        PathsUtil.showMessage(context, "Stop Command cannot be empty", false);
                       } else if (checkstatusCmdEditText.getText().toString().isEmpty()) {
-                        NhPaths.showMessage(context, "Check Status Command cannot be empty", false);
+                        PathsUtil.showMessage(context, "Check Status Command cannot be empty", false);
                       } else {
                         ArrayList<String> dataArrayList = new ArrayList<>();
                         dataArrayList.add(titleEditText.getText().toString());
@@ -388,9 +387,9 @@ public class ServicesFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewDelete =
-              inflater.inflate(R.layout.materialhunter_delete_dialog_view, null, false);
+              inflater.inflate(R.layout.delete_dialog_view, null, false);
           final RecyclerView recyclerViewDeleteItem =
-              promptViewDelete.findViewById(R.id.f_materialhunter_delete_recyclerview);
+              promptViewDelete.findViewById(R.id.recyclerview);
           ServicesRecyclerViewAdapterDeleteItems servicesRecyclerViewAdapterDeleteItems =
               new ServicesRecyclerViewAdapterDeleteItems(context, servicesModelList);
 
@@ -420,7 +419,7 @@ public class ServicesFragment extends Fragment {
                         if (viewHolder != null) {
                           CheckBox box =
                               viewHolder.itemView.findViewById(
-                                  R.id.f_materialhunter_recyclerview_dialog_chkbox);
+                                  R.id.checkbox);
                           if (box.isChecked()) {
                             selectedPosition.add(i);
                             selectedTargetIds.add(i + 1);
@@ -433,13 +432,13 @@ public class ServicesFragment extends Fragment {
                                 selectedPosition,
                                 selectedTargetIds,
                                 ServicesSQL.getInstance(context));
-                        NhPaths.showSnack(
+                        PathsUtil.showSnack(
                             getView(),
                             "Successfully deleted " + selectedPosition.size() + " items.",
                             false);
                         adDelete.dismiss();
                       } else {
-                        NhPaths.showMessage(context, "Nothing to be deleted.", false);
+                        PathsUtil.showMessage(context, "Nothing to be deleted.", false);
                       }
                     });
               });
@@ -455,12 +454,12 @@ public class ServicesFragment extends Fragment {
           final LayoutInflater inflater =
               (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
           final View promptViewMove =
-              inflater.inflate(R.layout.materialhunter_move_dialog_view, null, false);
+              inflater.inflate(R.layout.move_dialog_view, null, false);
           final Spinner titlesBefore =
-              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesbefore);
+              promptViewMove.findViewById(R.id.move_titlesbefore);
           final Spinner titlesAfter =
-              promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_titlesafter);
-          final Spinner actions = promptViewMove.findViewById(R.id.f_materialhunter_move_adb_spr_actions);
+              promptViewMove.findViewById(R.id.move_titlesafter);
+          final Spinner actions = promptViewMove.findViewById(R.id.move_actions);
 
           ArrayList<String> serviceNameArrayList = new ArrayList<>();
           for (ServicesModel servicesModel : servicesModelList) {
@@ -492,7 +491,7 @@ public class ServicesFragment extends Fragment {
                               && targetPositionIndex == (originalPositionIndex + 1))
                           || (actions.getSelectedItemPosition() == 1
                               && targetPositionIndex == (originalPositionIndex - 1))) {
-                        NhPaths.showMessage(
+                        PathsUtil.showMessage(
                             context,
                             "You are moving the item to the same position, nothing to be moved.",
                             false);
@@ -503,7 +502,7 @@ public class ServicesFragment extends Fragment {
                                 originalPositionIndex,
                                 targetPositionIndex,
                                 ServicesSQL.getInstance(context));
-                        NhPaths.showSnack(getView(), "Successfully moved item.", false);
+                        PathsUtil.showSnack(getView(), "Successfully moved item.", false);
                         adMove.dismiss();
                       }
                     });

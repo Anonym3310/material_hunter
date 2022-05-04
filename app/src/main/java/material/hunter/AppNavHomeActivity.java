@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -34,28 +35,32 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
+
 import java.io.File;
 import java.util.Objects;
+
 import material.hunter.Extensions.InstallerInterface;
-import material.hunter.SQL.MaterialHunterSQL;
 import material.hunter.SQL.ServicesSQL;
 import material.hunter.SQL.USBArmorySQL;
 import material.hunter.service.CompatCheckService;
 import material.hunter.utils.CheckForRoot;
-import material.hunter.utils.NhPaths;
+import material.hunter.utils.PathsUtil;
 import material.hunter.utils.PermissionCheck;
-import material.hunter.utils.SharePrefTag;
 import material.hunter.utils.ShellExecuter;
+
 import mirivan.TransparentQ;
 
 public class AppNavHomeActivity extends AppCompatActivity {
+
   public static final String TAG = "AppNavHomeActivity";
   public static final String CHROOT_INSTALLED_TAG = "CHROOT_INSTALLED_TAG";
   public static final String BOOT_CHANNEL_ID = "BOOT_CHANNEL";
+  public static ActionBar actionBar;
   public static MenuItem lastSelectedMenuItem;
   public static boolean isBackPressDisabled = false;
   public static Context context;
@@ -66,10 +71,9 @@ public class AppNavHomeActivity extends AppCompatActivity {
   private CharSequence mTitle = "MaterialHunter";
   private SharedPreferences prefs;
   private BroadcastReceiver materialhunterReceiver;
-  private NhPaths nhPaths;
+  private PathsUtil nhPaths;
   private PermissionCheck permissionCheck;
   private boolean updateServiceBound = false;
-  private boolean keyword = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -91,21 +95,22 @@ public class AppNavHomeActivity extends AppCompatActivity {
           .setBackground(new ColorDrawable(Color.parseColor(TransparentQ.p2c(color, alpha_level))));
     }
     context = getApplicationContext();
-    nhPaths = NhPaths.getInstance(context);
+    nhPaths = PathsUtil.getInstance(context);
     permissionCheck = new PermissionCheck(this, context);
     materialhunterReceiver = new MaterialHunterReceiver();
     IntentFilter AppNavHomeIntentFilter = new IntentFilter();
     AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.CHECKCOMPAT);
     AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.CHECKCHROOT);
+    AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.CHROOT_CORRUPTED);
     AppNavHomeIntentFilter.addAction(MaterialHunterReceiver.WORKING);
     registerReceiver(materialhunterReceiver, new IntentFilter(AppNavHomeIntentFilter));
 
     // Initialize installer
     InstallerInterface iface = new InstallerInterface(context, this);
     // We must not attempt to copy files unless we have storage permissions
+    setRootView();
     if (permissionCheck.isAllPermitted(PermissionCheck.PERMISSIONS)) {
       iface.Install();
-      setRootView();
     } else {
       // Crude way of waiting for the permissions to be granted before we continue
       permissionCheck.requestPermissions(PermissionCheck.PERMISSIONS, PermissionCheck.REQUEST_CODE);
@@ -121,7 +126,6 @@ public class AppNavHomeActivity extends AppCompatActivity {
       }
       if (permissionCheck.isAllPermitted(PermissionCheck.PERMISSIONS)) {
         iface.Install();
-        setRootView();
         showWarningDialog("Everything fine", "Please restart application to finalize setup.", true);
       } else {
         showWarningDialog("Bad request", "Please restart application and grant all required permissions.", true);
@@ -197,37 +201,20 @@ public class AppNavHomeActivity extends AppCompatActivity {
     }
   }
 
-  @SuppressLint("ClickableViewAccessibility")
   private void setRootView() {
     setContentView(R.layout.base_layout);
     MaterialToolbar tb = findViewById(R.id.appbar);
     setSupportActionBar(tb);
-    ActionBar ab = getSupportActionBar();
-    if (ab != null) {
-      ab.setHomeButtonEnabled(true);
-      ab.setDisplayHomeAsUpEnabled(true);
+    actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setHomeButtonEnabled(true);
+      actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     mDrawerLayout = findViewById(R.id.drawer_layout);
 
     navigationView = findViewById(R.id.navigation_view);
-    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    @SuppressLint("InflateParams")
-    LinearLayout navigationHeadView =
-        (LinearLayout) inflater.inflate(R.layout.sidenav_header, null);
-    navigationView.addHeaderView(navigationHeadView);
-
-    TextView easter_egg = navigationHeadView.findViewById(R.id.easter_egg);
-    easter_egg.setOnLongClickListener(
-        view -> {
-          if (keyword) {
-            showLicense();
-          } else {
-            NhPaths.showMessage(context, "¯\\_(ツ)_/¯", false);
-            keyword = true;
-          }
-          return false;
-        });
+    View headerView = navigationView.getHeaderView(0);
 
     if (navigationView != null) {
       setupDrawerContent(navigationView);
@@ -243,24 +230,12 @@ public class AppNavHomeActivity extends AppCompatActivity {
 
     if (lastSelectedMenuItem == null) { // only in the 1st create
       lastSelectedMenuItem = navigationView.getMenu().getItem(0);
-      lastSelectedMenuItem.setChecked(true);
     }
     mDrawerToggle =
         new ActionBarDrawerToggle(
             this, mDrawerLayout, R.string.drawer_opened, R.string.drawer_closed);
     mDrawerLayout.setDrawerListener(mDrawerToggle);
     mDrawerToggle.syncState();
-    startService(new Intent(context, CompatCheckService.class));
-  }
-
-  private void showLicense() {
-    final View rootView = getLayoutInflater().inflate(R.layout.license_layout, null);
-    MaterialAlertDialogBuilder adb = new MaterialAlertDialogBuilder(this);
-    adb.setView(rootView).setNegativeButton("Close", (dialog, which) -> dialog.dismiss());
-    adb.setCancelable(true);
-    AlertDialog ad = adb.create();
-    ad.show();
-    ((TextView) ad.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance());
   }
 
   @SuppressLint("NonConstantResourceId")
@@ -274,10 +249,14 @@ public class AppNavHomeActivity extends AppCompatActivity {
               lastSelectedMenuItem = menuItem;
             }
             menuItem.setChecked(true);
-            mTitle = menuItem.getTitle();
+            if (itemId == R.id.materialhunter_item)
+                mTitle = getString(R.string.app_name);
+            else
+                mTitle = menuItem.getTitle();
           }
           if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) mDrawerLayout.closeDrawers();
 
+          actionBar.setSubtitle("");
           changeDrawer(itemId);
           restoreActionBar();
           return true;
@@ -294,10 +273,10 @@ public class AppNavHomeActivity extends AppCompatActivity {
         changeFragment(fragmentManager, ChrootManagerFragment.newInstance(itemId));
         break;
       case R.id.usbarmory_item:
-        if (new File("/config/usb_gadget").exists()) {
+        if (new File("/config/usb_gadget/g1").exists()) {
           changeFragment(fragmentManager, USBArmoryFragment.newInstance(itemId));
         } else {
-          showWarningDialog("", "Your kernel doesn't support this function.", false);
+          showWarningDialog("", "Your kernel doesn't support FunctionFS. Make sure your kernel version newer than 3.10.", false);
         }
         break;
       case R.id.mhsettings_item:
@@ -311,17 +290,13 @@ public class AppNavHomeActivity extends AppCompatActivity {
           intent.putExtra("com.termux.RUN_COMMAND_PATH", "/data/data/com.termux/files/usr/bin/su");
           intent.putExtra(
               "com.termux.RUN_COMMAND_ARGUMENTS",
-              new String[] {"-c", NhPaths.APP_SCRIPTS_PATH + "/bootroot_login"});
-          // To be honest, I didn't like this method, but it still works great, so I will continue
-          // to use it..and hardly refuse.
-          // intent.putExtra("com.termux.RUN_COMMAND_ARGUMENTS", new String[]{"-c", "echo 'Hello
-          // world!'"});
+              new String[] {"-c", PathsUtil.APP_SCRIPTS_PATH + "/bootroot_login"});
           intent.putExtra("com.termux.RUN_COMMAND_WORKDIR", "/data/data/com.termux/files/home");
           intent.putExtra("com.termux.RUN_COMMAND_BACKGROUND", false);
           intent.putExtra("com.termux.RUN_COMMAND_SESSION_ACTION", "0");
           startService(intent);
         } catch (RuntimeException e) {
-          NhPaths.showMessage(this, "Termux uid isn't exists.", true);
+          PathsUtil.showMessage(this, "Termux uid isn't exists.", true);
         }
         break;
       case R.id.custom_commands_item:
@@ -366,53 +341,58 @@ public class AppNavHomeActivity extends AppCompatActivity {
     warningAD.setCancelable(false);
     warningAD.setTitle(title);
     warningAD.setMessage(message);
-    warningAD.setPositiveButton(
-        "CLOSE",
-        (dialog, which) -> {
-          dialog.dismiss();
-          if (NeedToExit) System.exit(1);
-        });
+    if (NeedToExit)
+        warningAD.setPositiveButton(
+            "Exit",
+            (dialog, which) -> {
+              dialog.cancel();
+              System.exit(1);
+            });
+    else
+        warningAD.setPositiveButton(
+            "Cancel",
+            (dialog, which) -> dialog.cancel());
     warningAD.create().show();
   }
 
-  public class MaterialHunterReceiver extends BroadcastReceiver {
-    public static final String CHECKCOMPAT = "material.hunter.CHECKCOMPAT";
-    public static final String CHECKCHROOT = "material.hunter.CHECKCHROOT";
-    public static final String CHROOT_CORRUPTED = "material.hunter.CHROOT_CORRUPTED";
-    public static final String WORKING = "material.hunter.WORKING";
+    public class MaterialHunterReceiver extends BroadcastReceiver {
+        public static final String CHECKCOMPAT = "material.hunter.CHECKCOMPAT";
+        public static final String CHECKCHROOT = "material.hunter.CHECKCHROOT";
+        public static final String CHROOT_CORRUPTED = "material.hunter.CHROOT_CORRUPTED";
+        public static final String WORKING = "material.hunter.WORKING";
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
-      if (intent.getAction() != null) {
-        switch (intent.getAction()) {
-          case CHECKCOMPAT:
-            showWarningDialog(
-                "MaterialHunter app can't be run properly",
-                intent.getStringExtra("message"),
-                true);
-            break;
-          case CHROOT_CORRUPTED:
-            navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
-          case CHECKCHROOT:
-            try {
-              if (intent.getBooleanExtra("ENABLEFRAGMENT", false)) {
-                navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, true);
-              } else {
-                navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
-              }
-            } catch (Exception e) {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction() != null) {
+                switch (intent.getAction()) {
+                    case CHECKCOMPAT:
+                        showWarningDialog(
+                            "MaterialHunter app can't be run properly",
+                            intent.getStringExtra("message"),
+                            !intent.getBooleanExtra("cancelable", true));
+                        break;
+                    case CHROOT_CORRUPTED:
+                        navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
+                        break;
+                    case CHECKCHROOT:
+                        try {
+                            if (intent.getBooleanExtra("ENABLEFRAGMENT", false)) {
+                                navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, true);
+                            } else {
+                                navigationView.getMenu().setGroupEnabled(R.id.chrootDependentGroup, false);
+                            }
+                        } catch (Exception e) { }
+                        break;
+                    case WORKING:
+                        isBackPressDisabled = intent.getBooleanExtra("working", true);
+                        if (isBackPressDisabled) {
+                            blockActionBar();
+                        } else {
+                            restoreActionBar();
+                        }
+                        break;
+                }
             }
-            break;
-          case WORKING:
-            isBackPressDisabled = intent.getBooleanExtra("working", true);
-            if (isBackPressDisabled) {
-              blockActionBar();
-            } else {
-              restoreActionBar();
-            }
-            break;
         }
-      }
     }
-  }
 }
