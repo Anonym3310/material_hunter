@@ -18,4 +18,4 @@ Chroot Manager app with [Material You Design](https://m3.material.io/)
 - Reboot your device
 - Profit!
 
-# EOL
+:)
