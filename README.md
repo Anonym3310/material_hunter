@@ -8,7 +8,7 @@
 Chroot Manager app with [Material You Design](https://m3.material.io/)
 
 # Supporting
-- Android 7-12 (include x86)
+- Android 7-12 ~~(include x86)~~
 - Windows Subsystem for Android
 
 # Instructions
