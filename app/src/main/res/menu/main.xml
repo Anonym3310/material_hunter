@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:checked="true"
+        android:icon="@drawable/menu_home"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/manager"
+        android:icon="@drawable/menu_android"
+        android:title="Manager"/>
+
+    <item
+        android:id="@+id/menu"
+        android:icon="@drawable/menu_icon"
+        android:title="Menu"/>
+
+</menu>

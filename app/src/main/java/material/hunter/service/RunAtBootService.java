@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.core.app.NotificationCompat;
 
-import material.hunter.AppNavHomeActivity;
 import material.hunter.R;
-import material.hunter.utils.CheckForRoot;
+import material.hunter.utils.Checkers;
 import material.hunter.utils.PathsUtil;
 import material.hunter.utils.ShellExecuter;
 
@@ -24,7 +23,7 @@ public class RunAtBootService extends JobIntentService {
 
     static final int SERVICE_JOB_ID = 1;
     private static final String TAG = "MaterialHunter: Startup";
-    private NotificationCompat.Builder n = null;
+    private NotificationCompat.Builder builder;
     private Context context;
 
     public static void enqueueWork(Context context, Intent work) {
@@ -40,18 +39,19 @@ public class RunAtBootService extends JobIntentService {
     }
 
     private void doNotification(String contents) {
-        if (n == null) {
-            n = new NotificationCompat.Builder(context, AppNavHomeActivity.BOOT_CHANNEL_ID);
+        if (builder == null) {
+            builder = new NotificationCompat.Builder(context, "boot_channel");
         }
-        n.setStyle(new NotificationCompat.BigTextStyle().bigText(contents))
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(contents))
                 .setContentTitle(RunAtBootService.TAG)
                 .setSmallIcon(R.drawable.ic_stat_ic_nh_notificaiton)
+                .setOnlyAlertOnce(true)
                 .setAutoCancel(true);
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         if (notificationManager != null) {
-            notificationManager.notify(999, n.build());
+            notificationManager.notify(999, builder.build());
         }
     }
 
@@ -61,18 +61,18 @@ public class RunAtBootService extends JobIntentService {
     }
 
     protected void onHandleIntent(@NonNull Intent intent) {
-        SharedPreferences o = this.getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
-        if (o.getBoolean("mh_runonboot_enabled", true)) {
-            // 1. Check root -> 2. Run materialhunter init.d files. -> 3. Push notifications.
-            String isOK = "ok";
+        SharedPreferences prefs = getSharedPreferences("material.hunter", Context.MODE_PRIVATE);
+        if (prefs.getBoolean("run_on_boot_enabled", true)) {
+            // 1. Check root and chroot status -> 2. Run materialhunter init.d files. -> 3. Push
+            // notifications.
+            String isOK = "ok.";
             doNotification("Doing boot checks...");
 
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("ROOT", "access isn't granted.");
-            hashMap.put("SELINUX", "enforcing.");
             hashMap.put("CHROOT", "isn't yet installed.");
 
-            if (CheckForRoot.isRoot()) {
+            if (Checkers.isRoot()) {
                 hashMap.put("ROOT", isOK);
             }
 
@@ -82,10 +82,6 @@ public class RunAtBootService extends JobIntentService {
             if (exe.RunAsRootReturnValue(PathsUtil.APP_SCRIPTS_PATH + "/chrootmgr -c \"status\"")
                     == 0) {
                 hashMap.put("CHROOT", isOK);
-            }
-
-            if (!CheckForRoot.isEnforce()) {
-                hashMap.put("SELINUX", "permissive");
             }
 
             String resultMsg = "Boot completed.\nEveryting is fine and chroot has been started.";
@@ -98,9 +94,6 @@ public class RunAtBootService extends JobIntentService {
             doNotification(
                     "Root: "
                             + hashMap.get("ROOT")
-                            + "\n"
-                            + "Selinux: "
-                            + hashMap.get("SELINUX")
                             + "\n"
                             + "Chroot: "
                             + hashMap.get("CHROOT")
@@ -118,7 +111,7 @@ public class RunAtBootService extends JobIntentService {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel serviceChannel =
                     new NotificationChannel(
-                            AppNavHomeActivity.BOOT_CHANNEL_ID,
+                            "boot_channel",
                             "MaterialHunter: Boot Check Service",
                             NotificationManager.IMPORTANCE_HIGH);
 

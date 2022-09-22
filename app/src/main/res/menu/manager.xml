@@ -1,0 +1,34 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/clear_logger"
+        android:icon="@drawable/delete_sweep"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/update_chroot_status"
+        android:icon="@drawable/update"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/edit_chroot_folder"
+        android:icon="@drawable/snippet_folder"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/change_system_path"
+        android:title="Change system path"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/security_settings"
+        android:title="Security settings"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/rename_chroot_folder"
+        android:title="Rename chroot folder"
+        app:showAsAction="never" />
+
+</menu>

@@ -1,6 +1,10 @@
 <resources>
+
     <string name="app_name">MaterialHunter</string>
     <string name="app_nav_home_label">MaterialHunter</string>
+    <string name="home">Home</string>
+    <string name="manager">Manager</string>
+    <string name="menu">Menu</string>
 
     <!-- Custom Spinner Array -->
     <string-array name="array_move_position">
@@ -50,4 +54,8 @@
         <item>interactive</item>
         <item>background</item>
     </string-array>
+
+    <string name="update">Update</string>
+    <string name="mh_repository">https://raw.githubusercontent.com/Mirivan/dev-root-project/main/.materialrepo</string>
+
 </resources>

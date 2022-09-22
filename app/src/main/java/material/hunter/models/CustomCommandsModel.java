@@ -1,62 +1,58 @@
 package material.hunter.models;
 
 public class CustomCommandsModel {
-    private String CommandLabel;
-    private String Command;
-    private String RuntimeEnv;
-    private String ExecutionMode;
-    private String RunOnBoot;
 
-    public CustomCommandsModel(
-            String CommandLabel,
-            String Command,
-            String RuntimeEnv,
-            String ExecutionMode,
-            String RunOnBoot) {
-        this.CommandLabel = CommandLabel;
-        this.Command = Command;
-        this.RuntimeEnv = RuntimeEnv;
-        this.ExecutionMode = ExecutionMode;
-        this.RunOnBoot = RunOnBoot;
+    private String label;
+    private String cmd;
+    private String env;
+    private String mode;
+    private String receive;
+
+    public CustomCommandsModel(String label, String cmd, String env, String mode, String receive) {
+        this.label = label;
+        this.cmd = cmd;
+        this.env = env;
+        this.mode = mode;
+        this.receive = receive;
     }
 
-    public String getCommandLabel() {
-        return CommandLabel;
+    public String getLabel() {
+        return label;
     }
 
-    public void setCommandLabel(String CommandLabel) {
-        this.CommandLabel = CommandLabel;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public String getCommand() {
-        return Command;
+        return cmd;
     }
 
-    public void setCommand(String Command) {
-        this.Command = Command;
+    public void setCommand(String cmd) {
+        this.cmd = cmd;
     }
 
-    public String getRuntimeEnv() {
-        return RuntimeEnv;
+    public String getEnv() {
+        return env;
     }
 
-    public void setRuntimeEnv(String RuntimeEnv) {
-        this.RuntimeEnv = RuntimeEnv;
+    public void setEnv(String env) {
+        this.env = env;
     }
 
-    public String getExecutionMode() {
-        return ExecutionMode;
+    public String getMode() {
+        return mode;
     }
 
-    public void setExecutionMode(String ExecutionMode) {
-        this.ExecutionMode = ExecutionMode;
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
     public String getRunOnBoot() {
-        return RunOnBoot;
+        return receive;
     }
 
-    public void setRunOnBoot(String RunOnBoot) {
-        this.RunOnBoot = RunOnBoot;
+    public void setRunOnBoot(String receive) {
+        this.receive = receive;
     }
 }

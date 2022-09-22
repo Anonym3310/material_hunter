@@ -1,6 +1,7 @@
 package material.hunter.models;
 
 public class ServicesModel {
+
     private String ServiceName;
     private String CommandforStartService;
     private String CommandforStopService;

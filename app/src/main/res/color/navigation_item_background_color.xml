@@ -1,0 +1,7 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:alpha="@dimen/material_emphasis_disabled" android:state_activated="true" android:color="?attr/colorTertiaryContainer"/>
+    <item android:alpha="@dimen/material_emphasis_disabled" android:state_checked="true" android:color="?attr/colorTertiaryContainer"/>
+    <item android:color="@android:color/transparent"/>
+
+</selector>

@@ -1,58 +1,51 @@
 [
-  {
-    "artifactId": "legacy-support-v4",
-    "excludes": [],
-    "groupId": "androidx.legacy",
-    "scope": "compile",
-    "versionName": "1.0.0"
-  },
-  {
-    "artifactId": "appcompat",
-    "excludes": [],
-    "groupId": "androidx.appcompat",
-    "scope": "compile",
-    "versionName": "1.2.0"
-  },
-  {
-    "artifactId": "constraintlayout",
-    "excludes": [],
-    "groupId": "androidx.constraintlayout",
-    "scope": "compile",
-    "versionName": "2.0.4"
-  },
-  {
-    "artifactId": "lifecycle-extensions",
-    "excludes": [],
-    "groupId": "androidx.lifecycle",
-    "scope": "compile",
-    "versionName": "2.2.0"
-  },
-  {
-    "artifactId": "guava",
-    "excludes": [],
-    "groupId": "com.google.guava",
-    "scope": "compile",
-    "versionName": "31.0.1-jre"
-  },
-  {
-    "artifactId": "material",
-    "excludes": [],
-    "groupId": "com.google.android.material",
-    "scope": "compile",
-    "versionName": "1.5.0"
-  },
-  {
-    "artifactId": "lottie",
-    "excludes": [],
-    "groupId": "com.airbnb.android",
-    "scope": "compile",
-    "versionName": "4.2.2"
-  },
-  {
-    "artifactId": "jsoup",
-    "excludes": [],
-    "groupId": "org.jsoup",
-    "scope": "compile",
-    "versionName": "1.14.3"
-  }
+	{
+		"artifactId": "legacy-support-v4",
+		"excludes": [],
+		"groupId": "androidx.legacy",
+		"scope": "compile",
+		"versionName": "1.0.0"
+	},
+	{
+		"artifactId": "appcompat",
+		"excludes": [],
+		"groupId": "androidx.appcompat",
+		"scope": "compile",
+		"versionName": "1.4.2"
+	},
+	{
+		"artifactId": "constraintlayout",
+		"excludes": [],
+		"groupId": "androidx.constraintlayout",
+		"scope": "compile",
+		"versionName": "2.1.4"
+	},
+	{
+		"artifactId": "lifecycle-extensions",
+		"excludes": [],
+		"groupId": "androidx.lifecycle",
+		"scope": "compile",
+		"versionName": "2.2.0"
+	},
+	{
+		"artifactId": "guava",
+		"excludes": [],
+		"groupId": "com.google.guava",
+		"scope": "compile",
+		"versionName": "31.1-jre"
+	},
+	{
+		"artifactId": "lottie",
+		"excludes": [],
+		"groupId": "com.airbnb.android",
+		"scope": "compile",
+		"versionName": "5.2.0"
+	},
+	{
+		"artifactId": "material",
+		"excludes": [],
+		"groupId": "com.google.android.material",
+		"scope": "compile",
+		"versionName": "1.6.1"
+	}
 ]
