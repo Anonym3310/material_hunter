@@ -79,8 +79,6 @@ function revert_to_ori_state(){
     if [ ! -e $DIR_CUR_FUNCS/$SYMLINK_FUNC_NAME ]; then
         ln -s $DIR_ALL_FUNCS/ffs.adb $DIR_CUR_FUNCS/$SYMLINK_FUNC_NAME
     fi
-    echo "$ID_VENDOR" > $DIR_CONFIGFS/idVendor
-    echo "$ID_PRODUCT" > $DIR_CONFIGFS/idProduct
     fireup_funcs
 }
 
@@ -212,6 +210,17 @@ function switch_funcs(){
     local IS_ACM_READY=1
     local IS_ECM_READY=1
 
+    ## Setup the idProduct, idVendor, manufacturer, product, serialnumber
+
+    echo "$ID_VENDOR" > $DIR_CONFIGFS/idVendor
+    echo "$ID_PRODUCT" > $DIR_CONFIGFS/idProduct
+
+    ## Changing manufacturer, product, serialnumber may make your PC fail to authen your device again, ##
+    ## so this part is disabled now until further experiment. ##
+    [ ! -z "$MANUFACTURER" ] && [ -f $DIR_CONFIGFS/strings/0x409/manufacturer ] && echo "$MANUFACTURER" > $DIR_CONFIGFS/strings/0x409/manufacturer
+    [ ! -z "$PRODUCT" ]      && [ -f $DIR_CONFIGFS/strings/0x409/product ]      && echo "$PRODUCT" > $DIR_CONFIGFS/strings/0x409/product
+    [ ! -z "$SERIALNUMBER" ] && [ -f $DIR_CONFIGFS/strings/0x409/serialnumber ] && echo "$SERIALNUMBER" > $DIR_CONFIGFS/strings/0x409/serialnumber
+
     ## If the target function is "reset" then go to reset function directly ##
     if [ "$TARGET_FUNCS" = "reset" ]; then
         echo "[!] Resetting the usb functions."
@@ -315,67 +324,19 @@ function switch_funcs(){
     done
 
     ## Last work to do ##
-    ## 1. Setup the idProduct, idVendor, manufacturer, product, serialnumber
-    #if [ -z "$ID_VENDOR" -o -z "$ID_PRODUCT" ]; then
-    #    case "$TARGET_OS" in
-    #        win|lnx)
-    #            if [ $(($IS_HID_SELECTED | $IS_MASS_SELECTED | $IS_RNDIS_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x0525"; ID_PRODUCT="0xa4a8"
-    #            elif [ $(($IS_HID_SELECTED | $IS_MASS_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x046d"; ID_PRODUCT="0xc318"
-    #            elif [ $(($IS_HID_SELECTED | $IS_RNDIS_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x0525"; ID_PRODUCT="0xa4a6"
-    #            elif [ $(($IS_MASS_SELECTED | $IS_RNDIS_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x0525"; ID_PRODUCT="0xa4a4"
-    #            elif [ $IS_HID_SELECTED -eq 0 ]; then
-    #                ID_VENDOR="0x046d"; ID_PRODUCT="0xc316"
-    #            elif [ $IS_MASS_SELECTED -eq 0 ]; then
-    #                ID_VENDOR="0x9051"; ID_PRODUCT="0x168a"
-    #            elif [ $IS_RNDIS_SELECTED -eq 0 ]; then
-    #                ID_VENDOR="0x0525"; ID_PRODUCT="0xa4a2"
-    #            fi
-    #            ;;
-    #        mac)
-    #            if [ $(($IS_HID_SELECTED | $IS_MASS_SELECTED | $IS_ACM_SELECTED | $IS_ECM_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x05ac"; ID_PRODUCT="0x0201"
-    #            elif [ $(($IS_HID_SELECTED | $IS_MASS_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x05ac"; ID_PRODUCT="0x0201"
-    #            elif [ $(($IS_HID_SELECTED | $IS_ACM_SELECTED | $IS_ECM_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x05ac"; ID_PRODUCT="0x0201"
-    #            elif [ $(($IS_MASS_SELECTED | $IS_ACM_SELECTED | $IS_ECM_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x1d6b"; ID_PRODUCT="0x0105"
-    #            elif [ $IS_HID_SELECTED -eq 0 ]; then
-    #                ID_VENDOR="0x05ac"; ID_PRODUCT="0x0201"
-    #            elif [ $IS_MASS_SELECTED -eq 0 ]; then
-    #                ID_VENDOR="0x0930"; ID_PRODUCT="0x6545"
-    #            elif [ $(($IS_ACM_SELECTED | $IS_ECM_SELECTED)) -eq 0 ]; then
-    #                ID_VENDOR="0x1d6b"; ID_PRODUCT="0x0105"
-    #            fi
-    #            ;;
-    #    esac
-    #fi
 
-    echo "$ID_VENDOR" > $DIR_CONFIGFS/idVendor
-    echo "$ID_PRODUCT" > $DIR_CONFIGFS/idProduct
-
-    ## Changing manufacturer, product, serialnumber may make your PC fail to authen your device again, ##
-    ## so this part is disabled now until further experiment. ##
-    [ ! -z "$MANUFACTURER" ] && [ -f $DIR_CONFIGFS/strings/0x409/manufacturer ] && echo "$MANUFACTURER" > $DIR_CONFIGFS/strings/0x409/manufacturer
-    [ ! -z "$PRODUCT" ]      && [ -f $DIR_CONFIGFS/strings/0x409/product ]      && echo "$PRODUCT" > $DIR_CONFIGFS/strings/0x409/product
-    [ ! -z "$SERIALNUMBER" ] && [ -f $DIR_CONFIGFS/strings/0x409/serialnumber ] && echo "$SERIALNUMBER" > $DIR_CONFIGFS/strings/0x409/serialnumber
-
-    ## 2. Fireup the usb functions ##
+    ## 1. Fireup the usb functions ##
     if [ $IS_ADB_SELECTED -eq 0 ]; then
         start adbd
         setprop sys.usb.ffs.ready 1
     fi
     fireup_funcs
 
-    ## 3. Set the configuration description. ##
+    ## 2. Set the configuration description. ##
     FUNCS_DESC=$(join_by _ "${FUNCS_DESC[@]}")
     echo "$FUNCS_DESC" > $DIR_CUR_FUNCS/strings/0x409/configuration
 
-    ## 4. Check If the hid enabled, but still no /dev/hidg0 and /dev/hidg1 available. ##
+    ## 3. Check If the hid enabled, but still no /dev/hidg0 and /dev/hidg1 available. ##
     if [ $IS_HID_SELECTED -eq 0 ]; then
         if [ ! -c /dev/hidg0 -o ! -c /dev/hidg1 ]; then
             echo "[-] No /dev/hidg0 or /dev/hidg1 is up"

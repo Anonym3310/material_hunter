@@ -30,4 +30,5 @@ unset LD_PRELOAD
 unset PREFIX
 unset TMPDIR
 
+# TODO: избавиться от костылей в этой части (вызов из сервисов)
 $BUSYBOX chroot $MNT $CHROOT_EXEC -E PATH=$PATH su -c "$*"

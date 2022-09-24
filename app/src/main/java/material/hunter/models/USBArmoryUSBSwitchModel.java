@@ -1,6 +1,7 @@
 package material.hunter.models;
 
 public class USBArmoryUSBSwitchModel {
+
     private String idVendor;
     private String idProduct;
     private String manufacturer;

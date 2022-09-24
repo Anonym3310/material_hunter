@@ -4,15 +4,22 @@
 ## Define chroot sudo path
 CHROOT_EXEC=/usr/bin/sudo
 
-## Define base system path
-NHSYSTEM_PATH=/data/local/nhsystem
+## Define chroot paths
+CHROOT_SYSTEM_PATH=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | sed -n 's/.*<string name="chroot_system_path">\(.*\)<\/string>/\1/p'`
+if [ -z $CHROOT_SYSTEM_PATH ]; then
+    CHROOT_SYSTEM_PATH="/data/local/nhsystem"
+fi
+directory=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | sed -n 's/.*<string name="chroot_directory">\(.*\)<\/string>/\1/p'`
+if [ -z $directory ]; then
+    directory="chroot"
+fi
 
 ## Combine android $PATH to chroot $PATH
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 
 ## Define busybox path
 BUSYBOX=`which busybox | head -n1`
-if [ -z "$BUSYBOX" ]; then
+if [ -z $BUSYBOX ]; then
     if [ -x "/system/xbin/busybox" ]; then
         BUSYBOX="/system/xbin/busybox"
     elif [ -x "/system/bin/busybox" ]; then
@@ -21,11 +28,12 @@ if [ -z "$BUSYBOX" ]; then
 fi
 
 ## Define chroot settings
-sdcard_part=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"sdcard_part\"" | sed "s/^.*\"sdcard_part\">\(.*\)<\/string>/\1/g"`
-system_part=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"system_part\"" | sed "s/^.*\"system_part\">\(.*\)<\/string>/\1/g"`
+mount_sdcard=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | sed -n 's/.*<boolean name="mount_sdcard" value="\(.*\)" \/>/\1/p'`
+mount_system=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | sed -n 's/.*<boolean name="mount_system" value="\(.*\)" \/>/\1/p'`
+mount_data=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | sed -n 's/.*<boolean name="mount_data" value="\(.*\)" \/>/\1/p'`
 
-## Define executable variables
-MNT=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"chroot_directory_path\"" | sed "s/^.*\"chroot_directory_path\">\(.*\)<\/string>/\1/g"`
+## Define MNT (full path to target chroot)
+MNT="$CHROOT_SYSTEM_PATH/$directory"
 
 HOSTNAME=`cat /data/data/material.hunter/shared_prefs/material.hunter.xml | grep "\"hostname\"" | sed "s/^.*\"hostname\">\(.*\)<\/string>/\1/g"`
 if [ -z $HOSTNAME ]; then

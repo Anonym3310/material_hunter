@@ -8,14 +8,15 @@
 Chroot Manager app with [Material You Design](https://m3.material.io/)
 
 # Supporting
-- Android 7-12 ~~(include x86)~~
-- Windows Subsystem for Android
+- Android 7-12 (include x86)
+
+# Requires
+- Termux
+- Magisk SU
 
 # Instructions
 - Download and install app
 - Grant all permissions (including root)
-- Navigate to Menu > Chroot Manager > Install > Download > Enter a direct link to choot traball > Wait
+- Navigate to Menu > Manager > Install > Download > Enter a direct link to choot traball > Wait
 - Reboot your device
 - Profit!
-
-New version coming soon!

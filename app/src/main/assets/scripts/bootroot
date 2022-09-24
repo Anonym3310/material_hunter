@@ -17,6 +17,12 @@ if [ -z "$MNT" ]; then
     exit 2
 fi
 
+if [ ! -d "$MNT" ]; then
+    echo "[-] Chroot directory doesn't exist."
+    echo "[!] Don't do stupid things."
+    exit 2
+fi
+
 # Check chroot status
 check_chroot() {
     if [ ! "$($BUSYBOX chroot $MNT /bin/uname)" ]; then
@@ -39,7 +45,16 @@ check_chroot() {
 # Check mount
 check_mount(){
     local FS
-    FS=(proc sys dev dev/pts $system_part $sdcard_part)
+    FS=(proc sys dev dev/pts)
+    if [ $mount_sdcard == "true" ]; then
+        FS[${#FS[@]}]=sdcard
+    fi
+    if [ $mount_system == "true" ]; then
+        FS[${#FS[@]}]=system
+    fi
+    if [ $mount_data == "true" ]; then
+        FS[${#FS[@]}]=data
+    fi
     for i in "${FS[@]}"; do
         if [ "$(grep $MNT/$i /proc/mounts)" ]; then
             echo "[+] $i partition is mounted."
@@ -107,7 +122,7 @@ do_mount() {
     fi
 
     ######### SET SYSTEM ########
-    if [ -n "$system_part" ]; then
+    if [ $mount_system == "true" ]; then
         if [ ! "$($BUSYBOX mountpoint $MNT/system 2> /dev/null | grep 'is a')" ]; then
             [ -d $MNT/system ] && rm -rf $MNT/system
             [ ! -d $MNT/system ] && mkdir -p $MNT/system
@@ -115,8 +130,17 @@ do_mount() {
         fi
     fi
 
+    ######### SET DATA ########
+    if [ $mount_data == "true" ]; then
+        if [ ! "$($BUSYBOX mountpoint $MNT/data 2> /dev/null | grep 'is a')" ]; then
+            # [ -d $MNT/data ] && rm -rf $MNT/data
+            [ ! -d $MNT/data ] && mkdir -p $MNT/data
+            $BUSYBOX mount -o bind /data $MNT/data && echo "[+] mounted /data"
+        fi
+    fi
+
     ######### SET INTERNAL SDCARD ########
-    if [ -n "$sdcard_part" ]; then
+    if [ $mount_sdcard == "true" ]; then
         if [ ! "$($BUSYBOX mountpoint $MNT/sdcard 2> /dev/null | grep 'is a')" ]; then
             [ ! -d $MNT/sdcard ] && mkdir -p $MNT/sdcard
             for sdcard in \

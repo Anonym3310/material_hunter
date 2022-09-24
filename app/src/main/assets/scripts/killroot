@@ -31,12 +31,10 @@ kill_processes() {
 
 # Restoring the device to its original state
 restore_state() {
-    echo "[!] Restoring the device to its original state..."
+    echo "[!] Restoring the device to it's original state..."
 
     # Restore shared memory
     $BUSYBOX sysctl -w kernel.shmmax=134217728
-
-    # i
 }
 
 # Unbinding filesystem
@@ -49,9 +47,18 @@ do_unmount() {
 
     # Safely try to unmount internal storage partition
     $BUSYBOX umount -l $MNT/sdcard
-    echo "[+] Internal storage partition is unmounted."
-    if [ ! "$($BUSYBOX mountpoint $MNT/sdcard 2> /dev/null | grep 'is a')" ]; then
+    if [ "$($BUSYBOX mountpoint $MNT/sdcard 2> /dev/null | grep 'is a')" ]; then
+        echo "[-] Internal storage partition is a mountpoint, unmount failed, bad thing."
+    else
         echo "[+] Internal storage partition isn't a mountpoint now, everything fine."
+    fi
+
+    # Safely try to unmount data partition
+    $BUSYBOX umount $MNT/data | $BUSYBOX umount -l $MNT/data
+    if [ "$($BUSYBOX mountpoint $MNT/data 2> /dev/null | grep 'is a')" ]; then
+        echo "[+] /data partition is a mountpoint now, bad thing."
+    else
+        echo "[+] /data partition is unmounted."
     fi
 
     FS=(dev/pts dev/shm dev proc sys system)

@@ -7,11 +7,8 @@ shels=$(readlink -f $0)
 #### DEFINE GLOBAL VARIABLES ####
 #################################
 
-# Check directory state
-[ ! -d $NHSYSTEM_PATH ] && mkdir -p $NHSYSTEM_PATH
-
 # Check busybox functionality
-if [ -z "$BUSYBOX" ]; then
+if [ -z $BUSYBOX ]; then
     echo "[-] Busybox isn't installed or permissions isn't granted to execute it."
     echo "Check has been made for:"
     echo "1. /system/xbin"
@@ -28,7 +25,7 @@ f_chroot_usage(){
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"getchtpath\" ---> return the string of current chroot container path."
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"status\" ---> return 0 if chroot is mounted, return 1 if choot is not yet mounted, return 2 if no chroot is found, return 3 if chroot corrupted."
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"backup <full_path_of_your_chroot_folder> <full_path_with_desired_name.tar.[gx]z>\""
-    echo "[!] chrootmgr [-p <your chroot folder>] -c \"restore <full_path_of_your_.tar.[gx]z> </data/local/nhsystem/>\""
+    echo "[!] chrootmgr [-p <your chroot folder>] -c \"restore <full_path_of_your_.tar.[gx]z> <chroot_system_path/>\""
     echo "[!] chrootmgr [-p <your chroot folder>] -c \"remove <full_path_of_your_chroot_folder>\" ---> Delete your chroot folder without rebooting the device, but not 100% guranteed success"
     echo "[!] If -p option is not specified, then the script will find the chroot path according to the app sharepreference."
 }
@@ -90,19 +87,48 @@ if [ ! $# -eq 0 ]; then
                         echo "[+] Seems you have chroot installed already!"
                         if [ ! -x "$MNT/$CHROOT_EXEC" ]; then
                             echo "[-] sudo not installed. This is not a MaterialHunter problem!"
-                            echo "Solutions:"
-                            echo "1. Try using busybox to login and install it"
-                            echo "2. Contact chroot builder"
+                            if [ -z $(cat $MNT/etc/resolv.conf) ]; then
+                                echo "[-] An attempt was made to install sudo, but it failed, because resolv.conf is empty."
+                                echo "[!] Hint: you can set Google DNS manually for normal internet inside chroot:"
+                                echo "su -mm"
+                                echo "$BUSYBOX chroot $MNT /usr/bin/sh"
+                                echo "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:\$PATH"
+                                echo "echo \"nameserver 8.8.8.8\" > /etc/resolv.conf"
+                                echo "echo \"nameserver 8.8.4.4\" >> /etc/resolv.conf"
+                            else
+                                if PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH $BUSYBOX chroot $MNT /usr/bin/sh -c "apt update && apt install sudo -y" &> /dev/null; then
+                                    echo "[!] An attempt was made to install sudo, update chroot status in app bar."
+                                else
+                                    echo "[-] An attempt was made to install sudo, but it failed."
+                                    echo "Solutions:"
+                                    echo "1. Try using busybox to login and install it manually:"
+                                    echo "su -mm"
+                                    echo "$BUSYBOX chroot $MNT /usr/bin/sh"
+                                    echo "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:\$PATH"
+                                    echo "apt update"
+                                    echo "apt install sudo"
+                                    echo "2. Contact chroot builder"
+                                fi
+                            fi
                             return 3
                         fi
                         ISALLREADY=0
-                        FS=(proc sys dev dev/pts $system_part $sdcard_part)
+                        FS=(proc sys dev dev/pts)
+                        if [ $mount_sdcard == "true" ]; then
+                            FS[${#FS[@]}]=sdcard
+                        fi
+                        if [ $mount_system == "true" ]; then
+                            FS[${#FS[@]}]=system
+                        fi
+                        if [ $mount_data == "true" ]; then
+                            FS[${#FS[@]}]=data
+                        fi
                         for i in "${FS[@]}"; do
                             if [ "$($BUSYBOX grep $MNT/$i /proc/mounts)" ]; then
                                 echo "[+] $i was mounted already."
                                 continue
                             else
-                                echo "[-] $i is not yet mounted."
+                                echo "[-] $i isn't yet mounted."
                                 ISALLREADY=1
                             fi
                         done
@@ -140,24 +166,27 @@ if [ ! $# -eq 0 ]; then
                     fi
                     [ ! -d $1 ] && echo "[-] $1 not found, please check again." && exit 1;
                     TARGET_DIR=`echo "$1" | $BUSYBOX sed "s/\(\/\+\)$//g" | $BUSYBOX awk -F/ '{print $NF}'`
-                    if chrootmgr -c "status"; then
+                    if ${shels%/*}/chrootmgr -c "status" &> /dev/null; then
                         echo "[!] Chroot is mounted! Running killroot to make sure no service or process is being run."
-                        if ! killroot; then
-                            echo "[-] Aborted! killroot failed to unmount or kill all the fs. Please check.."
+                        if ! ${shels%/*}/killroot; then
+                            echo "[-] Aborted! killroot failed to unmount or kill all the fs. Something wrong."
                             exit 1
                         fi
                     else
                         echo "[!] Chroot is already unmounted."
                     fi
-                    echo "[!] Creating chroot backup from \"$TARGET_DIR\" to \"$2\", please be patient until it is finished.."
+                    echo "[!] Creating chroot backup from \"$TARGET_DIR\" to \"$2\"."
+                    echo "[$] Please don't kill the app during this proccess. MaterialHunter doesn't support background support for processes of this type, as it takes up an impressive amount of RAM."
                     cd $1/../ || exit
-                    if echo $2 | $BUSYBOX grep -q ".tar.gz$"; then
-                        $BUSYBOX tar czf $2 $TARGET_DIR
-                        $BUSYBOX sync
-                    else
-                        echo "[!] You must use tar.gz compression."
-                        echo "Do not use tar.xz, it is slow and takes up more space"
-                        exit 1
+                    if echo $2 | $BUSYBOX grep -q ".tar.[gx]z$"; then
+                        if echo $2 | $BUSYBOX grep -q ".tar.xz$"; then
+                            echo "[!] It is recommended to use .tar.gz compression for chroot backup. XZ compression is slow and takes up more space."
+                            $BUSYBOX tar cJf $2 $TARGET_DIR
+                            $BUSYBOX sync
+                        else
+                            $BUSYBOX tar czf $2 $TARGET_DIR
+                            $BUSYBOX sync
+                        fi
                     fi
                     echo "[+] Done! Backup has been created at \"$2\"."
                     return 0
@@ -173,14 +202,13 @@ if [ ! $# -eq 0 ]; then
                 2)
                     TARGET_TARBALL_PATH=$1
                     TARGET_CHROOT_DIR_NAME=$2
+                    local TARGET_TARBALL_DIRS_COLUMN
 
-                    echo "[!] Checking... Please stay on the screen until process completes."
                     if ! echo $TARGET_TARBALL_PATH | grep -q ".tar.[gx]z$"; then
                         echo "[-] Invalid filename, make sure it is followed by tar.gz or tar.xz"
                         exit 1
                     fi
                     [ ! -e $TARGET_TARBALL_PATH ] && echo "[-] $TARGET_TARBALL_PATH not found, please check again." && exit 1;
-                    [ ! "$(echo $TARGET_CHROOT_DIR_NAME | $BUSYBOX grep -E '^/data/local/nhsystem/')" ] && echo "[-] The chroot folder must be extracted to /data/local/nhsystem/" && exit 1;
                     if [ -d $TARGET_CHROOT_DIR_NAME ]; then
                         if [ "$(ls -A $TARGET_CHROOT_DIR_NAME)" ]; then
                             echo "[-] $TARGET_CHROOT_DIR_NAME is not a empty directory, please either delete the whole folder or all the files in it first."
@@ -199,30 +227,29 @@ if [ ! $# -eq 0 ]; then
                             fi
                         fi
                     done
-                    echo "[!] Chroot requires at least 8 Gb free sapce just to make sure it won't break your system."
-                    echo "[!] Checking storage capacity..."
-                    SDCARD_PARTITION=$(mount | grep sdcardfs | $BUSYBOX awk '{print $1}' | head -n1)
-                    AVAILABLESIZE=$(df $SDCARD_PARTITION | tail -n1 | $BUSYBOX awk '{s=$4} END{print (s/1024)}' | sed 's/\..*$//')
-                    echo "[!] Available size of $SDCARD_PARTITION partition: $AVAILABLESIZE MB"
-                    if [ ! $AVAILABLESIZE -gt 0 ]; then
-                        echo "[-] Error checking space. Continuing to damage the device!"
-                        exit 1
-                    fi
-                    echo "[!] Restoring the chroot backup from \"$TARGET_TARBALL_PATH\" to \"$TARGET_CHROOT_DIR_NAME\""
+                    echo "[!] Chroot occupies the space of the internal storage of your device, make sure that there is enough space to install the tar image, just to make sure it won't break your system."
+                    echo "[$] Please don't kill the app during this proccess. MaterialHunter doesn't support background support for processes of this type, as it takes up an impressive amount of RAM."
+                    echo "[!] Installing from \"$TARGET_TARBALL_PATH\""
                     echo "[!] It may take a while, please be patient until it is finished extracting..."
 
                     if echo $TARGET_TARBALL_PATH | $BUSYBOX grep -q ".tar.[gx]z$"; then
-                        TARBALL_ROOTDIR_NAME=$($BUSYBOX tar -tf $TARGET_TARBALL_PATH | $BUSYBOX sed -e 's@/.*@@' | $BUSYBOX uniq | $BUSYBOX sed 's/\/.*$//')
-                        if [ $(echo $TARBALL_ROOTDIR_NAME | $BUSYBOX sed 's/ /\n/g' | wc -l) -eq 1 ]; then
-                            $BUSYBOX tar xf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/ --exclude `echo "$TARBALL_ROOTDIR_NAME/dev"`
+                        TARBALL_ROOT_DIR_OR_LIST=$($BUSYBOX tar -tf $TARGET_TARBALL_PATH | $BUSYBOX sed -e 's@/.*@@' | $BUSYBOX uniq | $BUSYBOX sed 's/\/.*$//')
+                        TARBALL_DIRS_COLUMN=$(echo $TARBALL_ROOT_DIR_OR_LIST | $BUSYBOX sed 's/ /\n/g' | wc -l)
+                        if [ TARBALL_DIRS_COLUMN -eq 1 ]; then
+                            $BUSYBOX tar xf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/ --exclude $TARBALL_ROOTDIR_NAME/dev
                             $BUSYBOX sync
+                            mv "$TEMP_EXTRACT_DIR/$TARBALL_ROOT_DIR_OR_LIST" "$TARGET_CHROOT_DIR_NAME"
+                        elif [ TARBALL_DIRS_COLUMN -gt 1 ]; then
+                            $BUSYBOX tar xf $TARGET_TARBALL_PATH -C `echo "$TEMP_EXTRACT_DIR" | $BUSYBOX sed "s/\(\/\+\)$//g"`/ --exclude dev
+                            $BUSYBOX sync
+                            mv "$TEMP_EXTRACT_DIR" "$TARGET_CHROOT_DIR_NAME"
                         else
                             echo "[-] $TARGET_TARBALL_PATH is not a valid tarball file for chroot, make sure there is only one root directory at the top level of the tarball file."
+                            exit 1
                         fi
                     fi
-                    mv "$TEMP_EXTRACT_DIR/$TARBALL_ROOTDIR_NAME" "$TARGET_CHROOT_DIR_NAME"
                     rmdir "$TEMP_EXTRACT_DIR"
-                    echo "[+] Chroot has been installed."
+                    echo "[+] Chroot has been installed successfully."
                     return 0
                     ;;
                 *)
@@ -237,12 +264,13 @@ if [ ! $# -eq 0 ]; then
                     [ ! -d $MNT ] && echo "[-] Chroot directory doesn't exist..aborted." && exit 1
                     $SOURCE_PATH/killroot
                     [ $? -eq 1 ] && echo "[-] Failed to unmount the chroot environment..aborted." && exit 1
-                    [ ! -z "$(ls $MNT/sdcard)" ] && echo "[-] Internal storage partition isn't unmounted..aborted." && exit 1
+                    [ ! -z "$(ls -A $MNT/sdcard)" ] && echo "[-] Internal storage partition isn't unmounted..aborted." && exit 1
                     echo "[!] Removing chroot now..."
-                    echo "It may take a while, be patient."
+                    echo "[!] It may take a while, be patient."
                     rm -rf $MNT
                     $BUSYBOX sync
                     echo "[+] Chroot has been removed successfully."
+                    [ -z "$(ls $CHROOT_SYSTEM_PATH)" ] && echo "[!] Chroot system path is empty..removing now." && rm -rf $CHROOT_SYSTEM_PATH
                     ;;
                 *)
                     f_chroot_usage
@@ -253,20 +281,24 @@ if [ ! $# -eq 0 ]; then
             shift 1
             case $# in
                 0)
-                    CHROOT_ARCH=($($BUSYBOX find $NHSYSTEM_PATH -type d -maxdepth 1 -exec $BUSYBOX basename {} \; | $BUSYBOX grep -E '^[^nhsystem]'))
-                    if [ $(echo ${#CHROOT_ARCH[@]}) -eq 1 ]; then
-                        if [ "$($BUSYBOX chroot $NHSYSTEM_PATH/$CHROOT_ARCH /bin/uname -n)" ]; then
-                            echo $CHROOT_ARCH
-                        fi
-                    elif [ $(echo ${#CHROOT_ARCH[@]}) -gt 1 ]; then
-                        for CHROOT_COUNT in $(seq 0 ${#CHROOT_ARCH[@]}); do
-                            if [ ! "$($BUSYBOX chroot $NHSYSTEM_PATH/${CHROOT_ARCH[$CHROOT_COUNT]} /bin/uname -n)" ]; then
-                                unset CHROOT_ARCH[$CHROOT_COUNT]
-                            fi
-                        done
-                        echo ${CHROOT_ARCH[@]} | sed 's/ /\n/g'
-                    else
+                    if [ ! -d $CHROOT_SYSTEM_PATH ]; then
                         echo ""
+                    else
+                        CHROOT_ARCH=($($BUSYBOX find $CHROOT_SYSTEM_PATH -type d -maxdepth 1 -exec $BUSYBOX basename {} \;))
+                        if [ $(echo ${#CHROOT_ARCH[@]}) -eq 1 ]; then
+                            if [ $BUSYBOX chroot $CHROOT_SYSTEM_PATH/$CHROOT_ARCH /bin/uname -n &> /dev/null ]; then
+                                echo ""
+                            fi
+                        elif [ $(echo ${#CHROOT_ARCH[@]}) -gt 1 ]; then
+                            for CHROOT_COUNT in $(seq 0 ${#CHROOT_ARCH[@]}); do
+                                if [ ! $BUSYBOX chroot $CHROOT_SYSTEM_PATH/${CHROOT_ARCH[$CHROOT_COUNT]} /bin/uname -n &> /dev/null ]; then
+                                    unset CHROOT_ARCH[$CHROOT_COUNT]
+                                fi
+                            done
+                            echo ${CHROOT_ARCH[@]} | sed 's/ /\n/g' | tail -n +2
+                        else
+                            echo ""
+                        fi
                     fi
                     ;;
                 *)

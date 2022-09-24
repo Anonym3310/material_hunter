@@ -16,6 +16,8 @@
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="com.offsec.nhterm.permission.RUN_SCRIPT_SU" />
 
     <supports-screens
         android:anyDensity="true"
@@ -36,12 +38,12 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize" >
         <activity
-            android:name=".SplashScreen"
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:theme="@style/Theme.MaterialHunter" >
-            <intent-filter android:label="@string/app_nav_home_label" >
+            <intent-filter android:label="Home" >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -49,14 +51,102 @@
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".AppNavHomeActivity"
+            android:name=".TerminalRunActivity"
+            android:excludeFromRecents="true"
+            android:icon="@mipmap/ic_mh_termux"
+            android:label="Chroot Terminal"
+            android:launchMode="standard" >
+            <intent-filter android:label="Chroot Terminal" >
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="About" >
+            <intent-filter android:label="About" >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AuthorsActivity"
+            android:label="Authors" >
+            <intent-filter android:label="Authors" >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LicensesActivity"
+            android:label="Licenses" >
+            <intent-filter android:label="Licenses" >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Settings"
+            android:autoRemoveFromRecents="true"
             android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
-            android:label="@string/app_name"
+            android:label="Settings"
             android:launchMode="singleTop"
             android:theme="@style/Theme.MaterialHunter" >
-            <intent-filter android:label="@string/app_nav_home_label" >
+            <intent-filter android:label="Settings" >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".USBArmory"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
+            android:label="USB Armory"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.MaterialHunter" >
+            <intent-filter android:label="USB Armory" >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CustomCommands"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
+            android:label="Custom Commands"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.MaterialHunter" >
+            <intent-filter android:label="Custom Commands" >
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Services"
+            android:configChanges="orientation|keyboardHidden|screenSize|keyboard"
+            android:label="Services"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.MaterialHunter" >
+            <intent-filter android:label="Services" >
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
@@ -82,10 +172,6 @@
 
         <service
             android:name=".service.CompatCheckService"
-            android:enabled="true"
-            android:exported="false" />
-        <service
-            android:name=".service.NotificationChannelService"
             android:enabled="true"
             android:exported="false" />
         <service

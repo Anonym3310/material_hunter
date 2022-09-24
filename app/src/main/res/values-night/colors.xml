@@ -4,4 +4,7 @@
     <item name="colorAccent" type="color">#eeeeff</item>
     <item name="colorBars" type="color">#121212</item>
 
+    <color name="switch_thumb_tint_material3">@color/switch_thumb_tint_dark_material3</color>
+    <color name="switch_track_tint_material3">@color/switch_track_tint_dark_material3</color>
+
 </resources>
